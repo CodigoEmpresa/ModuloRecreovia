@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Modulos\Personas;
 
 use Idrd\Usuarios\Repo\Ciudad as MCiudad;
 

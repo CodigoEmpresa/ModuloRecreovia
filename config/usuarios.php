@@ -6,12 +6,12 @@ return array(
    
   'prefijo_ruta' => 'personas', 
  
-  'modelo_persona' => 'App\Persona', 
-  'modelo_documento' => 'App\Documento', 
-  'modelo_pais' => 'App\Pais', 
-  'modelo_ciudad' => 'App\Ciudad', 
-  'modelo_genero' => 'App\Genero', 
-  'modelo_etnia' => 'App\Etnia', 
+  'modelo_persona' => 'App\Modulos\Personas\Persona', 
+  'modelo_documento' => 'App\Modulos\Personas\Documento', 
+  'modelo_pais' => 'App\Modulos\Personas\Pais', 
+  'modelo_ciudad' => 'App\Modulos\Personas\Ciudad', 
+  'modelo_genero' => 'App\Modulos\Personas\Genero', 
+  'modelo_etnia' => 'App\Modulos\Personas\Etnia', 
    
   //vistas que carga las vistas 
   'vista_lista' => 'list', 
