@@ -37,7 +37,7 @@ class MainController extends Controller {
 			$permissions_array = $user_array;
 
 			$permisos = [
-				//ir agregando los permisos
+				'editar_zonas' => 1 //$permissions_array[1]
 			];
 
 			$_SESSION['Usuario'] = $user_array;
@@ -60,7 +60,6 @@ class MainController extends Controller {
 	public function logout()
 	{
 		$_SESSION['Usuario'] = '';
-		Session::set('Usuario', ''); 
 
 		return redirect()->to('/');
 	}

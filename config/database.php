@@ -71,6 +71,20 @@ return [
             'prefix' => '',
             'strict' => false,
             'engine' => 'InnoDB',
+        ],
+
+        'db_parques' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST'),
+            'port' => env('DB_PORT'),
+            'database' => env('DB_PARQUES'),
+            'username' => env('DB_PARQUES_USERNAME'),
+            'password' => env('DB_PARQUES_PASSWORD'),
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+            'engine' => 'InnoDB',
         ]
     ],
 

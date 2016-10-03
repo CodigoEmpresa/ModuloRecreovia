@@ -15,6 +15,8 @@ return [
 
     'env' => env('APP_ENV', 'production'),
 
+    'page_size' => 20,
+
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
@@ -155,7 +157,8 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Idrd\Usuarios\UsuariosServiceProvider::class
+        Idrd\Usuarios\UsuariosServiceProvider::class,
+        Idrd\Parques\ParquesServiceProvider::class
 
     ],
 

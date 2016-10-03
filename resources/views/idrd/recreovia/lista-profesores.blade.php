@@ -57,10 +57,6 @@
         </div>
         <div class="col-xs-12"><br></div>
         <div class="col-xs-12">
-            <button data-loading-text="Cargando..." id="crear" data-role="crear" class="btn btn-primary" type="button">Crear persona</button>
-        </div>
-        <div class="col-xs-12"><br></div>
-        <div class="col-xs-12">
             <ul class="list-group" id="personas">
                 @foreach($personas as $persona)
                     <li class="list-group-item">
