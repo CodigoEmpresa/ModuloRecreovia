@@ -9,6 +9,12 @@ class Zona extends Model
 	public $timestamps = false;
 	protected $table = 'Zonas';
     protected $primaryKey = 'Id_Zona';
+    protected $connection = 'mysql';
+
+    public function __construct()
+    {
+    	$this->table = config('database.connections.mysql.database').'.Zonas';
+    }
 
     public function personas()
     {

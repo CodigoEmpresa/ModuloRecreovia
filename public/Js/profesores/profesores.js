@@ -1,10 +1,10 @@
 $(function()
 {
     var URL = $('#main_persona').data('url');
+    var URL_PROFESORES = $('#main_persona').data('url-profesores');
     var $personas_actuales = $('#personas').html();
 
-    function validarCampo(e)
-    {
+    function validarCampo(e){
     	var	code = (document.all) ? e.keyCode : e.which;
    		if (code == 8) return true;
      	var key = String.fromCharCode(code);
@@ -26,7 +26,7 @@ $(function()
         $('#buscar span').removeClass('glyphicon-search').addClass('glyphicon-refresh spin-r');
        	$("#buscador").prop('disabled', true);
         $('#buscar').data('role', 'reset');
-        $.get(URL+'/service/buscar/'+key,{}, function(data){
+        $.get(URL_PROFESORES+'/service/buscar/'+key,{}, function(data){
             if(data.length > 0){
                 var html = '';
                 $.each(data, function(i, e){
@@ -90,6 +90,15 @@ $(function()
         $('select[name="Nombre_Ciudad"]').data('value', persona['Nombre_Ciudad']);
         $('select[name="Id_Pais"]').val(persona['Id_Pais']).trigger('change');
         $('input[name="Id_Persona"]').val(persona['Id_Persona']);
+        
+        if(persona.zonas.length)
+        {
+        	$('input[name="Id_Zona"]').val(persona.zonas[0]['Id_Zona']);
+        	$('input[name="tipo"][value="'+persona.zonas[0]['tipo']+'"]').prop('checked', true);
+        } else {
+        	$('input[name="Id_Zona"]').val('');
+        	$('input[name="tipo"]').prop('checked', false);
+        }
 
         $('input[name="Id_Genero"]').removeAttr('checked').parent('.btn').removeClass('active');
         $('input[name="Id_Genero"][value="'+persona['Id_Genero']+'"]').trigger('click');
@@ -170,14 +179,18 @@ $(function()
             Id_Pais: 41,
             Nombre_Ciudad: '',
             Id_Persona: 0,
-            Id_Genero: 0
+            Id_Genero: 0,
+            zonas: [{
+            	Id_Zona: 0,
+            	tipo: ''
+            }]
         }
         popular_modal_persona(persona);
     });
 
     $('#personas').delegate('a[data-role="editar"]', 'click', function(e){
         var id = $(this).data('rel');
-        $.get(URL+'/service/obtener/'+id,{},function(data){	
+        $.get(URL_PROFESORES+'/service/obtener/'+id,{},function(data){	
             if(data)
             {
                 popular_modal_persona(data);
@@ -206,7 +219,7 @@ $(function()
 
     $('#form_persona').on('submit', function(e){
         $("#guardar").button('loading');
-        $.post(URL+'/service/procesar',$(this).serialize(),function(data){
+        $.post(URL_PROFESORES+'/service/procesar',$(this).serialize(),function(data){
             if(data.status == 'error')
             {
                 popular_errores_modal(data.errors);
@@ -220,7 +233,6 @@ $(function()
                 }, 4000)
             }
         },'json');
-
         e.preventDefault();
     });
 });

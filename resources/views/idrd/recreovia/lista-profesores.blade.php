@@ -1,7 +1,7 @@
 @section('script')
     @parent
 
-    <script src="{{ asset('public/Js/usuarios/usuarios.js') }}"></script>   
+    <script src="{{ asset('public/Js/profesores/profesores.js') }}"></script>
 @stop
 
 @section('style')
@@ -40,11 +40,11 @@
 @stop
     
 <div class="content">
-    <div id="main_persona" class="row" data-url="{{ url(config('usuarios.prefijo_ruta')) }}">
+    <div id="main_persona" class="row" data-url="{{ url(config('usuarios.prefijo_ruta')) }}" data-url-profesores="{{ url('profesores') }}">
         <div id="alerta" class="col-xs-12" style="display:none;">
             <div class="alert alert-success alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    Datos actualizados satisfactoriamente.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Datos actualizados satisfactoriamente.
             </div>                                
         </div>
         <div class="col-xs-12 form-group">
@@ -55,10 +55,13 @@
                 </span>
             </div>
         </div>
+        <div class="col-xs-12">
+            <button class="btn btn-primary" id="crear">Crear</button>
+        </div>
         <div class="col-xs-12"><br></div>
         <div class="col-xs-12">
             <ul class="list-group" id="personas">
-                @foreach($personas as $persona)
+                @foreach($elementos as $persona)
                     <li class="list-group-item">
                         <h5 class="list-group-item-heading">
                             {{ strtoupper($persona['Primer_Apellido'].' '.$persona['Segundo_Apellido'].' '.$persona['Primer_Nombre'].' '.$persona['Segundo_Nombre']) }}
@@ -79,7 +82,7 @@
                 @endforeach
             </ul>
         </div>
-        <div id="paginador" class="col-xs-12">{!! $personas->render() !!}</div>    
+        <div id="paginador" class="col-xs-12">{!! $elementos->render() !!}</div>    
         <!-- Modal formulario  persona -->
         <div class="modal fade" id="modal_form_persona" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -94,12 +97,12 @@
                                 <div class="col-xs-12 col-md-6">
                                     <div class="form-group">
                                         <label class="control-label" for="Id_TipoDocumento">* Tipo documento </label>
-                                            <select name="Id_TipoDocumento" id="" class="form-control">
-                                                <option value="">Seleccionar</option>
-                                                @foreach($documentos as $documento)
-                                                    <option value="{{ $documento['Id_TipoDocumento'] }}">{{ $documento['Descripcion_TipoDocumento'] }}</option>
-                                                @endforeach
-                                            </select>
+                                        <select name="Id_TipoDocumento" id="" class="form-control">
+                                            <option value="">Seleccionar</option>
+                                            @foreach($documentos as $documento)
+                                                <option value="{{ $documento['Id_TipoDocumento'] }}">{{ $documento['Descripcion_TipoDocumento'] }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-6">
@@ -155,24 +158,24 @@
                                 <div class="col-xs-12 col-md-6">
                                     <div class="form-group">
                                         <label class="control-label" for="Id_Etnia">* Etnia </label>
-                                            <select name="Id_Etnia" id="" class="form-control">
-                                                <option value="">Seleccionar</option>
-                                                @foreach($etnias as $etnia)
-                                                    <option value="{{ $etnia['Id_Etnia'] }}">{{ $etnia['Nombre_Etnia'] }}</option>
-                                                @endforeach
-                                            </select>
+                                        <select name="Id_Etnia" id="" class="form-control">
+                                            <option value="">Seleccionar</option>
+                                            @foreach($etnias as $etnia)
+                                                <option value="{{ $etnia['Id_Etnia'] }}">{{ $etnia['Nombre_Etnia'] }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-xs-12"><hr></div>
                                 <div class="col-xs-12 col-md-6">
                                     <div class="form-group">
                                         <label class="control-label" for="Id_Pais">* Pais </label>
-                                            <select name="Id_Pais" id="" class="form-control">
-                                                <option value="">Seleccionar</option>
-                                                    @foreach($paises as $pais)
-                                                        <option value="{{ $pais['Id_Pais'] }}">{{ $pais['Nombre_Pais'] }}</option>
-                                                    @endforeach
-                                            </select>
+                                        <select name="Id_Pais" id="" class="form-control">
+                                            <option value="">Seleccionar</option>
+                                                @foreach($paises as $pais)
+                                                    <option value="{{ $pais['Id_Pais'] }}">{{ $pais['Nombre_Pais'] }}</option>
+                                                @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-6">
@@ -181,6 +184,29 @@
                                         <select name="Nombre_Ciudad" id="" class="form-control" data-value="">
                                             <option value="">Seleccionar</option>
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12"><hr></div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="Zona">Zona </label>
+                                        <select name="Zona" id="" class="form-control" data-value="">
+                                            <option value="">Seleccionar</option>
+                                            @foreach($zonas as $zona)
+                                                <option value="{{ $zona['Id_Zona'] }}">{{ $zona['Nombre'] }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="tipo">Tipo</label> <br>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="tipo" id="tipo" value="profesor"> Profesor
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="tipo" id="tipo" value="gestor"> Gestor
+                                        </label>
                                     </div>
                                 </div>
                             </fieldset>

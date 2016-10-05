@@ -16,13 +16,19 @@ Route::get('/personas/service/buscar/{key}', '\Idrd\Usuarios\Controllers\Persona
 Route::get('/personas/service/ciudad/{id_pais}', '\Idrd\Usuarios\Controllers\LocalizacionController@buscarCiudades');
 Route::post('/personas/service/procesar/', '\Idrd\Usuarios\Controllers\PersonaController@procesar');
 
+Route::get('/profesores/service/buscar/{key}', 'Recreovia\ProfesoresController@buscar');
+Route::get('/profesores/service/obtener/{id}', 'Recreovia\ProfesoresController@obtener');
+Route::post('/personas/service/procesar/', 'Recreovia\ProfesoresController@procesar');
+
 Route::any('/', 'MainController@index');
 Route::any('/logout', 'MainController@logout');
 
 //rutas con filtro de autenticación
-Route::group(['middleware' => ['web']], function () {
+Route::group(['middleware' => ['web']], function() 
+{
 	Route::get('/welcome', 'MainController@welcome');
 	Route::get('/zonas', 'Recreovia\ZonaController@index');
+	Route::get('/profesores', 'Recreovia\ProfesoresController@index');
 });
 /*
 |--------------------------------------------------------------------------

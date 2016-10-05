@@ -48,15 +48,19 @@
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Actividades</a>
               </li>
                 @if(
+                  $_SESSION['Usuario']['Permisos']['editar_profesores']
+                )
+                  <li class="{{ $seccion && $seccion == 'Profesores' ? 'active' : '' }}">
+                    <a href="{{ url('profesores') }}">Profesores</a>
+                  </li>
+                @endif
+                @if(
                   $_SESSION['Usuario']['Permisos']['editar_zonas']
                 )
                   <li class="{{ $seccion && $seccion == 'Zonas' ? 'active' : '' }}">
                     <a href="{{ url('zonas') }}">Zonas</a>
                   </li>
                 @endif
-                <li class="{{ $seccion && $seccion == 'Personas' ? 'active' : '' }}">
-                  <a href="{{ url('/personas') }}">Administración</a>
-                </li>
             </ul>
             
             <ul class="nav navbar-nav navbar-right">
