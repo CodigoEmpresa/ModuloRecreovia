@@ -26,7 +26,7 @@ $(function()
         $('#buscar span').removeClass('glyphicon-search').addClass('glyphicon-refresh spin-r');
        	$("#buscador").prop('disabled', true);
         $('#buscar').data('role', 'reset');
-        $.get(URL_PROFESORES+'/service/buscar/'+key,{}, function(data){
+        $.get(URL_PROFESORES+'/service/buscar/'+key, {}, function(data){
             if(data.length > 0){
                 var html = '';
                 $.each(data, function(i, e){
@@ -93,10 +93,10 @@ $(function()
         
         if(persona.zonas.length)
         {
-        	$('input[name="Id_Zona"]').val(persona.zonas[0]['Id_Zona']);
-        	$('input[name="tipo"][value="'+persona.zonas[0]['tipo']+'"]').prop('checked', true);
+        	$('select[name="Id_Zona"]').val(persona.zonas[0]['Id_Zona']);
+        	$('input[name="tipo"][value="'+persona.zonas[0].pivot['tipo']+'"]').prop('checked', true);
         } else {
-        	$('input[name="Id_Zona"]').val('');
+        	$('select[name="Id_Zona"]').val('');
         	$('input[name="tipo"]').prop('checked', false);
         }
 
@@ -116,6 +116,7 @@ $(function()
                     case 'tipoDocumento':
                     case 'Id_Etnia':
                     case 'Id_Pais':
+                    case 'Id_Zona':
                             selector = 'select';
                     break;
 
@@ -124,6 +125,7 @@ $(function()
                     case 'Primer_Nombre':
                     case 'Fecha_Nacimiento':
                     case 'Id_Genero':
+                    case 'tipo':
                             selector = 'input';
                     break;
                 }
@@ -182,7 +184,9 @@ $(function()
             Id_Genero: 0,
             zonas: [{
             	Id_Zona: 0,
-            	tipo: ''
+            	pivot: {
+                    tipo: ''
+                }
             }]
         }
         popular_modal_persona(persona);
@@ -209,7 +213,7 @@ $(function()
     //Submit formulario único de personas
     $('#form_persona input[name="Cedula"]').on('blur', function(e){
         var key = $(this).val();
-        $.get(URL+'/service/buscar/'+key,{}, function(data){
+        $.get(URL_PROFESORES+'/service/buscar/'+key,{}, function(data){
             if(data.length == 1)
             {
                 popular_modal_persona(data[0]);

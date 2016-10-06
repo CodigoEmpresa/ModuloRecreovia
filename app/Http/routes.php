@@ -18,7 +18,7 @@ Route::post('/personas/service/procesar/', '\Idrd\Usuarios\Controllers\PersonaCo
 
 Route::get('/profesores/service/buscar/{key}', 'Recreovia\ProfesoresController@buscar');
 Route::get('/profesores/service/obtener/{id}', 'Recreovia\ProfesoresController@obtener');
-Route::post('/personas/service/procesar/', 'Recreovia\ProfesoresController@procesar');
+Route::post('/profesores/service/procesar/', 'Recreovia\ProfesoresController@procesar');
 
 Route::any('/', 'MainController@index');
 Route::any('/logout', 'MainController@logout');

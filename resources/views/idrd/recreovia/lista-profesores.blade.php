@@ -190,7 +190,7 @@
                                 <div class="col-xs-12 col-md-6">
                                     <div class="form-group">
                                         <label class="control-label" for="Zona">Zona </label>
-                                        <select name="Zona" id="" class="form-control" data-value="">
+                                        <select name="Id_Zona" id="" class="form-control" data-value="">
                                             <option value="">Seleccionar</option>
                                             @foreach($zonas as $zona)
                                                 <option value="{{ $zona['Id_Zona'] }}">{{ $zona['Nombre'] }}</option>

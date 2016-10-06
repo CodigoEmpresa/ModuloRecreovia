@@ -11,6 +11,7 @@ use App\Modulos\Personas\Documento as Documento;
 use App\Modulos\Personas\Pais as Pais;
 use App\Modulos\Personas\Etnia as Etnia;
 use Idrd\Usuarios\Repo\PersonaInterface;
+use Validator;
 
 class ProfesoresController extends Controller {
 	
@@ -76,7 +77,7 @@ class ProfesoresController extends Controller {
 				'Fecha_Nacimiento' => 'required|date',
 				'Id_Etnia' => 'required|min:1',
 				'Id_Pais' => 'required|min:1',
-				'Id_Genero' => 'required|in:1,2'
+				'Id_Genero' => 'required|in:1,2',
 				'Id_Zona' => 'required',
 				'tipo' => 'required|in:profesor,gestor'
         	]
@@ -85,18 +86,30 @@ class ProfesoresController extends Controller {
         if ($validator->fails())
             return response()->json(array('status' => 'error', 'errors' => $validator->errors()));
         
-        if($request->input('Id_Persona') == '0')
+        if ($request->input('Id_Persona') == '0')
         	$profesor = $this->repositorio_personas->guardar($request->all());
         else
         	$profesor = $this->repositorio_personas->actualizar($request->all());
 
-        $zona = Zona::with('personas')->find($request->input('Id_Persona'));
+        $zona = Zona::with('personas')->find($request->input('Id_Zona'));
         $personas = [];
+        $profesor->zonas()->detach();
 
         foreach ($zona->personas as $persona) 
         {
-        	
+        	echo $persona->Id_Persona.' != '.$profesor->Id_Persona;
+
+        	if ($persona->Id_Persona != $profesor->Id_Persona)
+	        	$personas[$persona->Id_Persona] = [
+	        		'tipo' => $persona->pivot['tipo']
+	        	];
         }
+
+        $personas[$profesor->Id_Persona] = [
+        	'tipo' => $request->input('tipo')
+        ];
+
+        $zona->personas()->sync($personas);
 
         return response()->json(array('status' => 'ok'));
 	}
