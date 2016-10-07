@@ -46,6 +46,7 @@ $(function()
                                     '</div>'+
                                 '</div>'+
                             '</p>'+
+                            '<span class="label label-default">'+e.zonas[0].Nombre+'</span>'+
                         '</li>';
                 });
                 $('#personas').html(html);
@@ -223,20 +224,19 @@ $(function()
 
     $('#form_persona').on('submit', function(e){
         $("#guardar").button('loading');
-        $.post(URL_PROFESORES+'/service/procesar',$(this).serialize(),function(data){
-            if(data.status == 'error')
-            {
-                popular_errores_modal(data.errors);
-            } else {
-                $('#alerta').show();
-                $('#modal_form_persona').modal('hide');
-                $("#guardar").button('reset');
+        $.post(URL_PROFESORES+'/service/procesar', $(this).serialize(), 'json')
+        .done(function(msg) {
+            $('#alerta').show();
+            $('#modal_form_persona').modal('hide');
+            $("#guardar").button('reset');
 
-                setTimeout(function(){
-                    $('#alerta').hide();
-                }, 4000)
-            }
-        },'json');
+            setTimeout(function(){
+                $('#alerta').hide();
+            }, 4000)
+        })
+        .fail(function(xhr, status, error) {
+            popular_errores_modal(xhr.responseJSON);
+        });
         e.preventDefault();
     });
 });

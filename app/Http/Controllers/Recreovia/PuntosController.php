@@ -82,6 +82,8 @@ class ProfesoresController extends Controller {
 
         foreach ($zona->personas as $persona) 
         {
+        	echo $persona->Id_Persona.' != '.$profesor->Id_Persona;
+
         	if ($persona->Id_Persona != $profesor->Id_Persona)
 	        	$personas[$persona->Id_Persona] = [
 	        		'tipo' => $persona->pivot['tipo']

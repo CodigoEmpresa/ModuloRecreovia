@@ -78,6 +78,7 @@
                                 </div>
                             </div>
                         </p>
+                        <span class="label label-default">{{ $persona->zonas[0]->Nombre }}</span>
                     </li>
                 @endforeach
             </ul>
