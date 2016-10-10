@@ -5,16 +5,14 @@ namespace App\Http\Controllers\Recreovia;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Modulos\Recreovia\Zona;
-use App\Modulos\Personas\Persona;
-use App\Modulos\Personas\Documento;
-use App\Modulos\Personas\Pais;
-use App\Modulos\Personas\Etnia;
+use App\Modulos\Recreovia\Punto;
+use App\Modulos\Parques\Localidad;
+use App\Modulos\Parques\Upz;
 use App\Http\Requests\GuardarProfesor;
 use Idrd\Usuarios\Repo\PersonaInterface;
 use Validator;
 
-class ProfesoresController extends Controller {
+class PuntosController extends Controller {
 	
 	protected $repositorio_personas;
 
@@ -26,14 +24,14 @@ class ProfesoresController extends Controller {
 	public function index()
 	{
 		$perPage = config('app.page_size');
-		$elementos = Persona::has('zonas')->with(['zonas' => function($query){
+		$elementos = Puntow::with(['zona' => function($query){
 								return $query->orderBy('Id_Zona');
 							}])
-							->orderBy('Cedula', 'ASC')
+							->orderBy('Cod_IDRD', 'ASC')
 							->paginate($perPage);
 
 		$lista = [
-			'titulo' => 'Profesores',
+			'titulo' => 'Puntos',
 	        'elementos' => $elementos,
 	        'documentos' => Documento::all(),
 	        'paises' => Pais::all(),
@@ -42,7 +40,7 @@ class ProfesoresController extends Controller {
 		];
 
 		$datos = [
-			'seccion' => 'Profesores',
+			'seccion' => 'Puntos',
 			'lista'	=> view('idrd.recreovia.lista-profesores', $lista)
 		];
 
