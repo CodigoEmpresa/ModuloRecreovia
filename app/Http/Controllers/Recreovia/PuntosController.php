@@ -6,10 +6,13 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Modulos\Recreovia\Punto;
+use App\Modulos\Recreovia\Jornada;
 use App\Modulos\Parques\Localidad;
 use App\Modulos\Parques\Upz;
-use App\Http\Requests\GuardarProfesor;
+use App\Modulos\Recreovia\Zona;
+use App\Http\Requests\GuardarPunto;
 use Idrd\Usuarios\Repo\PersonaInterface;
+use Idrd\Parques\Repo\LocalizacionInterface;
 use Validator;
 
 class PuntosController extends Controller {
@@ -24,24 +27,23 @@ class PuntosController extends Controller {
 	public function index()
 	{
 		$perPage = config('app.page_size');
-		$elementos = Puntow::with(['zona' => function($query){
+		$elementos = Punto::with(['zona' => function($query){
 								return $query->orderBy('Id_Zona');
-							}])
+							}, 'localidad', 'upz'])
 							->orderBy('Cod_IDRD', 'ASC')
 							->paginate($perPage);
 
 		$lista = [
 			'titulo' => 'Puntos',
 	        'elementos' => $elementos,
-	        'documentos' => Documento::all(),
-	        'paises' => Pais::all(),
-	        'etnias' => Etnia::all(),
+	        'localidades' => Localidad::all(),
+	        'upz' => Upz::all(),
 	        'zonas' => Zona::all()
 		];
 
 		$datos = [
 			'seccion' => 'Puntos',
-			'lista'	=> view('idrd.recreovia.lista-profesores', $lista)
+			'lista'	=> view('idrd.recreovia.lista-puntos', $lista)
 		];
 
 		return view('list', $datos);
@@ -49,51 +51,86 @@ class PuntosController extends Controller {
 
 	public function buscar(Request $request, $key)
 	{
-		$resultados = $this->repositorio_personas->buscar($key);
-		$profesores = Persona::with('zonas', 'tipoDocumento')
-							->whereIn('Id_Persona', $resultados->lists('Id_Persona'))
-							->get();
-
-		return response()->json($profesores);
+		return response()->json([true]);
 	}
 
 	public function obtener(Request $request, $id)
 	{
-		$persona = $this->repositorio_personas->obtener($id);	
-		$profesor = Persona::with('zonas', 'tipoDocumento')
-						->where('Id_Persona', $persona->Id_Persona)
-						->first();
-
-		return response()->json($profesor);
+		$punto = Punto::with(['jornadas' => function($query){
+			return $query->whereNull('deleted_at');
+		}])->find($id);
+		return response()->json($punto);
 	}
 
-	public function procesar(GuardarProfesor $request)
+	public function procesar(GuardarPunto $request)
 	{
-        if ($request->input('Id_Persona') == '0')
-        	$profesor = $this->repositorio_personas->guardar($request->all());
-        else
-        	$profesor = $this->repositorio_personas->actualizar($request->all());
+		if ($request['Id_Punto'] == 0)
+			$punto = $this->crearPunto($request);
+		else 
+			$punto = $this->editarPunto($request);
 
-        $zona = Zona::with('personas')->find($request->input('Id_Zona'));
-        $personas = [];
-        $profesor->zonas()->detach();
+		$punto->Direccion = $request['Direccion'];
+		$punto->Escenario = $request['Escenario'];
+		$punto->Cod_IDRD = $request['Cod_IDRD'];
+		$punto->Cod_Recreovia = $request['Cod_Recreovia'];
+		$punto->Id_Zona = $request['Id_Zona'];
+		$punto->Id_Localidad = $request['Id_Localidad'];
+		$punto->Id_Upz = $request['Id_Upz'];
+		$punto->save();
 
-        foreach ($zona->personas as $persona) 
-        {
-        	echo $persona->Id_Persona.' != '.$profesor->Id_Persona;
+		$this->sincronizarJornadas($request['Jornadas'], $punto);
 
-        	if ($persona->Id_Persona != $profesor->Id_Persona)
-	        	$personas[$persona->Id_Persona] = [
-	        		'tipo' => $persona->pivot['tipo']
-	        	];
-        }
+        return response()->json(['status' => 'ok']);
+	}
 
-        $personas[$profesor->Id_Persona] = [
-        	'tipo' => $request->input('tipo')
-        ];
+	private function sincronizarJornadas($jornadas, $punto)
+	{
+		$jornadas = json_decode($jornadas);
+		$jornadas_ids = [];
 
-        $zona->personas()->sync($personas);
+		foreach ($jornadas as $j) 
+		{
+			if ($j->Id_Jornada != 0)
+				$jornadas_ids[] = $j->Id_Jornada;
+		}
+		
+		$jornadas_eliminadas = Jornada::where('Id_Punto', $punto['Id_Punto'])
+				->whereNotIn('Id_Jornada', $jornadas_ids)
+				->get();
 
-        return response()->json(array('status' => 'ok'));
+		foreach ($jornadas_eliminadas as $j) 
+		{
+			$j->delete();
+		}
+
+		foreach ($jornadas as $j) 
+		{
+			if ($j->Id_Jornada != 0)
+			{
+				$jornada = Jornada::find($j->Id_Jornada);
+			} else {
+				$jornada = new Jornada;
+			}
+
+			$jornada->Id_Punto = $punto['Id_Punto'];
+			$jornada->Jornada = $j->Jornada;
+			$jornada->Dias = $j->Dias;
+			$jornada->Inicio = $j->Inicio;
+			$jornada->Fin = $j->Fin;
+
+			$jornada->save();
+		}
+	}
+
+	private function crearPunto($request)
+	{
+		$punto = new Punto;
+		return $punto;
+	}
+
+	private function editarPunto($request)
+	{
+		$punto = Punto::find($request->Id_Punto);
+		return $punto;
 	}
 }

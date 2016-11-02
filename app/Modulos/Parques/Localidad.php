@@ -6,5 +6,8 @@ use Idrd\Parques\Repo\Localidad as MLocalidad;
 
 class Localidad extends MLocalidad
 {
-    //
+    public function punto()
+    {
+    	return $this->hasMany('App\Modulos\Recreovia\Punto', 'Id_Localidad');
+    }
 }

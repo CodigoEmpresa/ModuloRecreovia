@@ -10,11 +10,13 @@
       <meta name="author" content="">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="csrf-token" content="{{ csrf_token() }}" />
 
       @section('style')
           <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
           <link rel="stylesheet" href="{{ asset('public/Css/jquery-ui.css') }}" media="screen">    
           <link rel="stylesheet" href="{{ asset('public/Css/bootstrap.css') }}" media="screen">    
+          <link rel="stylesheet" href="{{ asset('public/Css/bootstrap-datetimepicker.css') }}" media="screen">    
           <link rel="stylesheet" href="{{ asset('public/Css/sticky-footer.css') }}" media="screen">    
           <link rel="stylesheet" href="{{ asset('public/Css/main.css') }}" media="screen">    
       @show
@@ -23,6 +25,8 @@
           <script src="{{ asset('public/Js/jquery.js') }}"></script>
           <script src="{{ asset('public/Js/jquery-ui.js') }}"></script>
           <script src="{{ asset('public/Js/bootstrap.min.js') }}"></script>
+          <script src="{{ asset('public/Js/moment.js') }}"></script>
+          <script src="{{ asset('public/Js/bootstrap-datetimepicker.min.js') }}"></script>
           <script src="{{ asset('public/Js/main.js') }}"></script>
       @show
 
@@ -59,6 +63,13 @@
                 )
                   <li class="{{ $seccion && $seccion == 'Zonas' ? 'active' : '' }}">
                     <a href="{{ url('zonas') }}">Zonas</a>
+                  </li>
+                @endif
+                @if(
+                  $_SESSION['Usuario']['Permisos']['editar_puntos']
+                )
+                  <li class="{{ $seccion && $seccion == 'Puntos' ? 'active' : '' }}">
+                    <a href="{{ url('puntos') }}">Puntos</a>
                   </li>
                 @endif
             </ul>

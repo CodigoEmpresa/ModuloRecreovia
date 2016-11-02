@@ -13,7 +13,7 @@ class ZonaController extends Controller {
 	{
 		$perPage = config('app.page_size');
 		
-		$elementos = Zona::with('personas')
+		$elementos = Zona::with('personas', 'puntos')
 							->orderBy('Id_Zona', 'ASC')
 							->paginate($perPage);
 

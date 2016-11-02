@@ -24,7 +24,7 @@
 					<div class="zona">
 						<h5>{{ $zona['Nombre'] }}</h5>
 						<p class="small">
-							Total puntos: <br>
+							Total puntos: {{ count($zona->puntos) }}<br>
 							Total profesores: {{ count($zona->personas) }}<br>
 						</p>
 						<a href="" class="btn btn-xs btn-default">Puntos</a>

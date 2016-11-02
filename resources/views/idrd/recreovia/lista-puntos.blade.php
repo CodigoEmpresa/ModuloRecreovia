@@ -1,7 +1,8 @@
 @section('script')
     @parent
 
-    <script src="{{ asset('public/Js/profesores/profesores.js') }}"></script>
+    <script src="{{ asset('public/Js/puntos/search.js') }}"></script>
+    <script src="{{ asset('public/Js/puntos/util.js') }}"></script>
 @stop
 
 @section('style')
@@ -40,7 +41,7 @@
 @stop
     
 <div class="content">
-    <div id="main_persona" class="row" data-url="{{ url(config('usuarios.prefijo_ruta')) }}" data-url-profesores="{{ url('profesores') }}">
+    <div id="main" class="row" data-url="{{ url('puntos') }}">
         <div id="alerta" class="col-xs-12" style="display:none;">
             <div class="alert alert-success alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -60,12 +61,12 @@
         </div>
         <div class="col-xs-12"><br></div>
         <div class="col-xs-12">
-            <ul class="list-group" id="personas">
+            <ul class="list-group" id="principal">
                 @foreach($elementos as $punto)
                     <li class="list-group-item">
                         <h5 class="list-group-item-heading">
-                            {{ strtoupper($persona['Primer_Apellido'].' '.$persona['Segundo_Apellido'].' '.$persona['Primer_Nombre'].' '.$persona['Segundo_Nombre']) }}
-                            <a id="editM" data-role="editar" data-rel="{{ $punto['Id_Persona'] }}" class="pull-right btn btn-primary btn-xs">
+                            {{ strtoupper($punto['Escenario']) }}
+                            <a data-role="editar" data-rel="{{ $punto['Id_Punto'] }}" class="pull-right btn btn-primary btn-xs">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </a>
                         </h5>
@@ -73,124 +74,60 @@
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="row">
-                                        <div class="col-xs-12 col-sm-6 col-md-3"><small>Identificación: {{ $persona->tipoDocumento['Nombre_TipoDocumento'].' '.$persona['Cedula'] }}</small></div>
+                                        <div class="col-xs-12 col-sm-6 col-md-3">
+                                            <small>Direccion: {{ $punto['Direccion'] }}</small>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </p>
-                        <span class="label label-default">{{ $persona->zonas[0]->Nombre }}</span>
+                        <span class="label label-default">{{ $punto->zona['Nombre'] }}</span>
+                        <span class="label label-default">{{ $punto->upz['Upz'] }}</span>
+                        <span class="label label-default">{{ $punto->localidad['Localidad'] }}</span>
                     </li>
                 @endforeach
             </ul>
         </div>
         <div id="paginador" class="col-xs-12">{!! $elementos->render() !!}</div>    
-        <!-- Modal formulario  persona -->
-        <div class="modal fade" id="modal_form_persona" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <form action="" id="form_persona">
+        <!-- Modal formulario  principal -->
+        <div class="modal fade" id="modal-principal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <form action="" id="form-principal">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Crear o editar persona.</h4>
+                            <h4 class="modal-title" id="myModalLabel">Crear o editar punto</h4>
                         </div>
                         <div class="modal-body">
                             <fieldset>
-                                <div class="col-xs-12 col-md-6">
+                                <div class="col-xs-12">
                                     <div class="form-group">
-                                        <label class="control-label" for="Id_TipoDocumento">* Tipo documento </label>
-                                        <select name="Id_TipoDocumento" id="" class="form-control">
-                                            <option value="">Seleccionar</option>
-                                            @foreach($documentos as $documento)
-                                                <option value="{{ $documento['Id_TipoDocumento'] }}">{{ $documento['Descripcion_TipoDocumento'] }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label" for="Cedula">* Documento </label>
-                                        <input type="text" name="Cedula" class="form-control">
+                                        <label class="control-label" for="Direccion">Direccion</label>
+                                        <input type="text" name="Direccion" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-xs-12">
                                     <div class="form-group">
-                                        <label class="control-label" for="Primer_Apellido">* Primer apellido </label>
-                                        <input type="text" name="Primer_Apellido" class="form-control">
+                                        <label class="control-label" for="Escenario">Escenario</label>
+                                        <input type="text" name="Escenario" class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-xs-12">
+                                <div class="col-md-6 col-xs-12">
                                     <div class="form-group">
-                                        <label class="control-label" for="Segundo_Apellido">Segundo apellido </label>
-                                        <input type="text" name="Segundo_Apellido" class="form-control">
+                                        <label class="control-label" for="Cod_IDRD">Cod. IDRD</label>
+                                        <input type="text" name="Cod_IDRD" class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-xs-12">
+                                <div class="col-md-6 col-xs-12">
                                     <div class="form-group">
-                                        <label class="control-label" for="Primer_Nombre">* Primer nombre </label>
-                                        <input type="text" name="Primer_Nombre" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-xs-12">
-                                    <div class="form-group">
-                                        <label class="control-label" for="Segundo_Nombre">Segundo nombre </label>
-                                        <input type="text" name="Segundo_Nombre" class="form-control">
+                                        <label class="control-label" for="Cod_Recreovia">Cod. Recreovia</label>
+                                        <input type="text" name="Cod_Recreovia" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-xs-12"><hr></div>
-                                <div class="col-xs-12 col-md-6">
+                                <div class="col-xs-12 col-md-12">
                                     <div class="form-group">
-                                        <label class="control-label" for="Fecha_Nacimiento">* Fecha de nacimiento</label>
-                                        <input type="text" name="Fecha_Nacimiento" data-role="datepicker" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label" for="Id_Genero">* Genero</label><br>
-                                        <div class="btn-group" data-toggle="buttons">
-                                            <label class="btn btn-default">
-                                                <input type="radio" name="Id_Genero" value="1" autocomplete="off"> <span class="text-success">M</span>
-                                            </label>
-                                            <label class="btn btn-default">
-                                                <input type="radio" name="Id_Genero" value="2" autocomplete="off"> <span class="text-danger">F</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label" for="Id_Etnia">* Etnia </label>
-                                        <select name="Id_Etnia" id="" class="form-control">
-                                            <option value="">Seleccionar</option>
-                                            @foreach($etnias as $etnia)
-                                                <option value="{{ $etnia['Id_Etnia'] }}">{{ $etnia['Nombre_Etnia'] }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12"><hr></div>
-                                <div class="col-xs-12 col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label" for="Id_Pais">* Pais </label>
-                                        <select name="Id_Pais" id="" class="form-control">
-                                            <option value="">Seleccionar</option>
-                                                @foreach($paises as $pais)
-                                                    <option value="{{ $pais['Id_Pais'] }}">{{ $pais['Nombre_Pais'] }}</option>
-                                                @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label" for="Nombre_Ciudad">Ciudad </label>
-                                        <select name="Nombre_Ciudad" id="" class="form-control" data-value="">
-                                            <option value="">Seleccionar</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12"><hr></div>
-                                <div class="col-xs-12 col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label" for="Zona">Zona </label>
+                                        <label class="control-label" for="Id_Zona">Zona </label>
                                         <select name="Id_Zona" id="" class="form-control" data-value="">
                                             <option value="">Seleccionar</option>
                                             @foreach($zonas as $zona)
@@ -201,20 +138,113 @@
                                 </div>
                                 <div class="col-xs-12 col-md-6">
                                     <div class="form-group">
-                                        <label for="tipo">Tipo</label> <br>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="tipo" id="tipo" value="profesor"> Profesor
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="tipo" id="tipo" value="gestor"> Gestor
-                                        </label>
+                                        <label class="control-label" for="Id_Localidad">Localidad </label>
+                                        <select name="Id_Localidad" id="" class="form-control">
+                                            <option value="">Seleccionar</option>
+                                            @foreach($localidades as $localidad)
+                                                <option value="{{ $localidad['Id_Localidad'] }}">{{ $localidad['Localidad'] }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="Id_Upz">Upz</label>
+                                        <select name="Id_Upz" id="" class="form-control" data-json="{{ $upz }}">
+                                            <option value="">Seleccionar</option>
+                                            @foreach($upz as $u)
+                                                <option data-localidad="{{ $u['IdLocalidad'] }}" value="{{ $u['Id_Upz'] }}">{{ $u['Upz'] }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <span class="text text-primary">Jornadas</span>
+                                    <button class="pull-right btn btn-xs btn-default" id="agregar-jornada">Agregar <span class="glyphicon glyphicon-plus"></span></button>
+                                </div>
+                                <div class="col-xs-12" id="form-jornadas" style="display:none;">
+                                    <div class="row" style="background-color: #eee; margin-top: 10px; padding-top: 10px; margin-bottom: 10px; padding-bottom: 10px;">
+                                        <div class="col-md-9">
+                                            <div class="form-group">
+                                                <label for="control-label">Dias</label> <br>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" id="dia1" name="dias[]" value="lunes"> Lunes&nbsp;&nbsp;
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" id="dia2" name="dias[]" value="martes"> Martes&nbsp;&nbsp;
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" id="dia3" name="dias[]" value="miercoles"> Miercoles
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" id="dia4" name="dias[]" value="jueves"> Jueves
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" id="dia5" name="dias[]" value="viernes"> Viernes
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" id="dia6" name="dias[]" value="sabado"> Sabado
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" id="dia7" name="dias[]" value="domingo"> Domingo
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="control-label">Jornada</label> <br>
+                                                <label class="radio-inline">
+                                                    <input type="radio" id="jornada1" name="jornada" value="dia"> Dia
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" id="jornada2" name="jornada" value="noche"> Noche
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" id="jornada3" name="jornada" value="fds"> FDS
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 col-xs-6">
+                                            <div class="form-group">
+                                                <label for="">Hora inicio</label>
+                                                <input type="text" class="form-control input-sm" name="inicio" data-role="clockpicker" placeholder="Hora inicio">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 col-xs-6">
+                                            <div class="form-group">
+                                                <label for="">Hora fin</label>
+                                                <input type="text" class="form-control input-sm" name="fin" data-role="clockpicker" placeholder="Hora fin">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <input type="hidden" name="Id_Jornada" value="">
+                                            <input type="button" value="Guardar" id="guardar-jornada" class="btn btn-xs btn-primary">
+                                            <input style="display:none;" type="button" id="eliminar-jornada" value="Eliminar" class="btn btn-xs btn-danger">
+                                            <input type="button" id="cancelar-jornada" value="Cancelar" class="btn btn-xs btn-default">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <table id="table-jornadas" class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>N°</th>
+                                                <th>Dias</th>
+                                                <th>Jornada</th>
+                                                <th width="15px"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                        </tbody>
+                                    </table>
                                 </div>
                             </fieldset>
                         </div>
                         <div class="modal-footer">
-                            <input type="hidden" name="Id_Persona" value="0">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            <input type="hidden" name="Id_Punto" value="0">
+                            <input type="hidden" name="jornadas" value="">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                             <button id="guardar" type="submit" class="btn btn-primary">Guardar</button>
                         </div>
                     </div>

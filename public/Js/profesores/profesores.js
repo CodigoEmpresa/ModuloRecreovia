@@ -46,7 +46,8 @@ $(function()
                                     '</div>'+
                                 '</div>'+
                             '</p>'+
-                            '<span class="label label-default">'+e.zonas[0].Nombre+'</span>'+
+                            '<span class="label label-default">'+(e.zonas.length > 0 ? e.zonas[0].Nombre : 'Zona no asignada')+'</span> '+
+                            '<span class="label label-default">'+(e.zonas.length > 0 ? e.zonas[0].pivot['tipo']: 'Tipo no asignado')+'</span>'+
                         '</li>';
                 });
                 $('#personas').html(html);
@@ -232,6 +233,7 @@ $(function()
 
             setTimeout(function(){
                 $('#alerta').hide();
+                location.reload();
             }, 4000)
         })
         .fail(function(xhr, status, error) {

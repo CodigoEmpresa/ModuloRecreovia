@@ -79,6 +79,7 @@
                             </div>
                         </p>
                         <span class="label label-default">{{ $persona->zonas[0]->Nombre }}</span>
+                        <span class="label label-default">{{ $persona->zonas[0]->pivot['tipo'] }}</span>
                     </li>
                 @endforeach
             </ul>

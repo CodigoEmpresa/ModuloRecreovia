@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Requests\Request;
 use Illuminate\Contracts\Validation\Validator;
 
-class GuardarProfesor extends Request
+class GuardarPunto extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,16 +25,13 @@ class GuardarProfesor extends Request
     public function rules()
     {
         return [
-            'Id_TipoDocumento' => 'required|min:1',
-            'Cedula' => 'required|numeric',
-            'Primer_Apellido' => 'required',
-            'Primer_Nombre' => 'required',
-            'Fecha_Nacimiento' => 'required|date',
-            'Id_Etnia' => 'required|min:1',
-            'Id_Pais' => 'required|min:1',
-            'Id_Genero' => 'required|in:1,2',
+            'Direccion' => 'required',
+            'Escenario' => 'required',
+            'Cod_IDRD' => 'required',
+            'Cod_Recreovia' => 'required',
             'Id_Zona' => 'required',
-            'tipo' => 'required|in:profesor,gestor'
+            'Id_Localidad' => 'required',
+            'Id_Upz' => 'required'
         ];
     }
 }
