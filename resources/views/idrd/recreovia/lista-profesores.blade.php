@@ -78,7 +78,6 @@
                                 </div>
                             </div>
                         </p>
-                        <span class="label label-default">{{ $persona->zonas[0]->Nombre }}</span>
                         <span class="label label-default">{{ $persona->zonas[0]->pivot['tipo'] }}</span>
                     </li>
                 @endforeach
@@ -191,17 +190,6 @@
                                 <div class="col-xs-12"><hr></div>
                                 <div class="col-xs-12 col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label" for="Zona">Zona </label>
-                                        <select name="Id_Zona" id="" class="form-control" data-value="">
-                                            <option value="">Seleccionar</option>
-                                            @foreach($zonas as $zona)
-                                                <option value="{{ $zona['Id_Zona'] }}">{{ $zona['Nombre'] }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-md-6">
-                                    <div class="form-group">
                                         <label for="tipo">Tipo</label> <br>
                                         <label class="radio-inline">
                                             <input type="radio" name="tipo" id="tipo" value="profesor"> Profesor
@@ -214,6 +202,7 @@
                             </fieldset>
                         </div>
                         <div class="modal-footer">
+                            <input type="hidden" name="Id_Zona" value="1">
                             <input type="hidden" name="Id_Persona" value="0">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                             <button id="guardar" type="submit" class="btn btn-primary">Guardar</button>

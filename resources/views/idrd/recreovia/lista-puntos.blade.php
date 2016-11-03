@@ -125,17 +125,6 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-12"><hr></div>
-                                <div class="col-xs-12 col-md-12">
-                                    <div class="form-group">
-                                        <label class="control-label" for="Id_Zona">Zona </label>
-                                        <select name="Id_Zona" id="" class="form-control" data-value="">
-                                            <option value="">Seleccionar</option>
-                                            @foreach($zonas as $zona)
-                                                <option value="{{ $zona['Id_Zona'] }}">{{ $zona['Nombre'] }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
                                 <div class="col-xs-12 col-md-6">
                                     <div class="form-group">
                                         <label class="control-label" for="Id_Localidad">Localidad </label>
@@ -217,6 +206,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-12">
+                                            <input type="hidden" name="Id_Zona" value="1">
                                             <input type="hidden" name="Id_Jornada" value="">
                                             <input type="button" value="Guardar" id="guardar-jornada" class="btn btn-xs btn-primary">
                                             <input style="display:none;" type="button" id="eliminar-jornada" value="Eliminar" class="btn btn-xs btn-danger">
