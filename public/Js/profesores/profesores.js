@@ -46,7 +46,6 @@ $(function()
                                     '</div>'+
                                 '</div>'+
                             '</p>'+
-                            '<span class="label label-default">'+(e.zonas.length > 0 ? e.zonas[0].Nombre : 'Zona no asignada')+'</span> '+
                             '<span class="label label-default">'+(e.zonas.length > 0 ? e.zonas[0].pivot['tipo']: 'Tipo no asignado')+'</span>'+
                         '</li>';
                 });

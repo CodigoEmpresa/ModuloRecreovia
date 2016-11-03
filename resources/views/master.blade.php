@@ -48,32 +48,31 @@
           </div>
           <div class="navbar-collapse collapse" id="navbar-main">
             <ul class="nav navbar-nav">
-              <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Actividades</a>
+            @if(
+              $_SESSION['Usuario']['Permisos']['editar_profesores'] ||
+              $_SESSION['Usuario']['Permisos']['editar_puntos']
+            )
+              <li class="dropdown {{ $seccion && in_array($seccion, ['Profesores', 'Puntos']) ? 'active' : '' }}">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Configuración <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  @if(
+                    $_SESSION['Usuario']['Permisos']['editar_profesores']
+                  )
+                    <li class="{{ $seccion && $seccion == 'Profesores' ? 'active' : '' }}">
+                      <a href="{{ url('profesores') }}">Profesores</a>
+                    </li>
+                  @endif
+                  @if(
+                    $_SESSION['Usuario']['Permisos']['editar_puntos']
+                  )
+                    <li class="{{ $seccion && $seccion == 'Puntos' ? 'active' : '' }}">
+                      <a href="{{ url('puntos') }}">Puntos</a>
+                    </li>
+                  @endif
+                </ul>
               </li>
-                @if(
-                  $_SESSION['Usuario']['Permisos']['editar_profesores']
-                )
-                  <li class="{{ $seccion && $seccion == 'Profesores' ? 'active' : '' }}">
-                    <a href="{{ url('profesores') }}">Profesores</a>
-                  </li>
-                @endif
-                @if(
-                  $_SESSION['Usuario']['Permisos']['editar_zonas']
-                )
-                  <li class="{{ $seccion && $seccion == 'Zonas' ? 'active' : '' }}">
-                    <a href="{{ url('zonas') }}">Zonas</a>
-                  </li>
-                @endif
-                @if(
-                  $_SESSION['Usuario']['Permisos']['editar_puntos']
-                )
-                  <li class="{{ $seccion && $seccion == 'Puntos' ? 'active' : '' }}">
-                    <a href="{{ url('puntos') }}">Puntos</a>
-                  </li>
-                @endif
             </ul>
-            
+            @endif
             <ul class="nav navbar-nav navbar-right">
               <li><a href="http://www.idrd.gov.co/sitio/idrd/" target="_blank">I.D.R.D</a></li>
               <li class="dropdown">
@@ -106,6 +105,9 @@
                  <div align="right"> 
                     <img src="public/Img/IDRD.JPG" width="50%" heigth="40%"/>
                  </div>                    
+              </div>
+              <div class="col-sm-12">
+                <p class="text-primary">{{ $seccion ? $seccion : '' }}</p>
               </div>
             </div>
           </div>        

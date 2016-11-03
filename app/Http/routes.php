@@ -22,7 +22,6 @@ Route::any('/logout', 'MainController@logout');
 Route::group(['middleware' => ['web']], function() 
 {
 	Route::get('/welcome', 'MainController@welcome');
-	Route::get('/zonas', 'Recreovia\ZonaController@index');
 	
 	Route::get('/profesores', 'Recreovia\ProfesoresController@index');
 	Route::get('/profesores/service/buscar/{key}', 'Recreovia\ProfesoresController@buscar');
