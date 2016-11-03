@@ -253,7 +253,7 @@ $(function()
             setTimeout(function(){
                 $('#alerta').hide();
                 location.reload();
-            }, 4000);
+            }, 500);
         })
         .fail(function(xhr, status, error) {
             popular_errores_modal(xhr.responseJSON);

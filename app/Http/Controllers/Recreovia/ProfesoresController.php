@@ -10,6 +10,7 @@ use App\Modulos\Personas\Persona;
 use App\Modulos\Personas\Documento;
 use App\Modulos\Personas\Pais;
 use App\Modulos\Personas\Etnia;
+use App\Modulos\Parques\Localidad;
 use App\Http\Requests\GuardarProfesor;
 use Idrd\Usuarios\Repo\PersonaInterface;
 use Validator;
@@ -28,7 +29,7 @@ class ProfesoresController extends Controller {
 		$perPage = config('app.page_size');
 		$elementos = Persona::has('zonas')->with(['zonas' => function($query){
 								return $query->orderBy('Id_Zona');
-							}])
+							}, 'localidades'])
 							->orderBy('Cedula', 'ASC')
 							->paginate($perPage);
 
@@ -38,7 +39,8 @@ class ProfesoresController extends Controller {
 	        'documentos' => Documento::all(),
 	        'paises' => Pais::all(),
 	        'etnias' => Etnia::all(),
-	        'zonas' => Zona::all()
+	        'zonas' => Zona::all(),
+	        'localidades' => Localidad::all()
 		];
 
 		$datos = [
@@ -52,7 +54,7 @@ class ProfesoresController extends Controller {
 	public function buscar(Request $request, $key)
 	{
 		$resultados = $this->repositorio_personas->buscar($key);
-		$profesores = Persona::with('zonas', 'tipoDocumento')
+		$profesores = Persona::with('zonas', 'localidades', 'tipoDocumento')
 							->whereIn('Id_Persona', $resultados->lists('Id_Persona'))
 							->get();
 
@@ -62,7 +64,7 @@ class ProfesoresController extends Controller {
 	public function obtener(Request $request, $id)
 	{
 		$persona = $this->repositorio_personas->obtener($id);	
-		$profesor = Persona::with('zonas', 'tipoDocumento')
+		$profesor = Persona::with('zonas', 'localidades', 'tipoDocumento')
 						->where('Id_Persona', $persona->Id_Persona)
 						->first();
 
@@ -89,7 +91,8 @@ class ProfesoresController extends Controller {
         }
 
         $personas[$profesor->Id_Persona] = [
-        	'tipo' => $request->input('tipo')
+        	'tipo' => $request->input('tipo'),
+        	'Id_Localidad' => $request->input('Id_Localidad')
         ];
 
         $zona->personas()->sync($personas);

@@ -34,7 +34,8 @@ class GuardarProfesor extends Request
             'Id_Pais' => 'required|min:1',
             'Id_Genero' => 'required|in:1,2',
             'Id_Zona' => 'required',
-            'tipo' => 'required|in:profesor,gestor'
+            'Id_Localidad' => 'required',
+            'tipo' => 'required|in:Profesor,Gestor'
         ];
     }
 }

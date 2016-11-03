@@ -78,7 +78,8 @@
                                 </div>
                             </div>
                         </p>
-                        <span class="label label-default">{{ $persona->zonas[0]->pivot['tipo'] }}</span>
+                        <span class="label label-default capitalize">{{ $persona->zonas[0]->pivot['tipo'] }}</span>
+                        <span class="label label-default capitalize">{{ $persona->localidades[0]->Localidad }}</span>
                     </li>
                 @endforeach
             </ul>
@@ -192,11 +193,22 @@
                                     <div class="form-group">
                                         <label for="tipo">Tipo</label> <br>
                                         <label class="radio-inline">
-                                            <input type="radio" name="tipo" id="tipo" value="profesor"> Profesor
+                                            <input type="radio" name="tipo" id="tipo" value="Profesor"> Profesor
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="tipo" id="tipo" value="gestor"> Gestor
+                                            <input type="radio" name="tipo" id="tipo" value="Gestor"> Gestor
                                         </label>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="Id_Localidad">* Localidad </label>
+                                        <select name="Id_Localidad" id="" class="form-control">
+                                            <option value="">Seleccionar</option>
+                                                @foreach($localidades as $localidad)
+                                                    <option value="{{ $localidad['Id_Localidad'] }}">{{ $localidad['Localidad'] }}</option>
+                                                @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </fieldset>

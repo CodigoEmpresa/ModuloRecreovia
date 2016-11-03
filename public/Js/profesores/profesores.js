@@ -46,7 +46,8 @@ $(function()
                                     '</div>'+
                                 '</div>'+
                             '</p>'+
-                            '<span class="label label-default">'+(e.zonas.length > 0 ? e.zonas[0].pivot['tipo']: 'Tipo no asignado')+'</span>'+
+                            '<span class="label label-default capitalize">'+(e.zonas.length > 0 ? e.zonas[0].pivot['tipo']: 'Tipo no asignado')+'</span> '+
+                            '<span class="label label-default capitalize">'+(e.localidades.length > 0 ? e.localidades[0].Localidad: 'Localidad no asignada')+'</span>'+
                         '</li>';
                 });
                 $('#personas').html(html);
@@ -94,11 +95,13 @@ $(function()
         
         if(persona.zonas.length)
         {
-        	$('select[name="Id_Zona"]').val(persona.zonas[0]['Id_Zona']);
-        	$('input[name="tipo"][value="'+persona.zonas[0].pivot['tipo']+'"]').prop('checked', true);
+            $('input[name="Id_Zona"]').val(persona.zonas[0]['Id_Zona']);
+            $('input[name="tipo"][value="'+persona.zonas[0].pivot['tipo']+'"]').prop('checked', true);
+        	$('select[name="Id_Localidad"]').val(persona.zonas[0].pivot['Id_Localidad']);
         } else {
-        	$('select[name="Id_Zona"]').val('');
-        	$('input[name="tipo"]').prop('checked', false);
+            $('input[name="Id_Zona"]').val('1');
+            $('input[name="tipo"]').prop('checked', false);
+            $('select[name="Id_Localidad"]').val('');
         }
 
         $('input[name="Id_Genero"]').removeAttr('checked').parent('.btn').removeClass('active');
@@ -118,6 +121,7 @@ $(function()
                     case 'Id_Etnia':
                     case 'Id_Pais':
                     case 'Id_Zona':
+                    case 'Id_Localidad':
                             selector = 'select';
                     break;
 
@@ -186,7 +190,8 @@ $(function()
             zonas: [{
             	Id_Zona: 0,
             	pivot: {
-                    tipo: ''
+                    tipo: '',
+                    Id_Localidad: ''
                 }
             }]
         }
@@ -233,7 +238,7 @@ $(function()
             setTimeout(function(){
                 $('#alerta').hide();
                 location.reload();
-            }, 4000)
+            }, 500)
         })
         .fail(function(xhr, status, error) {
             popular_errores_modal(xhr.responseJSON);

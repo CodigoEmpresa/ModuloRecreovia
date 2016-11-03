@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class TablaZonasPersonal extends Migration
+class LocalidadParaProfesores extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,8 @@ class TablaZonasPersonal extends Migration
      */
     public function up()
     {
-        Schema::create('ZonasPersonasRecreovia', function($table){
-            $table->integer('Id_Zona')->unsigned();
-            $table->integer('Id_Persona')->unsigned();
-            $table->enum('tipo', ['Gestor', 'Profesor']);
+        Schema::table('ZonasPersonasRecreovia', function($table){
+            $table->integer('Id_Localidad')->unsigned()->after('Id_Persona');
         });
     }
 
@@ -26,6 +24,9 @@ class TablaZonasPersonal extends Migration
      */
     public function down()
     {
-        Schema::drop('ZonasPersonasRecreovia');
+
+        Schema::table('ZonasPersonasRecreovia', function($table){
+            $table->dropColumn(['Id_Localidad']);
+        });
     }
 }

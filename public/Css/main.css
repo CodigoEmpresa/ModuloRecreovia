@@ -7,3 +7,8 @@
 .zona h5 {
     margin-top: 0px !important;
 }
+
+.capitalize:first-letter {
+	text-transform: capitalize;
+	color: #000;
+}
