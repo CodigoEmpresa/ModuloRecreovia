@@ -24,8 +24,8 @@ $(function()
     {
     	return '<li class="list-group-item">'+
                     '<h5 class="list-group-item-heading">'+
-                        ''+e['Primer_Apellido'].toUpperCase()+' '+e['Segundo_Apellido'].toUpperCase()+' '+e['Primer_Nombre'].toUpperCase()+' '+e['Segundo_Nombre'].toUpperCase()+''+
-                        '<a data-role="editar" data-rel="'+e['Id_Persona']+'" class="pull-right btn btn-primary btn-xs">'+
+                        ''+e['Escenario'].toUpperCase()+''+
+                        '<a data-role="editar" data-rel="'+e['Id_Punto']+'" class="pull-right btn btn-primary btn-xs">'+
                             '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>'+
                         '</a>'+
                     '</h5>'+
@@ -33,12 +33,15 @@ $(function()
                         '<div class="row">'+
                             '<div class="col-xs-12">'+
                                 '<div class="row">'+
-                                    '<div class="col-xs-12 col-sm-6 col-md-3"><small>Identificación: '+e.tipo_documento['Nombre_TipoDocumento']+' '+e['Cedula']+'</small></div>'+
+                                    '<div class="col-xs-12 col-sm-6 col-md-3">'+
+                                        '<small>Dirección: '+e['Direccion']+'</small>'+
+                                    '</div>'+
                                 '</div>'+
                             '</div>'+
                         '</div>'+
                     '</p>'+
-                    '<span class="label label-default">'+e.zonas[0].Nombre+'</span>'+
+                    '<span class="label label-default">'+e.localidad['Localidad']+'</span> '+
+                    '<span class="label label-default">'+e.upz['Upz']+'</span>'+
                 '</li>';
     }
 

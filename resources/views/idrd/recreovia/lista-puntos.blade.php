@@ -4,41 +4,6 @@
     <script src="{{ asset('public/Js/puntos/search.js') }}"></script>
     <script src="{{ asset('public/Js/puntos/util.js') }}"></script>
 @stop
-
-@section('style')
-    @parent
-    
-    <style>
-        .glyphicon.spin-r {
-            -webkit-animation: glyphicon-spin-r 1s infinite linear;
-            animation: glyphicon-spin-r 1s infinite linear;
-        }
-
-        @-webkit-keyframes spin-r {
-            0% {
-                -webkit-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-
-            100% {
-                -webkit-transform: rotate(359deg);
-                transform: rotate(359deg);
-            }
-        }
-
-        @keyframes glyphicon-spin-r {
-            0% {
-                -webkit-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-
-            100% {
-                -webkit-transform: rotate(359deg);
-                transform: rotate(359deg);
-            }
-        }
-    </style>
-@stop
     
 <div class="content">
     <div id="main" class="row" data-url="{{ url('puntos') }}">
@@ -75,15 +40,14 @@
                                 <div class="col-xs-12">
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-6 col-md-3">
-                                            <small>Direccion: {{ $punto['Direccion'] }}</small>
+                                            <small>Dirección: {{ $punto['Direccion'] }}</small>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </p>
-                        <span class="label label-default">{{ $punto->zona['Nombre'] }}</span>
+                        <span class="label label-default">{{ $punto->localidad['Localidad'] }}</span> 
                         <span class="label label-default">{{ $punto->upz['Upz'] }}</span>
-                        <span class="label label-default">{{ $punto->localidad['Localidad'] }}</span>
                     </li>
                 @endforeach
             </ul>
