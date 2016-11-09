@@ -39,7 +39,8 @@ class MainController extends Controller {
 			$permisos = [
 				'editar_zonas' => 1, //$permissions_array[1]
 				'editar_profesores' => 1,
-				'editar_puntos' => 1
+				'editar_puntos' => 1,
+				'asignar_puntos' => 1
 			];
 
 			$_SESSION['Usuario'] = $user_array;

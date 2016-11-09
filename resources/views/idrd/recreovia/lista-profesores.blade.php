@@ -3,41 +3,6 @@
 
     <script src="{{ asset('public/Js/profesores/profesores.js') }}"></script>
 @stop
-
-@section('style')
-    @parent
-    
-    <style>
-        .glyphicon.spin-r {
-            -webkit-animation: glyphicon-spin-r 1s infinite linear;
-            animation: glyphicon-spin-r 1s infinite linear;
-        }
-
-        @-webkit-keyframes spin-r {
-            0% {
-                -webkit-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-
-            100% {
-                -webkit-transform: rotate(359deg);
-                transform: rotate(359deg);
-            }
-        }
-
-        @keyframes glyphicon-spin-r {
-            0% {
-                -webkit-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-
-            100% {
-                -webkit-transform: rotate(359deg);
-                transform: rotate(359deg);
-            }
-        }
-    </style>
-@stop
     
 <div class="content">
     <div id="main_persona" class="row" data-url="{{ url(config('usuarios.prefijo_ruta')) }}" data-url-profesores="{{ url('profesores') }}">
@@ -85,7 +50,7 @@
             </ul>
         </div>
         <div id="paginador" class="col-xs-12">{!! $elementos->render() !!}</div>    
-        <!-- Modal formulario  persona -->
+        <!-- Modal formulario persona -->
         <div class="modal fade" id="modal_form_persona" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <form action="" id="form_persona">

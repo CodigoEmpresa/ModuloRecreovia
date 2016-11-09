@@ -49,9 +49,30 @@ class PuntosController extends Controller {
 		return view('list', $datos);
 	}
 
+	public function asignarPuntos()
+	{
+		$formulario = [
+			'titulo' => 'Asignación de puntos',
+			'localidades' => Localidad::all()
+		];
+
+		$datos = [
+			'seccion' => 'Asignar puntos',
+			'formulario' => view('idrd.recreovia.asignacion-de-puntos', $formulario)
+		];
+
+		return view('form', $datos);
+	}
+
 	public function buscar(Request $request, $key)
 	{
-		return response()->json([true]);
+		$puntos = Punto::with(['zona' => function($query){
+							return $query->orderBy('Id_Zona');
+						}, 'localidad', 'upz'])
+						->where('escenario', 'LIKE', '%'.$key.'%')
+						->get();
+
+		return response()->json($puntos);
 	}
 
 	public function obtener(Request $request, $id)

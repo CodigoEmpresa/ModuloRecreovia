@@ -50,9 +50,10 @@
             <ul class="nav navbar-nav">
             @if(
               $_SESSION['Usuario']['Permisos']['editar_profesores'] ||
-              $_SESSION['Usuario']['Permisos']['editar_puntos']
+              $_SESSION['Usuario']['Permisos']['editar_puntos'] ||
+              $_SESSION['Usuario']['Permisos']['asignar_puntos']
             )
-              <li class="dropdown {{ $seccion && in_array($seccion, ['Profesores', 'Puntos']) ? 'active' : '' }}">
+              <li class="dropdown {{ $seccion && in_array($seccion, ['Profesores', 'Puntos', 'Asignar puntos']) ? 'active' : '' }}">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Configuración <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   @if(
@@ -67,6 +68,13 @@
                   )
                     <li class="{{ $seccion && $seccion == 'Puntos' ? 'active' : '' }}">
                       <a href="{{ url('puntos') }}">Puntos</a>
+                    </li>
+                  @endif
+                  @if(
+                    $_SESSION['Usuario']['Permisos']['asignar_puntos']
+                  )
+                    <li class="{{ $seccion && $seccion == 'Asignar puntos' ? 'active' : '' }}">
+                      <a href="{{ url('puntos/asignar') }}">Asignar puntos</a>
                     </li>
                   @endif
                 </ul>
@@ -99,11 +107,11 @@
             <div class="row">
               <div class="col-lg-8 col-md-7 col-sm-6">
                 <h1>Recreovia</h1>
-                <p class="lead"><h4>Modulo para la gestión y control de actividades</h4></p>
+                <p class="lead"><h4>Módulo para la gestión y control de actividades</h4></p>
               </div>
               <div class="col-lg-4 col-md-5 col-sm-6">
                  <div align="right"> 
-                    <img src="public/Img/IDRD.JPG" width="50%" heigth="40%"/>
+                    <img src="{{ asset('public/Img/IDRD.JPG') }}" width="50%" heigth="40%"/>
                  </div>                    
               </div>
               <div class="col-sm-12">
