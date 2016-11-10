@@ -17,11 +17,6 @@ class Punto extends Model
     	$this->table = config('database.connections.mysql.database').'.Puntos';
     }
 
-    public function zona()
-    {
-        return $this->belongsTo('App\Modulos\Recreovia\Zona', 'Id_Zona');
-    }
-
     public function localidad()
     {
         return $this->belongsTo('App\Modulos\Parques\Localidad', 'Id_Localidad');

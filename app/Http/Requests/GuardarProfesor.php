@@ -26,15 +26,13 @@ class GuardarProfesor extends Request
     {
         return [
             'Id_TipoDocumento' => 'required|min:1',
-            'Cedula' => 'required|numeric',
+            'Cedula' => 'required|numeric|unique:db_principal.persona,Cedula,'.$this->input('Id_Persona').',Id_Persona',
             'Primer_Apellido' => 'required',
             'Primer_Nombre' => 'required',
             'Fecha_Nacimiento' => 'required|date',
             'Id_Etnia' => 'required|min:1',
             'Id_Pais' => 'required|min:1',
             'Id_Genero' => 'required|in:1,2',
-            'Id_Zona' => 'required',
-            'Id_Localidad' => 'required',
             'tipo' => 'required|in:Profesor,Gestor'
         ];
     }

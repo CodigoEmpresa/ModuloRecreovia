@@ -3,18 +3,14 @@
 namespace App\Modulos\Personas;
 
 use Idrd\Usuarios\Repo\Persona as MPersona;
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
 class Persona extends MPersona
 {
-    public function zonas()
-    {
-    	return $this->belongsToMany('App\Modulos\Recreovia\Zona', config('database.connections.mysql.database').'.ZonasPersonasRecreovia', 'Id_Persona', 'Id_Zona')
-    				->withPivot('tipo', 'Id_Localidad');
-    }
+    public function recreopersona()
+	{
+		return $this->hasOne('App\Modulos\Recreovia\Recreopersona', 'Id_Persona');
+	}
 
-    public function localidades()
-    {
-    	return $this->belongsToMany('App\Modulos\Parques\Localidad', config('database.connections.mysql.database').'.ZonasPersonasRecreovia', 'Id_Persona', 'Id_Localidad')
-    				->withPivot('tipo', 'Id_Zona');
-    }
+	use SoftDeletingTrait;
 }

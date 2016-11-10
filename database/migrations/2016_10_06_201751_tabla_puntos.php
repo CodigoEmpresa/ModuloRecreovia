@@ -15,7 +15,6 @@ class TablaPuntos extends Migration
         Schema::create('Puntos', function(Blueprint $table)
         {
             $table->increments('Id_Punto');
-            $table->integer('Id_Zona')->unsigned();
             $table->integer('Id_Localidad')->unsigned();
             $table->integer('Id_Upz')->unsigned();
             $table->string('Cod_IDRD', 30);
@@ -25,8 +24,6 @@ class TablaPuntos extends Migration
             $table->string('Direccion');
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('Id_Zona')->references('Id_Zona')->on('Zonas')->onDelete('cascade');
         });
 
         Schema::create('Jornadas', function(Blueprint $table)
@@ -54,11 +51,6 @@ class TablaPuntos extends Migration
         Schema::table('Jornadas', function(Blueprint $table)
         {
             $table->dropForeign(['Id_Punto']);
-        });
-
-        Schema::table('Puntos', function(Blueprint $table)
-        {
-            $table->dropForeign(['Id_Zona']);
         });
 
         Schema::drop('Jornadas');

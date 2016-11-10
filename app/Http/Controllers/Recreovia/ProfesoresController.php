@@ -5,12 +5,12 @@ namespace App\Http\Controllers\Recreovia;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Modulos\Recreovia\Zona;
 use App\Modulos\Personas\Persona;
 use App\Modulos\Personas\Documento;
 use App\Modulos\Personas\Pais;
 use App\Modulos\Personas\Etnia;
 use App\Modulos\Parques\Localidad;
+use App\Modulos\Recreovia\Recreopersona;
 use App\Http\Requests\GuardarProfesor;
 use Idrd\Usuarios\Repo\PersonaInterface;
 use Validator;
@@ -27,34 +27,73 @@ class ProfesoresController extends Controller {
 	public function index()
 	{
 		$perPage = config('app.page_size');
-		$elementos = Persona::has('zonas')->with(['zonas' => function($query){
-								return $query->orderBy('Id_Zona');
-							}, 'localidades'])
+		$elementos = Persona::has('recreopersona')
 							->orderBy('Cedula', 'ASC')
 							->paginate($perPage);
 
 		$lista = [
 			'titulo' => 'Profesores',
 	        'elementos' => $elementos,
-	        'documentos' => Documento::all(),
-	        'paises' => Pais::all(),
-	        'etnias' => Etnia::all(),
-	        'zonas' => Zona::all(),
-	        'localidades' => Localidad::all()
+	        'status' => session('status')
 		];
 
 		$datos = [
 			'seccion' => 'Profesores',
-			'lista'	=> view('idrd.recreovia.lista-profesores', $lista)
+			'lista'	=> view('idrd.recreovia.lista-recreopersonas', $lista)
 		];
 
 		return view('list', $datos);
 	}
 
+	public function crear()
+	{
+		$formulario = [
+			'titulo' => 'Crear ó editar profesores y gestores',
+			'persona' => null,
+			'documentos' => Documento::all(),
+	        'paises' => Pais::all(),
+	        'etnias' => Etnia::all(),
+	        'localidades' => Localidad::all(),
+	        'status' => session('status')
+		];
+
+		$datos = [
+			'seccion' => 'Profesores',
+			'formulario' => view('idrd.recreovia.formulario-recreopersonas', $formulario)
+		];
+
+		return view('form', $datos);
+	}
+
+	public function editar(Request $request, $id)
+	{
+		$persona = $this->repositorio_personas->obtener($id);
+		$profesor = Persona::with('recreopersona', 'tipoDocumento')
+						->where('Id_Persona', $persona->Id_Persona)
+						->first();
+
+		$formulario = [
+			'titulo' => 'Crear ó editar profesores y gestores',
+			'persona' => $profesor,
+			'documentos' => Documento::all(),
+	        'paises' => Pais::all(),
+	        'etnias' => Etnia::all(),
+	        'localidades' => Localidad::all(),
+	        'status' => session('status')
+		];
+
+		$datos = [
+			'seccion' => 'Profesores',
+			'formulario' => view('idrd.recreovia.formulario-recreopersonas', $formulario)
+		];
+
+		return view('form', $datos);
+	}
+
 	public function buscar(Request $request, $key)
 	{
 		$resultados = $this->repositorio_personas->buscar($key);
-		$profesores = Persona::with('zonas', 'localidades', 'tipoDocumento')
+		$profesores = Persona::with('recreopersona', 'tipoDocumento')
 							->whereIn('Id_Persona', $resultados->lists('Id_Persona'))
 							->get();
 
@@ -63,40 +102,57 @@ class ProfesoresController extends Controller {
 
 	public function obtener(Request $request, $id)
 	{
-		$persona = $this->repositorio_personas->obtener($id);	
-		$profesor = Persona::with('zonas', 'localidades', 'tipoDocumento')
+		$persona = $this->repositorio_personas->obtener($id);
+		$profesor = Persona::with('recreopersona', 'tipoDocumento')
 						->where('Id_Persona', $persona->Id_Persona)
 						->first();
 
 		return response()->json($profesor);
 	}
 
+	public function eliminar(Request $request, $id)
+	{
+		$profesor = Persona::with('recreopersona', 'tipoDocumento')
+						->where('Id_Persona', $persona->Id_Persona)
+						->first();
+		$profesor->recreopersona()->delete();
+
+		return redirect('/profesores')->with(['status' => 'success']); 
+	}
+
 	public function procesar(GuardarProfesor $request)
 	{
         if ($request->input('Id_Persona') == '0')
-        	$profesor = $this->repositorio_personas->guardar($request->all());
+        	$persona = $this->repositorio_personas->guardar($request->all());
         else
-        	$profesor = $this->repositorio_personas->actualizar($request->all());
+        	$persona = $this->repositorio_personas->actualizar($request->all());
 
-        $zona = Zona::with('personas')->find($request->input('Id_Zona'));
-        $personas = [];
-        $profesor->zonas()->detach();
+        $profesor = Persona::with('recreopersona', 'tipoDocumento')
+			->where('Id_Persona', $persona->Id_Persona)
+			->first();
 
-        foreach ($zona->personas as $persona) 
-        {
-        	if ($persona->Id_Persona != $profesor->Id_Persona)
-	        	$personas[$persona->Id_Persona] = [
-	        		'tipo' => $persona->pivot['tipo']
-	        	];
-        }
+		$recreopersona = Recreopersona::withTrashed()
+								->where('Id_Persona', $persona->Id_Persona);
+								->first();
 
-        $personas[$profesor->Id_Persona] = [
+		if ($profesor->recreopersona)
+		{			
+			$profesor->recreopersona()->update([
+				'tipo' => $request->input('tipo')
+			]);
+		} else {
+			$recreopersona = new Recreopersona([
+				'tipo' => $request->input('tipo')
+			]);
+
+			$profesor->recreopersona()->save($recreopersona);
+		}
+
+        $persona[$profesor->Id_Persona] = [
         	'tipo' => $request->input('tipo'),
         	'Id_Localidad' => $request->input('Id_Localidad')
         ];
 
-        $zona->personas()->sync($personas);
-
-        return response()->json(array('status' => 'ok'));
+        return redirect('/profesores/editar/'.$persona['Id_Persona'])->with(['status' => 'success']);
 	}
 }

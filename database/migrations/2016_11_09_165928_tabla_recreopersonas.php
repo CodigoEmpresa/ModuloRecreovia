@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class TablaZonasPersonal extends Migration
+class TablaRecreopersonas extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,13 @@ class TablaZonasPersonal extends Migration
      */
     public function up()
     {
-        Schema::create('ZonasPersonasRecreovia', function($table){
-            $table->integer('Id_Zona')->unsigned();
+        Schema::create('Recreopersonas', function(Blueprint $table)
+        {
+            $table->increments('Id_Recreopersona');
             $table->integer('Id_Persona')->unsigned();
             $table->enum('tipo', ['Gestor', 'Profesor']);
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -26,6 +29,6 @@ class TablaZonasPersonal extends Migration
      */
     public function down()
     {
-        Schema::drop('ZonasPersonasRecreovia');
+        Schema::drop('Recreopersonas');
     }
 }
