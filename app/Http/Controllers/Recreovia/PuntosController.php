@@ -9,7 +9,6 @@ use App\Modulos\Recreovia\Punto;
 use App\Modulos\Recreovia\Jornada;
 use App\Modulos\Parques\Localidad;
 use App\Modulos\Parques\Upz;
-use App\Modulos\Recreovia\Zona;
 use App\Http\Requests\GuardarPunto;
 use Idrd\Usuarios\Repo\PersonaInterface;
 use Idrd\Parques\Repo\LocalizacionInterface;
@@ -27,9 +26,7 @@ class PuntosController extends Controller {
 	public function index()
 	{
 		$perPage = config('app.page_size');
-		$elementos = Punto::with(['zona' => function($query){
-								return $query->orderBy('Id_Zona');
-							}, 'localidad', 'upz'])
+		$elementos = Punto::with('localidad', 'upz')
 							->orderBy('Cod_IDRD', 'ASC')
 							->paginate($perPage);
 
@@ -37,8 +34,7 @@ class PuntosController extends Controller {
 			'titulo' => 'Puntos',
 	        'elementos' => $elementos,
 	        'localidades' => Localidad::all(),
-	        'upz' => Upz::all(),
-	        'zonas' => Zona::all()
+	        'upz' => Upz::all()
 		];
 
 		$datos = [
@@ -66,9 +62,7 @@ class PuntosController extends Controller {
 
 	public function buscar(Request $request, $key)
 	{
-		$puntos = Punto::with(['zona' => function($query){
-							return $query->orderBy('Id_Zona');
-						}, 'localidad', 'upz'])
+		$puntos = Punto::with('localidad', 'upz')
 						->where('escenario', 'LIKE', '%'.$key.'%')
 						->get();
 
@@ -94,7 +88,6 @@ class PuntosController extends Controller {
 		$punto->Escenario = $request['Escenario'];
 		$punto->Cod_IDRD = $request['Cod_IDRD'];
 		$punto->Cod_Recreovia = $request['Cod_Recreovia'];
-		$punto->Id_Zona = $request['Id_Zona'];
 		$punto->Id_Localidad = $request['Id_Localidad'];
 		$punto->Id_Upz = $request['Id_Upz'];
 		$punto->save();

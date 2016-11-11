@@ -112,10 +112,10 @@ class ProfesoresController extends Controller {
 
 	public function eliminar(Request $request, $id)
 	{
-		$profesor = Persona::with('recreopersona', 'tipoDocumento')
-						->where('Id_Persona', $persona->Id_Persona)
+		$recreopersona = Recreopersona::where('Id_Persona', $id)
 						->first();
-		$profesor->recreopersona()->delete();
+
+		$recreopersona->delete();
 
 		return redirect('/profesores')->with(['status' => 'success']); 
 	}
@@ -131,15 +131,16 @@ class ProfesoresController extends Controller {
 			->where('Id_Persona', $persona->Id_Persona)
 			->first();
 
-		$recreopersona = Recreopersona::withTrashed()
-								->where('Id_Persona', $persona->Id_Persona);
+		$recreopersona = Recreopersona::where('Id_Persona', $persona->Id_Persona)
 								->first();
 
-		if ($profesor->recreopersona)
-		{			
-			$profesor->recreopersona()->update([
-				'tipo' => $request->input('tipo')
-			]);
+		if ($recreopersona)
+		{
+			if($recreopersona->trashed())
+				$recreopersona->restore();
+
+			$recreopersona->tipo = $request->input('tipo');
+			$recreopersona->save();
 		} else {
 			$recreopersona = new Recreopersona([
 				'tipo' => $request->input('tipo')
