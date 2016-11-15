@@ -11,6 +11,7 @@ class Punto extends Model
 	protected $table = 'Puntos';
     protected $primaryKey = 'Id_Punto';
     protected $connection = 'mysql';
+    protected $cascadeDeletes = ['jornadas'];
 
     public function __construct()
     {
@@ -24,7 +25,7 @@ class Punto extends Model
 
     public function upz()
     {
-        return $this->belongsTo('App\Modulos\Parques\Upz', 'Id_Upz');
+        return $this->belongsTo('App\Modulos\Parques\Upz', 'Id_Upz', 'Id_Upz');
     }
 
     public function jornadas()

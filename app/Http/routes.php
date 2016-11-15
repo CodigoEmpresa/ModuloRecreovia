@@ -15,8 +15,11 @@ Route::get('/personas/service/obtener/{id}', '\Idrd\Usuarios\Controllers\Persona
 Route::get('/personas/service/buscar/{key}', '\Idrd\Usuarios\Controllers\PersonaController@buscar');
 Route::get('/personas/service/ciudad/{id_pais}', '\Idrd\Usuarios\Controllers\LocalizacionController@buscarCiudades');
 Route::post('/personas/service/procesar/', '\Idrd\Usuarios\Controllers\PersonaController@procesar');
-Route::any('/', 'MainController@index');
+
+Route::get('/parques/service/buscar/{key}', '\Idrd\Parques\Controllers\ParqueController@buscar');
+
 Route::any('/logout', 'MainController@logout');
+Route::any('/', 'MainController@index');
 
 //rutas con filtro de autenticación
 Route::group(['middleware' => ['web']], function() 
@@ -34,7 +37,10 @@ Route::group(['middleware' => ['web']], function()
 	Route::get('/puntos', 'Recreovia\PuntosController@index');
 	Route::get('/puntos/service/buscar/{key}', 'Recreovia\PuntosController@buscar');
 	Route::get('/puntos/service/obtener/{id}', 'Recreovia\PuntosController@obtener');
-	Route::post('/puntos/service/procesar/', 'Recreovia\PuntosController@procesar');
+	Route::get('/puntos/crear/', 'Recreovia\PuntosController@crear');
+	Route::get('/puntos/editar/{id}', 'Recreovia\PuntosController@editar');
+	Route::get('/puntos/eliminar/{id}', 'Recreovia\PuntosController@eliminar');
+	Route::post('/puntos/procesar/', 'Recreovia\PuntosController@procesar');
 
 	Route::get('/puntos/asignar', 'Recreovia\PuntosController@asignarPuntos');
 });

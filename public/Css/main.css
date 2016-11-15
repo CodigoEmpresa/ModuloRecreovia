@@ -41,3 +41,7 @@
 	  transform: rotate(359deg);
 	}
 }
+
+#map {
+	height: 313px;
+}

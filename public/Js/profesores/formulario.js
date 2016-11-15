@@ -1,6 +1,6 @@
 $(function()
 {
-    var URL = $('#main_persona').data('url');
+    var URL = $('#main').data('url');
 
     function popular_modal_persona(persona)
     { 

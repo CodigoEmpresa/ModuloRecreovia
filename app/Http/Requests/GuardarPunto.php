@@ -29,9 +29,10 @@ class GuardarPunto extends Request
             'Escenario' => 'required',
             'Cod_IDRD' => 'required',
             'Cod_Recreovia' => 'required',
-            'Id_Zona' => 'required',
             'Id_Localidad' => 'required',
-            'Id_Upz' => 'required'
+            'Id_Upz' => 'required',
+            'Latitud' => 'required',
+            'Longitud' => 'required'
         ];
     }
 }

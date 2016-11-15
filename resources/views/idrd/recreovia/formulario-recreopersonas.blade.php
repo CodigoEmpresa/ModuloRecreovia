@@ -5,7 +5,7 @@
 @stop
     
 <div class="content">
-    <div id="main_persona" class="row" data-url="{{ url('personas') }}" data-url-profesores="{{ url('profesores') }}">
+    <div id="main" class="row" data-url="{{ url('personas') }}">
         @if ($status == 'success')
             <div id="alerta" class="col-xs-12">
                 <div class="alert alert-success alert-dismissible" role="alert">
@@ -165,20 +165,22 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="modal-eliminar" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Eliminar</h4>
-            </div>
-            <div class="modal-body">
-                <p>Realmente desea eliminar este usuario de recreovia.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <a href="{{ url('profesores/eliminar/'.$persona['Id_Persona']) }}" class="btn btn-danger">Eliminar</a>
+@if ($persona)
+    <div class="modal fade" id="modal-eliminar" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Eliminar</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Realmente desea eliminar este usuario de recreovia.</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="{{ url('profesores/eliminar/'.$persona['Id_Persona']) }}" class="btn btn-danger">Eliminar</a>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+@endif

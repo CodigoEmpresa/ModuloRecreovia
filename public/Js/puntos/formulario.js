@@ -1,35 +1,29 @@
 $(function()
 {
-	var URL = $('#main').data('url');
+    var URL = $('#main').data('url');
+    var URL_PARQUES = $('#main').data('url-parques');
     var UPZ = $.parseJSON(JSON.stringify($('select[name="Id_Upz"]').data('json')));
     var jornadas = {};
     var jornada_actual = -1;
-	
-    function popular_errores_modal(data){
-        $('#form_persona .form-group').removeClass('has-error');
-        var selector = '';
-        for (var error in data){
-            if (typeof data[error] !== 'function') {
-                switch(error)
-                {
-                    case 'Id_Upz':
-                    case 'Id_Zona':
-                    case 'Id_Localidad':
-                            selector = 'select';
-                    break;
+    var latitud = $('input[name="Latitud"]').val() ? parseFloat($('input[name="Latitud"]').val()) : 4.666575;
+    var longitud = $('input[name="Longitud"]').val() ? parseFloat($('input[name="Longitud"]').val()) : -74.125786;
+    var zoom = $('input[name="Id_Punto"]').val() == '0' ? 11 : 13;
 
-                    case 'Direccion':
-                    case 'Escenario':
-                    case 'Cod_IDRD':
-                    case 'Cod_Recreovia':
-                            selector = 'input';
-                    break;
-                }
-                $('#form-principal '+selector+'[name="'+error+'"]').closest('.form-group').addClass('has-error');
-            }
+    function actualizarPosicion(e)
+    {
+        $('input[name="Latitud"]').val(e.latLng.lat());
+        $('input[name="Longitud"]').val(e.latLng.lng());
+    }
+
+    function toggleBounce() 
+    {
+        if (marker.getAnimation() !== null) 
+        {
+            marker.setAnimation(null);
+        } else {
+            marker.setAnimation(google.maps.Animation.BOUNCE);
         }
-        $("#guardar").button('reset');
-    };
+    }
 
     function reindexar_tabla_jornadas()
     {
@@ -44,7 +38,6 @@ $(function()
         var valido = true;
         $.each(obj, function(key, val)
         {
-            console.log('input[name^="'+key.toLowerCase()+'"]', val);
             if($.trim(val) == '' || typeof val == 'undefined')
             {
                 $('input[name^="'+key.toLowerCase()+'"]').closest('.form-group').addClass('has-error');
@@ -81,13 +74,12 @@ $(function()
         $('#form-jornadas').show();
     };
 
-	function popular_modal(obj)
+    function popular_modal(obj)
     {
         $('input[name="Direccion"]').val($.trim(obj['Direccion']));
         $('input[name="Escenario"]').val($.trim(obj['Escenario']));
         $('input[name="Cod_IDRD"]').val($.trim(obj['Cod_IDRD']));
         $('input[name="Cod_Recreovia"]').val($.trim(obj['Cod_Recreovia']));
-        $('select[name="Id_Zona"]').val($.trim(obj['Id_Zona']));
         $.when($('select[name="Id_Localidad"]').val($.trim(obj['Id_Localidad'])).trigger('change')).done(
             function(){
                 $('select[name="Id_Upz"]').val($.trim(obj['Id_Upz']));
@@ -121,23 +113,6 @@ $(function()
                 $('select[name="Id_Upz"]').append('<option value="'+e.Id_Upz+'">'+e.Upz+'</option>');
             });
         }
-    });
-
-	$('#crear').on('click', function(e)
-    {
-        $(this).button('loading');
-        var obj = {
-            Direccion: '',
-            Escenario: '',
-            Cod_IDRD: '',
-            Cod_Recreovia: '',
-            Id_Zona: '',
-            Id_Localidad: '',
-            Id_Upz: '',
-            Id_Punto: 0,
-            jornadas: []
-        };
-        popular_modal(obj);
     });
 
     $("#guardar-jornada").on('click', function(e)
@@ -220,18 +195,49 @@ $(function()
         e.preventDefault();
     });
 
-    $('#principal').delegate('a[data-role="editar"]', 'click', function(e)
+    $('input[name="Cod_IDRD"]').on('blur', function(e)
     {
-        var id = $(this).data('rel');
-        $.get(URL+'/service/obtener/'+id,{},function(data){  
-            if(data)
-            {
-                popular_modal(data);
-            }
-        },'json');
+        var key = $(this).val();
+
+        if (key)
+        {
+            $.get(
+                URL_PARQUES+'/service/buscar/'+$(this).val(),
+                {},
+                function(data)
+                {
+                    if(data)
+                    {
+                        $('input[name="Direccion"]').val(data[0].Direccion);
+                        $('input[name="Escenario"]').val(data[0].Nombre);
+                        $.when($('select[name="Id_Localidad"]').val(data[0].Id_Localidad).trigger('change')).done(function(){
+                            $('select[name="Id_Upz"]').val(data[0].upz['Id_Upz']);
+                        });
+                    }
+                    console.log(data);
+                },
+                'json'
+            )
+        }
     });
 
-    $('#form-principal').on('submit', function(e)
+    var map = new google.maps.Map($("#map").get(0), {
+      center: {lat: latitud, lng: longitud},
+      zoom: zoom
+    });
+
+    var marker = new google.maps.Marker({
+        map: map,
+        draggable: true,
+        animation: google.maps.Animation.DROP,
+        position: {lat: latitud, lng: longitud}
+    });
+    
+    marker.addListener('click', toggleBounce);
+
+    marker.addListener('dragend', actualizarPosicion);
+
+    /*$('#form-principal').on('submit', function(e)
     {
         var jornadas_actualizadas = [];
         $('#guardar').button('loading');
@@ -259,5 +265,5 @@ $(function()
             popular_errores_modal(xhr.responseJSON);
         });
         e.preventDefault();
-    });
+    });*/
 });

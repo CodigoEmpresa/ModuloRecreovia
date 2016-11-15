@@ -22,6 +22,8 @@ class TablaPuntos extends Migration
             $table->date('Anio_Vigencia');
             $table->string('Escenario');
             $table->string('Direccion');
+            $table->decimal('Latitud', 10, 8);
+            $table->decimal('Longitud', 11, 8);
             $table->timestamps();
             $table->softDeletes();
         });
