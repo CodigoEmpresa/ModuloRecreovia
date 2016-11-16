@@ -1,6 +1,6 @@
 $(function()
 {
-    var URL_PROFESORES = $('#main').data('url-profesores');
+    var URL_PROFESORES = $('#main').data('url');
     var $personas_actuales = $('#personas').html();
 
     function validarCampo(e){

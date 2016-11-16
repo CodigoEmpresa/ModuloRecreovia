@@ -36,6 +36,7 @@ class TablaPuntos extends Migration
             $table->string('Dias');
             $table->time('Inicio');
             $table->time('Fin');
+            $table->enum('Tipo', ['Periodico', 'Unico']);
             $table->timestamps();
             $table->softDeletes();
 

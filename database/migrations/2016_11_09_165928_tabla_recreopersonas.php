@@ -17,6 +17,7 @@ class TablaRecreopersonas extends Migration
             $table->increments('Id_Recreopersona');
             $table->integer('Id_Persona')->unsigned();
             $table->enum('tipo', ['Gestor', 'Profesor']);
+            $table->string('correo');
             $table->timestamps();
             $table->softDeletes();
         });

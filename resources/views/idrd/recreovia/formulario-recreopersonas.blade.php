@@ -127,6 +127,12 @@
                             </div>
                         </div>
                         <div class="col-xs-12"><hr></div>
+                        <div class="col-xs-12">
+                            <div class="form-group {{ $errors->has('correo') ? 'has-error' : '' }}">
+                                <label class="control-label" for="correo">* Correo</label>
+                                <input type="text" name="correo" class="form-control" value="{{ $persona ? $persona->recreopersona['correo'] : old('correo') }}">
+                            </div>
+                        </div>
                         <div class="col-xs-12 col-md-6">
                             <div class="form-group {{ $errors->has('tipo') ? 'has-error' : '' }}">
                                 <label class="control-label" for="Tipo">* Tipo</label><br>

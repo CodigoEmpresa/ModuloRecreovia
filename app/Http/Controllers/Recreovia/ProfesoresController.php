@@ -140,19 +140,15 @@ class ProfesoresController extends Controller {
 				$recreopersona->restore();
 
 			$recreopersona->tipo = $request->input('tipo');
+			$recreopersona->correo = $request->input('correo');
 			$recreopersona->save();
 		} else {
-			$recreopersona = new Recreopersona([
-				'tipo' => $request->input('tipo')
-			]);
+			$recreopersona = new Recreopersona;
+			$recreopersona->tipo = $request->input('tipo');
+			$recreopersona->correo = $request->input('correo');
 
 			$profesor->recreopersona()->save($recreopersona);
 		}
-
-        $persona[$profesor->Id_Persona] = [
-        	'tipo' => $request->input('tipo'),
-        	'Id_Localidad' => $request->input('Id_Localidad')
-        ];
 
         return redirect('/profesores/editar/'.$persona['Id_Persona'])->with(['status' => 'success']);
 	}
