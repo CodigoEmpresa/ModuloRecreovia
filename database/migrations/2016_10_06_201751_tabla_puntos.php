@@ -33,10 +33,11 @@ class TablaPuntos extends Migration
             $table->increments('Id_Jornada');
             $table->integer('Id_Punto')->unsigned();
             $table->string('Jornada');
-            $table->string('Dias');
+            $table->string('Dias')->nullable();
             $table->time('Inicio');
             $table->time('Fin');
-            $table->enum('Tipo', ['Periodico', 'Unico']);
+            $table->enum('Tipo', ['Periodico', 'Eventual']);
+            $table->date('Fecha_Evento')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

@@ -7,4 +7,5 @@ return array(
   'modelo_tipo' => '\Idrd\Parques\Repo\TipoParque',
   'modelo_localidad' => 'App\Modulos\Parques\Localidad',
   'modelo_upz' => 'App\Modulos\Parques\Upz',
+  'modelo_dotacion' => 'Idrd\Parques\Repo\Dotacion'
 );
