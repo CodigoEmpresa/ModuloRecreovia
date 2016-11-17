@@ -3,14 +3,16 @@ $(function()
 	var URL = $('#main').data('url');
     var $datos_actuales = $('#principal').html();
 
-    function validarCampo(e){
+    function validarCampo(e)
+    {
     	var	code = (document.all) ? e.keyCode : e.which;
    		if (code == 8) return true;
      	var key = String.fromCharCode(code);
     	return /[A-Za-z0-9\s]/.test(key);
     }
 
-    function reset(e){
+    function reset(e)
+    {
         $('input[name="buscador"]').val('');
         $('#buscar span').removeClass('glyphicon-refresh spin-r').addClass('glyphicon-search');
         $('#buscar span').empty();
@@ -45,7 +47,8 @@ $(function()
                 '</li>';
     }
 
-    function buscar(e){
+    function buscar(e)
+    {
         var key = $('input[name="buscador"]').val();
         $('#buscar span').removeClass('glyphicon-search').addClass('glyphicon-refresh spin-r');
        	$("#buscador").prop('disabled', true);
@@ -69,14 +72,16 @@ $(function()
         });
     }
 
-    $('input[name="buscador"]').on('keyup', function(e){
+    $('input[name="buscador"]').on('keyup', function(e)
+    {
         var code = e.which; //http://stackoverflow.com/questions/3462995/jquery-keydown-keypress-keyup-enterkey-detection
         if(code==13) buscar(e);
     });
 
     $('input[name="buscador"]').on('keypress', validarCampo);
 
-    $('#buscar').on('click', function(e){  
+    $('#buscar').on('click', function(e)
+    {  
         var key = $('input[name="buscador"]').val();
         if(!key && $(this).data('role') == 'buscar')
         {

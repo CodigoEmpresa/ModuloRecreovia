@@ -3,14 +3,16 @@ $(function()
     var URL_PROFESORES = $('#main').data('url');
     var $personas_actuales = $('#personas').html();
 
-    function validarCampo(e){
+    function validarCampo(e)
+    {
     	var	code = (document.all) ? e.keyCode : e.which;
    		if (code == 8) return true;
      	var key = String.fromCharCode(code);
     	return /[A-Za-z0-9\s]/.test(key);
     }
 
-    function reset(e){
+    function reset(e)
+    {
         $('input[name="buscador"]').val('');
         $('#buscar span').removeClass('glyphicon-refresh spin-r').addClass('glyphicon-search');
         $('#buscar span').empty();
@@ -20,7 +22,8 @@ $(function()
         $('#paginador').fadeIn();
     }
 
-    function buscar(e){
+    function buscar(e)
+    {
         var key = $('input[name="buscador"]').val();
         $('#buscar span').removeClass('glyphicon-search').addClass('glyphicon-refresh spin-r');
        	$("#buscador").prop('disabled', true);
@@ -45,7 +48,7 @@ $(function()
                                     '</div>'+
                                 '</div>'+
                             '</p>'+
-                            '<span class="label label-default capitalize">'+(e.recreopersona ? e.recreopersona['tipo']: 'Tipo no asignado')+'</span> '+
+                            /*'<span class="label label-default capitalize">'+(e.recreopersona ? e.recreopersona['tipo']: 'Tipo no asignado')+'</span> '+*/
                         '</li>';
                 });
                 $('#personas').html(html);
@@ -62,14 +65,16 @@ $(function()
     }
     
     //Eventos
-    $('input[name="buscador"]').on('keyup', function(e){
+    $('input[name="buscador"]').on('keyup', function(e)
+    {
         var code = e.which; //http://stackoverflow.com/questions/3462995/jquery-keydown-keypress-keyup-enterkey-detection
         if(code==13) buscar(e);
     });
 
     $('input[name="buscador"]').on('keypress', validarCampo);
 
-    $('#buscar').on('click', function(e){  
+    $('#buscar').on('click', function(e)
+    {  
         var key = $('input[name="buscador"]').val();
         if(!key && $(this).data('role') == 'buscar')
         {

@@ -133,19 +133,6 @@
                                 <input type="text" name="correo" class="form-control" value="{{ $persona ? $persona->recreopersona['correo'] : old('correo') }}">
                             </div>
                         </div>
-                        <div class="col-xs-12 col-md-6">
-                            <div class="form-group {{ $errors->has('tipo') ? 'has-error' : '' }}">
-                                <label class="control-label" for="Tipo">* Tipo</label><br>
-                                <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-default {{ ($persona && $persona->recreopersona && $persona->recreopersona['tipo'] == 'Profesor') || old('tipo') == 'Profesor' ? 'active' : '' }}">
-                                        <input type="radio" name="tipo" value="Profesor" autocomplete="off" {{ ($persona && $persona->recreopersona && $persona->recreopersona['tipo'] == 'Profesor') || old('tipo') == 'Profesor' ? 'checked' : '' }}> Profesor
-                                    </label>
-                                    <label class="btn btn-default {{ ($persona && $persona->recreopersona && $persona->recreopersona['tipo'] == 'Gestor') || old('tipo') == 'Gestor' ? 'active' : '' }}">
-                                        <input type="radio" name="tipo" value="Gestor" autocomplete="off" {{ ($persona && $persona->recreopersona && $persona->recreopersona['tipo'] == 'Gestor') || old('tipo') == 'Gestor' ? 'checked' : '' }}> Gestor
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
                         <div class="col-xs-12">
                             <hr>
                         </div>

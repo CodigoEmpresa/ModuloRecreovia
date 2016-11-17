@@ -139,12 +139,10 @@ class ProfesoresController extends Controller {
 			if($recreopersona->trashed())
 				$recreopersona->restore();
 
-			$recreopersona->tipo = $request->input('tipo');
 			$recreopersona->correo = $request->input('correo');
 			$recreopersona->save();
 		} else {
 			$recreopersona = new Recreopersona;
-			$recreopersona->tipo = $request->input('tipo');
 			$recreopersona->correo = $request->input('correo');
 
 			$profesor->recreopersona()->save($recreopersona);
