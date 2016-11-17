@@ -3,7 +3,7 @@ $(function()
     var URL = $('#main').data('url');
     var URL_PARQUES = $('#main').data('url-parques');
     var UPZ = $.parseJSON(JSON.stringify($('select[name="Id_Upz"]').data('json')));
-    var jornadas = {};
+    var jornadas = $('input[name="Jornadas"]').val() == '' ? {} : $.parseJSON($('input[name="Jornadas"]').val());
     var jornada_actual = -1;
     var latitud = $('input[name="Latitud"]').val() ? parseFloat($('input[name="Latitud"]').val()) : 4.666575;
     var longitud = $('input[name="Longitud"]').val() ? parseFloat($('input[name="Longitud"]').val()) : -74.125786;
@@ -81,6 +81,42 @@ $(function()
         $('#form-jornadas').show();
     };
 
+    function registrar_jornada(jornada)
+    {
+        if(jornada_actual == -1)
+        {
+            var tr = $('<tr data-row="0" data-jornada=""><td class="index">0</td><td> </td><td><a href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td></tr>');
+            $('#table-jornadas tbody').append(tr);
+        } else {
+            var tr = $('#table-jornadas tbody').find('tr[data-row="'+jornada_actual+'"]');
+        }
+
+        var label = '';
+
+        switch(jornada.Jornada)
+        {
+            case 'dia': 
+                label = 'Jornada diurna los dias '+jornada.Dias+' de '+jornada.Inicio+' a '+jornada.Fin;
+            break;
+            case 'noche': 
+                label = 'Jornada nocturna los dias '+jornada.Dias+' de '+jornada.Inicio+' a '+jornada.Fin;
+            break;
+            case 'fds': 
+                label = 'Jornada de fin de semana los dias '+jornada.Dias+' de '+jornada.Inicio+' a '+jornada.Fin;
+            break;
+            case 'clases_grupales': 
+                label = 'Clase grupal el dia '+jornada.Fecha_Evento+' de '+jornada.Inicio+' a '+jornada.Fin;
+            break;
+            case 'mega_eventos': 
+                label = 'Mega evento de actividad fisica el dia '+jornada.Fecha_Evento+' de '+jornada.Inicio+' a '+jornada.Fin;
+            break;
+        }
+        
+        tr.data('jornada', jornada);
+        tr.children('td').eq(1).text(label);
+        reindexar_tabla_jornadas();
+    }
+
     $('select[name="Id_Localidad"]').on('change', function(e)
     {
         var localidad = $(this).val();
@@ -147,40 +183,8 @@ $(function()
 
         if(validar_jornada(temp))
         {
-            if(jornada_actual == -1)
-            {
-                var tr = $('<tr data-row="0" data-jornada=""><td class="index">0</td><td> </td><td><a href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td></tr>');
-                $('#table-jornadas tbody').append(tr);
-            } else {
-                var tr = $('#table-jornadas tbody').find('tr[data-row="'+jornada_actual+'"]');
-            }
-
-            var label = '';
-
-            switch(jornada.Jornada)
-            {
-                case 'dia': 
-                    label = 'Jornada diurna los dias '+jornada.Dias+' de '+jornada.Inicio+' a '+jornada.Fin;
-                break;
-                case 'noche': 
-                    label = 'Jornada nocturna los dias '+jornada.Dias+' de '+jornada.Inicio+' a '+jornada.Fin;
-                break;
-                case 'fds': 
-                    label = 'Jornada de fin de semana los dias '+jornada.Dias+' de '+jornada.Inicio+' a '+jornada.Fin;
-                break;
-                case 'clases_grupales': 
-                    label = 'Clase grupal el dia '+jornada.Fecha_Evento+' de '+jornada.Inicio+' a '+jornada.Fin;
-                break;
-                case 'mega_eventos': 
-                    label = 'Mega evento de actividad fisica el dia '+jornada.Fecha_Evento+' de '+jornada.Inicio+' a '+jornada.Fin;
-                break;
-            }
-            
-            tr.data('jornada', jornada);
-            tr.children('td').eq(1).text(label);
-
+            registrar_jornada(jornada);
             $('#form-jornadas').hide();
-            reindexar_tabla_jornadas();
         }
     });
 
@@ -278,4 +282,8 @@ $(function()
     marker.addListener('click', toggleBounce);
 
     marker.addListener('dragend', actualizarPosicion);
+
+    $.each(jornadas, function(i, e){
+        registrar_jornada(e);
+    });
 });

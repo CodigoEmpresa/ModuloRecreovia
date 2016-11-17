@@ -157,7 +157,7 @@
 	                        <div class="col-md-12">
                                 <input type="hidden" name="Id_Jornada" value="">
 	                            <input type="hidden" name="Tipo" value="">
-	                            <input type="button" value="Agregar" id="guardar-jornada" class="btn btn-xs btn-primary">
+	                            <input type="button" value="Guardar " id="guardar-jornada" class="btn btn-xs btn-primary">
 	                            <input style="display:none;" type="button" id="eliminar-jornada" value="Eliminar" class="btn btn-xs btn-danger">
 	                            <input type="button" id="cancelar-jornada" value="Cancelar" class="btn btn-xs btn-default">
 	                        </div>
