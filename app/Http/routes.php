@@ -27,7 +27,7 @@ Route::group(['middleware' => ['web']], function()
 	Route::get('/welcome', 'MainController@welcome');
 	
 	Route::get('/profesores', 'Recreovia\ProfesoresController@index');
-	Route::get('/profesores/service/buscar/{key}', 'Recreovia\ProfesoresController@buscar');
+	Route::get('/profesores/service/buscar/{key}/{strict?}', 'Recreovia\ProfesoresController@buscar');
 	Route::get('/profesores/service/obtener/{id}', 'Recreovia\ProfesoresController@obtener');
 	Route::get('/profesores/crear', 'Recreovia\ProfesoresController@crear');
 	Route::get('/profesores/editar/{id}', 'Recreovia\ProfesoresController@editar');
@@ -42,7 +42,10 @@ Route::group(['middleware' => ['web']], function()
 	Route::get('/puntos/eliminar/{id}', 'Recreovia\PuntosController@eliminar');
 	Route::post('/puntos/procesar/', 'Recreovia\PuntosController@procesar');
 
-	Route::get('/puntos/asignar', 'Recreovia\PuntosController@asignarPuntos');
+	Route::get('/localidades/administrar', 'Recreovia\LocalidadController@index');
+	Route::get('/localidades/administrar/{id}', 'Recreovia\LocalidadController@editar');
+	Route::get('/localidades/{id}/personal/{id_persona}/remover', 'Recreovia\LocalidadController@removerPersonal');
+	Route::post('/localidades/personal/agregar', 'Recreovia\LocalidadController@agregarPersonal');
 });
 /*
 |--------------------------------------------------------------------------

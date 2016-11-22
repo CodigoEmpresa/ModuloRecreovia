@@ -90,12 +90,24 @@ class ProfesoresController extends Controller {
 		return view('form', $datos);
 	}
 
-	public function buscar(Request $request, $key)
+	public function buscar(Request $request, $key, $strict=null)
 	{
 		$resultados = $this->repositorio_personas->buscar($key);
-		$profesores = Persona::with('recreopersona', 'tipoDocumento')
-							->whereIn('Id_Persona', $resultados->lists('Id_Persona'))
-							->get();
+		
+		if(!$strict)
+		{
+			$profesores = Persona::with('recreopersona', 'tipoDocumento')
+								->whereIn('Id_Persona', $resultados->lists('Id_Persona'))
+								->get();
+		} else {
+			$profesores = Persona::with('recreopersona', 'tipoDocumento')
+								->whereHas('recreopersona', function($query) use ($resultados)
+								{
+									$query->whereIn('Id_Persona', $resultados->lists('Id_Persona'));
+								})
+								->get();
+		}
+
 
 		return response()->json($profesores);
 	}

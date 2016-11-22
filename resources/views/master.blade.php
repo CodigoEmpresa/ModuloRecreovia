@@ -51,7 +51,7 @@
             @if(
               $_SESSION['Usuario']['Permisos']['editar_profesores'] ||
               $_SESSION['Usuario']['Permisos']['editar_puntos'] ||
-              $_SESSION['Usuario']['Permisos']['asignar_puntos']
+              $_SESSION['Usuario']['Permisos']['administrar_localidades']
             )
               <li class="dropdown {{ $seccion && in_array($seccion, ['Profesores', 'Puntos', 'Asignar puntos']) ? 'active' : '' }}">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Configuración <span class="caret"></span></a>
@@ -71,10 +71,10 @@
                     </li>
                   @endif
                   @if(
-                    $_SESSION['Usuario']['Permisos']['asignar_puntos']
+                    $_SESSION['Usuario']['Permisos']['administrar_localidades']
                   )
-                    <li class="{{ $seccion && $seccion == 'Asignar puntos' ? 'active' : '' }}">
-                      <a href="{{ url('puntos/asignar') }}">Asignar puntos</a>
+                    <li class="{{ $seccion && $seccion == 'Administrar localidades' ? 'active' : '' }}">
+                      <a href="{{ url('localidades/administrar') }}">Administrar localidades</a>
                     </li>
                   @endif
                 </ul>
@@ -106,8 +106,8 @@
           <div class="page-header" id="banner">
             <div class="row">
               <div class="col-lg-8 col-md-7 col-sm-6">
-                <h1>Recreovia</h1>
-                <p class="lead"><h4>Módulo para la gestión y control de actividades</h4></p>
+                <h1>Recreovía</h1>
+                <p class="lead"><h4>Módulo para la gestión y control de actividades del programa recreovía</h4></p>
               </div>
               <div class="col-lg-4 col-md-5 col-sm-6">
                  <div align="right"> 

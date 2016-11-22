@@ -23,5 +23,11 @@ class Recreopersona extends Model
     	return $this->belongsTo('App\Modulos\Personas\Persona', 'Id_Persona');
     }
 
+    public function localidades()
+    {
+        return $this->belongsToMany('App\Modulos\Parques\Localidad', 'LocalidadesPersonas', 'Id_Recreopersona', 'Id_Localidad')
+                    ->withPivot('tipo');
+    }
+
     use SoftDeletes, CascadeSoftDeletes;
 }

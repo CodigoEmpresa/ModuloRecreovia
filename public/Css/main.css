@@ -4,6 +4,12 @@
     margin-top: 12px;
 }
 
+.squad-grid {
+	border: 1px solid #ccc;
+	padding: 5px;
+	margin-top: 15px;
+}
+
 .zona h5 {
     margin-top: 0px !important;
 }
