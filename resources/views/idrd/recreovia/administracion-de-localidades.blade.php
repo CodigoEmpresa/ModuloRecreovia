@@ -15,7 +15,7 @@
                     <div class="col-md-4">
                         <div class="squad-grid">
                             <a href="{{ url('localidades/administrar/'.$localidad['Id_Localidad']) }}" class="btn-link">
-                                {{ $localidad['Localidad'] }}
+                                {{ $localidad['Id_Localidad'].' - '.$localidad['Localidad'] }}
                             </a>
                             <p class="list-group-item-text">
                                 <small>Puntos: {{ count($localidad->puntos) }} Gestores: {{ count($localidad->recreopersonas()->where('Tipo', 'Gestor')->get()) }} Profesores: {{ count($localidad->recreopersonas()->where('Tipo', 'Profesor')->get()) }}</small>

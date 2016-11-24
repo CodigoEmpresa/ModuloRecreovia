@@ -64,7 +64,7 @@
                                 <select name="Id_Localidad" id="" class="form-control" data-value="{{ $punto ? $punto['Id_Localidad'] : old('Id_Localidad') }}">
                                     <option value="">Seleccionar</option>
                                     @foreach($localidades as $localidad)
-                                        <option value="{{ $localidad['Id_Localidad'] }}">{{ $localidad['Localidad'] }}</option>
+                                        <option value="{{ $localidad['Id_Localidad'] }}">{{ $localidad['Id_Localidad'].' - '.$localidad['Localidad'] }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -75,7 +75,7 @@
                                 <select name="Id_Upz" id="" class="form-control" data-json="{{ $upz }}" data-value="{{ $punto ? $punto['Id_Upz'] : old('Id_Upz') }}">
                                     <option value="">Seleccionar</option>
                                     @foreach($upz as $u)
-                                        <option data-localidad="{{ $u['IdLocalidad'] }}" value="{{ $u['Id_Upz'] }}">{{ $u['Upz'] }}</option>
+                                        <option data-localidad="{{ $u['IdLocalidad'] }}" value="{{ $u['Id_Upz'] }}">{{ $u['cod_upz'].' - '.$u['Upz'] }}</option>
                                     @endforeach
                                 </select>
                             </div>

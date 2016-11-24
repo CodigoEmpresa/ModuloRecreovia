@@ -14,8 +14,11 @@ class LocalidadController extends Controller {
 	{
 		$formulario = [
 			'titulo' => 'Administrar localidades',
-			'localidades' => Localidad::with('puntos', 'recreopersonas', 'recreopersonas.persona')
-									->orderBy('Localidad')
+			'localidades' => Localidad::with(['puntos' => function($query)
+									{
+										$query->whereNull('deleted_at');
+									}, 'recreopersonas', 'recreopersonas.persona'])
+									->orderBy('Id_Localidad')
 									->get(),
 			'status' => session('status')
 		];
