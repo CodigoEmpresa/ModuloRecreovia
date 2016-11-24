@@ -62,7 +62,8 @@ $(function()
         $('input[name="Id_Jornada"]').val(obj.Id_Jornada);
         $('input[name="Tipo"]').val(obj.Tipo);
         $('select[name="Jornada"]').val(obj.Jornada).trigger('change');
-        $('input[name="Fecha_Evento"]').val(obj.Fecha_Evento);
+        $('input[name="Fecha_Evento_Inicio"]').val(obj.Fecha_Evento_Inicio == '0000-00-00' ? '' : obj.Fecha_Evento_Inicio);
+        $('input[name="Fecha_Evento_Fin"]').val(obj.Fecha_Evento_Fin == '0000-00-00' ? '' : obj.Fecha_Evento_Fin);
         $('input[name="Inicio"]').val(obj.Inicio);
         $('input[name="Fin"]').val(obj.Fin);
         $('input[name="Dias[]"]').map(function()
@@ -92,23 +93,34 @@ $(function()
         }
 
         var label = '';
+        var periodo = '';
+        var periodo_dias = '';
+
+        if(jornada.Fecha_Evento_Fin)
+            periodo = 'del '+jornada.Fecha_Evento_Inicio+' al '+jornada.Fecha_Evento_Fin;
+        else
+            periodo = 'el dia '+jornada.Fecha_Evento_Inicio;
+        
+        if(jornada.Dias)
+            periodo_dias = (jornada.Dias.split(',').length > 1 ? 'los dias ' : 'el dia ')+jornada.Dias+'';
 
         switch(jornada.Jornada)
         {
+
             case 'dia': 
-                label = 'Jornada diurna los dias '+jornada.Dias+' de '+jornada.Inicio+' a '+jornada.Fin;
+                label = 'Jornada diurna '+periodo_dias+' de '+jornada.Inicio+' a '+jornada.Fin;
             break;
             case 'noche': 
-                label = 'Jornada nocturna los dias '+jornada.Dias+' de '+jornada.Inicio+' a '+jornada.Fin;
+                label = 'Jornada nocturna '+periodo_dias+' de '+jornada.Inicio+' a '+jornada.Fin;
             break;
             case 'fds': 
-                label = 'Jornada de fin de semana los dias '+jornada.Dias+' de '+jornada.Inicio+' a '+jornada.Fin;
+                label = 'Jornada de fin de semana '+periodo_dias+' de '+jornada.Inicio+' a '+jornada.Fin;
             break;
-            case 'clases_grupales': 
-                label = 'Clase grupal el dia '+jornada.Fecha_Evento+' de '+jornada.Inicio+' a '+jornada.Fin;
+            case 'clases_grupales':
+                label = 'Clase grupal '+periodo+' '+periodo_dias+' de '+jornada.Inicio+' a '+jornada.Fin;
             break;
             case 'mega_eventos': 
-                label = 'Mega evento de actividad fisica el dia '+jornada.Fecha_Evento+' de '+jornada.Inicio+' a '+jornada.Fin;
+                label = 'Mega evento de actividad fisica '+periodo+' '+periodo_dias+' de '+jornada.Inicio+' a '+jornada.Fin;
             break;
         }
         
@@ -141,13 +153,15 @@ $(function()
         switch($option.data('tipo'))
         {
             case 'Periodico':
-                $('input[name="Fecha_Evento"]').datepicker('option', 'disabled', true);
-                $('input[name="Fecha_Evento"]').val('');
-                $('input[name="Dias[]"]').closest('.form-group').show();
+                $('input[name="Fecha_Evento_Inicio"]').datepicker('option', 'disabled', true);
+                $('input[name="Fecha_Evento_Fin"]').datepicker('option', 'disabled', true);
+                $('input[name="Fecha_Evento_Inicio"]').val('');
+                $('input[name="Fecha_Evento_Fin"]').val('');
             break;
             case 'Eventual':
-                $('input[name="Fecha_Evento"]').datepicker('option', 'disabled', false);
-                $('input[name="Dias[]"]').prop('checked', false).closest('.form-group').hide();
+                $('input[name="Fecha_Evento_Inicio"]').datepicker('option', 'disabled', false);
+                $('input[name="Fecha_Evento_Fin"]').datepicker('option', 'disabled', false);
+                $('input[name="Dias[]"]').prop('checked', false).closest('.form-group').show();
             break;
         }
         $('input[name="Tipo"]').val($option.data('tipo'));
@@ -160,7 +174,8 @@ $(function()
             Id_Punto: $('input[name="Id_Punto"]').val(),
             Jornada: $('select[name="Jornada"]').val(),
             Tipo: $('input[name="Tipo"]').val(),
-            Fecha_Evento: $('input[name="Fecha_Evento"]').val(),
+            Fecha_Evento_Inicio: $('input[name="Fecha_Evento_Inicio"]').val(),
+            Fecha_Evento_Fin: $('input[name="Fecha_Evento_Fin"]').val(),
             Dias: $('input[name="Dias[]"]:checked').map(function()
             {
                 return $(this).val();
@@ -174,10 +189,12 @@ $(function()
         switch($('input[name="Tipo"]').val())
         {
             case 'Periodico': 
-                delete temp.Fecha_Evento;
+                delete temp.Fecha_Evento_Inicio;
+                delete temp.Fecha_Evento_Fin;
             break;
             case 'Eventual':
                 delete temp.Dias;
+                delete temp.Fecha_Evento_Fin;
             break;
         }
 
@@ -203,7 +220,8 @@ $(function()
             Id_Punto: '',
             Jornada: '',
             Tipo: '',
-            Fecha_Evento: '',
+            Fecha_Evento_Inicio: '',
+            Fecha_Evento_Fin: '',
             Dias: '',
             Inicio: '',
             Fin: ''
@@ -221,7 +239,8 @@ $(function()
             Id_Punto: '',
             Jornada: '',
             Tipo: '',
-            Fecha_Evento: '',
+            Fecha_Evento_Inicio: '',
+            Fecha_Evento_Fin: '',
             Dias: '',
             Inicio: '',
             Fin: ''
@@ -260,7 +279,6 @@ $(function()
                             $('select[name="Id_Upz"]').val(data[0].upz['Id_Upz']);
                         });
                     }
-                    console.log(data);
                 },
                 'json'
             )

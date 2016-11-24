@@ -152,10 +152,12 @@ class ProfesoresController extends Controller {
 				$recreopersona->restore();
 
 			$recreopersona->correo = $request->input('correo');
+			$recreopersona->contrato = $request->input('contrato');
 			$recreopersona->save();
 		} else {
 			$recreopersona = new Recreopersona;
 			$recreopersona->correo = $request->input('correo');
+			$recreopersona->contrato = $request->input('contrato');
 
 			$profesor->recreopersona()->save($recreopersona);
 		}

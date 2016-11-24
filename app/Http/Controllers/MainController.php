@@ -36,10 +36,11 @@ class MainController extends Controller {
 			$user_array = unserialize($vector);
 			$permissions_array = $user_array;
 
-			$permisos = [//$permissions_array[1]
+			$permisos = [
 				'editar_profesores' => 1,
 				'editar_puntos' => 1,
-				'administrar_localidades' => 1
+				'administrar_localidades' => 1,
+				'administrar_jornadas'=> 1
 			];
 
 			$_SESSION['Usuario'] = $user_array;

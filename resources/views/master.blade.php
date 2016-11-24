@@ -49,12 +49,28 @@
           <div class="navbar-collapse collapse" id="navbar-main">
             <ul class="nav navbar-nav">
             @if(
+              $_SESSION['Usuario']['Permisos']['administrar_jornadas']
+             )
+              <li class="dropdown {{ $seccion && in_array($seccion, ['Administrar jornadas']) ? 'active' : '' }}">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestores <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  @if(
+                    $_SESSION['Usuario']['Permisos']['administrar_jornadas']
+                  )
+                    <li class="{{ $seccion && $seccion == 'Administrar jornadas' ? 'active' : '' }}">
+                      <a href="{{ url('jornadas/administrar') }}">Asignar jornadas</a>
+                    </li>
+                  @endif
+                </ul>
+              </li>
+            @endif
+            @if(
               $_SESSION['Usuario']['Permisos']['editar_profesores'] ||
               $_SESSION['Usuario']['Permisos']['editar_puntos'] ||
               $_SESSION['Usuario']['Permisos']['administrar_localidades']
             )
-              <li class="dropdown {{ $seccion && in_array($seccion, ['Profesores', 'Puntos', 'Asignar puntos']) ? 'active' : '' }}">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Configuración <span class="caret"></span></a>
+              <li class="dropdown {{ $seccion && in_array($seccion, ['Profesores', 'Puntos', 'Administrar localidades']) ? 'active' : '' }}">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administración <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   @if(
                     $_SESSION['Usuario']['Permisos']['editar_profesores']
@@ -74,13 +90,13 @@
                     $_SESSION['Usuario']['Permisos']['administrar_localidades']
                   )
                     <li class="{{ $seccion && $seccion == 'Administrar localidades' ? 'active' : '' }}">
-                      <a href="{{ url('localidades/administrar') }}">Administrar localidades</a>
+                      <a href="{{ url('localidades/administrar') }}">Localidades</a>
                     </li>
                   @endif
                 </ul>
               </li>
-            </ul>
             @endif
+            </ul>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="http://www.idrd.gov.co/sitio/idrd/" target="_blank">I.D.R.D</a></li>
               <li class="dropdown">

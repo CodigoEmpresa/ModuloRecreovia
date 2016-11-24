@@ -17,6 +17,7 @@ class TablaRecreopersonas extends Migration
             $table->increments('Id_Recreopersona');
             $table->integer('Id_Persona')->unsigned();
             $table->string('correo');
+            $table->string('contrato');
             $table->timestamps();
             $table->softDeletes();
         });

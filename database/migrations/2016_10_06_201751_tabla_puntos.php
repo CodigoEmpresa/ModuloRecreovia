@@ -37,7 +37,8 @@ class TablaPuntos extends Migration
             $table->time('Inicio');
             $table->time('Fin');
             $table->enum('Tipo', ['Periodico', 'Eventual']);
-            $table->date('Fecha_Evento')->nullable();
+            $table->date('Fecha_Evento_Inicio')->nullable();
+            $table->date('Fecha_Evento_Fin')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

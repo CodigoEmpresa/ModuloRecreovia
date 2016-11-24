@@ -174,7 +174,8 @@ class PuntosController extends Controller {
 				$jornada->Inicio = $j->Inicio;
 				$jornada->Fin = $j->Fin;
 				$jornada->Tipo = $j->Tipo;
-				$jornada->Fecha_Evento = $j->Fecha_Evento;
+				$jornada->Fecha_Evento_Inicio = $j->Fecha_Evento_Inicio;
+				$jornada->Fecha_Evento_Fin = $j->Fecha_Evento_Fin;
 
 				$jornada->save();
 			}
