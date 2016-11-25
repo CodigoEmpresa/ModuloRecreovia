@@ -15,7 +15,16 @@ $(function()
    
     $('input[data-role="clockpicker"]').datetimepicker({
         format: 'HH:mm:ss',
-        ignoreReadonly:true
+        ignoreReadonly:true,
+        useCurrent:false
+    });
+
+    $('input[data-rel="hora_inicio"]').on("dp.change", function (e) {
+        $('input[data-rel="hora_fin"]').data("DateTimePicker").minDate(e.date);
+    });
+
+    $('input[data-rel="hora_fin"]').on("dp.change", function (e) {
+        $('input[data-rel="hora_inicio"]').data("DateTimePicker").maxDate(e.date);
     });
 
 	$('select').each(function(i, e){

@@ -125,13 +125,13 @@
 	                        <div class="col-md-2 col-xs-6">
 	                            <div class="form-group">
 	                                <label for="">Hora inicio</label>
-	                                <input type="text" class="form-control input-sm" name="Inicio" data-role="clockpicker" placeholder="Hora inicio">
+	                                <input type="text" class="form-control input-sm" data-rel="hora_inicio" name="Inicio" data-role="clockpicker" placeholder="Hora inicio">
 	                            </div>
 	                        </div>
 	                        <div class="col-md-2 col-xs-6">
 	                            <div class="form-group">
 	                                <label for="">Hora fin</label>
-	                                <input type="text" class="form-control input-sm" name="Fin" data-role="clockpicker" placeholder="Hora fin">
+	                                <input type="text" class="form-control input-sm" data-rel="hora_fin" name="Fin" data-role="clockpicker" placeholder="Hora fin">
 	                            </div>
 	                        </div>
                             <div class="col-md-12">

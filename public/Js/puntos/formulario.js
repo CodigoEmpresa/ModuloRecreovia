@@ -246,6 +246,9 @@ $(function()
             Fin: ''
         };
 
+        $('input[data-rel="hora_fin"]').data("DateTimePicker").minDate(false);
+        $('input[data-rel="hora_inicio"]').data("DateTimePicker").maxDate(false);
+
         jornada_actual = -1;
         popular_jornada(jornada);
         e.preventDefault();
