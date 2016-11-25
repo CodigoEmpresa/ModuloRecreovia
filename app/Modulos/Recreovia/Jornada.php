@@ -17,9 +17,9 @@ class Jornada extends Model
     	$this->table = config('database.connections.mysql.database').'.Jornadas';
     }
 
-    public function punto()
+    public function puntos()
     {
-        return $this->belongsTo('App\Modulos\Recreovia\Punto', 'Id_Punto');
+        return $this->belongsToMany('App\Modulos\Recreovia\Punto', 'JornadasPuntos', 'Id_Jornada', 'Id_Punto');
     }
 
     use SoftDeletes, CascadeSoftDeletes;
