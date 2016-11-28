@@ -6,12 +6,14 @@
     
 <div class="content">
     <div id="main" class="row" data-url="{{ url('puntos') }}">
-        <div id="alerta" class="col-xs-12" style="display:none;">
-            <div class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                Datos actualizados satisfactoriamente.
-            </div>                                
-        </div>
+        @if ($status == 'success')
+            <div id="alerta" class="col-xs-12">
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    Datos actualizados satisfactoriamente.
+                </div>                                
+            </div>
+        @endif
         <div class="col-xs-12 form-group">
             <div class="input-group">
                 <input name="buscador" type="text" class="form-control" placeholder="Buscar" id="buscador">

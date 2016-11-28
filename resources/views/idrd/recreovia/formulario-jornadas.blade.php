@@ -104,7 +104,7 @@
                             <input type="hidden" name="Tipo" value="{{ $jornada ? $jornada['Tipo'] : '' }}">
                             <input type="submit" value="Guardar" id="guardar-jornada" class="btn btn-primary">
                             @if ($jornada)
-                                <input type="button" id="eliminar-jornada" value="Eliminar" class="btn btn-danger">
+                                <a data-toggle="modal" data-target="#modal-eliminar" class="btn btn-danger">Eliminar</a>
                             @endif
                             <a href="{{ url('jornadas') }}" class="btn btn-default">Cancelar</a>
                         </div>
@@ -114,3 +114,22 @@
         </div>
     </div>
 </div>
+@if ($jornada)
+    <div class="modal fade" id="modal-eliminar" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Eliminar</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Realmente desea eliminar esta jornada.</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="{{ url('jornadas/eliminar/'.$jornada['Id_Jornada']) }}" class="btn btn-danger">Eliminar</a>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif

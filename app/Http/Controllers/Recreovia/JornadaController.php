@@ -70,6 +70,17 @@ class JornadaController extends Controller {
 		return view('form', $datos);
 	}
 
+	public function eliminar(Request $request, $id)
+	{
+		$jornada = Jornada::where('Id_Jornada', $id)
+						->first();
+
+		$jornada->delete();
+
+		return redirect('/jornadas')->with(['status' => 'success']); 
+	}
+
+
 	public function procesar(GuardarJornada $request)
 	{
 		if ($request['Id_Jornada'] == 0)
