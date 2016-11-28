@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Recreovia;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Modulos\Recreovia\Punto;
 use App\Modulos\Recreovia\Jornada;
 use App\Modulos\Parques\Localidad;
@@ -13,6 +11,7 @@ use App\Http\Requests\GuardarPunto;
 use Idrd\Usuarios\Repo\PersonaInterface;
 use Idrd\Parques\Repo\LocalizacionInterface;
 use Validator;
+use Illuminate\Http\Request;
 
 class PuntosController extends Controller {
 	

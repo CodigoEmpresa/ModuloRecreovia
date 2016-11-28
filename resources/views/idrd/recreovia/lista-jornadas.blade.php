@@ -18,43 +18,16 @@
         <div class="col-xs-12"><br></div>
         <div class="col-xs-12">
             <ul class="list-group" id="principal">
+            	<?php
+            		$i = 0;
+            	?>
                 @foreach($elementos as $jornada)
                 	<?php
-                		$label = '';
-                		$titulo = '';
-				        $periodo = '';
-				        $periodo_dias = '';
-
-				        if($jornada->Fecha_Evento_Fin)
-				            $periodo = 'del '.$jornada->Fecha_Evento_Inicio.' al '.$jornada->Fecha_Evento_Fin;
-				        else
-				            $periodo = 'el dia '.$jornada->Fecha_Evento_Inicio;
-				        
-				        if($jornada->Dias)
-				            periodo_dias = (count(explode(',', $jornada->Dias)) > 1 ? 'los dias ' : 'el dia ').$jornada->Dias;
-
-				        switch($jornada->Jornada)
-				        {
-				            case 'dia': 
-				                label = 'Jornada diurna '+periodo_dias+' de '+$jornada->Inicio+' a '+$jornada->Fin;
-				            break;
-				            case 'noche': 
-				                label = 'Jornada nocturna '+periodo_dias+' de '+$jornada->Inicio+' a '+$jornada->Fin;
-				            break;
-				            case 'fds': 
-				                label = 'Jornada de fin de semana '+periodo_dias+' de '+$jornada->Inicio+' a '+$jornada->Fin;
-				            break;
-				            case 'clases_grupales':
-				                label = 'Clase grupal '+periodo+' '+periodo_dias+' de '+$jornada->Inicio+' a '+$jornada->Fin;
-				            break;
-				            case 'mega_eventos': 
-				                label = 'Mega evento de actividad física '+periodo+' '+periodo_dias+' de '+$jornada->Inicio+' a '+$jornada->Fin;
-				            break;
-				        }
+				        $i++;
                 	?>
                     <li class="list-group-item">
                         <h5 class="list-group-item-heading">
-                            Jornada {{ strtoupper($punto['Escenario']) }}
+                            Jornada {{ $i }}
                             <a data-role="editar" href="{{ url('jornadas/editar/'.$jornada['Id_Jornada']) }}" class="pull-right btn btn-primary btn-xs">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </a>
@@ -63,15 +36,13 @@
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="row">
-                                        <div class="col-xs-12 col-sm-6 col-md-3">
-                                            <small>Dirección: {{ $punto['Direccion'] }}</small>
+                                        <div class="col-xs-12 col-sm-6 col-md-12">
+                                            <small>{{ $jornada->toString() }}</small>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </p>
-                        <span class="label label-default">{{ $punto->localidad['Localidad'] }}</span> 
-                        <span class="label label-default">{{ $punto->upz['Upz'] }}</span>
                     </li>
                 @endforeach
             </ul>

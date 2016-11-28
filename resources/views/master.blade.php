@@ -49,48 +49,46 @@
           <div class="navbar-collapse collapse" id="navbar-main">
             <ul class="nav navbar-nav">
             @if(
+              $_SESSION['Usuario']['Permisos']['editar_profesores'] ||
+              $_SESSION['Usuario']['Permisos']['editar_puntos'] ||
+              $_SESSION['Usuario']['Permisos']['administrar_localidades'] ||
               $_SESSION['Usuario']['Permisos']['administrar_jornadas']
-             )
-              <li class="dropdown {{ $seccion && in_array($seccion, ['Administrar jornadas']) ? 'active' : '' }}">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestores <span class="caret"></span></a>
+            )
+              <li class="dropdown {{ $seccion && in_array($seccion, ['Profesores', 'Puntos', 'Administrar localidades']) ? 'active' : '' }}">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administración <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  @if(
-                    $_SESSION['Usuario']['Permisos']['administrar_jornadas']
-                  )
-                    <li class="{{ $seccion && $seccion == 'Administrar jornadas' ? 'active' : '' }}">
-                      <a href="{{ url('jornadas/administrar') }}">Asignar jornadas</a>
+                  @if($_SESSION['Usuario']['Permisos']['administrar_jornadas'])
+                    <li class="{{ $seccion && $seccion == 'Jornadas' ? 'active' : '' }}">
+                      <a href="{{ url('jornadas') }}">Jornadas</a>
+                    </li>
+                  @endif
+                  @if($_SESSION['Usuario']['Permisos']['administrar_localidades'])
+                    <li class="{{ $seccion && $seccion == 'Administrar localidades' ? 'active' : '' }}">
+                      <a href="{{ url('localidades/administrar') }}">Localidades</a>
+                    </li>
+                  @endif
+                  @if($_SESSION['Usuario']['Permisos']['editar_profesores'])
+                    <li class="{{ $seccion && $seccion == 'Profesores' ? 'active' : '' }}">
+                      <a href="{{ url('profesores') }}">Profesores</a>
+                    </li>
+                  @endif
+                  @if($_SESSION['Usuario']['Permisos']['editar_puntos'])
+                    <li class="{{ $seccion && $seccion == 'Puntos' ? 'active' : '' }}">
+                      <a href="{{ url('puntos') }}">Puntos</a>
                     </li>
                   @endif
                 </ul>
               </li>
             @endif
             @if(
-              $_SESSION['Usuario']['Permisos']['editar_profesores'] ||
-              $_SESSION['Usuario']['Permisos']['editar_puntos'] ||
-              $_SESSION['Usuario']['Permisos']['administrar_localidades']
-            )
-              <li class="dropdown {{ $seccion && in_array($seccion, ['Profesores', 'Puntos', 'Administrar localidades']) ? 'active' : '' }}">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administración <span class="caret"></span></a>
+              $_SESSION['Usuario']['Permisos']['administrar_jornadas']
+             )
+              <li class="dropdown {{ $seccion && in_array($seccion, ['Administrar jornadas']) ? 'active' : '' }}">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestores <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  @if(
-                    $_SESSION['Usuario']['Permisos']['editar_profesores']
-                  )
-                    <li class="{{ $seccion && $seccion == 'Profesores' ? 'active' : '' }}">
-                      <a href="{{ url('profesores') }}">Profesores</a>
-                    </li>
-                  @endif
-                  @if(
-                    $_SESSION['Usuario']['Permisos']['editar_puntos']
-                  )
-                    <li class="{{ $seccion && $seccion == 'Puntos' ? 'active' : '' }}">
-                      <a href="{{ url('puntos') }}">Puntos</a>
-                    </li>
-                  @endif
-                  @if(
-                    $_SESSION['Usuario']['Permisos']['administrar_localidades']
-                  )
-                    <li class="{{ $seccion && $seccion == 'Administrar localidades' ? 'active' : '' }}">
-                      <a href="{{ url('localidades/administrar') }}">Localidades</a>
+                  @if($_SESSION['Usuario']['Permisos']['administrar_jornadas'])
+                    <li class="{{ $seccion && $seccion == 'Administrar jornadas' ? 'active' : '' }}">
+                      <a href="{{ url('jornadas/administrar') }}">Asignar jornadas</a>
                     </li>
                   @endif
                 </ul>
