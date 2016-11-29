@@ -45,6 +45,7 @@
                                 </div>
                             </div>
                         </p>
+                        <span class="label label-default">Puntos: {{ count($jornada->puntos) }}</span> 
                     </li>
                 @endforeach
             </ul>
