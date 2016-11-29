@@ -50,6 +50,7 @@ class PuntosController extends Controller {
 			'titulo' => 'Crear ó editar puntos',
 	        'punto' => null,
 	        'localidades' => Localidad::all(),
+	        'jornadas' => Jornada::whereNull('deleted_at')->get(),
 	        'upz' => Upz::all(),
 	        'status' => session('status')
 	    ];
@@ -73,6 +74,7 @@ class PuntosController extends Controller {
 			'titulo' => 'Crear ó editar puntos',
 	        'punto' => $punto,
 	        'localidades' => Localidad::all(),
+	        'jornadas' => Jornada::whereNull('deleted_at')->get(),
 	        'upz' => Upz::all(),
 	        'status' => session('status')
 	    ];
@@ -111,17 +113,20 @@ class PuntosController extends Controller {
 		else 
 			$punto = $this->editarPunto($request);
 
-		$punto->Direccion = $request['Direccion'];
-		$punto->Escenario = $request['Escenario'];
-		$punto->Cod_IDRD = $request['Cod_IDRD'];
-		$punto->Cod_Recreovia = $request['Cod_Recreovia'];
-		$punto->Id_Localidad = $request['Id_Localidad'];
-		$punto->Id_Upz = $request['Id_Upz'];
-		$punto->Latitud = $request['Latitud'];
-		$punto->Longitud = $request['Longitud'];
+		$punto->Direccion = $request->input('Direccion');
+		$punto->Escenario = $request->input('Escenario');
+		$punto->Cod_IDRD = $request->input('Cod_IDRD');
+		$punto->Cod_Recreovia = $request->input('Cod_Recreovia');
+		$punto->Id_Localidad = $request->input('Id_Localidad');
+		$punto->Id_Upz = $request->input('Id_Upz');
+		$punto->Latitud = $request->input('Latitud');
+		$punto->Longitud = $request->input('Longitud');
 		$punto->save();
 
-		$this->sincronizarJornadas($request['Jornadas'], $punto);
+		$jornadas = $request->input('Jornadas');
+		$jornadas = rtrim($jornadas, ',');
+
+		$punto->jornadas()->sync(explode(',', $jornadas));
 
        	return redirect('/puntos/editar/'.$punto['Id_Punto'])->with(['status' => 'success']);
 	}
@@ -130,13 +135,11 @@ class PuntosController extends Controller {
 	{
 		$punto = Punto::where('Id_Punto', $id)
 						->first();
-
 		$punto->delete();
-
 		return redirect('/puntos')->with(['status' => 'success']); 
 	}
 
-	private function sincronizarJornadas($jornadas, $punto)
+	/*private function sincronizarJornadas($jornadas, $punto)
 	{
 		$jornadas = json_decode($jornadas);
 		$jornadas_ids = [];
@@ -179,7 +182,7 @@ class PuntosController extends Controller {
 				$jornada->save();
 			}
 		}
-	}
+	}*/
 
 	private function crearPunto($request)
 	{

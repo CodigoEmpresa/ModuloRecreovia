@@ -91,11 +91,19 @@
 	        </div>
 	        <div class="col-xs-12 col-md-12">
 	        	<div class="row">
-		        	<div class="col-xs-12">
-	                    <span class="text text-primary">Jornadas </span>
-	                    <button class="btn btn-xs btn-default" id="agregar-jornada">Nuevo <span class="glyphicon glyphicon-plus"></span></button>
+                    <div class="col-xs-12 form-group">
+	                    <label for="">Jornadas </label>
+                        <div class="input-group">
+                            <select name="select-jornadas" id="select-jornadas" class="form-control">
+                                @foreach($jornadas as $jornada)
+                                    <option value="{{ $jornada['Id_Jornada'] }}">{{ $jornada->toString() }}</option>
+                                @endforeach
+                            </select>
+                            <span class="input-group-btn">
+	                           <button class="btn btn-default" id="agregar-jornada" type="button"><span class="glyphicon glyphicon-plus"></span></button>
+                            </span>
+                        </div>
 	                </div>
-	                
 	                <div class="col-xs-12">
 	                    <table id="table-jornadas" class="table table-striped">
 	                        <thead>
@@ -119,7 +127,7 @@
                         <input type="hidden" name="Latitud" value="{{ $punto ? $punto['Latitud'] : old('Latitud') }}"> 
                         <input type="hidden" name="Longitud" value="{{ $punto ? $punto['Longitud'] : old('Longitud') }}"> 
                         <input type="hidden" name="Id_Punto" value="{{ $punto ? $punto['Id_Punto'] : 0 }}"> 
-                        <input type="hidden" name="Jornadas" value="{{ $punto ? $punto->jornadas : old('Jornadas') }}"> 
+                        <input type="hidden" name="Jornadas" value="{{ $punto ? implode(',', $punto->jornadas()->lists('Jornadas.Id_Jornada')) : old('Jornadas') }}"> 
                         <button id="guardar" type="submit" class="btn btn-primary">Guardar</button> 
                         @if ($punto)
                             <a data-toggle="modal" data-target="#modal-eliminar" class="btn btn-danger">Eliminar</a>

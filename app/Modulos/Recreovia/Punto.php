@@ -30,7 +30,7 @@ class Punto extends Model
 
     public function jornadas()
     {
-        return $this->belongsToMany('App\Modulos\Recreovia\Punto', 'JornadasPuntos', 'Id_Punto', 'Id_Jornada');
+        return $this->belongsToMany('App\Modulos\Recreovia\Jornada', 'JornadasPuntos', 'Id_Punto', 'Id_Jornada');
     }
 
     use SoftDeletes, CascadeSoftDeletes;
