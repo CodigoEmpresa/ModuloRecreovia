@@ -46,6 +46,12 @@ Route::group(['middleware' => ['web']], function()
 	Route::get('/localidades/administrar/{id}', 'Recreovia\LocalidadController@editar');
 	Route::get('/localidades/{id}/personal/{id_persona}/remover', 'Recreovia\LocalidadController@removerPersonal');
 	Route::post('/localidades/personal/agregar', 'Recreovia\LocalidadController@agregarPersonal');
+
+	route::get('/jornadas', 'Recreovia\JornadaController@index');
+	route::get('/jornadas/crear', 'Recreovia\JornadaController@crear');
+	route::get('/jornadas/editar/{id}', 'Recreovia\JornadaController@editar');
+	route::get('/jornadas/eliminar/{id}', 'Recreovia\JornadaController@eliminar');
+	route::post('/jornadas/procesar', 'Recreovia\JornadaController@procesar');
 });
 /*
 |--------------------------------------------------------------------------

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Recreovia;
 use App\Http\Requests;
 use App\Http\Requests\AgregarPersonalLocalidad;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Modulos\Parques\Localidad;
 
 class LocalidadController extends Controller {

@@ -31,7 +31,6 @@ class TablaPuntos extends Migration
         Schema::create('Jornadas', function(Blueprint $table)
         {
             $table->increments('Id_Jornada');
-            $table->integer('Id_Punto')->unsigned();
             $table->string('Jornada');
             $table->string('Dias')->nullable();
             $table->time('Inicio');
@@ -41,7 +40,15 @@ class TablaPuntos extends Migration
             $table->date('Fecha_Evento_Fin')->nullable();
             $table->timestamps();
             $table->softDeletes();
+        });
 
+        Schema::create('JornadasPuntos', function(Blueprint $table)
+        {
+            $table->increments('Id');
+            $table->integer('Id_Jornada')->unsigned();
+            $table->integer('Id_Punto')->unsigned();
+
+            $table->foreign('Id_Jornada')->references('Id_Jornada')->on('Jornadas')->onDelete('cascade');
             $table->foreign('Id_Punto')->references('Id_Punto')->on('Puntos')->onDelete('cascade');
         });
     }
@@ -53,11 +60,13 @@ class TablaPuntos extends Migration
      */
     public function down()
     {
-        Schema::table('Jornadas', function(Blueprint $table)
+        Schema::table('JornadasPuntos', function(Blueprint $table)
         {
             $table->dropForeign(['Id_Punto']);
+            $table->dropForeign(['Id_Jornada']);
         });
 
+        Schema::drop('JornadasPuntos');
         Schema::drop('Jornadas');
         Schema::drop('Puntos');
     }

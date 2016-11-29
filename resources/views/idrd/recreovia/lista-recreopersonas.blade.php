@@ -6,7 +6,7 @@
     
 <div class="content">
     <div id="main" class="row" data-url="{{ url('profesores') }}">
-         @if ($status == 'success')
+        @if ($status == 'success')
             <div id="alerta" class="col-xs-12">
                 <div class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -45,7 +45,8 @@
                                 </div>
                             </div>
                         </p>
-                        <!-- <span class="label label-default capitalize">{{ $persona->recreopersona['tipo'] }}</span> -->
+                        <span class="label label-default capitalize">{{ $persona->recreopersona['contrato'] }}</span>
+                        <span class="label label-default capitalize">{{ $persona->recreopersona['correo'] }}</span>
                     </li>
                 @endforeach
             </ul>

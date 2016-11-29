@@ -91,83 +91,24 @@
 	        </div>
 	        <div class="col-xs-12 col-md-12">
 	        	<div class="row">
-		        	<div class="col-xs-12">
-	                    <span class="text text-primary">Jornadas </span>
-	                    <button class="btn btn-xs btn-default" id="agregar-jornada">Nuevo <span class="glyphicon glyphicon-plus"></span></button>
-	                </div>
-	                <div class="col-xs-12" id="form-jornadas" style="display:none;">
-	                    <div class="row" style="background-color: #eee; margin-top: 10px; padding-top: 10px; margin-bottom: 10px; padding-bottom: 10px;">
-	                        <div class="col-md-3">
-	                            <div class="form-group">
-	                                <label for="control-label">Jornada</label>
-                                    <select name="Jornada" id="Jornada" class="form-control input-sm">
-                                        <option value="">Seleccionar</option>
-                                        <option data-tipo="Periodico" value="dia">Dia</option>
-                                        <option data-tipo="Periodico" value="noche">Noche</option>
-                                        <option data-tipo="Periodico" value="fds">FDS</option>
-                                        <option data-tipo="Eventual" value="clases_grupales">Clases grupales</option>
-                                        <option data-tipo="Eventual" value="mega_eventos">Mega eventos de actividad física</option>
-                                    </select>
-	                            </div>
-	                        </div>
-                            <div class="col-md-2 col-xs-6">
-                                <div class="form-group">
-                                    <label for="">Fecha inicio evento</label>
-                                    <input type="text" class="form-control input-sm" name="Fecha_Evento_Inicio" data-role="datepicker" placeholder="Fecha inicio evento">
-                                </div>
+                    <div class="col-xs-12 form-group">
+	                    <label for="">Jornadas </label>
+                        @if($jornadas)
+                            <div class="input-group">
+                                <select name="select-jornadas" id="select-jornadas" class="form-control">
+                                    @foreach($jornadas as $jornada)
+                                        <option value="{{ $jornada['Id_Jornada'] }}">{{ $jornada->toString() }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="input-group-btn">
+    	                           <button class="btn btn-default" id="agregar-jornada" type="button"><span class="glyphicon glyphicon-plus"></span></button>
+                                </span>
                             </div>
-                            <div class="col-md-2 col-xs-6">
-                                <div class="form-group">
-                                    <label for="">Fecha fin evento</label>
-                                    <input type="text" class="form-control input-sm" name="Fecha_Evento_Fin" data-role="datepicker" placeholder="Fecha fin evento">
-                                </div>
-                            </div>
-	                        <div class="col-md-2 col-xs-6">
-	                            <div class="form-group">
-	                                <label for="">Hora inicio</label>
-	                                <input type="text" class="form-control input-sm" data-rel="hora_inicio" name="Inicio" data-role="clockpicker" placeholder="Hora inicio">
-	                            </div>
-	                        </div>
-	                        <div class="col-md-2 col-xs-6">
-	                            <div class="form-group">
-	                                <label for="">Hora fin</label>
-	                                <input type="text" class="form-control input-sm" data-rel="hora_fin" name="Fin" data-role="clockpicker" placeholder="Hora fin">
-	                            </div>
-	                        </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="control-label">Días</label> <br>
-                                    <label class="checkbox-inline">
-                                        <input type="checkbox" id="dia1" name="Dias[]" value="lunes"> Lunes&nbsp;&nbsp;
-                                    </label>
-                                    <label class="checkbox-inline">
-                                        <input type="checkbox" id="dia2" name="Dias[]" value="martes"> Martes&nbsp;&nbsp;
-                                    </label>
-                                    <label class="checkbox-inline">
-                                        <input type="checkbox" id="dia3" name="Dias[]" value="miercoles"> Miercoles
-                                    </label>
-                                    <label class="checkbox-inline">
-                                        <input type="checkbox" id="dia4" name="Dias[]" value="jueves"> Jueves
-                                    </label>
-                                    <label class="checkbox-inline">
-                                        <input type="checkbox" id="dia5" name="Dias[]" value="viernes"> Viernes
-                                    </label>
-                                    <label class="checkbox-inline">
-                                        <input type="checkbox" id="dia6" name="Dias[]" value="sabado"> Sabado
-                                    </label>
-                                    <label class="checkbox-inline">
-                                        <input type="checkbox" id="dia7" name="Dias[]" value="domingo"> Domingo
-                                    </label>
-                                </div>
-                            </div>
-	                        <div class="col-md-12">
-                                <input type="hidden" name="Id_Jornada" value="">
-	                            <input type="hidden" name="Tipo" value="">
-	                            <input type="button" value="Guardar" id="guardar-jornada" class="btn btn-xs btn-primary">
-	                            <input style="display:none;" type="button" id="eliminar-jornada" value="Eliminar" class="btn btn-xs btn-danger">
-	                            <input type="button" id="cancelar-jornada" value="Cancelar" class="btn btn-xs btn-default">
-	                        </div>
-	                    </div>
+                        @else
+                            <p class="form-control-static">
+                                Aun no has creado ninguna jornada para crear una has click <a href="{{ url('jornadas') }}">aquí</a>
+                            </p>
+                        @endif
 	                </div>
 	                <div class="col-xs-12">
 	                    <table id="table-jornadas" class="table table-striped">
@@ -191,8 +132,8 @@
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="Latitud" value="{{ $punto ? $punto['Latitud'] : old('Latitud') }}"> 
                         <input type="hidden" name="Longitud" value="{{ $punto ? $punto['Longitud'] : old('Longitud') }}"> 
-                        <input type="hidden" name="Id_Punto" value="{{ $punto ? $punto['Id_Punto'] : 0 }}"> 
-                        <input type="hidden" name="Jornadas" value="{{ $punto ? $punto->jornadas : old('Jornadas') }}"> 
+                        <input type="hidden" name="Id_Punto" value="{{ $punto ? $punto['Id_Punto'] : 0 }}">
+                        <input type="hidden" name="Jornadas" value="{{ $punto ? implode(',', $punto->jornadas()->lists('Jornadas.Id_Jornada')->all()).',' : old('Jornadas') }}"> 
                         <button id="guardar" type="submit" class="btn btn-primary">Guardar</button> 
                         @if ($punto)
                             <a data-toggle="modal" data-target="#modal-eliminar" class="btn btn-danger">Eliminar</a>

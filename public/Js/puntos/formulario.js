@@ -3,8 +3,6 @@ $(function()
     var URL = $('#main').data('url');
     var URL_PARQUES = $('#main').data('url-parques');
     var UPZ = $.parseJSON(JSON.stringify($('select[name="Id_Upz"]').data('json')));
-    var jornadas = $('input[name="Jornadas"]').val() == '' ? {} : $.parseJSON($('input[name="Jornadas"]').val());
-    var jornada_actual = -1;
     var latitud = $('input[name="Latitud"]').val() ? parseFloat($('input[name="Latitud"]').val()) : 4.666575;
     var longitud = $('input[name="Longitud"]').val() ? parseFloat($('input[name="Longitud"]').val()) : -74.125786;
     var zoom = $('input[name="Id_Punto"]').val() == '0' ? 11 : 13;
@@ -25,109 +23,35 @@ $(function()
         }
     }
 
-    function reindexar_tabla_jornadas()
+    function registrar_jornadas(jornadas)
     {
-        var jornadas_actualizadas = [];
+        var temp = $('input[name="Jornadas"]').val();
+        temp = temp.endsWith(',') ? temp.slice(0, -1) : temp;
+        var jornadas_punto = temp.split(',');
+
+        console.log(jornadas_punto, temp);
+
+        if (jornadas_punto.length > 0)
+        {
+            $.each(jornadas_punto, function(i, e)
+            {
+
+                if(e && !$('#table-jornadas tr[data-id="'+e+'"]').length)
+                {
+                    var option = $('select[name="select-jornadas"] option[value="'+e+'"]');
+                    $('#table-jornadas').append('<tr data-id="'+e+'"><td class="index"></td><td>'+option.text()+'</td><td><a href="#" class="btn btn-link" data-role="eliminar"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td></tr>');
+                    option.remove();
+                }
+            });
+        }
 
         $('#table-jornadas tr').each(function(i, e)
         {
-            $(this).attr('data-row', i).find('td.index').text(i);
-            if($(e).data('jornada'))
-                jornadas_actualizadas.push($(e).data('jornada'));
+            $(this).find('td.index').text(i);
         });
 
-        $('input[name="Jornadas"]').val(JSON.stringify(jornadas_actualizadas));
+        $('select[name="select-jornadas"]').focus();
     };
-
-    function validar_jornada(obj)
-    {
-        var valido = true;
-        $('#form-jornadas .form-group').removeClass('has-error');
-
-        $.each(obj, function(key, val)
-        {
-            if($.trim(val) == '' || typeof val == 'undefined')
-            {
-                $('*[name^="'+key+'"]').closest('.form-group').addClass('has-error');
-                valido = false;
-            }
-        });
-
-        return valido;
-    };
-
-    function popular_jornada(obj)
-    {
-        var dias = obj.Dias.split(',');
-        $('input[name="Id_Jornada"]').val(obj.Id_Jornada);
-        $('input[name="Tipo"]').val(obj.Tipo);
-        $('select[name="Jornada"]').val(obj.Jornada).trigger('change');
-        $('input[name="Fecha_Evento_Inicio"]').val(obj.Fecha_Evento_Inicio == '0000-00-00' ? '' : obj.Fecha_Evento_Inicio);
-        $('input[name="Fecha_Evento_Fin"]').val(obj.Fecha_Evento_Fin == '0000-00-00' ? '' : obj.Fecha_Evento_Fin);
-        $('input[name="Inicio"]').val(obj.Inicio);
-        $('input[name="Fin"]').val(obj.Fin);
-        $('input[name="Dias[]"]').map(function()
-        {
-            if($.inArray($(this).attr('value'), dias) > -1)
-                $(this).prop('checked', true);
-            else
-                $(this).prop('checked', false);
-        });
-
-        if(jornada_actual > 0)
-            $('#eliminar-jornada').show();
-        else
-            $('#eliminar-jornada').hide();
-
-        $('#form-jornadas').show();
-    };
-
-    function registrar_jornada(jornada)
-    {
-        if(jornada_actual == -1)
-        {
-            var tr = $('<tr data-row="0" data-jornada=""><td class="index">0</td><td> </td><td><a href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td></tr>');
-            $('#table-jornadas tbody').append(tr);
-        } else {
-            var tr = $('#table-jornadas tbody').find('tr[data-row="'+jornada_actual+'"]');
-        }
-
-        var label = '';
-        var periodo = '';
-        var periodo_dias = '';
-
-        if(jornada.Fecha_Evento_Fin)
-            periodo = 'del '+jornada.Fecha_Evento_Inicio+' al '+jornada.Fecha_Evento_Fin;
-        else
-            periodo = 'el dia '+jornada.Fecha_Evento_Inicio;
-        
-        if(jornada.Dias)
-            periodo_dias = (jornada.Dias.split(',').length > 1 ? 'los dias ' : 'el dia ')+jornada.Dias+'';
-
-        switch(jornada.Jornada)
-        {
-
-            case 'dia': 
-                label = 'Jornada diurna '+periodo_dias+' de '+jornada.Inicio+' a '+jornada.Fin;
-            break;
-            case 'noche': 
-                label = 'Jornada nocturna '+periodo_dias+' de '+jornada.Inicio+' a '+jornada.Fin;
-            break;
-            case 'fds': 
-                label = 'Jornada de fin de semana '+periodo_dias+' de '+jornada.Inicio+' a '+jornada.Fin;
-            break;
-            case 'clases_grupales':
-                label = 'Clase grupal '+periodo+' '+periodo_dias+' de '+jornada.Inicio+' a '+jornada.Fin;
-            break;
-            case 'mega_eventos': 
-                label = 'Mega evento de actividad fisica '+periodo+' '+periodo_dias+' de '+jornada.Inicio+' a '+jornada.Fin;
-            break;
-        }
-        
-        tr.data('jornada', jornada);
-        tr.children('td').eq(1).text(label);
-        reindexar_tabla_jornadas();
-    }
 
     $('select[name="Id_Localidad"]').on('change', function(e)
     {
@@ -146,120 +70,33 @@ $(function()
         }
     });
 
-    $('select[name="Jornada"]').on('change', function(e)
-    {
-        var $option = $(this).find('option:selected');
-
-        switch($option.data('tipo'))
-        {
-            case 'Periodico':
-                $('input[name="Fecha_Evento_Inicio"]').datepicker('option', 'disabled', true);
-                $('input[name="Fecha_Evento_Fin"]').datepicker('option', 'disabled', true);
-                $('input[name="Fecha_Evento_Inicio"]').val('');
-                $('input[name="Fecha_Evento_Fin"]').val('');
-            break;
-            case 'Eventual':
-                $('input[name="Fecha_Evento_Inicio"]').datepicker('option', 'disabled', false);
-                $('input[name="Fecha_Evento_Fin"]').datepicker('option', 'disabled', false);
-                $('input[name="Dias[]"]').prop('checked', false).closest('.form-group').show();
-            break;
-        }
-        $('input[name="Tipo"]').val($option.data('tipo'));
-    });
-
-    $("#guardar-jornada").on('click', function(e)
-    {
-        var jornada = {
-            Id_Jornada: $('input[name="Id_Jornada"]').val(),
-            Id_Punto: $('input[name="Id_Punto"]').val(),
-            Jornada: $('select[name="Jornada"]').val(),
-            Tipo: $('input[name="Tipo"]').val(),
-            Fecha_Evento_Inicio: $('input[name="Fecha_Evento_Inicio"]').val(),
-            Fecha_Evento_Fin: $('input[name="Fecha_Evento_Fin"]').val(),
-            Dias: $('input[name="Dias[]"]:checked').map(function()
-            {
-                return $(this).val();
-            }).get().join(','),
-            Inicio: $('input[name="Inicio"]').val(),
-            Fin: $('input[name="Fin"]').val()
-        };
-
-        var temp = $.extend({}, jornada);
-
-        switch($('input[name="Tipo"]').val())
-        {
-            case 'Periodico': 
-                delete temp.Fecha_Evento_Inicio;
-                delete temp.Fecha_Evento_Fin;
-            break;
-            case 'Eventual':
-                delete temp.Dias;
-                delete temp.Fecha_Evento_Fin;
-            break;
-        }
-
-        if(validar_jornada(temp))
-        {
-            registrar_jornada(jornada);
-            $('#form-jornadas').hide();
-        }
-    });
-
-    $('#eliminar-jornada').on('click', function(e){
-        var tr = $('#table-jornadas tbody').find('tr[data-row="'+jornada_actual+'"]');
-        tr.remove();
-
-        $('#form-jornadas').hide();
-        reindexar_tabla_jornadas();
-    });
-
-    $("#cancelar-jornada").on('click', function(e)
-    {
-        var jornada = {
-            Id_Jornada: 0,
-            Id_Punto: '',
-            Jornada: '',
-            Tipo: '',
-            Fecha_Evento_Inicio: '',
-            Fecha_Evento_Fin: '',
-            Dias: '',
-            Inicio: '',
-            Fin: ''
-        };
-
-        popular_jornada(jornada);
-        $('#form-jornadas').hide();
-    });
-
     $('#agregar-jornada').on('click', function(e)
     {
-        
-        var jornada = {
-            Id_Jornada: 0,
-            Id_Punto: '',
-            Jornada: '',
-            Tipo: '',
-            Fecha_Evento_Inicio: '',
-            Fecha_Evento_Fin: '',
-            Dias: '',
-            Inicio: '',
-            Fin: ''
-        };
+        var id = $('select[name="select-jornadas"]').val();
+        if (id && id != '')
+            $('input[name="Jornadas"]').val($('input[name="Jornadas"]').val()+id+',');
 
-        $('input[data-rel="hora_fin"]').data("DateTimePicker").minDate(false);
-        $('input[data-rel="hora_inicio"]').data("DateTimePicker").maxDate(false);
-
-        jornada_actual = -1;
-        popular_jornada(jornada);
-        e.preventDefault();
+        registrar_jornadas();
     });
-
+    
     $("#table-jornadas").delegate('a', 'click', function(e)
     {
         var $tr = $(this).closest('tr');
-        var jornada = $.parseJSON(JSON.stringify($tr.data('jornada')));
-        jornada_actual = $tr.data('row');
-        popular_jornada(jornada);
+        $('select[name="select-jornadas"]').append('<option value="'+$tr.data('id')+'">'+$tr.find('td').eq(1).text()+'</option>');
+        
+        var temp = $('input[name="Jornadas"]').val();
+        temp = temp.endsWith(',') ? temp.slice(0, -1) : temp;
+        var jornadas_punto = temp.split(',');
+        
+        temp = '';
+        $.each(jornadas_punto, function(i, e)
+        {
+            if(e != $tr.data('id'))
+                temp += e+',';
+        });
+
+        $('input[name="Jornadas"]').val(temp);
+        $tr.remove();
         e.preventDefault();
     });
 
@@ -304,7 +141,5 @@ $(function()
 
     marker.addListener('dragend', actualizarPosicion);
 
-    $.each(jornadas, function(i, e){
-        registrar_jornada(e);
-    });
+    registrar_jornadas();
 });

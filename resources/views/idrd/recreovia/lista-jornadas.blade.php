@@ -5,7 +5,7 @@
 @stop
     
 <div class="content">
-    <div id="main" class="row" data-url="{{ url('puntos') }}">
+    <div id="main" class="row" data-url="{{ url('jornadas') }}">
         @if ($status == 'success')
             <div id="alerta" class="col-xs-12">
                 <div class="alert alert-success alert-dismissible" role="alert">
@@ -14,25 +14,23 @@
                 </div>                                
             </div>
         @endif
-        <div class="col-xs-12 form-group">
-            <div class="input-group">
-                <input name="buscador" type="text" class="form-control" placeholder="Buscar" id="buscador">
-                <span class="input-group-btn">
-                    <button id="buscar" data-role="buscar" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                </span>
-            </div>
-        </div>
         <div class="col-xs-12">
-            <a href="{{ url('/puntos/crear/') }}" class="btn btn-primary" id="crear">Crear</a>
+            <a href="{{ url('/jornadas/crear/') }}" class="btn btn-primary" id="crear">Crear</a>
         </div>
         <div class="col-xs-12"><br></div>
         <div class="col-xs-12">
             <ul class="list-group" id="principal">
-                @foreach($elementos as $punto)
+            	<?php
+            		$i = 0;
+            	?>
+                @foreach($elementos as $jornada)
+                	<?php
+				        $i++;
+                	?>
                     <li class="list-group-item">
                         <h5 class="list-group-item-heading">
-                            {{ strtoupper($punto['Escenario']) }}
-                            <a data-role="editar" href="{{ url('puntos/editar/'.$punto['Id_Punto']) }}" class="pull-right btn btn-primary btn-xs">
+                            Jornada {{ $i }}
+                            <a data-role="editar" href="{{ url('jornadas/editar/'.$jornada['Id_Jornada']) }}" class="pull-right btn btn-primary btn-xs">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </a>
                         </h5>
@@ -40,15 +38,13 @@
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="row">
-                                        <div class="col-xs-12 col-sm-6 col-md-3">
-                                            <small>Dirección: {{ $punto['Direccion'] }}</small>
+                                        <div class="col-xs-12 col-sm-6 col-md-12">
+                                            <small>{{ $jornada->toString() }}</small>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </p>
-                        <span class="label label-default">{{ $punto->localidad['Localidad'] }}</span> 
-                        <span class="label label-default">{{ $punto->upz['Upz'] }}</span>
                     </li>
                 @endforeach
             </ul>
