@@ -48,7 +48,8 @@ $(function()
                                     '</div>'+
                                 '</div>'+
                             '</p>'+
-                            /*'<span class="label label-default capitalize">'+(e.recreopersona ? e.recreopersona['tipo']: 'Tipo no asignado')+'</span> '+*/
+                            '<span class="label label-default capitalize">'+(e.recreopersona ? e.recreopersona['contrato']: 'Tipo no asignado')+'</span> '+
+                            '<span class="label label-default capitalize">'+(e.recreopersona ? e.recreopersona['correo']: 'Correo no asignado')+'</span> '+
                         '</li>';
                 });
                 $('#personas').html(html);

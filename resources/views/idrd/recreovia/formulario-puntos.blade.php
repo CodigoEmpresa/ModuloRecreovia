@@ -93,16 +93,22 @@
 	        	<div class="row">
                     <div class="col-xs-12 form-group">
 	                    <label for="">Jornadas </label>
-                        <div class="input-group">
-                            <select name="select-jornadas" id="select-jornadas" class="form-control">
-                                @foreach($jornadas as $jornada)
-                                    <option value="{{ $jornada['Id_Jornada'] }}">{{ $jornada->toString() }}</option>
-                                @endforeach
-                            </select>
-                            <span class="input-group-btn">
-	                           <button class="btn btn-default" id="agregar-jornada" type="button"><span class="glyphicon glyphicon-plus"></span></button>
-                            </span>
-                        </div>
+                        @if($jornadas)
+                            <div class="input-group">
+                                <select name="select-jornadas" id="select-jornadas" class="form-control">
+                                    @foreach($jornadas as $jornada)
+                                        <option value="{{ $jornada['Id_Jornada'] }}">{{ $jornada->toString() }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="input-group-btn">
+    	                           <button class="btn btn-default" id="agregar-jornada" type="button"><span class="glyphicon glyphicon-plus"></span></button>
+                                </span>
+                            </div>
+                        @else
+                            <p class="form-control-static">
+                                Aun no has creado ninguna jornada para crear una has click <a href="{{ url('jornadas') }}">aquí</a>
+                            </p>
+                        @endif
 	                </div>
 	                <div class="col-xs-12">
 	                    <table id="table-jornadas" class="table table-striped">
@@ -126,8 +132,8 @@
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="Latitud" value="{{ $punto ? $punto['Latitud'] : old('Latitud') }}"> 
                         <input type="hidden" name="Longitud" value="{{ $punto ? $punto['Longitud'] : old('Longitud') }}"> 
-                        <input type="hidden" name="Id_Punto" value="{{ $punto ? $punto['Id_Punto'] : 0 }}"> 
-                        <input type="hidden" name="Jornadas" value="{{ $punto ? implode(',', $punto->jornadas()->lists('Jornadas.Id_Jornada')) : old('Jornadas') }}"> 
+                        <input type="hidden" name="Id_Punto" value="{{ $punto ? $punto['Id_Punto'] : 0 }}">
+                        <input type="hidden" name="Jornadas" value="{{ $punto ? implode(',', $punto->jornadas()->lists('Jornadas.Id_Jornada')->all()).',' : old('Jornadas') }}"> 
                         <button id="guardar" type="submit" class="btn btn-primary">Guardar</button> 
                         @if ($punto)
                             <a data-toggle="modal" data-target="#modal-eliminar" class="btn btn-danger">Eliminar</a>

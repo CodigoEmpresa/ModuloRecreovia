@@ -45,7 +45,8 @@
                                 </div>
                             </div>
                         </p>
-                        <!-- <span class="label label-default capitalize">{{ $persona->recreopersona['tipo'] }}</span> -->
+                        <span class="label label-default capitalize">{{ $persona->recreopersona['contrato'] }}</span>
+                        <span class="label label-default capitalize">{{ $persona->recreopersona['correo'] }}</span>
                     </li>
                 @endforeach
             </ul>

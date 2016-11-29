@@ -29,6 +29,8 @@ $(function()
         temp = temp.endsWith(',') ? temp.slice(0, -1) : temp;
         var jornadas_punto = temp.split(',');
 
+        console.log(jornadas_punto, temp);
+
         if (jornadas_punto.length > 0)
         {
             $.each(jornadas_punto, function(i, e)
@@ -47,6 +49,8 @@ $(function()
         {
             $(this).find('td.index').text(i);
         });
+
+        $('select[name="select-jornadas"]').focus();
     };
 
     $('select[name="Id_Localidad"]').on('change', function(e)
@@ -69,11 +73,10 @@ $(function()
     $('#agregar-jornada').on('click', function(e)
     {
         var id = $('select[name="select-jornadas"]').val();
-        if (id)
+        if (id && id != '')
             $('input[name="Jornadas"]').val($('input[name="Jornadas"]').val()+id+',');
 
         registrar_jornadas();
-        $('select[name="select-jornadas"]').focus();
     });
     
     $("#table-jornadas").delegate('a', 'click', function(e)
