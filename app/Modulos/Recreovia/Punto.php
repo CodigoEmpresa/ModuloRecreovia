@@ -33,5 +33,10 @@ class Punto extends Model
         return $this->belongsToMany('App\Modulos\Recreovia\Jornada', 'JornadasPuntos', 'Id_Punto', 'Id_Jornada');
     }
 
+    public function cronogramas()
+    {
+        return $this->hasMany('App\Modulos\Recreovia\Cronograma', 'Id_Punto');
+    }
+
     use SoftDeletes, CascadeSoftDeletes;
 }

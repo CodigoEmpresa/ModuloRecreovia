@@ -29,5 +29,15 @@ class Recreopersona extends Model
                     ->withPivot('tipo');
     }
 
+    public function cronogramas()
+    {
+        return $this->hasMany('App\Modulos\Recreovia\Cronograma', 'Id_Recreopersona');
+    }
+
+    public function sesiones()
+    {
+        return $this->hasMany('App\Modulos\Recreovia\Sesion', 'Id_Recreopersona');
+    }
+
     use SoftDeletes, CascadeSoftDeletes;
 }

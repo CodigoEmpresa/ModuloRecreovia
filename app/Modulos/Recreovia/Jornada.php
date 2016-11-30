@@ -22,6 +22,11 @@ class Jornada extends Model
         return $this->belongsToMany('App\Modulos\Recreovia\Punto', 'JornadasPuntos', 'Id_Jornada', 'Id_Punto');
     }
 
+    public function cronogramas()
+    {
+        return $this->hasMany('App\Modulos\Recreovia\Cronograma', 'Id_Jornada');
+    }
+
     public function validarDia($dia='')
     {
         $dias = explode(',', $this->Dias);
