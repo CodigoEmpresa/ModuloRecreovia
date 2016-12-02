@@ -2,6 +2,9 @@ $(function()
 {
 	var URL = $('#main').data('url');
 	var URL_LOCALIDADES = $('#main').data('url-localidades');
+	var latitud = parseFloat($('#latitud').val());
+	var longitud = parseFloat($('#longitud').val());
+	var zoom = 13;
 
 	$('input[name="Profesor"]').autocomplete({
 		source: function(request, response)
@@ -91,4 +94,26 @@ $(function()
 			});
 		}
 	});
+
+	$('select[name="id_punto"]').on('change', function(e)
+	{
+		var punto = $(this).val();
+
+		if(punto != '')
+		{
+			window.location.href = URL_LOCALIDADES+'/administrar/'+$(this).data('localidad')+'/'+$(this).val();
+		}
+	});
+
+	var map = new google.maps.Map($("#map").get(0), {
+      center: {lat: latitud, lng: longitud},
+      zoom: zoom
+    });
+
+    var marker = new google.maps.Marker({
+        map: map,
+        draggable: true,
+        animation: google.maps.Animation.DROP,
+        position: {lat: latitud, lng: longitud}
+    });
 });

@@ -10,10 +10,4 @@ class Localidad extends MLocalidad
     {
     	return $this->hasMany('App\Modulos\Recreovia\Punto', 'Id_Localidad');
     }
-
-    public function recreopersonas()
-    {
-    	return $this->belongsToMany('App\Modulos\Recreovia\Recreopersona', 'LocalidadesPersonas', 'Id_Localidad', 'Id_Recreopersona')
-    				->withPivot('tipo');
-    }
 }

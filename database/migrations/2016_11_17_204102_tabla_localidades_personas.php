@@ -12,15 +12,16 @@ class TablaLocalidadesPersonas extends Migration
      */
     public function up()
     {
-        Schema::create('LocalidadesPersonas', function(Blueprint $table)
+        Schema::create('PuntosPersonas', function(Blueprint $table)
         {
             $table->increments('Id');
             $table->integer('Id_Recreopersona')->unsigned();
-            $table->integer('Id_Localidad')->unsigned();
+            $table->integer('Id_Punto')->unsigned();
             $table->enum('tipo', ['Profesor', 'Gestor']);
             $table->timestamps();
             $table->softDeletes();
 
+            $table->foreign('Id_Punto')->references('Id_Punto')->on('Puntos')->onDelete('cascade');
             $table->foreign('Id_Recreopersona')->references('Id_Recreopersona')->on('Recreopersonas')->onDelete('cascade');
         });
     }
@@ -32,11 +33,12 @@ class TablaLocalidadesPersonas extends Migration
      */
     public function down()
     {
-        Schema::table('LocalidadesPersonas', function(Blueprint $table)
+        Schema::table('PuntosPersonas', function(Blueprint $table)
         {
             $table->dropForeign(['Id_Recreopersona']);
+            $table->dropForeign(['Id_Punto']);
         });
 
-        Schema::drop('LocalidadesPersonas');
+        Schema::drop('PuntosPersonas');
     }
 }
