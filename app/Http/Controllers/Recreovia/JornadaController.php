@@ -31,7 +31,7 @@ class JornadaController extends Controller {
 		];
 
 		$datos = [
-			'seccion' => 'Puntos',
+			'seccion' => 'Jornadas',
 			'lista'	=> view('idrd.recreovia.lista-jornadas', $lista)
 		];
 

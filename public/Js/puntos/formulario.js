@@ -29,8 +29,6 @@ $(function()
         temp = temp.endsWith(',') ? temp.slice(0, -1) : temp;
         var jornadas_punto = temp.split(',');
 
-        console.log(jornadas_punto, temp);
-
         if (jornadas_punto.length > 0)
         {
             $.each(jornadas_punto, function(i, e)

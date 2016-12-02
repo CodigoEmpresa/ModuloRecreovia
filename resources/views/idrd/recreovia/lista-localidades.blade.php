@@ -18,7 +18,7 @@
                                 {{ $localidad['Id_Localidad'].' - '.$localidad['Localidad'] }}
                             </a>
                             <p class="list-group-item-text">
-                                <small>Puntos: {{ count($localidad->puntos) }} Gestores: {{ count($localidad->recreopersonas()->where('Tipo', 'Gestor')->get()) }} Profesores: {{ count($localidad->recreopersonas()->where('Tipo', 'Profesor')->get()) }}</small>
+                                <small>Puntos: {{ count($localidad->puntos) }}</small>
                             </p>
                         </div>
                     </div>
