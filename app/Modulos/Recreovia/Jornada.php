@@ -11,6 +11,7 @@ class Jornada extends Model
 	protected $table = 'Jornadas';
     protected $primaryKey = 'Id_Jornada';
     protected $connection = 'mysql';
+    protected $cascadeDeletes = ['cronogramas'];
 
     public function __construct()
     {

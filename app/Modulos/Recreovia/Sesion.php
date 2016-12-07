@@ -8,7 +8,7 @@ use Iatstuti\Database\Support\CascadeSoftDeletes;
 
 class Sesion extends Model
 {
-	protected $table = 'Sesion';
+	protected $table = 'Sesiones';
     protected $primaryKey = 'Id';
     protected $connection = 'mysql';
 
@@ -21,4 +21,6 @@ class Sesion extends Model
     {
     	return $this->belongsTo('App\Modulos\Recreovia\Recreopersona', 'Id_Recreopersona');
     }
+
+    use SoftDeletes, CascadeSoftDeletes;
 }

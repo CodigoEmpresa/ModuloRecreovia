@@ -47,13 +47,13 @@
                         <div class="col-md-2 col-xs-6 {{ $errors->has('Fecha_Evento_Inicio') ? 'has-error' : '' }}">
                             <div class="form-group">
                                 <label for="">Fecha inicio evento</label>
-                                <input type="text" class="form-control" name="Fecha_Evento_Inicio" data-role="datepicker" placeholder="Fecha inicio evento" value="{{ $jornada ? $jornada['Fecha_Evento_Inicio'] : old('Fecha_Evento_Inicio') }}">
+                                <input type="text" class="form-control" name="Fecha_Evento_Inicio" data-role="datepicker" data-rel="fecha_inicio" placeholder="Fecha inicio evento" value="{{ $jornada ? $jornada['Fecha_Evento_Inicio'] : old('Fecha_Evento_Inicio') }}">
                             </div>
                         </div>
                         <div class="col-md-2 col-xs-6">
                             <div class="form-group {{ $errors->has('Fecha_Evento_Fin') ? 'has-error' : '' }}">
                                 <label for="">Fecha fin evento</label>
-                                <input type="text" class="form-control" name="Fecha_Evento_Fin" data-role="datepicker" placeholder="Fecha fin evento" value="{{ $jornada ? $jornada['Fecha_Evento_Fin'] : old('Fecha_Evento_Fin') }}">
+                                <input type="text" class="form-control" name="Fecha_Evento_Fin" data-role="datepicker" data-rel="fecha_fin" placeholder="Fecha fin evento" value="{{ $jornada ? $jornada['Fecha_Evento_Fin'] : old('Fecha_Evento_Fin') }}">
                             </div>
                         </div>
                         <div class="col-md-2 col-xs-6">
@@ -106,7 +106,7 @@
                             @if ($jornada)
                                 <a data-toggle="modal" data-target="#modal-eliminar" class="btn btn-danger">Eliminar</a>
                             @endif
-                            <a href="{{ url('jornadas') }}" class="btn btn-default">Cancelar</a>
+                            <a href="{{ url('jornadas') }}" class="btn btn-default">Volver</a>
                         </div>
                     </fieldset>
                 </form>

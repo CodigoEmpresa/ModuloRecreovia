@@ -52,6 +52,14 @@ Route::group(['middleware' => ['web']], function()
 	route::get('/jornadas/editar/{id}', 'Recreovia\JornadaController@editar');
 	route::get('/jornadas/eliminar/{id}', 'Recreovia\JornadaController@eliminar');
 	route::post('/jornadas/procesar', 'Recreovia\JornadaController@procesar');
+
+	route::get('/programacion/gestores', 'Recreovia\ProgramacionController@index');
+	route::get('/programacion/gestores/crear', 'Recreovia\ProgramacionController@crear');
+	route::get('/programacion/gestores/editar/{id_cronograma}', 'Recreovia\ProgramacionController@editar');
+	route::get('/programacion/gestores/eliminar/{id_cronograma}', 'Recreovia\ProgramacionController@eliminar');
+	route::post('/programacion/gestores/procesar', 'Recreovia\ProgramacionController@procesar');
+
+	route::get('/programacion/gestores/sesiones/{id_cronograma}, Recreovia\SesionController@sesionesGestor');
 });
 /*
 |--------------------------------------------------------------------------

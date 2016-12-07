@@ -8,19 +8,10 @@ use App\Modulos\Recreovia\Jornada;
 use App\Modulos\Parques\Localidad;
 use App\Modulos\Parques\Upz;
 use App\Http\Requests\GuardarPunto;
-use Idrd\Usuarios\Repo\PersonaInterface;
 use Idrd\Parques\Repo\LocalizacionInterface;
-use Validator;
 use Illuminate\Http\Request;
 
 class PuntosController extends Controller {
-	
-	protected $repositorio_personas;
-
-	public function __construct(PersonaInterface $repositorio_personas)
-	{
-		$this->repositorio_personas = $repositorio_personas;
-	}
 
 	public function index()
 	{
@@ -138,51 +129,6 @@ class PuntosController extends Controller {
 		$punto->delete();
 		return redirect('/puntos')->with(['status' => 'success']); 
 	}
-
-	/*private function sincronizarJornadas($jornadas, $punto)
-	{
-		$jornadas = json_decode($jornadas);
-		$jornadas_ids = [];
-
-		if(is_array($jornadas))
-		{
-			foreach ($jornadas as $j) 
-			{
-				if ($j->Id_Jornada != 0)
-					$jornadas_ids[] = $j->Id_Jornada;
-			}
-			
-			$jornadas_eliminadas = Jornada::where('Id_Punto', $punto['Id_Punto'])
-					->whereNotIn('Id_Jornada', $jornadas_ids)
-					->get();
-
-			foreach ($jornadas_eliminadas as $j) 
-			{
-				$j->delete();
-			}
-
-			foreach ($jornadas as $j) 
-			{
-				if ($j->Id_Jornada != 0)
-				{
-					$jornada = Jornada::find($j->Id_Jornada);
-				} else {
-					$jornada = new Jornada;
-				}
-
-				$jornada->Id_Punto = $punto['Id_Punto'];
-				$jornada->Jornada = $j->Jornada;
-				$jornada->Dias = $j->Dias;
-				$jornada->Inicio = $j->Inicio;
-				$jornada->Fin = $j->Fin;
-				$jornada->Tipo = $j->Tipo;
-				$jornada->Fecha_Evento_Inicio = $j->Fecha_Evento_Inicio;
-				$jornada->Fecha_Evento_Fin = $j->Fecha_Evento_Fin;
-
-				$jornada->save();
-			}
-		}
-	}*/
 
 	private function crearPunto($request)
 	{

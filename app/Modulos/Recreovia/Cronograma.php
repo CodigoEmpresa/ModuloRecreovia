@@ -8,9 +8,15 @@ use Iatstuti\Database\Support\CascadeSoftDeletes;
 
 class Cronograma extends Model
 {
-	protected $table = 'Cronograma';
+	protected $table = 'Cronogramas';
     protected $primaryKey = 'Id';
     protected $connection = 'mysql';
+    protected $cascadeDeletes = ['sesiones'];
+
+    public function __construct()
+    {
+        $this->table = config('database.connections.mysql.database').'.Cronogramas';
+    }
 
     public function sesiones()
     {
@@ -31,4 +37,11 @@ class Cronograma extends Model
     {
     	return $this->belongsTo('App\Modulos\Recreovia\Punto', 'Id_Punto');
     }
+
+    public function toString()
+    {
+        return 'Cronograma de sesiones desde '.$this->Desde.' hasta '.$this->Hasta;
+    }
+    
+    use SoftDeletes, CascadeSoftDeletes;
 }

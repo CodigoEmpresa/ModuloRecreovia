@@ -32,7 +32,6 @@ class GuardarJornada extends Request
         ];
     }
 
-
     public function messages()
     {
         return [

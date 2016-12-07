@@ -14,6 +14,11 @@
     margin-top: 0px !important;
 }
 
+.form-group .radio-inline,
+.form-group .checkbox-inline {
+	padding-top: 7px;
+}
+
 .capitalize:first-letter {
 	text-transform: capitalize;
 	color: #000;

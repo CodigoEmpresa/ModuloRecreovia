@@ -1,11 +1,5 @@
-@section('script')
-    @parent
-
-    <script src="{{ asset('public/Js/puntos/buscador.js') }}"></script>
-@stop
-    
 <div class="content">
-    <div id="main" class="row" data-url="{{ url('jornadas') }}">
+    <div id="main" class="row" data-url="{{ url('programacion') }}">
         @if ($status == 'success')
             <div id="alerta" class="col-xs-12">
                 <div class="alert alert-success alert-dismissible" role="alert">
@@ -15,16 +9,16 @@
             </div>
         @endif
         <div class="col-xs-12">
-            <a href="{{ url('/jornadas/crear/') }}" class="btn btn-primary" id="crear">Crear</a>
+            <a href="{{ url('/programacion/gestores/crear/') }}" class="btn btn-primary" id="crear">Crear</a>
         </div>
         <div class="col-xs-12"><br></div>
         <div class="col-xs-12">
             <ul class="list-group" id="principal">
-                @foreach($elementos as $jornada)
+                @foreach($elementos as $cronograma)
                     <li class="list-group-item">
                         <h5 class="list-group-item-heading">
-                            Jornada
-                            <a data-role="editar" href="{{ url('jornadas/editar/'.$jornada['Id_Jornada']) }}" class="pull-right btn btn-primary btn-xs">
+                            Cronograma
+                            <a data-role="editar" href="{{ url('/programacion/gestores/editar/'.$cronograma['Id']) }}" class="pull-right btn btn-primary btn-xs">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </a>
                         </h5>
@@ -33,13 +27,13 @@
                                 <div class="col-xs-12">
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-6 col-md-12">
-                                            <small>{{ $jornada->toString() }}</small>
+                                            <small>{{ $cronograma->toString().' de la '.$cronograma->jornada->toString() }}</small>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </p>
-                        <span class="label label-default">Puntos: {{ count($jornada->puntos) }}</span> 
+                        <span class="label label-default">Total sesiones: {{ count($cronograma->sesiones) }}</span> 
                     </li>
                 @endforeach
             </ul>

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Modulos\Recreovia\Recreopersona;
 use Idrd\Usuarios\Repo\PersonaInterface;
 use Illuminate\Http\Request;
 
@@ -44,7 +44,22 @@ class MainController extends Controller {
 			];
 
 			$_SESSION['Usuario'] = $user_array;
+			$_SESSION['Usuario']['Recreopersona'] = [];
+			$_SESSION['Usuario']['Roles'] = [];
+			
 			$persona = $this->repositorio_personas->obtener($_SESSION['Usuario'][0]);
+			$recreopersona = Recreopersona::with('puntos')->where('Id_Persona', $persona['Id_Persona'])->first();
+
+			if ($recreopersona)
+			{
+				$_SESSION['Usuario']['Recreopersona'] = $recreopersona;
+
+				foreach ($recreopersona->puntos as $punto)
+				{
+					if (!in_array($punto->pivot['tipo'], $_SESSION['Usuario']['Roles']))
+						$_SESSION['Usuario']['Roles'][] = $punto->pivot['tipo'];
+				}
+			}
 
 			$_SESSION['Usuario']['Persona'] = $persona;
 			$_SESSION['Usuario']['Permisos'] = $permisos;

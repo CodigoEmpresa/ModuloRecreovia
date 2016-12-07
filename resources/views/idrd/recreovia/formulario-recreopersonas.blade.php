@@ -150,7 +150,7 @@
                             @if ($persona && $persona->recreopersona)
                                 <a data-toggle="modal" data-target="#modal-eliminar" class="btn btn-danger">Eliminar</a>
                             @endif
-                            <a href="{{ url('profesores') }}" class="btn btn-default">Cancelar</a>
+                            <a href="{{ url('profesores') }}" class="btn btn-default">Volver</a>
                         </div>
                         <div class="col-xs-12"><br></div>
                     </fieldset>

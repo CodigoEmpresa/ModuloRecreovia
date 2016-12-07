@@ -138,7 +138,7 @@
                         @if ($punto)
                             <a data-toggle="modal" data-target="#modal-eliminar" class="btn btn-danger">Eliminar</a>
                         @endif
-                        <a href="{{ url('puntos') }}" class="btn btn-default">Cancelar</a> 
+                        <a href="{{ url('puntos') }}" class="btn btn-default">Volver</a> 
 	                </div>
                 </div>
 	        </div>

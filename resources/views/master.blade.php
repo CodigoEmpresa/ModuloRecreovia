@@ -81,16 +81,14 @@
               </li>
             @endif
             @if(
-              $_SESSION['Usuario']['Permisos']['administrar_jornadas']
-             )
-              <li class="dropdown {{ $seccion && in_array($seccion, ['Administrar jornadas']) ? 'active' : '' }}">
+              in_array('Gestor', $_SESSION['Usuario']['Roles'])
+            )
+              <li class="dropdown {{ $seccion && in_array($seccion, ['Programación']) ? 'active' : '' }}">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestores <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  @if($_SESSION['Usuario']['Permisos']['administrar_jornadas'])
-                    <li class="{{ $seccion && $seccion == 'Administrar jornadas' ? 'active' : '' }}">
-                      <a href="{{ url('jornadas/administrar') }}">Asignar jornadas</a>
-                    </li>
-                  @endif
+                  <li class="{{ $seccion && $seccion == 'Programación' ? 'active' : '' }}">
+                    <a href="{{ url('programacion/gestores') }}">Programación de sesiones</a>
+                  </li>
                 </ul>
               </li>
             @endif

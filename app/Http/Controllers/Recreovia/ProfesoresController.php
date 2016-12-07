@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Recreovia;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Modulos\Personas\Persona;
 use App\Modulos\Personas\Documento;
 use App\Modulos\Personas\Pais;
@@ -13,7 +11,7 @@ use App\Modulos\Parques\Localidad;
 use App\Modulos\Recreovia\Recreopersona;
 use App\Http\Requests\GuardarProfesor;
 use Idrd\Usuarios\Repo\PersonaInterface;
-use Validator;
+use Illuminate\Http\Request;
 
 class ProfesoresController extends Controller {
 	
