@@ -26,25 +26,25 @@
             <div class="row">
                 <form action="{{ url('programacion/gestores/sesion/procesar') }}" method="post">
                     <fieldset>
-                    	<div class="col-md-4 form-group">
+                        <div class="col-md-9 form-group">
+                            <label for="">Sesión</label>
+                            <input type="text" class="form-control" name="Objetivo_General">
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label for="">Materiales</label>
+                            <input type="text" class="form-control" name="Recursos">
+                        </div>
+                    	<div class="col-md-3 form-group">
                     		<label for="">Fecha</label>
                     		<input type="text" class="form-control" data-role="datepicker" name="Fecha">
                     	</div>
-                    	<div class="col-md-4 form-group">
+                    	<div class="col-md-3 form-group">
                     		<label for="">Inicio</label>
                     		<input type="text" class="form-control" data-role="clockpicker" data-rel="hora_inicio" name="Inicio">
                     	</div>
-                    	<div class="col-md-4 form-group">
+                    	<div class="col-md-3 form-group">
                     		<label for="">Fin</label>
                     		<input type="text" class="form-control" data-role="clockpicker" data-rel="hora_fin" name="Fin">
-                    	</div>
-                    	<div class="col-md-8 form-group">
-                    		<label for="">Sesión</label>
-                    		<input type="text" class="form-control" name="Objetivo_General">
-                    	</div>
-                    	<div class="col-md-4 form-group">
-                    		<label for="">Materiales</label>
-                    		<input type="text" class="form-control" name="Recursos">
                     	</div>
                     	<div class="col-md-12">
                     		<hr>

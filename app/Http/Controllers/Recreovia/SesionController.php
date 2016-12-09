@@ -29,8 +29,8 @@ class SesionController extends Controller {
 
 		$datos = [
 			'seccion' => 'Programación',
-			'formulario' => view('idrd.recreovia.formulario-sesiones.blade.php')
-		]
+			'formulario' => view('idrd.recreovia.formulario-sesiones', $formulario)
+		];
 
 		return view('form', $datos);
 	}
