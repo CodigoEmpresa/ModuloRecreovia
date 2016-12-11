@@ -19,7 +19,7 @@ class SesionController extends Controller {
 
 	public function crearSesionesGestor(Request $request, $id_cronograma)
 	{
-		$cronograma = Cronograma::with(['punto', 'punto.profesores.persona', 'jornada', 'sesiones'])
+		$cronograma = Cronograma::with(['punto', 'punto.profesores.persona', 'jornada', 'sesiones', 'sesiones.profesor'])
 											->find($id_cronograma);
 											
 		$formulario = [
@@ -59,6 +59,14 @@ class SesionController extends Controller {
 		return view('form', $datos);
 	}
 
+	public function eliminarSesionesGestor(Request $request, $id_cronograma, $id_sesion)
+	{
+		$sesion = Sesion::find($id_sesion);
+		$sesion->delete();
+
+		return redirect('/programacion/gestores/'.$request->input('Id_Cronograma').'/sesiones')->with(['status' => 'success']);
+	}
+
 	public function procesarGestor(GuardarSesionGestor $request)
 	{
 		if ($request->input('Id') == 0)
@@ -73,7 +81,7 @@ class SesionController extends Controller {
 		$sesion->Fecha = $request->input('Fecha');
 		$sesion->Inicio = $request->input('Inicio');
 		$sesion->Fin = $request->input('Fin');
-		$sesion->Estado = 'Gestor';
+		$sesion->Estado = 'Pendiente';
 
 		$sesion->save();
 

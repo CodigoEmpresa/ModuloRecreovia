@@ -28,7 +28,7 @@ class GuardarSesionGestor extends Request
             'Inicio' => 'required',
             'Fin' => 'required',
             'Id_Recreopersona' => 'required',
-            'Objetivo_General' => 'required',
+            'Objetivo_General' => 'required'
         ];
     }
 

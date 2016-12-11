@@ -94,8 +94,10 @@ $(function()
 		});
     });
 
-	$('input[data-fecha-inicio]').datepicker('option', 'minDate', $('input[data-fecha-inicio]').data('fecha-inicio'));
-	$('input[data-fecha-fin]').datepicker('option', 'maxDate', $('input[data-fecha-fin]').data('fecha-fin'));
+    if ($('input[data-fecha-inicio]').length)
+		$('input[data-fecha-inicio]').datepicker('option', 'minDate', $('input[data-fecha-inicio]').data('fecha-inicio'));
+    if ($('input[data-fecha-fin]').length)
+		$('input[data-fecha-fin]').datepicker('option', 'maxDate', $('input[data-fecha-fin]').data('fecha-fin'));
 
 	$('input[data-rel="fecha_inicio"]').on('change', function(e)
 	{
@@ -114,8 +116,10 @@ $(function()
         useCurrent:false
     });
 
-    $('input[data-hora-inicio]').data("DateTimePicker").minDate($('input[data-hora-inicio]').data('hora-inicio')).maxDate($('input[data-hora-fin]').data('hora-fin'));
-    $('input[data-hora-fin]').data("DateTimePicker").minDate($('input[data-hora-inicio]').data('hora-inicio')).maxDate($('input[data-hora-fin]').data('hora-fin'));
+    if ($('input[data-hora-inicio]').length)
+    	$('input[data-hora-inicio]').data("DateTimePicker").minDate($('input[data-hora-inicio]').data('hora-inicio')).maxDate($('input[data-hora-fin]').data('hora-fin'));
+    if ($('input[data-hora-fin]').length)
+    	$('input[data-hora-fin]').data("DateTimePicker").minDate($('input[data-hora-inicio]').data('hora-inicio')).maxDate($('input[data-hora-fin]').data('hora-fin'));
 
     $('input[data-rel="hora_inicio"]').on('dp.change', function (e) 
     {
