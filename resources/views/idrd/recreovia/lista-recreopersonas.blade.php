@@ -31,7 +31,7 @@
                 @foreach($elementos as $persona)
                     <li class="list-group-item">
                         <h5 class="list-group-item-heading">
-                            {{ strtoupper($persona['Primer_Apellido'].' '.$persona['Segundo_Apellido'].' '.$persona['Primer_Nombre'].' '.$persona['Segundo_Nombre']) }}
+                            {{ $persona->toString() }}
                             <a href="{{ url('profesores/editar/'.$persona['Id_Persona']) }}" class="pull-right btn btn-primary btn-xs">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </a>

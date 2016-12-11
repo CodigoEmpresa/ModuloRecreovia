@@ -11,4 +11,9 @@ class Persona extends MPersona
 		return $this->hasOne('App\Modulos\Recreovia\Recreopersona', 'Id_Persona')
 					->whereNull('deleted_at');
 	}
+
+	public function toString()
+	{
+		return strtoupper($this->Primer_Apellido.' '.$this->Segundo_Apellido.' '.$this->Primer_Nombre.' '.$this->Segundo_Nombre);
+	}
 }

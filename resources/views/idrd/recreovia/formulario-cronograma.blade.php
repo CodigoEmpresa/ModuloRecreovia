@@ -65,7 +65,7 @@
                     	</div>
                         @if ($cronograma)
                             <div class="col-md-12">
-                                <a href="{{ url('programacion/gestores/sesiones/'.$cronograma['Id']) }}" class="btn btn-link">Administrar sesiones</a>
+                                <a href="{{ url('programacion/gestores/'.$cronograma['Id'].'/sesiones') }}" class="btn btn-link">Administrar sesiones</a>
                             </div>
                         @endif
                         <div class="col-xs-12">
