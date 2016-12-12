@@ -95,18 +95,17 @@ class ProfesoresController extends Controller {
 		
 		if(!$strict)
 		{
-			$profesores = Persona::with('recreopersona', 'tipoDocumento')
+			$profesores = Persona::with('recreopersona', 'recreopersona.cronogramas', 'recreopersona.sesiones', 'recreopersona.puntos', 'tipoDocumento')
 								->whereIn('Id_Persona', $resultados->lists('Id_Persona'))
 								->get();
 		} else {
-			$profesores = Persona::with('recreopersona', 'tipoDocumento')
+			$profesores = Persona::with('recreopersona', 'recreopersona.cronogramas', 'recreopersona.sesiones', 'recreopersona.puntos', 'tipoDocumento')
 								->whereHas('recreopersona', function($query) use ($resultados)
 								{
 									$query->whereIn('Id_Persona', $resultados->lists('Id_Persona'));
 								})
 								->get();
 		}
-
 
 		return response()->json($profesores);
 	}

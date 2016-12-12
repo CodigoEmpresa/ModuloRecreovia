@@ -35,15 +35,20 @@ $(function()
                         '<div class="row">'+
                             '<div class="col-xs-12">'+
                                 '<div class="row">'+
-                                    '<div class="col-xs-12 col-sm-6 col-md-3">'+
-                                        '<small>Dirección: '+e['Direccion']+'</small>'+
+                                    '<div class="col-xs-12 col-sm-12 col-md-12">'+
+                                        '<small>'+
+                                            'Dirección: '+e['Direccion']+'. <br>'+
+                                            'Jornadas realizadas: '+e['jornadas'].length+'. <br>'+
+                                            'Total gestores: '+e['gestores'].length+'. <br>'+
+                                            'Total profesores: '+e['profesores'].length+'.'+
+                                        '</small>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>'+
                         '</div>'+
                     '</p>'+
-                    '<span class="label label-default">'+e.localidad['Localidad']+'</span> '+
-                    '<span class="label label-default">'+e.upz['Upz']+'</span>'+
+                    '<span class="label label-default">Localidad '+e.localidad['Id_Localidad']+' - '+e.localidad['Localidad']+'</span> '+
+                    '<span class="label label-default">UPZ '+e.upz['Id_Upz']+' - '+e.upz['Upz']+'</span>'+
                 '</li>';
     }
 

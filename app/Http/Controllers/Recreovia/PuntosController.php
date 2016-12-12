@@ -80,7 +80,7 @@ class PuntosController extends Controller {
 
 	public function buscar(Request $request, $key)
 	{
-		$puntos = Punto::with('localidad', 'upz')
+		$puntos = Punto::with('localidad', 'profesores', 'gestores', 'jornadas', 'upz')
 						->where('escenario', 'LIKE', '%'.$key.'%')
 						->get();
 

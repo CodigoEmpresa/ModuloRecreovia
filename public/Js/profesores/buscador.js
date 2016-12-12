@@ -43,7 +43,18 @@ $(function()
                                 '<div class="row">'+
                                     '<div class="col-xs-12">'+
                                         '<div class="row">'+
-                                            '<div class="col-xs-12 col-sm-6 col-md-3"><small>Identificación: '+e.tipo_documento['Nombre_TipoDocumento']+' '+e['Cedula']+'</small></div>'+
+                                            '<div class="col-xs-12 col-sm-12 col-md-12">'+
+                                                '<small>'+
+                                                    'Identificación: '+e.tipo_documento['Nombre_TipoDocumento']+' '+e['Cedula']+'. <br>'+
+                                                    (e.recreopersona ? 
+                                                        'Disponible en '+e.recreopersona['puntos'].length+' puntos. <br>'+
+                                                        'Ha realizado '+e.recreopersona['cronogramas'].length+' programaciones. <br>'+
+                                                        'Presente en '+e.recreopersona['sesiones'].length+' sesiones.' 
+                                                        : 
+                                                        'No hace parte del programa de recreovia'
+                                                    )+
+                                                '</small>'+
+                                            '</div>'+
                                         '</div>'+
                                     '</div>'+
                                 '</div>'+

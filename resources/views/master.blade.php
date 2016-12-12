@@ -74,7 +74,7 @@
                   @endif
                   @if($_SESSION['Usuario']['Permisos']['administrar_localidades'])
                     <li class="{{ $seccion && $seccion == 'Administrar localidades' ? 'active' : '' }}">
-                      <a href="{{ url('localidades/administrar') }}">Personal por puntos</a>
+                      <a href="{{ url('localidades/administrar') }}">Distribuir personal</a>
                     </li>
                   @endif
                 </ul>
