@@ -67,7 +67,7 @@
 						</div>
 						<div class="col-md-6 form-group">
 							<label for="">Materiales</label>
-							<textarea class="form-control" class="form-control" name="Recursos">{{ $sesion ? $sesion['Recursos'] : old('Recursos') }}"</textarea>
+							<textarea class="form-control" class="form-control" name="Recursos">{{ $sesion ? $sesion['Recursos'] : old('Recursos') }}</textarea>
 						</div>
 						<div class="col-md-12">
 							<hr>
@@ -77,6 +77,8 @@
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 							<input type="hidden" name="Id" value="{{ $sesion ? $sesion['Id'] : 0 }}">
 							<input type="hidden" name="Id_Cronograma" value="{{ $cronograma->Id }}">
+			                <input type="hidden" id="latitud" value="{{ $cronograma->punto ? $cronograma->punto['Latitud'] : 4.666575 }}">
+			                <input type="hidden" id="longitud" value="{{ $cronograma->punto ? $cronograma->punto['Longitud'] : -74.125786 }}">
 							<input type="submit" class="btn btn-primary" value="Guardar">
                             @if ($sesion)
                                 <a data-toggle="modal" data-target="#modal-eliminar" class="btn btn-danger">Eliminar</a>

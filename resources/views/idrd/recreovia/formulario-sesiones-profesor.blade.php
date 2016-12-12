@@ -77,7 +77,7 @@
 		                            </label>
 		                            @if($tipo == "gestor")
 			                            <label class="radio-inline">
-			                                <input type="radio" name="Estado" id="estado3" value="Aprovado" {{ ($sesion && $sesion['Estado'] == 'Aprovado') || old('Estado') == 'Aprovado' ? 'checked' : '' }}> Aprovado
+			                                <input type="radio" name="Estado" id="estado3" value="Aprobado" {{ ($sesion && $sesion['Estado'] == 'Aprobado') || old('Estado') == 'Aprobado' ? 'checked' : '' }}> Aprobado
 			                            </label>
 			                            <label class="radio-inline">
 			                                <input type="radio" name="Estado" id="estado4" value="Rechazado" {{ ($sesion && $sesion['Estado'] == 'Rechazado') || old('Estado') == 'Rechazado' ? 'checked' : '' }}> Rechazado
