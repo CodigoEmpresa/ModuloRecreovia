@@ -78,7 +78,7 @@ $(function()
 		var id_localidad = $('input[name="id"]').val();
 		var id_persona = $('input[name="'+tipo+'-seleccionado"]').val();
 
-		if (id_persona.length > 0)
+		if (id_persona != '')
 		{
 			$.post(
 				URL_LOCALIDADES+'/personal/agregar',

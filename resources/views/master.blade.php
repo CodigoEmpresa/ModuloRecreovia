@@ -83,11 +83,26 @@
             @if(
               in_array('Gestor', $_SESSION['Usuario']['Roles'])
             )
-              <li class="dropdown {{ $seccion && in_array($seccion, ['Programación']) ? 'active' : '' }}">
+              <li class="dropdown {{ $seccion && in_array($seccion, ['Programación', 'Sesiones gestor']) ? 'active' : '' }}">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestores <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li class="{{ $seccion && $seccion == 'Programación' ? 'active' : '' }}">
                     <a href="{{ url('programacion/gestores') }}">Programación de sesiones</a>
+                  </li>
+                  <li class="{{ $seccion && $seccion == 'Sesiones gestor' ? 'active' : '' }}">
+                    <a href="{{ url('programacion/gestor/sesiones') }}">Sesiones</a>
+                  </li>
+                </ul>
+              </li>
+            @endif
+            @if(
+              in_array('Profesor', $_SESSION['Usuario']['Roles'])
+            )
+              <li class="dropdown {{ $seccion && in_array($seccion, ['Sesiones profesor']) ? 'active' : '' }}">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Profesores <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li class="{{ $seccion && $seccion == 'Sesiones profesor' ? 'active' : '' }}">
+                    <a href="{{ url('programacion/profesor/sesiones') }}">Sesiones</a>
                   </li>
                 </ul>
               </li>

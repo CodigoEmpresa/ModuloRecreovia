@@ -63,11 +63,11 @@
 						</div>
 						<div class="col-md-6 form-group {{ $errors->has('Objetivo_General') ? 'has-error' : '' }}">
 							<label for="">Sesión</label>
-							<input type="text" class="form-control" name="Objetivo_General" value="{{ $sesion ? $sesion['Objetivo_General'] : old('Objetivo_General') }}">
+							<textarea class="form-control" name="Objetivo_General">{{ $sesion ? $sesion['Objetivo_General'] : old('Objetivo_General') }}</textarea>
 						</div>
-						<div class="col-md-6 form-group {{ $errors->has('Recursos') ? 'has-error' : '' }}">
+						<div class="col-md-6 form-group">
 							<label for="">Materiales</label>
-							<input type="text" class="form-control" name="Recursos" value="{{ $sesion ? $sesion['Recursos'] : old('Recursos') }}">
+							<textarea class="form-control" class="form-control" name="Recursos">{{ $sesion ? $sesion['Recursos'] : old('Recursos') }}"</textarea>
 						</div>
 						<div class="col-md-12">
 							<hr>

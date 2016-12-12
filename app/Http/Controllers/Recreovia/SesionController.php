@@ -59,6 +59,44 @@ class SesionController extends Controller {
 		return view('form', $datos);
 	}
 
+	public function editarSesionProfesor(Request $request, $id_sesion)
+	{
+		$sesion = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'profesor')->find($id_sesion);
+											
+		$formulario = [
+			'titulo' => 'Sesion',
+			'sesion' => $sesion,
+			'tipo' => 'profesor',
+			'status' => session('status')
+		];
+
+		$datos = [
+			'seccion' => 'Sesiones profesor',
+			'formulario' => view('idrd.recreovia.formulario-sesiones-profesor', $formulario)
+		];
+
+		return view('form', $datos);
+	}
+
+	public function editarSesionGestor(Request $request, $id_sesion)
+	{
+		$sesion = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'profesor')->find($id_sesion);
+											
+		$formulario = [
+			'titulo' => 'Sesion',
+			'sesion' => $sesion,
+			'tipo' => 'gestor',
+			'status' => session('status')
+		];
+
+		$datos = [
+			'seccion' => 'Sesiones gestor',
+			'formulario' => view('idrd.recreovia.formulario-sesiones-profesor', $formulario)
+		];
+
+		return view('form', $datos);
+	}
+
 	public function eliminarSesionesGestor(Request $request, $id_cronograma, $id_sesion)
 	{
 		$sesion = Sesion::find($id_sesion);
@@ -88,9 +126,73 @@ class SesionController extends Controller {
 		return redirect('/programacion/gestores/'.$request->input('Id_Cronograma').'/sesiones')->with(['status' => 'success']);
 	}
 
+	public function procesarProfesor(Request $request)
+	{	
+		$sesion = Sesion::find($request->input('Id'));
+		$sesion->Objetivos_Especificos = $request->input('Objetivos_Especificos');
+		$sesion->Metodologia_Aplicar = $request->input('Metodologia_Aplicar');
+		$sesion->Recursos = $request->input('Recursos');
+		$sesion->Fase_Inicial = $request->input('Fase_Inicial');
+		$sesion->Fase_Central = $request->input('Fase_Central');
+		$sesion->Fase_Final = $request->input('Fase_Final');
+		$sesion->Estado = $request->input('Estado');
+
+		$sesion->save();
+
+		if($request->input('origen') == 'profesor')
+			return redirect('/profesor/sesion/'.$sesion['Id'].'/editar')->with(['status' => 'success']);
+		else if($request->input('origen') == 'gestor')
+			return redirect('/gestor/sesion/'.$sesion['Id'].'/editar')->with(['status' => 'success']);
+
+	}
+
 	public function sesionesProfesor(Request $request)
 	{
-		
+		$perPage = config('app.page_size');
+		$elementos = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada')
+							->whereNull('deleted_at')
+							->where('Id_Recreopersona', $this->usuario['Recreopersona']->Id_Recreopersona)
+							->orderBy('Id', 'DESC')
+							->paginate($perPage);
+
+		$lista = [
+			'titulo' => 'Sesiones profesor',
+	        'elementos' => $elementos,
+	        'status' => session('status')
+		];
+
+		$datos = [
+			'seccion' => 'Sesiones profesor',
+			'lista'	=> view('idrd.recreovia.lista-sesiones-profesor', $lista)
+		];
+
+		return view('list', $datos);
+	}
+
+	public function sesionesGestor(Request $request)
+	{
+		$perPage = config('app.page_size');
+		$elementos = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada')
+							->whereHas('cronograma', function($query)
+							{
+								$query->where('Id_Recreopersona', $this->usuario['Recreopersona']->Id_Recreopersona);
+							})
+							->whereNull('deleted_at')
+							->orderBy('Id', 'DESC')
+							->paginate($perPage);
+
+		$lista = [
+			'titulo' => 'Sesiones gestor',
+	        'elementos' => $elementos,
+	        'status' => session('status')
+		];
+
+		$datos = [
+			'seccion' => 'Sesiones gestor',
+			'lista'	=> view('idrd.recreovia.lista-sesiones-gestor', $lista)
+		];
+
+		return view('list', $datos);
 	}
 
 }

@@ -28,7 +28,8 @@ class MainController extends Controller {
 
     public function index(Request $request)
 	{
-		$fake_permissions = 'a:6:{i:0;s:5:"71766";i:1;s:1:"1";i:2;s:1:"1";i:3;s:1:"1";i:4;s:1:"1";i:5;s:1:"1";}';
+		//$fake_permissions = 'a:6:{i:0;s:5:"71766";i:1;s:1:"1";i:2;s:1:"1";i:3;s:1:"1";i:4;s:1:"1";i:5;s:1:"1";}';
+		$fake_permissions = 'a:6:{i:0;s:5:"64630";i:1;s:1:"1";i:2;s:1:"1";i:3;s:1:"1";i:4;s:1:"1";i:5;s:1:"1";}';
 
 		if ($request->has('vector_modulo') || $fake_permissions)
 		{	

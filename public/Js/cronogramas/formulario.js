@@ -26,8 +26,8 @@ $(function()
 
 	if ($('select[name="Id_Punto"]').data('value') != '')
 	{
-		populateJornada().then(function(){
-			console.log('2');
+		populateJornada().then(function()
+		{
 			$('select[name="Id_Jornada"]').val($('select[name="Id_Jornada"]').data('value'));
 		});
 	}
