@@ -27,12 +27,16 @@
         </div>
         <div class="col-xs-12"><br></div>
         <div class="col-xs-12">
+            Total de puntos registrados: {{ count($elementos) }}
+        </div>
+        <div class="col-xs-12"><br></div>
+        <div class="col-xs-12">
             <ul class="list-group" id="principal">
                 @foreach($elementos as $punto)
                     <li class="list-group-item">
                         <h5 class="list-group-item-heading">
                             {{ strtoupper($punto['Escenario']) }}
-                            <a data-role="editar" href="{{ url('puntos/editar/'.$punto['Id_Punto']) }}" class="pull-right btn btn-primary btn-xs">
+                            <a data-role="editar" href="{{ url('puntos/'.$punto['Id_Punto'].'/editar') }}" class="pull-right btn btn-primary btn-xs">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </a>
                         </h5>
@@ -40,15 +44,20 @@
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="row">
-                                        <div class="col-xs-12 col-sm-6 col-md-3">
-                                            <small>Dirección: {{ $punto['Direccion'] }}</small>
+                                        <div class="col-xs-12 col-sm-12 col-md-12">
+                                            <small>
+                                                Dirección: {{ $punto['Direccion'] }}. <br>
+                                                Jornadas realizadas: {{ count($punto->jornadas) }}. <br>
+                                                Total gestores: {{ count($punto->gestores) }}. <br>
+                                                Total profesores: {{ count($punto->profesores) }}.
+                                            </small>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </p>
-                        <span class="label label-default">{{ $punto->localidad['Localidad'] }}</span> 
-                        <span class="label label-default">{{ $punto->upz['Upz'] }}</span>
+                        <span class="label label-default">Localidad {{ $punto->localidad['Id_Localidad'].' - '.$punto->localidad['Localidad'] }}</span> 
+                        <span class="label label-default">UPZ {{ $punto->Upz['Id_Upz'].' - '.$punto->upz['Upz'] }}</span>
                     </li>
                 @endforeach
             </ul>

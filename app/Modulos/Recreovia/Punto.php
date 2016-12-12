@@ -60,7 +60,7 @@ class Punto extends Model
 
     public function toString()
     {
-        return $this->Escenario.' / '.$this->Direccion;
+        return $this->Escenario;
     }
 
     use SoftDeletes, CascadeSoftDeletes;

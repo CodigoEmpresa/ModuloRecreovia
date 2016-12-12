@@ -97,7 +97,7 @@ class JornadaController extends Controller {
 		$jornada->Tipo = $request['Tipo'];
 		$jornada->save();
 
-       	return redirect('/jornadas/editar/'.$jornada['Id_Jornada'])->with(['status' => 'success']);
+       	return redirect('/jornadas/'.$jornada->Id_Jornada.'/editar')->with(['status' => 'success']);
 	}
 
 	private function crearJornada($request)

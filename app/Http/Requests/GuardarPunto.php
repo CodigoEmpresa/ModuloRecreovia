@@ -35,4 +35,14 @@ class GuardarPunto extends Request
             'Longitud' => 'required'
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'Cod_IDRD.required' => 'El campo código IDRD es requerido',
+            'Cod_Recreovia.required' => 'El campo código recreovia es requerido',
+            'Id_Upz.required' => 'El campo upz es requerido',
+            'Id_Localidad.required' => 'El campo localidad es requerido'
+        ];
+    }
 }

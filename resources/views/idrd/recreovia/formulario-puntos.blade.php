@@ -157,7 +157,7 @@
                 <p>Realmente desea eliminar este punto de recreovia.</p>
             </div>
             <div class="modal-footer">
-                <a href="{{ url('puntos/eliminar/'.$punto['Id_Punto']) }}" class="btn btn-danger">Eliminar</a>
+                <a href="{{ url('puntos/'.$punto['Id_Punto'].'/eliminar/') }}" class="btn btn-danger">Eliminar</a>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
             </div>
         </div>

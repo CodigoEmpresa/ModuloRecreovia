@@ -16,7 +16,7 @@ class PuntosController extends Controller {
 	public function index()
 	{
 		$perPage = config('app.page_size');
-		$elementos = Punto::with('puntos','localidad', 'upz')
+		$elementos = Punto::with('localidad', 'profesores', 'gestores', 'jornadas', 'upz')
 							->whereNull('deleted_at')
 							->orderBy('Cod_IDRD', 'ASC')
 							->paginate($perPage);
@@ -119,7 +119,7 @@ class PuntosController extends Controller {
 
 		$punto->jornadas()->sync(explode(',', $jornadas));
 
-       	return redirect('/puntos/editar/'.$punto['Id_Punto'])->with(['status' => 'success']);
+       	return redirect('/puntos/'.$punto->Id_Punto.'/editar')->with(['status' => 'success']);
 	}
 
 	public function eliminar(Request $request, $id)
