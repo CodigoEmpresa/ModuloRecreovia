@@ -59,22 +59,22 @@
                 <ul class="dropdown-menu">
                   @if($_SESSION['Usuario']['Permisos']['administrar_jornadas'])
                     <li class="{{ $seccion && $seccion == 'Jornadas' ? 'active' : '' }}">
-                      <a href="{{ url('jornadas') }}">Jornadas</a>
-                    </li>
-                  @endif
-                  @if($_SESSION['Usuario']['Permisos']['administrar_localidades'])
-                    <li class="{{ $seccion && $seccion == 'Administrar localidades' ? 'active' : '' }}">
-                      <a href="{{ url('localidades/administrar') }}">Localidades</a>
-                    </li>
-                  @endif
-                  @if($_SESSION['Usuario']['Permisos']['editar_profesores'])
-                    <li class="{{ $seccion && $seccion == 'Profesores' ? 'active' : '' }}">
-                      <a href="{{ url('profesores') }}">Profesores</a>
+                      <a href="{{ url('jornadas') }}">Gestión de jornadas</a>
                     </li>
                   @endif
                   @if($_SESSION['Usuario']['Permisos']['editar_puntos'])
                     <li class="{{ $seccion && $seccion == 'Puntos' ? 'active' : '' }}">
-                      <a href="{{ url('puntos') }}">Puntos</a>
+                      <a href="{{ url('puntos') }}">Puntos de recreovía</a>
+                    </li>
+                  @endif
+                  @if($_SESSION['Usuario']['Permisos']['editar_profesores'])
+                    <li class="{{ $seccion && $seccion == 'Profesores' ? 'active' : '' }}">
+                      <a href="{{ url('profesores') }}">Profesores y Gestores</a>
+                    </li>
+                  @endif
+                  @if($_SESSION['Usuario']['Permisos']['administrar_localidades'])
+                    <li class="{{ $seccion && $seccion == 'Administrar localidades' ? 'active' : '' }}">
+                      <a href="{{ url('localidades/administrar') }}">Personal por puntos</a>
                     </li>
                   @endif
                 </ul>

@@ -25,6 +25,12 @@ Route::any('/', 'MainController@index');
 Route::group(['middleware' => ['web']], function() 
 {
 	Route::get('/welcome', 'MainController@welcome');
+
+	route::get('/jornadas', 'Recreovia\JornadaController@index');
+	route::get('/jornadas/crear', 'Recreovia\JornadaController@crear');
+	route::get('/jornadas/{id}/editar', 'Recreovia\JornadaController@editar');
+	route::get('/jornadas/{id}/eliminar', 'Recreovia\JornadaController@eliminar');
+	route::post('/jornadas/procesar', 'Recreovia\JornadaController@procesar');
 	
 	Route::get('/profesores', 'Recreovia\ProfesoresController@index');
 	Route::get('/profesores/service/buscar/{key}/{strict?}', 'Recreovia\ProfesoresController@buscar');
@@ -46,12 +52,6 @@ Route::group(['middleware' => ['web']], function()
 	Route::get('/localidades/administrar/{id_localidad}/{id_punto?}', 'Recreovia\LocalidadController@editar');
 	Route::get('/localidades/{id_localidad}/punto/{id_punto}/personal/{id_persona}/remover', 'Recreovia\LocalidadController@removerPersonal');
 	Route::post('/localidades/personal/agregar', 'Recreovia\LocalidadController@agregarPersonal');
-
-	route::get('/jornadas', 'Recreovia\JornadaController@index');
-	route::get('/jornadas/crear', 'Recreovia\JornadaController@crear');
-	route::get('/jornadas/editar/{id}', 'Recreovia\JornadaController@editar');
-	route::get('/jornadas/eliminar/{id}', 'Recreovia\JornadaController@eliminar');
-	route::post('/jornadas/procesar', 'Recreovia\JornadaController@procesar');
 
 	route::get('/programacion/gestores', 'Recreovia\ProgramacionController@index');
 	route::get('/programacion/gestores/crear', 'Recreovia\ProgramacionController@crear');

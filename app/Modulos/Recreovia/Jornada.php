@@ -47,7 +47,7 @@ class Jornada extends Model
             $periodo = 'el dia '.$this->Fecha_Evento_Inicio;
         
         if($this->Dias)
-            $periodo_dias = (count(explode(',', $this->Dias)) > 1 ? 'los dias ' : 'el dia ').$this->Dias;
+            $periodo_dias = (count(explode(',', $this->Dias)) > 1 ? 'los dias ' : 'el dia ').strrev(preg_replace(strrev("/,/"), strrev(' y '), strrev($this->Dias), 1));
 
         switch($this->Jornada)
         {

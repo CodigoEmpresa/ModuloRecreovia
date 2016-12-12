@@ -126,7 +126,7 @@
                     <p>Realmente desea eliminar esta jornada.</p>
                 </div>
                 <div class="modal-footer">
-                    <a href="{{ url('jornadas/eliminar/'.$jornada['Id_Jornada']) }}" class="btn btn-danger">Eliminar</a>
+                    <a href="{{ url('jornadas/'.$jornada['Id_Jornada'].'/eliminar') }}" class="btn btn-danger">Eliminar</a>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                 </div>
             </div>

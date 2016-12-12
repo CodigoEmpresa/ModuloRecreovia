@@ -19,12 +19,16 @@
         </div>
         <div class="col-xs-12"><br></div>
         <div class="col-xs-12">
+            Total de jornadas registradas: {{ count($elementos) }}
+        </div>
+        <div class="col-xs-12"><br></div>
+        <div class="col-xs-12">
             <ul class="list-group" id="principal">
                 @foreach($elementos as $jornada)
                     <li class="list-group-item">
                         <h5 class="list-group-item-heading">
                             Jornada
-                            <a data-role="editar" href="{{ url('jornadas/editar/'.$jornada['Id_Jornada']) }}" class="pull-right btn btn-primary btn-xs">
+                            <a data-role="editar" href="{{ url('jornadas/'.$jornada['Id_Jornada'].'/editar') }}" class="pull-right btn btn-primary btn-xs">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </a>
                         </h5>
@@ -33,13 +37,15 @@
                                 <div class="col-xs-12">
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-6 col-md-12">
-                                            <small>{{ $jornada->toString() }}</small>
+                                            <small>
+                                                Descripción: {{ $jornada->toString() }}. <br>
+                                            </small>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </p>
-                        <span class="label label-default">Puntos: {{ count($jornada->puntos) }}</span> 
+                        <span class="label label-default">Disponible en {{ count($jornada->puntos) }} puntos</span> 
                     </li>
                 @endforeach
             </ul>
