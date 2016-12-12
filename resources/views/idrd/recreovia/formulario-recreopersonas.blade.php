@@ -159,7 +159,22 @@
         </div>
         <div class="col-xs-12 col-md-6">
             <div class="form-group">
-                <label for="">Últimas jornadas asignadas</label>
+                <label for="">Otros datos: </label>
+            </div>
+            <div class="row">
+                @if ($persona && $persona->recreopersona)
+                    <div class="col-md-12">
+                        <small>
+                            Disponible en {{ count($persona->recreopersona->puntos) }} puntos. <br>
+                            Ha realizado {{ count($persona->recreopersona->cronogramas) }} programaciones. <br>
+                            Presente en {{ count($persona->recreopersona->sesiones) }} sesiones.
+                        </small>
+                    </div>
+                @else
+                    <div class="col-md-12">
+                        <small>No disponible.</small>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
@@ -176,7 +191,7 @@
                     <p>Realmente desea eliminar este usuario de recreovia.</p>
                 </div>
                 <div class="modal-footer">
-                    <a href="{{ url('profesores/eliminar/'.$persona['Id_Persona']) }}" class="btn btn-danger">Eliminar</a>
+                    <a href="{{ url('profesores/'.$persona['Id_Persona'].'/eliminar') }}" class="btn btn-danger">Eliminar</a>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                 </div>
             </div>

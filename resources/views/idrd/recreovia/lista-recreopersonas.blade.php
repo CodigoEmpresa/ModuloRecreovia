@@ -27,12 +27,16 @@
         </div>
         <div class="col-xs-12"><br></div>
         <div class="col-xs-12">
+            Total de personas en recreovía: {{ count($elementos) }}
+        </div>
+        <div class="col-xs-12"><br></div>
+        <div class="col-xs-12">
             <ul class="list-group" id="personas">
                 @foreach($elementos as $persona)
                     <li class="list-group-item">
                         <h5 class="list-group-item-heading">
                             {{ $persona->toString() }}
-                            <a href="{{ url('profesores/editar/'.$persona['Id_Persona']) }}" class="pull-right btn btn-primary btn-xs">
+                            <a href="{{ url('profesores/'.$persona['Id_Persona'].'/editar') }}" class="pull-right btn btn-primary btn-xs">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </a>
                         </h5>
@@ -40,7 +44,14 @@
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="row">
-                                        <div class="col-xs-12 col-sm-6 col-md-3"><small>Identificación: {{ $persona->tipoDocumento['Nombre_TipoDocumento'].' '.$persona['Cedula'] }}</small></div>
+                                        <div class="col-xs-12 col-sm-12 col-md-12">
+                                            <small>
+                                                Identificación: {{ $persona->tipoDocumento['Nombre_TipoDocumento'].' '.$persona['Cedula'] }}. <br>
+                                                Disponible en {{ count($persona->recreopersona->puntos) }} puntos. <br>
+                                                Ha realizado {{ count($persona->recreopersona->cronogramas) }} programaciones. <br>
+                                                Presente en {{ count($persona->recreopersona->sesiones) }} sesiones.
+                                            </small>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

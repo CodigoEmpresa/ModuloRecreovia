@@ -44,8 +44,8 @@ Route::group(['middleware' => ['web']], function()
 	Route::get('/profesores/service/buscar/{key}/{strict?}', 'Recreovia\ProfesoresController@buscar');
 	Route::get('/profesores/service/obtener/{id}', 'Recreovia\ProfesoresController@obtener');
 	Route::get('/profesores/crear', 'Recreovia\ProfesoresController@crear');
-	Route::get('/profesores/editar/{id}', 'Recreovia\ProfesoresController@editar');
-	Route::get('/profesores/eliminar/{id}', 'Recreovia\ProfesoresController@eliminar');
+	Route::get('/profesores/{id}/editar', 'Recreovia\ProfesoresController@editar');
+	Route::get('/profesores/{id}/eliminar', 'Recreovia\ProfesoresController@eliminar');
 	Route::post('/profesores/procesar', 'Recreovia\ProfesoresController@procesar');
 
 	Route::get('/localidades/administrar', 'Recreovia\LocalidadController@index');

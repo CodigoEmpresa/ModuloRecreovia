@@ -27,7 +27,7 @@ $(function()
     	return '<li class="list-group-item">'+
                     '<h5 class="list-group-item-heading">'+
                         ''+e['Escenario'].toUpperCase()+''+
-                        '<a data-role="editar" data-rel="'+e['Id_Punto']+'" class="pull-right btn btn-primary btn-xs">'+
+                        '<a data-role="editar" data-rel="'+e['Id_Punto']+'" href="'+(URL+'/'+e['Id_Punto']+'/editar')+'" class="pull-right btn btn-primary btn-xs">'+
                             '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>'+
                         '</a>'+
                     '</h5>'+

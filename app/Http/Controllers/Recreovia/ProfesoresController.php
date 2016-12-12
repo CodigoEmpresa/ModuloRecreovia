@@ -26,6 +26,7 @@ class ProfesoresController extends Controller {
 	{
 		$perPage = config('app.page_size');
 		$elementos = Persona::has('recreopersona')
+							->with('recreopersona', 'recreopersona.cronogramas', 'recreopersona.sesiones', 'recreopersona.puntos')
 							->orderBy('Cedula', 'ASC')
 							->paginate($perPage);
 
@@ -66,7 +67,7 @@ class ProfesoresController extends Controller {
 	public function editar(Request $request, $id)
 	{
 		$persona = $this->repositorio_personas->obtener($id);
-		$profesor = Persona::with('recreopersona', 'tipoDocumento')
+		$profesor = Persona::with('recreopersona', 'recreopersona.cronogramas', 'recreopersona.sesiones', 'recreopersona.puntos', 'tipoDocumento')
 						->where('Id_Persona', $persona->Id_Persona)
 						->first();
 
@@ -160,6 +161,6 @@ class ProfesoresController extends Controller {
 			$profesor->recreopersona()->save($recreopersona);
 		}
 
-        return redirect('/profesores/editar/'.$persona['Id_Persona'])->with(['status' => 'success']);
+        return redirect('/profesores/'.$persona['Id_Persona'].'/editar')->with(['status' => 'success']);
 	}
 }

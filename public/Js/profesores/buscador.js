@@ -35,7 +35,7 @@ $(function()
                     html += '<li class="list-group-item">'+
                             '<h5 class="list-group-item-heading">'+
                                 ''+e['Primer_Apellido'].toUpperCase()+' '+e['Segundo_Apellido'].toUpperCase()+' '+e['Primer_Nombre'].toUpperCase()+' '+e['Segundo_Nombre'].toUpperCase()+''+
-                                '<a href="'+URL_PROFESORES+'/editar/'+e['Id_Persona']+'" class="pull-right btn btn-primary btn-xs">'+
+                                '<a href="'+URL_PROFESORES+'/'+e['Id_Persona']+'/editar" class="pull-right btn btn-primary btn-xs">'+
                                     '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>'+
                                 '</a>'+
                             '</h5>'+
