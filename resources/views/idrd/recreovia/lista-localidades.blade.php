@@ -14,7 +14,7 @@
                 @foreach($localidades as $localidad)
                     <div class="col-md-4">
                         <div class="squad-grid">
-                            <a href="{{ url('localidades/administrar/'.$localidad['Id_Localidad']) }}" class="btn-link">
+                            <a href="{{ url('localidades/'.$localidad['Id_Localidad'].'/administrar') }}" class="btn-link">
                                 {{ $localidad['Id_Localidad'].' - '.$localidad['Localidad'] }}
                             </a>
                             <p class="list-group-item-text">

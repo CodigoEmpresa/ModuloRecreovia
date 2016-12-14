@@ -137,5 +137,13 @@
                 <div id="map"></div>
             </div>
         </div>
+        <div class="col-md-12">
+            <hr>
+        </div>
+        <div class="vol-md-12">
+            <div class="col-md-12">
+                <a href="{{ url('localidades/administrar') }}" class="btn btn-default">Volver</a>
+            </div>
+        </div>
     </div>
 </div>

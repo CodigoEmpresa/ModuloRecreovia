@@ -59,7 +59,7 @@ class LocalidadController extends Controller {
 			$punto->recreopersonas()->attach($request->input('id_persona'), ['tipo' => $request->input('tipo')]);
 		}
 
-		return redirect('/localidades/administrar/'.$request->input('id_localidad').'/'.$request->input('id_punto'))->with(['status' => 'success']); 
+		return redirect('/localidades/'.$request->input('id_localidad').'/administrar/'.$request->input('id_punto'))->with(['status' => 'success']); 
 	}
 
 	public function removerPersonal(Request $request, $id_localidad, $id_punto, $id_persona)
@@ -71,6 +71,6 @@ class LocalidadController extends Controller {
 			$punto->recreopersonas()->detach($id_persona);
 		}
 
-		return redirect('/localidades/administrar/'.$id_localidad.'/'.$id_punto)->with(['status' => 'success']); 
+		return redirect('/localidades/'.$id_localidad.'/administrar/'.$id_punto)->with(['status' => 'success']); 
 	}
 }

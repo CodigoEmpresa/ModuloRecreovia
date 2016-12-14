@@ -101,7 +101,7 @@ $(function()
 
 		if(punto != '')
 		{
-			window.location.href = URL_LOCALIDADES+'/administrar/'+$(this).data('localidad')+'/'+$(this).val();
+			window.location.href = URL_LOCALIDADES+'/'+$(this).data('localidad')+'/administrar/'+$(this).val();
 		}
 	});
 
