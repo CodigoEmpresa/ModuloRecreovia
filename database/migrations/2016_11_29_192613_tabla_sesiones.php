@@ -20,7 +20,7 @@ class TablaSesiones extends Migration
             $table->integer('Id_Recreopersona')->unsigned();
             $table->date('Desde');
             $table->date('Hasta');
-            $table->enum('recreovia', ['RESD', 'RESN']);
+            $table->enum('recreovia', ['RESD', 'RESN', 'REFS']);
             $table->timestamps();
             $table->softDeletes();
 

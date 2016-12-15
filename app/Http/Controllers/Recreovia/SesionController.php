@@ -72,7 +72,7 @@ class SesionController extends Controller {
 
 		$datos = [
 			'seccion' => 'Sesiones profesor',
-			'formulario' => view('idrd.recreovia.formulario-sesiones-profesor', $formulario)
+			'formulario' => view('idrd.recreovia.formulario-sesiones-detalles', $formulario)
 		];
 
 		return view('form', $datos);
@@ -91,7 +91,7 @@ class SesionController extends Controller {
 
 		$datos = [
 			'seccion' => 'Sesiones gestor',
-			'formulario' => view('idrd.recreovia.formulario-sesiones-profesor', $formulario)
+			'formulario' => view('idrd.recreovia.formulario-sesiones-detalles', $formulario)
 		];
 
 		return view('form', $datos);
@@ -102,15 +102,19 @@ class SesionController extends Controller {
 		$sesion = Sesion::find($id_sesion);
 		$sesion->delete();
 
-		return redirect('/programacion/gestores/'.$request->input('Id_Cronograma').'/sesiones')->with(['status' => 'success']);
+		return redirect('/gestores/'.$request->input('Id_Cronograma').'/sesiones')->with(['status' => 'success']);
 	}
 
 	public function procesarGestor(GuardarSesionGestor $request)
 	{
 		if ($request->input('Id') == 0)
+		{
 			$sesion = new Sesion;
-		else
+			$nuevo = true;
+		} else {
 			$sesion = Sesion::find($request->input('Id'));
+			$nuevo = false;
+		}
 
 		$sesion->Id_Cronograma = $request->input('Id_Cronograma');
 		$sesion->Id_Recreopersona = $request->input('Id_Recreopersona');
@@ -119,11 +123,11 @@ class SesionController extends Controller {
 		$sesion->Fecha = $request->input('Fecha');
 		$sesion->Inicio = $request->input('Inicio');
 		$sesion->Fin = $request->input('Fin');
-		$sesion->Estado = 'Pendiente';
+		$sesion->Estado = !$nuevo ? : 'Pendiente';
 
 		$sesion->save();
 
-		return redirect('/programacion/gestores/'.$request->input('Id_Cronograma').'/sesiones')->with(['status' => 'success']);
+		return redirect('/gestores/'.$request->input('Id_Cronograma').'/sesiones')->with(['status' => 'success']);
 	}
 
 	public function procesarProfesor(Request $request)
@@ -140,9 +144,9 @@ class SesionController extends Controller {
 		$sesion->save();
 
 		if($request->input('origen') == 'profesor')
-			return redirect('/profesor/sesion/'.$sesion['Id'].'/editar')->with(['status' => 'success']);
+			return redirect('/profesores/sesiones/'.$sesion['Id'].'/editar')->with(['status' => 'success']);
 		else if($request->input('origen') == 'gestor')
-			return redirect('/gestor/sesion/'.$sesion['Id'].'/editar')->with(['status' => 'success']);
+			return redirect('/gestores/sesiones/'.$sesion['Id'].'/editar')->with(['status' => 'success']);
 
 	}
 

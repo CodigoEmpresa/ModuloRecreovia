@@ -15,7 +15,7 @@
                      <li class="list-group-item">
                         <h5 class="list-group-item-heading">
                             Sesión {{ $sesion->Objetivo_General }}
-                            <a data-role="editar" href="{{ url('/profesor/sesion/'.$sesion['Id'].'/editar') }}" class="pull-right btn btn-primary btn-xs">
+                            <a data-role="editar" href="{{ url('/profesores/sesiones/'.$sesion['Id'].'/editar') }}" class="pull-right btn btn-primary btn-xs">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </a>
                         </h5>
@@ -39,7 +39,24 @@
                             </div>
                         </p>
                         <span class="label label-default">{{ $sesion->cronograma->punto->toString() }}</span> 
-                        <span class="label label-default">{{ $sesion->Estado }}</span> 
+                        <?php
+                            switch ($sesion->Estado)
+                            {
+                                case 'Pendiente':
+                                    $class = 'label-default';
+                                break;
+                                case 'Diligenciado':
+                                    $class = 'label-primary';
+                                break;
+                                case 'Aprobado':
+                                    $class = 'label-success';
+                                break;
+                                case 'Rechazado':
+                                    $class = 'label-danger';
+                                break;
+                            }
+                        ?>
+                        <span class="label {{ $class }}">{{ $sesion->Estado }}</span> 
                     </li>
                 @endforeach
             </ul>

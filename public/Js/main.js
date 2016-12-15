@@ -6,7 +6,6 @@ $(function()
         }
     });
 
-
 	//utilodades para datepickers
     function getDate(value) {
     	var date;
@@ -47,8 +46,19 @@ $(function()
 		  	yearRange: "-80:+20",
 		  	changeMonth: true,
 		  	changeYear: true,
-		  	beforeShowDay: function(date)
+		  	beforeShow: function(e, o)
 		  	{
+		  		$(e).datepicker('option', 'minDate', null);
+		  		$(e).datepicker('option', 'maxDate', null);
+
+		  		if ($(e).attr('data-fecha-inicio'))
+		  			$(e).datepicker('option', 'minDate', $(e).attr('data-fecha-inicio'));
+				
+		  		if ($(e).attr('data-fecha-fin'))
+		  			$(e).datepicker('option', 'maxDate', $(e).attr('data-fecha-fin'));
+		  	},
+		  	beforeShowDay: function(date)
+		  	{	
 		  		var day = date.getDay();
 		  		if(dias)
 		  		{
@@ -78,7 +88,7 @@ $(function()
 		  						dias_habiles.push(6);
 		  					break;
 		  					case 'domingo':
-		  						dias_habiles.push(7);
+		  						dias_habiles.push(0);
 		  					break;
 		  				}
 		  			});
@@ -94,11 +104,6 @@ $(function()
 		});
     });
 
-    if ($('input[data-fecha-inicio]').length)
-		$('input[data-fecha-inicio]').datepicker('option', 'minDate', $('input[data-fecha-inicio]').data('fecha-inicio'));
-    if ($('input[data-fecha-fin]').length)
-		$('input[data-fecha-fin]').datepicker('option', 'maxDate', $('input[data-fecha-fin]').data('fecha-fin'));
-
 	$('input[data-rel="fecha_inicio"]').on('change', function(e)
 	{
 		$('input[data-rel="fecha_fin"]').datepicker('option', 'minDate', $('input[data-rel="fecha_inicio"]').datepicker('getDate'));
@@ -110,25 +115,39 @@ $(function()
 	});
    
     //utilidades para datetimepicker
-    $('input[data-role="clockpicker"]').datetimepicker({
-        format: 'HH:mm:ss',
-        ignoreReadonly:true,
-        useCurrent:false
+    $('input[data-role="clockpicker"]').each(function(i, e)
+    {
+	    $(this).datetimepicker({
+	        useCurrent:false,
+	        ignoreReadonly:true,
+	        format: 'HH:mm:ss'
+	    });
+
+	    if($(this).attr('data-hora-inicio'))
+	    {
+	    	$(this).data('DateTimePicker').defaultDate($(this).attr('data-hora-inicio'));
+	    }
+
+	    if($(this).attr('data-hora-fin'))
+	    {
+	    	$(this).data('DateTimePicker').defaultDate($(this).attr('data-hora-fin'));
+	    }
     });
 
+
     if ($('input[data-hora-inicio]').length)
-    	$('input[data-hora-inicio]').data("DateTimePicker").minDate($('input[data-hora-inicio]').data('hora-inicio')).maxDate($('input[data-hora-fin]').data('hora-fin'));
+    	$('input[data-hora-inicio]').data('DateTimePicker').minDate($('input[data-hora-inicio]').data('hora-inicio')).maxDate($('input[data-hora-fin]').data('hora-fin'));
     if ($('input[data-hora-fin]').length)
-    	$('input[data-hora-fin]').data("DateTimePicker").minDate($('input[data-hora-inicio]').data('hora-inicio')).maxDate($('input[data-hora-fin]').data('hora-fin'));
+    	$('input[data-hora-fin]').data('DateTimePicker').minDate($('input[data-hora-inicio]').data('hora-inicio')).maxDate($('input[data-hora-fin]').data('hora-fin'));
 
     $('input[data-rel="hora_inicio"]').on('dp.change', function (e) 
     {
-        $('input[data-rel="hora_fin"]').data("DateTimePicker").minDate(e.date);
+        $('input[data-rel="hora_fin"]').data('DateTimePicker').minDate(e.date);
     });
 
     $('input[data-rel="hora_fin"]').on('dp.change', function (e) 
     {
-        $('input[data-rel="hora_inicio"]').data("DateTimePicker").maxDate(e.date);
+        $('input[data-rel="hora_inicio"]').data('DateTimePicker').maxDate(e.date);
     });
 
     //utilidades de formularios

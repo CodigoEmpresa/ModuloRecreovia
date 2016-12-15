@@ -127,7 +127,7 @@ class ProgramacionController extends Controller {
 
 		$cronograma->save();
 
-		return redirect('/programacion/gestores/editar/'.$cronograma->Id)
+		return redirect('/programacion/'.$cronograma->Id.'/editar')
 					->with('status', 'success');
 	}
 

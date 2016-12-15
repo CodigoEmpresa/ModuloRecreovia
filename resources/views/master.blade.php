@@ -74,7 +74,7 @@
                   @endif
                   @if($_SESSION['Usuario']['Permisos']['administrar_localidades'])
                     <li class="{{ $seccion && $seccion == 'Administrar localidades' ? 'active' : '' }}">
-                      <a href="{{ url('localidades/administrar') }}">Distribuir personal</a>
+                      <a href="{{ url('localidades/administrar') }}">Distribución de personal</a>
                     </li>
                   @endif
                 </ul>
@@ -87,10 +87,10 @@
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestores <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li class="{{ $seccion && $seccion == 'Programación' ? 'active' : '' }}">
-                    <a href="{{ url('programacion/gestores') }}">Programación de sesiones</a>
+                    <a href="{{ url('programacion') }}">Programación de sesiones</a>
                   </li>
                   <li class="{{ $seccion && $seccion == 'Sesiones gestor' ? 'active' : '' }}">
-                    <a href="{{ url('programacion/gestor/sesiones') }}">Sesiones</a>
+                    <a href="{{ url('/gestores/sesiones') }}">Revisar sesiones</a>
                   </li>
                 </ul>
               </li>
@@ -102,7 +102,7 @@
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Profesores <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li class="{{ $seccion && $seccion == 'Sesiones profesor' ? 'active' : '' }}">
-                    <a href="{{ url('programacion/profesor/sesiones') }}">Sesiones</a>
+                    <a href="{{ url('/profesores/sesiones') }}">Consultar sesiones</a>
                   </li>
                 </ul>
               </li>

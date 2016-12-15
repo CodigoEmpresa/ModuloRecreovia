@@ -9,7 +9,7 @@
             </div>
         @endif
         <div class="col-xs-12">
-            <a href="{{ url('/programacion/gestores/crear/') }}" class="btn btn-primary" id="crear">Crear</a>
+            <a href="{{ url('/programacion/crear/') }}" class="btn btn-primary" id="crear">Crear</a>
         </div>
         <div class="col-xs-12"><br></div>
         <div class="col-xs-12">
@@ -18,7 +18,7 @@
                     <li class="list-group-item">
                         <h5 class="list-group-item-heading">
                             Cronograma
-                            <a data-role="editar" href="{{ url('/programacion/gestores/editar/'.$cronograma['Id']) }}" class="pull-right btn btn-primary btn-xs">
+                            <a data-role="editar" href="{{ url('/programacion/'.$cronograma['Id'].'/editar') }}" class="pull-right btn btn-primary btn-xs">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </a>
                         </h5>
@@ -26,8 +26,14 @@
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="row">
-                                        <div class="col-xs-12 col-sm-6 col-md-12">
-                                            <small>{{ $cronograma->toString().' de la '.$cronograma->jornada->toString() }}</small>
+                                        <div class="col-xs-12 col-sm-12 col-md-12">
+                                            <small>
+                                                {{ $cronograma->toString() }}.
+                                                <br>
+                                                Punto: {{ $cronograma->punto->toString() }}.
+                                                <br>
+                                                Jornada: {{ $cronograma->jornada->toString() }}.
+                                            </small>
                                         </div>
                                     </div>
                                 </div>

@@ -53,22 +53,22 @@ Route::group(['middleware' => ['web']], function()
 	Route::get('/localidades/{id_localidad}/punto/{id_punto}/personal/{id_persona}/remover', 'Recreovia\LocalidadController@removerPersonal');
 	Route::post('/localidades/personal/agregar', 'Recreovia\LocalidadController@agregarPersonal');
 
-	route::get('/programacion/gestores', 'Recreovia\ProgramacionController@index');
-	route::get('/programacion/gestores/crear', 'Recreovia\ProgramacionController@crear');
-	route::get('/programacion/gestores/editar/{id_cronograma}', 'Recreovia\ProgramacionController@editar');
-	route::get('/programacion/gestores/eliminar/{id_cronograma}', 'Recreovia\ProgramacionController@eliminar');
-	route::post('/programacion/gestores/procesar', 'Recreovia\ProgramacionController@procesar');
+	route::get('/programacion', 'Recreovia\ProgramacionController@index');
+	route::get('/programacion/crear', 'Recreovia\ProgramacionController@crear');
+	route::get('/programacion/{id_cronograma}/editar', 'Recreovia\ProgramacionController@editar');
+	route::get('/programacion/{id_cronograma}/eliminar', 'Recreovia\ProgramacionController@eliminar');
+	route::post('/programacion/procesar', 'Recreovia\ProgramacionController@procesar');
 
-	route::get('/programacion/gestores/{id_cronograma}/sesiones', 'Recreovia\SesionController@crearSesionesGestor');
-	route::get('/programacion/gestores/{id_cronograma}/sesiones/{id_sesion}/editar', 'Recreovia\SesionController@editarSesionesGestor');
-	route::get('/programacion/gestores/{id_cronograma}/sesiones/{id_sesion}/eliminar', 'Recreovia\SesionController@eliminarSesionesGestor');
-	route::post('/programacion/gestores/sesiones/procesar', 'Recreovia\SesionController@procesarGestor');
+	route::get('/gestores/sesiones', 'Recreovia\SesionController@sesionesGestor');
+	route::get('/gestores/{id_cronograma}/sesiones', 'Recreovia\SesionController@crearSesionesGestor');
+	route::get('/gestores/{id_cronograma}/sesiones/{id_sesion}/editar', 'Recreovia\SesionController@editarSesionesGestor');
+	route::get('/gestores/{id_cronograma}/sesiones/{id_sesion}/eliminar', 'Recreovia\SesionController@eliminarSesionesGestor');
+	route::post('/gestores/sesiones/procesar', 'Recreovia\SesionController@procesarGestor');
+	route::get('/gestores/sesiones/{id_sesion}/editar', 'Recreovia\SesionController@editarSesionGestor');
 
-	route::get('/programacion/profesor/sesiones', 'Recreovia\SesionController@sesionesProfesor');
-	route::get('/programacion/gestor/sesiones', 'Recreovia\SesionController@sesionesGestor');
-	route::post('/programacion/sesion/procesar', 'Recreovia\SesionController@procesarProfesor');
-	route::get('/profesor/sesion/{id_sesion}/editar', 'Recreovia\SesionController@editarSesionProfesor');
-	route::get('/gestor/sesion/{id_sesion}/editar', 'Recreovia\SesionController@editarSesionGestor');
+	route::get('/profesores/sesiones', 'Recreovia\SesionController@sesionesProfesor');
+	route::get('/profesores/sesiones/{id_sesion}/editar', 'Recreovia\SesionController@editarSesionProfesor');
+	route::post('/sesiones/procesar', 'Recreovia\SesionController@procesarProfesor');
 });
 /*
 |--------------------------------------------------------------------------

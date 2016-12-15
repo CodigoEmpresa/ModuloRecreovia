@@ -29,6 +29,20 @@
   	animation: glyphicon-spin-r 1s infinite linear;
 }
 
+.clear-both { clear: both; }
+
+.nivel1 {background-color: #FFF;}
+.nivel2 {background-color: #FAFAFA;}
+.nivel3 {background-color: #F7F7F7;}
+
+textarea.x2 {
+	height: 200px;
+}
+
+textarea {
+	resize: vertical;
+}
+
 @-webkit-keyframes spin-r {
 	0% {
 	  -webkit-transform: rotate(0deg);
