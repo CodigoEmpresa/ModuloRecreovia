@@ -5,4 +5,5 @@
 Homestead.yaml
 Homestead.json
 composer.lock
+.settings
 .env

@@ -47,9 +47,9 @@
                                         <div class="col-xs-12 col-sm-12 col-md-12">
                                             <small>
                                                 Identificación: {{ $persona->tipoDocumento['Nombre_TipoDocumento'].' '.$persona['Cedula'] }}. <br>
-                                                Disponible en {{ count($persona->recreopersona->puntos) }} puntos. <br>
-                                                Ha realizado {{ count($persona->recreopersona->cronogramas) }} programaciones. <br>
-                                                Presente en {{ count($persona->recreopersona->sesiones) }} sesiones.
+                                                Disponible en ({{ count($persona->recreopersona->puntos) }}) puntos. <br>
+                                                Ha realizado ({{ count($persona->recreopersona->cronogramas) }}) programaciones. <br>
+                                                Presente en ({{ count($persona->recreopersona->sesiones) }}) sesiones.
                                             </small>
                                         </div>
                                     </div>
