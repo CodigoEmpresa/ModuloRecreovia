@@ -39,7 +39,7 @@
        <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
           <div class="navbar-header">
-            <a href="{{ url('/welcome') }}" class="navbar-brand">SIM</a>
+            <a href="{{ url('/welcome') }}" data-role="{{ implode($_SESSION['Usuario']['Roles']) }}" class="navbar-brand">SIM</a>
             <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
@@ -81,6 +81,10 @@
               </li>
             @endif
             @if(
+              (
+              $_SESSION['Usuario']['Permisos']['programar_sesiones'] ||
+              $_SESSION['Usuario']['Permisos']['revisar_sesiones_gestor']
+              ) &&
               in_array('Gestor', $_SESSION['Usuario']['Roles'])
             )
               <li class="dropdown {{ $seccion && in_array($seccion, ['Programación', 'Sesiones gestor']) ? 'active' : '' }}">
@@ -96,6 +100,9 @@
               </li>
             @endif
             @if(
+              (
+              $_SESSION['Usuario']['Permisos']['revisar_sesiones_profesor']
+              ) &&
               in_array('Profesor', $_SESSION['Usuario']['Roles'])
             )
               <li class="dropdown {{ $seccion && in_array($seccion, ['Sesiones profesor']) ? 'active' : '' }}">

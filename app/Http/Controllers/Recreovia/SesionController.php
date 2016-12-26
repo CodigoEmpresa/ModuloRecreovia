@@ -153,7 +153,7 @@ class SesionController extends Controller {
 	public function sesionesProfesor(Request $request)
 	{
 		$perPage = config('app.page_size');
-		$elementos = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada')
+		$elementos = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'profesor.persona')
 							->whereNull('deleted_at')
 							->where('Id_Recreopersona', $this->usuario['Recreopersona']->Id_Recreopersona)
 							->orderBy('Id', 'DESC')
@@ -176,7 +176,7 @@ class SesionController extends Controller {
 	public function sesionesGestor(Request $request)
 	{
 		$perPage = config('app.page_size');
-		$elementos = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada')
+		$elementos = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'profesor.persona')
 							->whereHas('cronograma', function($query)
 							{
 								$query->where('Id_Recreopersona', $this->usuario['Recreopersona']->Id_Recreopersona);

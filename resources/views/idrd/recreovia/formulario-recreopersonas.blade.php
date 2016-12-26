@@ -77,7 +77,7 @@
                         <div class="col-xs-12"><hr></div>
                         <div class="col-xs-12 col-md-6 {{ $errors->has('Id_Genero') ? 'has-error' : '' }}">
                             <div class="form-group">
-                                <label class="control-label" for="Id_Genero">* Genero</label><br>
+                                <label class="control-label" for="Id_Genero">* Género</label><br>
                                 <div class="btn-group" data-toggle="buttons">
                                     <label class="btn btn-default {{ ($persona && $persona['Id_Genero'] == '1') || old('Id_Genero') == '1' ? 'active' : '' }}">
                                         <input type="radio" name="Id_Genero" value="1" autocomplete="off" {{ ($persona && $persona['Id_Genero'] == '1') || old('Id_Genero') == '1' ? 'checked' : '' }}> <span class="text-success">M</span>
@@ -109,7 +109,7 @@
                         <div class="col-xs-12"><hr></div>
                         <div class="col-xs-12 col-md-6">
                             <div class="form-group {{ $errors->has('Id_Pais') ? 'has-error' : '' }}">
-                                <label class="control-label" for="Id_Pais">* Pais </label>
+                                <label class="control-label" for="Id_Pais">* País </label>
                                 <select name="Id_Pais" id="" class="form-control" data-value="{{ $persona ? $persona['Id_Pais'] : old('Id_Pais') }}">
                                     <option value="">Seleccionar</option>
                                         @foreach($paises as $pais)

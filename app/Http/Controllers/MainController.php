@@ -28,7 +28,8 @@ class MainController extends Controller {
 
     public function index(Request $request)
 	{
-		$fake_permissions = ['71766', '1', '1', '1', '1'];
+		//$fake_permissions = ['71766', '1', '1', '1', '1'];
+		$fake_permissions = null;
 
 		if ($request->has('vector_modulo') || $fake_permissions)
 		{	
@@ -40,27 +41,17 @@ class MainController extends Controller {
 				'editar_profesores' => intval($permissions_array[1]),
 				'editar_puntos' => intval($permissions_array[2]),
 				'administrar_localidades' => intval($permissions_array[3]),
-				'administrar_jornadas'=> intval($permissions_array[4])
+				'administrar_jornadas'=> intval($permissions_array[4]),
+				'programar_sesiones'=> intval($permissions_array[5]),
+				'revisar_sesiones_gestor'=> intval($permissions_array[6]),
+				'revisar_sesiones_profesor'=> intval($permissions_array[7])
 			];
 
 			$_SESSION['Usuario'] = $user_array;
+            $persona = $this->repositorio_personas->obtener($_SESSION['Usuario'][0]);
+
 			$_SESSION['Usuario']['Recreopersona'] = [];
 			$_SESSION['Usuario']['Roles'] = [];
-			
-			$persona = $this->repositorio_personas->obtener($_SESSION['Usuario'][0]);
-			$recreopersona = Recreopersona::with('puntos')->where('Id_Persona', $persona['Id_Persona'])->first();
-
-			if ($recreopersona)
-			{
-				$_SESSION['Usuario']['Recreopersona'] = $recreopersona;
-
-				foreach ($recreopersona->puntos as $punto)
-				{
-					if (!in_array($punto->pivot['tipo'], $_SESSION['Usuario']['Roles']))
-						$_SESSION['Usuario']['Roles'][] = $punto->pivot['tipo'];
-				}
-			}
-
 			$_SESSION['Usuario']['Persona'] = $persona;
 			$_SESSION['Usuario']['Permisos'] = $permisos;
 			$this->Usuario = $_SESSION['Usuario'];

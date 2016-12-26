@@ -134,6 +134,9 @@
 		                            <a data-role="editar" href="{{ url('/gestores/'.$cronograma['Id'].'/sesiones/'.$sesion['Id'].'/editar') }}" class="pull-right btn btn-primary btn-xs">
 		                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 		                            </a>
+		                            <a data-role="validar" target="_blank" href="{{ url('/gestores/sesiones/'.$sesion['Id'].'/editar') }}" class="pull-right separe-right btn btn-default btn-xs">
+		                                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+		                            </a>
 		                        </h5>
 		                        <p class="list-group-item-text">
 		                            <div class="row">

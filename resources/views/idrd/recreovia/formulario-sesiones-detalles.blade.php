@@ -94,36 +94,36 @@
 									<label for="">Recursos</label>
 									<textarea class="form-control" name="Recursos">{{ $sesion ? $sesion['Recursos'] : old('Recursos') }}</textarea>
 								</div>
-								<div class="col-md-4 form-group">
-									<label for="">Fase inicial</label>
-									<textarea class="form-control x2 nivel1" name="Fase_Inicial">{{ $sesion ? $sesion['Fase_Inicial'] : old('Fase_Inicial') }}</textarea>
-								</div>
-								<div class="col-md-4 form-group">
-									<label for="">Fase central</label>
-									<textarea class="form-control x2 nivel2" name="Fase_Central">{{ $sesion ? $sesion['Fase_Central'] : old('Fase_Central') }}</textarea>
-								</div>
-								<div class="col-md-4 form-group">
-									<label for="">Fase final</label>
-									<textarea class="form-control x2 nivel3" name="Fase_Final">{{ $sesion ? $sesion['Fase_Final'] : old('Fase_Final') }}</textarea>
-								</div>
-								<div class="col-md-12 form-group">
-									<label for="">Estado</label><br>
-		                    		<label class="radio-inline">
-		                                <input type="radio" name="Estado" id="estado1" value="Pendiente" {{ ($sesion && $sesion['Estado'] == 'Pendiente') || old('Estado') == 'Pendiente' ? 'checked' : '' }}> Pendiente
-		                            </label>
-		                            <label class="radio-inline">
-		                                <input type="radio" name="Estado" id="estado2" value="Diligenciado" {{ ($sesion && $sesion['Estado'] == 'Diligenciado') || old('Estado') == 'Diligenciado' ? 'checked' : '' }}> Diligenciado
-		                            </label>
-		                            @if($tipo == "gestor")
-			                            <label class="radio-inline">
-			                                <input type="radio" name="Estado" id="estado3" value="Aprobado" {{ ($sesion && $sesion['Estado'] == 'Aprobado') || old('Estado') == 'Aprobado' ? 'checked' : '' }}> Aprobado
-			                            </label>
-			                            <label class="radio-inline">
-			                                <input type="radio" name="Estado" id="estado4" value="Rechazado" {{ ($sesion && $sesion['Estado'] == 'Rechazado') || old('Estado') == 'Rechazado' ? 'checked' : '' }}> Rechazado
-			                            </label>
-		                            @endif
-								</div>
 							</div>
+						</div>
+						<div class="col-md-4 form-group">
+							<label for="">Fase inicial</label>
+							<textarea class="form-control x2 nivel1" name="Fase_Inicial">{{ $sesion ? $sesion['Fase_Inicial'] : old('Fase_Inicial') }}</textarea>
+						</div>
+						<div class="col-md-4 form-group">
+							<label for="">Fase central</label>
+							<textarea class="form-control x2 nivel2" name="Fase_Central">{{ $sesion ? $sesion['Fase_Central'] : old('Fase_Central') }}</textarea>
+						</div>
+						<div class="col-md-4 form-group">
+							<label for="">Fase final</label>
+							<textarea class="form-control x2 nivel3" name="Fase_Final">{{ $sesion ? $sesion['Fase_Final'] : old('Fase_Final') }}</textarea>
+						</div>
+						<div class="col-md-12 form-group">
+							<label for="">Estado</label><br>
+                    		<label class="radio-inline">
+                                <input type="radio" name="Estado" id="estado1" value="Pendiente" {{ ($sesion && $sesion['Estado'] == 'Pendiente') || old('Estado') == 'Pendiente' ? 'checked' : '' }}> Pendiente
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="Estado" id="estado2" value="Diligenciado" {{ ($sesion && $sesion['Estado'] == 'Diligenciado') || old('Estado') == 'Diligenciado' ? 'checked' : '' }}> Diligenciado
+                            </label>
+                            @if($tipo == "gestor")
+	                            <label class="radio-inline">
+	                                <input type="radio" name="Estado" id="estado3" value="Aprobado" {{ ($sesion && $sesion['Estado'] == 'Aprobado') || old('Estado') == 'Aprobado' ? 'checked' : '' }}> Aprobado
+	                            </label>
+	                            <label class="radio-inline">
+	                                <input type="radio" name="Estado" id="estado4" value="Rechazado" {{ ($sesion && $sesion['Estado'] == 'Rechazado') || old('Estado') == 'Rechazado' ? 'checked' : '' }}> Rechazado
+	                            </label>
+                            @endif
 						</div>
 						<div class="col-md-12">
 							<hr>

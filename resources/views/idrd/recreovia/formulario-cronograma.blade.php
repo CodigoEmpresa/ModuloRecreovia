@@ -76,7 +76,7 @@
                         </div>
                         @if ($cronograma)
                             <div class="col-md-12">
-                                <a href="{{ url('/gestores/'.$cronograma['Id'].'/sesiones') }}" class="btn btn-link">Administrar sesiones</a>
+                                <a href="{{ url('/gestores/'.$cronograma['Id'].'/sesiones') }}" class="btn btn-link">Administrar sesiones ({{ count($cronograma->sesiones) }})</a>
                             </div>
                         @endif
                         <div class="col-md-12">
