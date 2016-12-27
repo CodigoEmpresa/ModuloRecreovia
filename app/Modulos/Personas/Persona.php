@@ -12,8 +12,13 @@ class Persona extends MPersona
 					->whereNull('deleted_at');
 	}
 
+	public function toFriendlyString()
+	{
+		return trim(strtoupper($this->Primer_Nombre.' '.$this->Primer_Apellido));
+	}
+
 	public function toString()
 	{
-		return strtoupper($this->Primer_Apellido.' '.$this->Segundo_Apellido.' '.$this->Primer_Nombre.' '.$this->Segundo_Nombre);
+		return trim(strtoupper($this->Primer_Apellido.' '.$this->Segundo_Apellido.' '.$this->Primer_Nombre.' '.$this->Segundo_Nombre));
 	}
 }

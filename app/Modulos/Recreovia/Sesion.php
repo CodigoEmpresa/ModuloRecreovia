@@ -22,5 +22,10 @@ class Sesion extends Model
     	return $this->belongsTo('App\Modulos\Recreovia\Recreopersona', 'Id_Recreopersona');
     }
 
+    public function toString()
+    {
+        return $this->Objetivo_General.' programada para el dia '.$this->Fecha.' de '.$this->Inicio.' a '.$this->Fin;
+    }
+
     use SoftDeletes, CascadeSoftDeletes;
 }

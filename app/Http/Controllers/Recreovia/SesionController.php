@@ -8,6 +8,7 @@ use App\Modulos\Recreovia\Recreopersona;
 use App\Modulos\Recreovia\Sesion;
 use App\Http\Requests\GuardarSesionGestor;
 use Illuminate\Http\Request;
+use Mail;
 
 class SesionController extends Controller {
 	
@@ -107,12 +108,18 @@ class SesionController extends Controller {
 
 	public function procesarGestor(GuardarSesionGestor $request)
 	{
+		$notificar = false;
+
 		if ($request->input('Id') == 0)
 		{
 			$sesion = new Sesion;
 			$nuevo = true;
+			$notificar = true;
 		} else {
 			$sesion = Sesion::find($request->input('Id'));
+			if ($sesion->Id_Recreopersona != $request->input('Id_Recreopersona'))
+				$notificar = true;
+
 			$nuevo = false;
 		}
 
@@ -124,15 +131,22 @@ class SesionController extends Controller {
 		$sesion->Inicio = $request->input('Inicio');
 		$sesion->Fin = $request->input('Fin');
 		$sesion->Estado = !$nuevo ? : 'Pendiente';
-
 		$sesion->save();
+
+		if ($notificar)
+			$this->notificar($sesion, 'profesor');
 
 		return redirect('/gestores/'.$request->input('Id_Cronograma').'/sesiones')->with(['status' => 'success']);
 	}
 
 	public function procesarProfesor(Request $request)
 	{	
+		$notificar = false;
 		$sesion = Sesion::find($request->input('Id'));
+
+		if ($sesion->Estado != $request->input('Estado'))
+			$notificar = true;
+		
 		$sesion->Objetivos_Especificos = $request->input('Objetivos_Especificos');
 		$sesion->Metodologia_Aplicar = $request->input('Metodologia_Aplicar');
 		$sesion->Recursos = $request->input('Recursos');
@@ -140,13 +154,22 @@ class SesionController extends Controller {
 		$sesion->Fase_Central = $request->input('Fase_Central');
 		$sesion->Fase_Final = $request->input('Fase_Final');
 		$sesion->Estado = $request->input('Estado');
-
 		$sesion->save();
 
 		if($request->input('origen') == 'profesor')
+		{
+			if ($notificar)
+				$this->notificar($sesion, 'gestor');
+			
 			return redirect('/profesores/sesiones/'.$sesion['Id'].'/editar')->with(['status' => 'success']);
-		else if($request->input('origen') == 'gestor')
+
+		} else if($request->input('origen') == 'gestor') {
+
+			if ($notificar)
+				$this->notificar($sesion, 'profesor');
+
 			return redirect('/gestores/sesiones/'.$sesion['Id'].'/editar')->with(['status' => 'success']);
+		}
 
 	}
 
@@ -199,4 +222,44 @@ class SesionController extends Controller {
 		return view('list', $datos);
 	}
 
+	private function notificar($sesion, $to)
+	{
+		$sesion = Sesion::with('cronograma', 'cronograma.gestor', 'cronograma.gestor.persona', 'cronograma.punto', 'cronograma.jornada', 'profesor', 'profesor.persona')
+							->whereNull('deleted_at')
+							->find($sesion['Id']);
+
+		$profesor = $sesion->profesor;
+		$gestor = $sesion->cronograma->gestor;
+
+		switch ($to) {
+			case 'gestor':
+					$destinatario = $gestor;
+					$notificacion = 'La sesión de '.$sesion->toString().' la cual le fue asignada al profesor '.$profesor->persona->toString().' tiene actualmente el estado: '.$sesion->Estado.'. Le recomendamos ingresar al modulo de Recreovía del sistema de información misional (SIM) para continuar el proceso.';
+				break;
+			case 'profesor':
+					$destinatario = $profesor;
+					$notificacion = 'La sesión de '.$sesion->toString().' la cual le fue asignada tiene actualmente el estado: '.$sesion->Estado.'. Le recomendamos ingresar al modulo de Recreovía del sistema de información misional (SIM) para continuar el proceso.';
+				break;
+			default:
+				# code...
+				break;
+		}
+
+		$datos = [
+			'titulo' => 'Notificación',
+			'destinatario' => $destinatario->persona->toFriendlyString(),
+			'notificacion' => $notificacion,
+			'link' => [
+				'url' => 'http://www.idrd.gov.co/SIM/Presentacion/',
+				'texto' => 'Ingresar al SIM'
+			],
+			'pie' => 'Gracias.',
+		];
+
+		Mail::send('email.notificacion', $datos, function($m) use ($destinatario)
+		{
+			$m->from('mails@idrd.gov.co', 'Recreovía');
+			$m->to($destinatario->correo, $destinatario->persona->toFriendlyString())->subject('Notificación');
+		});
+	}
 }
