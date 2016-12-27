@@ -58,7 +58,7 @@
                                     <input type="text" class="form-control" name="Hasta" data-role="datepicker" data-rel="fecha_fin" data-fecha-inicio="" data-fecha-fin="" value="{{ $cronograma ? $cronograma['Hasta'] : old('Hasta') }}" placeholder="Hasta">
                                 </div>
                                 <div class="col-md-12 form-group {{ $errors->has('recreovia') ? 'has-error' : '' }}">
-                                    <label for="">Recreovia</label><br>
+                                    <label for="">Recreovía</label><br>
                                     <label class="radio-inline">
                                         <input type="radio" name="recreovia" id="recreovia1" value="RESD" {{ ($cronograma && $cronograma['recreovia'] == 'RESD') || old('recreovia') == 'RESD' ? 'checked' : '' }}> RESD
                                     </label>

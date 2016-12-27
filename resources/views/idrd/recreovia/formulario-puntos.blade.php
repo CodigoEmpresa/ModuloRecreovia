@@ -53,7 +53,7 @@
                         </div>
                         <div class="col-md-6 col-xs-12">
                             <div class="form-group {{ $errors->has('Cod_Recreovia') ? 'has-error' : '' }}">
-                                <label class="control-label" for="Cod_Recreovia">Cod. Recreovia</label>
+                                <label class="control-label" for="Cod_Recreovia">Cod. Recreovía</label>
                                 <input type="text" name="Cod_Recreovia" class="form-control" value="{{ $punto ? $punto['Cod_Recreovia'] : old('Cod_Recreovia') }}">
                             </div>
                         </div>

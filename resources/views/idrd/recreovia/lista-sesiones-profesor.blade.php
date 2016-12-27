@@ -32,9 +32,9 @@
                                                 <small>
                                                     Punto: {{ $sesion->cronograma->punto->toString() }} <br>
                                                 	Fecha: {{ $sesion->Fecha }} / Horario: {{ $sesion->Inicio.' a '.$sesion->Fin }} <br>
-                                                	Objetivos especificos: {{ $sesion->Objetivos_Especificos }} <br>
+                                                	Objetivos específicos: {{ $sesion->Objetivos_Especificos }} <br>
                                                 	Recursos: {{ $sesion->Recursos }} <br>
-                                                	Metodologia a aplicar: {{ $sesion->Metodologia_Aplicar }} <br>
+                                                	Metodología a aplicar: {{ $sesion->Metodologia_Aplicar }} <br>
                                                 	Fase Inicial: {{ $sesion->Fase_Inicial }} <br>
                                                 	Fase Central: {{ $sesion->Fase_Central }} <br>
                                                 	Fase Final: {{ $sesion->Fase_Final }}
