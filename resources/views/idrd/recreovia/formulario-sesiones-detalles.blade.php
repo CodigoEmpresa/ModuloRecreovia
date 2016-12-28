@@ -20,6 +20,29 @@
 			<div class="row">
 				<form action="{{ url('/sesiones/procesar') }}" method="post">
 					<fieldset>
+						<div class="col-md-12">
+							<label for="">Estado</label>
+							<?php
+                                switch ($sesion->Estado)
+                                {
+                                    case 'Pendiente':
+                                        $class = 'default';
+                                    break;
+                                    case 'Diligenciado':
+                                        $class = 'warning';
+                                    break;
+                                    case 'Aprobado':
+                                        $class = 'success';
+                                    break;
+                                    case 'Rechazado':
+                                        $class = 'danger';
+                                    break;
+                                }
+                            ?>
+							<p class="form-control-static text-{{ $class }}">
+								{{ $sesion->Estado }}
+							</p>
+						</div>
 						<div class="row">
 							<div class="col-md-12">
 								<div class="col-md-12">
@@ -108,23 +131,17 @@
 							<label for="">Fase final</label>
 							<textarea class="form-control x2 nivel3" name="Fase_Final">{{ $sesion ? $sesion['Fase_Final'] : old('Fase_Final') }}</textarea>
 						</div>
+                        @if($tipo == "gestor")
 						<div class="col-md-12 form-group">
 							<label for="">Estado</label><br>
-                    		<label class="radio-inline">
-                                <input type="radio" name="Estado" id="estado1" value="Pendiente" {{ ($sesion && $sesion['Estado'] == 'Pendiente') || old('Estado') == 'Pendiente' ? 'checked' : '' }}> Pendiente
+                            <label class="radio-inline">
+                                <input type="radio" name="Estado" id="estado3" value="Aprobado" {{ ($sesion && $sesion['Estado'] == 'Aprobado') || old('Estado') == 'Aprobado' ? 'checked' : '' }}> Aprobado
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="Estado" id="estado2" value="Diligenciado" {{ ($sesion && $sesion['Estado'] == 'Diligenciado') || old('Estado') == 'Diligenciado' ? 'checked' : '' }}> Diligenciado
+                                <input type="radio" name="Estado" id="estado4" value="Rechazado" {{ ($sesion && $sesion['Estado'] == 'Rechazado') || old('Estado') == 'Rechazado' ? 'checked' : '' }}> Rechazado
                             </label>
-                            @if($tipo == "gestor")
-	                            <label class="radio-inline">
-	                                <input type="radio" name="Estado" id="estado3" value="Aprobado" {{ ($sesion && $sesion['Estado'] == 'Aprobado') || old('Estado') == 'Aprobado' ? 'checked' : '' }}> Aprobado
-	                            </label>
-	                            <label class="radio-inline">
-	                                <input type="radio" name="Estado" id="estado4" value="Rechazado" {{ ($sesion && $sesion['Estado'] == 'Rechazado') || old('Estado') == 'Rechazado' ? 'checked' : '' }}> Rechazado
-	                            </label>
-                            @endif
 						</div>
+                        @endif
 						<div class="col-md-12">
 							<hr>
 						</div>
@@ -135,10 +152,11 @@
 							<input type="hidden" name="origen" value="{{ $tipo }}">
 			                <input type="hidden" id="latitud" value="{{ $sesion->cronograma->punto ? $sesion->cronograma->punto['Latitud'] : 4.666575 }}">
 			                <input type="hidden" id="longitud" value="{{ $sesion->cronograma->punto ? $sesion->cronograma->punto['Longitud'] : -74.125786 }}">
-							<input type="submit" class="btn btn-primary" value="Guardar">
 							@if($tipo == "profesor")
+								<input type="submit" class="btn btn-primary" value="Guardar" {{ $sesion && $sesion['Estado'] == 'Aprobado' ? 'disabled' : '' }}>
                             	<a href="{{ url('/profesores/sesiones') }}" class="btn btn-default">Volver</a>
                             @else
+								<input type="submit" class="btn btn-primary" value="Guardar">
                             	<a href="{{ url('/gestores/sesiones') }}" class="btn btn-default">Volver</a>
                             @endif
 						</div>

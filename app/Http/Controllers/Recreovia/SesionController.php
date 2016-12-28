@@ -153,7 +153,13 @@ class SesionController extends Controller {
 		$sesion->Fase_Inicial = $request->input('Fase_Inicial');
 		$sesion->Fase_Central = $request->input('Fase_Central');
 		$sesion->Fase_Final = $request->input('Fase_Final');
-		$sesion->Estado = $request->input('Estado');
+		$sesion->Estado = $request->has('Estado') ? $request->input('Estado') : $sesion->Estado;
+		
+		if ($sesion->Estado != 'Aprobado' && $request->input('origen') == 'profesor')
+		{
+			$sesion->Estado = 'Diligenciado';
+		}
+
 		$sesion->save();
 
 		if($request->input('origen') == 'profesor')
