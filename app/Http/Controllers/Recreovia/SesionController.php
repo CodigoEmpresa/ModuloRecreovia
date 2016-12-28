@@ -103,7 +103,7 @@ class SesionController extends Controller {
 		$sesion = Sesion::find($id_sesion);
 		$sesion->delete();
 
-		return redirect('/gestores/'.$request->input('Id_Cronograma').'/sesiones')->with(['status' => 'success']);
+		return redirect('/gestores/'.$id_cronograma.'/sesiones')->with(['status' => 'success']);
 	}
 
 	public function procesarGestor(GuardarSesionGestor $request)
@@ -224,42 +224,48 @@ class SesionController extends Controller {
 
 	private function notificar($sesion, $to)
 	{
-		$sesion = Sesion::with('cronograma', 'cronograma.gestor', 'cronograma.gestor.persona', 'cronograma.punto', 'cronograma.jornada', 'profesor', 'profesor.persona')
+		/*
+		try {
+			$sesion = Sesion::with('cronograma', 'cronograma.gestor', 'cronograma.gestor.persona', 'cronograma.punto', 'cronograma.jornada', 'profesor', 'profesor.persona')
 							->whereNull('deleted_at')
 							->find($sesion['Id']);
 
-		$profesor = $sesion->profesor;
-		$gestor = $sesion->cronograma->gestor;
+			$profesor = $sesion->profesor;
+			$gestor = $sesion->cronograma->gestor;
 
-		switch ($to) {
-			case 'gestor':
-					$destinatario = $gestor;
-					$notificacion = 'La sesión de '.$sesion->toString().' la cual le fue asignada al profesor '.$profesor->persona->toString().' tiene actualmente el estado: '.$sesion->Estado.'. Le recomendamos ingresar al modulo de Recreovía del sistema de información misional (SIM) para continuar el proceso.';
-				break;
-			case 'profesor':
-					$destinatario = $profesor;
-					$notificacion = 'La sesión de '.$sesion->toString().' la cual le fue asignada tiene actualmente el estado: '.$sesion->Estado.'. Le recomendamos ingresar al modulo de Recreovía del sistema de información misional (SIM) para continuar el proceso.';
-				break;
-			default:
-				# code...
-				break;
+			switch ($to) {
+				case 'gestor':
+						$destinatario = $gestor;
+						$notificacion = 'La sesión de '.$sesion->toString().' la cual le fue asignada al profesor '.$profesor->persona->toString().' tiene actualmente el estado: '.$sesion->Estado.'. Le recomendamos ingresar al modulo de Recreovía del sistema de información misional (SIM) para continuar el proceso.';
+					break;
+				case 'profesor':
+						$destinatario = $profesor;
+						$notificacion = 'La sesión de '.$sesion->toString().' la cual le fue asignada tiene actualmente el estado: '.$sesion->Estado.'. Le recomendamos ingresar al modulo de Recreovía del sistema de información misional (SIM) para continuar el proceso.';
+					break;
+				default:
+					# code...
+					break;
+			}
+
+			$datos = [
+				'titulo' => 'Notificación',
+				'destinatario' => $destinatario->persona->toFriendlyString(),
+				'notificacion' => $notificacion,
+				'link' => [
+					'url' => 'http://www.idrd.gov.co/SIM/Presentacion/',
+					'texto' => 'Ingresar al SIM'
+				],
+				'pie' => 'Gracias.',
+			];
+
+			Mail::send('email.notificacion', $datos, function($m) use ($destinatario)
+			{
+				$m->from('mails@idrd.gov.co', 'Recreovía');
+				$m->to($destinatario->correo, $destinatario->persona->toFriendlyString())->subject('Notificación');
+			});
+		} catch (Exception $e) {
+			
 		}
-
-		$datos = [
-			'titulo' => 'Notificación',
-			'destinatario' => $destinatario->persona->toFriendlyString(),
-			'notificacion' => $notificacion,
-			'link' => [
-				'url' => 'http://www.idrd.gov.co/SIM/Presentacion/',
-				'texto' => 'Ingresar al SIM'
-			],
-			'pie' => 'Gracias.',
-		];
-
-		Mail::send('email.notificacion', $datos, function($m) use ($destinatario)
-		{
-			$m->from('mails@idrd.gov.co', 'Recreovía');
-			$m->to($destinatario->correo, $destinatario->persona->toFriendlyString())->subject('Notificación');
-		});
+		*/
 	}
 }

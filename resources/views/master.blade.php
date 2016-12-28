@@ -14,19 +14,21 @@
 
       @section('style')
           <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
-          <link rel="stylesheet" href="{{ asset('public/Css/jquery-ui.css') }}" media="screen">    
+          <link rel="stylesheet" href="{{ asset('public/components/jquery-ui/themes/base/jquery-ui.css') }}" media="screen">    
           <link rel="stylesheet" href="{{ asset('public/Css/bootstrap.css') }}" media="screen">    
-          <link rel="stylesheet" href="{{ asset('public/Css/bootstrap-datetimepicker.css') }}" media="screen">    
-          <link rel="stylesheet" href="{{ asset('public/Css/sticky-footer.css') }}" media="screen">    
+          <link rel="stylesheet" href="{{ asset('public/components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css') }}" media="screen">
+          <link rel="stylesheet" href="{{ asset('public/components/datatables.net-bs/css/dataTables.bootstrap.css') }}" media="screen">
           <link rel="stylesheet" href="{{ asset('public/Css/main.css') }}" media="screen">    
       @show
 
       @section('script')
-          <script src="{{ asset('public/Js/jquery.js') }}"></script>
-          <script src="{{ asset('public/Js/jquery-ui.js') }}"></script>
-          <script src="{{ asset('public/Js/bootstrap.min.js') }}"></script>
-          <script src="{{ asset('public/Js/moment.js') }}"></script>
-          <script src="{{ asset('public/Js/bootstrap-datetimepicker.min.js') }}"></script>
+          <script src="{{ asset('public/components/jquery/jquery.js') }}"></script>
+          <script src="{{ asset('public/components/jquery-ui/jquery-ui.js') }}"></script>
+          <script src="{{ asset('public/components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+          <script src="{{ asset('public/components/moment/moment.js') }}"></script>
+          <script src="{{ asset('public/components/datatables.net/js/jquery.dataTables.js') }}"></script>
+          <script src="{{ asset('public/components/datatables.net-bs/js/dataTables.bootstrap.js') }}"></script>
+          <script src="{{ asset('public/components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
           <script src="{{ asset('public/Js/main.js') }}"></script>
       @show
 
@@ -34,7 +36,6 @@
   </head>
 
   <body>
-      
        <!-- Menu Módulo -->
        <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
@@ -159,7 +160,14 @@
       <!-- Contenedor panel principal -->
       <div class="container">
           @yield('content')
-      </div>        
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <br><br><br>
+          </div>
+        </div>
+      </div>      
       <!-- FIN Contenedor panel principal -->
   </body>
 

@@ -6,6 +6,10 @@ $(function()
         }
     });
 
+	$('body').tooltip({
+	    selector: '[data-toggle="tooltip"]'
+	});
+
 	//utilodades para datepickers
     function getDate(value) {
     	var date;

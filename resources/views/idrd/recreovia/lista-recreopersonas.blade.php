@@ -36,7 +36,7 @@
                     <li class="list-group-item">
                         <h5 class="list-group-item-heading">
                             {{ $persona->toString() }}
-                            <a href="{{ url('profesores/'.$persona['Id_Persona'].'/editar') }}" class="pull-right btn btn-primary btn-xs">
+                            <a href="{{ url('profesores/'.$persona['Id_Persona'].'/editar') }}" class="pull-right btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Editar">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </a>
                         </h5>

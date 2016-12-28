@@ -117,7 +117,10 @@ class PuntosController extends Controller {
 		$jornadas = $request->input('Jornadas');
 		$jornadas = rtrim($jornadas, ',');
 
-		$punto->jornadas()->sync(explode(',', $jornadas));
+		if (trim($jornadas) != '')
+			$punto->jornadas()->sync(explode(',', $jornadas));
+		else
+			$punto->jornadas()->delete();
 
        	return redirect('/puntos/'.$punto->Id_Punto.'/editar')->with(['status' => 'success']);
 	}

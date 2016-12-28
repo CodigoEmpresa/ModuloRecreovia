@@ -18,8 +18,11 @@
                     <li class="list-group-item">
                         <h5 class="list-group-item-heading">
                             Cronograma
-                            <a data-role="editar" href="{{ url('/programacion/'.$cronograma['Id'].'/editar') }}" class="pull-right btn btn-primary btn-xs">
+                            <a data-role="editar" href="{{ url('/programacion/'.$cronograma['Id'].'/editar') }}" class="pull-right btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Editar">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                            </a>
+                            <a data-role="sesiones" target="_blank" href="{{ url('/gestores/'.$cronograma['Id'].'/sesiones') }}" class="pull-right btn btn-default btn-xs separe-right" data-toggle="tooltip" data-placement="bottom" title="Sesiones">
+                                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
                             </a>
                         </h5>
                         <p class="list-group-item-text">

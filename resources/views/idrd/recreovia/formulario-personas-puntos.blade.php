@@ -76,7 +76,7 @@
                                             @foreach ($punto->recreopersonas->filter(function($item){ return $item->pivot['tipo'] == 'Gestor'; })->all() as $gestor)
                                                 <tr>
                                                     <td>{{ $gestor->persona['Primer_Apellido'].' '.$gestor->persona['Primer_Nombre'] }}</td>
-                                                    <td><a href="{{ url('/localidades/'.$localidad->Id_Localidad.'/punto/'.$punto['Id_Punto'].'/personal/'.$gestor['Id_Recreopersona'].'/remover') }}"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a></td>
+                                                    <td><a class="btn btn-default btn-xs" href="{{ url('/localidades/'.$localidad->Id_Localidad.'/punto/'.$punto['Id_Punto'].'/personal/'.$gestor['Id_Recreopersona'].'/remover') }}" data-toggle="tooltip" data-placement="bottom" title="Eliminar"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
                                                 </tr>
                                             @endforeach
                                         @endif
@@ -117,7 +117,7 @@
                                             @foreach ($punto->recreopersonas->filter(function($item){ return $item->pivot['tipo'] == 'Profesor'; })->all() as $profesor)
                                                 <tr>
                                                     <td>{{ $profesor->persona['Primer_Apellido'].' '.$profesor->persona['Primer_Nombre'] }}</td>
-                                                    <td><a href="{{ url('/localidades/'.$localidad->Id_Localidad.'/punto/'.$punto['Id_Punto'].'/personal/'.$profesor['Id_Recreopersona'].'/remover') }}"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a></td>
+                                                    <td><a class="btn btn-default btn-xs" href="{{ url('/localidades/'.$localidad->Id_Localidad.'/punto/'.$punto['Id_Punto'].'/personal/'.$profesor['Id_Recreopersona'].'/remover') }}" data-toggle="tooltip" data-placement="bottom" title="Eliminar"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
                                                 </tr>
                                             @endforeach
                                         @endif

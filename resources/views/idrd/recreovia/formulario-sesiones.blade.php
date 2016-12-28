@@ -126,54 +126,54 @@
 			</div> 
 			<div class="row">
 				<div class="col-md-12">
-					<ul class="list-group">
-		                @foreach($cronograma->sesiones as $sesion)
-		                    <li class="list-group-item">
-		                        <h5 class="list-group-item-heading">
-		                            Sesión {{ $sesion->Objetivo_General }}
-		                            <a data-role="editar" href="{{ url('/gestores/'.$cronograma['Id'].'/sesiones/'.$sesion['Id'].'/editar') }}" class="pull-right btn btn-primary btn-xs">
-		                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-		                            </a>
-		                            <a data-role="validar" target="_blank" href="{{ url('/gestores/sesiones/'.$sesion['Id'].'/editar') }}" class="pull-right separe-right btn btn-default btn-xs">
-		                                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-		                            </a>
-		                        </h5>
-		                        <p class="list-group-item-text">
-		                            <div class="row">
-		                                <div class="col-xs-12">
-		                                    <div class="row">
-		                                        <div class="col-xs-12 col-sm-6 col-md-12">
-		                                            <small>
-		                                            	Fecha: {{ $sesion->Fecha }} <br>
-		                                            	Horario: {{ $sesion->Inicio.' a '.$sesion->Fin }}
-		                                            </small>
-		                                        </div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                        </p>
-		                        <span class="label label-default">{{ $sesion->profesor->persona->toString() }}</span> 
-		                        <?php
+					<table id="sesiones" class="table table-striped">
+						<thead>
+							<tr>
+								<th>Sesión</th>
+								<th>Fecha</th>
+								<th>H. Inicio</th>
+								<th>H. Fin</th>
+								<th>Estado</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach($cronograma->sesiones as $sesion)
+								<?php
 		                        	switch ($sesion->Estado)
 		                        	{
 		                        		case 'Pendiente':
-		                        			$class = 'label-default';
+		                        			$class = 'default';
 		                        		break;
 		                        		case 'Diligenciado':
-		                        			$class = 'label-primary';
+		                        			$class = 'warning';
 		                        		break;
 		                        		case 'Aprobado':
-		                        			$class = 'label-success';
+		                        			$class = 'success';
 		                        		break;
 		                        		case 'Rechazado':
-		                        			$class = 'label-danger';
+		                        			$class = 'danger';
 		                        		break;
 		                        	}
 		                        ?>
-		                        <span class="label {{ $class }}">{{ $sesion->Estado }}</span> 
-		                    </li>
-		                @endforeach
-		            </ul>
+								<tr class="{{ $class }}">
+                                	<td>{{ $sesion->Objetivo_General }}<br><small class="text-mutted">{{ $sesion->profesor->persona->toFriendlyString() }}</small></td>
+									<td>{{ $sesion->Fecha }}</td>
+									<td>{{ $sesion->Inicio }}</td>
+									<td>{{ $sesion->Fin }}</td>
+									<td>{{ $sesion->Estado }}</td>
+									<td> 
+										<a data-role="editar" href="{{ url('/gestores/'.$cronograma['Id'].'/sesiones/'.$sesion['Id'].'/editar') }}" class="pull-right btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Editar">
+		                                	<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+		                            	</a>
+		                            	<a data-role="validar" target="_blank" href="{{ url('/gestores/sesiones/'.$sesion['Id'].'/editar') }}" class="pull-right separe-right btn btn-default btn-xs" data-toggle="tooltip" data-placement="bottom" title="Detalles">
+		                                	<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+		                            	</a>
+		                            </td>
+								</tr>
+							@endforeach
+						</tbody>
+					</table>
 	            </div>
 			</div>
 		</div>

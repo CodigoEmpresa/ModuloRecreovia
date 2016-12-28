@@ -133,7 +133,7 @@
                         <input type="hidden" name="Latitud" value="{{ $punto ? $punto['Latitud'] : old('Latitud') }}"> 
                         <input type="hidden" name="Longitud" value="{{ $punto ? $punto['Longitud'] : old('Longitud') }}"> 
                         <input type="hidden" name="Id_Punto" value="{{ $punto ? $punto['Id_Punto'] : 0 }}">
-                        <input type="hidden" name="Jornadas" value="{{ $punto ? implode(',', $punto->jornadas()->lists('Jornadas.Id_Jornada')->all()).',' : old('Jornadas') }}"> 
+                        <input type="hidden" name="Jornadas" value="{{ $punto && count($punto->jornadas) > 0 ? implode(',', $punto->jornadas()->lists('Jornadas.Id_Jornada')->all()).',' : old('Jornadas') }}"> 
                         <button id="guardar" type="submit" class="btn btn-primary">Guardar</button> 
                         @if ($punto)
                             <a data-toggle="modal" data-target="#modal-eliminar" class="btn btn-danger">Eliminar</a>

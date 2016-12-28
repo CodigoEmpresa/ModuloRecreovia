@@ -28,7 +28,7 @@
                     <li class="list-group-item">
                         <h5 class="list-group-item-heading">
                             Jornada
-                            <a data-role="editar" href="{{ url('jornadas/'.$jornada['Id_Jornada'].'/editar') }}" class="pull-right btn btn-primary btn-xs">
+                            <a data-role="editar" href="{{ url('jornadas/'.$jornada['Id_Jornada'].'/editar') }}" class="pull-right btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Editar">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </a>
                         </h5>

@@ -49,7 +49,8 @@ class Authenticate
             if ($recreopersona)
             {
                 $_SESSION['Usuario']['Recreopersona'] = $recreopersona;
-
+                $_SESSION['Usuario']['Roles'] = [];
+                
                 foreach ($recreopersona->puntos as $punto)
                 {
                     if (!in_array($punto->pivot['tipo'], $_SESSION['Usuario']['Roles']))

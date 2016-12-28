@@ -37,7 +37,7 @@ $(function()
                 if(e && !$('#table-jornadas tr[data-id="'+e+'"]').length)
                 {
                     var option = $('select[name="select-jornadas"] option[value="'+e+'"]');
-                    $('#table-jornadas').append('<tr data-id="'+e+'"><td class="index"></td><td>'+option.text()+'</td><td><a href="#" class="btn btn-link" data-role="eliminar"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td></tr>');
+                    $('#table-jornadas').append('<tr data-id="'+e+'"><td class="index"></td><td>'+option.text()+'</td><td><a href="#" class="btn btn-default btn-xs" data-role="eliminar" data-toggle="tooltip" data-placement="bottom" title="Eliminar"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td></tr>');
                     option.remove();
                 }
             });
