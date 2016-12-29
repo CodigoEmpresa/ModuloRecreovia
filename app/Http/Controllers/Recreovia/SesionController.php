@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Recreovia;
 
 use App\Http\Controllers\Controller;
 use App\Modulos\Recreovia\Cronograma;
+use App\Modulos\Recreovia\GrupoPoblacional;
 use App\Modulos\Recreovia\Recreopersona;
 use App\Modulos\Recreovia\Sesion;
 use App\Http\Requests\GuardarSesionGestor;
@@ -40,8 +41,7 @@ class SesionController extends Controller {
 
 	public function editarSesionesGestor(Request $request, $id_cronograma, $id_sesion)
 	{
-		$cronograma = Cronograma::with(['punto', 'punto.profesores.persona', 'jornada', 'sesiones'])
-											->find($id_cronograma);
+		$cronograma = Cronograma::with(['punto', 'punto.profesores.persona', 'jornada', 'sesiones'])->find($id_cronograma);
 
 		$sesion = Sesion::find($id_sesion);
 											
@@ -62,12 +62,15 @@ class SesionController extends Controller {
 
 	public function editarSesionProfesor(Request $request, $id_sesion)
 	{
-		$sesion = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'profesor')->find($id_sesion);
+		$sesion = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'gruposPoblacionales', 'profesor')->find($id_sesion);
+		$gruposPoblacionales = GrupoPoblacional::get();
 											
 		$formulario = [
 			'titulo' => 'Sesion',
 			'sesion' => $sesion,
+			'gruposPoblacionales' => $gruposPoblacionales,
 			'tipo' => 'profesor',
+			'area' => session('area'),
 			'status' => session('status')
 		];
 
@@ -81,12 +84,15 @@ class SesionController extends Controller {
 
 	public function editarSesionGestor(Request $request, $id_sesion)
 	{
-		$sesion = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'profesor')->find($id_sesion);
+		$sesion = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'gruposPoblacionales', 'profesor')->find($id_sesion);
+		$gruposPoblacionales = GrupoPoblacional::get();
 											
 		$formulario = [
 			'titulo' => 'Sesion',
 			'sesion' => $sesion,
+			'gruposPoblacionales' => $gruposPoblacionales,
 			'tipo' => 'gestor',
+			'area' => session('area'),
 			'status' => session('status')
 		];
 
@@ -139,7 +145,7 @@ class SesionController extends Controller {
 		return redirect('/gestores/'.$request->input('Id_Cronograma').'/sesiones')->with(['status' => 'success']);
 	}
 
-	public function procesarProfesor(Request $request)
+	public function procesar(Request $request)
 	{	
 		$notificar = false;
 		$sesion = Sesion::find($request->input('Id'));
@@ -167,16 +173,60 @@ class SesionController extends Controller {
 			if ($notificar)
 				$this->notificar($sesion, 'gestor');
 			
-			return redirect('/profesores/sesiones/'.$sesion['Id'].'/editar')->with(['status' => 'success']);
+			return redirect('/profesores/sesiones/'.$sesion['Id'].'/editar')->with(['status' => 'success', 'area' => 'Detalles']);
 
 		} else if($request->input('origen') == 'gestor') {
 
 			if ($notificar)
 				$this->notificar($sesion, 'profesor');
 
-			return redirect('/gestores/sesiones/'.$sesion['Id'].'/editar')->with(['status' => 'success']);
+			return redirect('/gestores/sesiones/'.$sesion['Id'].'/editar')->with(['status' => 'success', 'area' => 'Detalles']);
+		}
+	}
+
+	public function asistencia(Request $request)
+	{
+		$gruposPoblacionales = GrupoPoblacional::get();
+		$sesion = Sesion::find($request->input('Id'));
+		$sesion->gruposPoblacionales()->detach();
+
+		foreach ($gruposPoblacionales as $grupo) 
+		{
+			//participantes masculinos
+			$sesion->gruposPoblacionales()->save($grupo, [
+				'Genero' => 'M',
+				'Grupo_Asistencia' => 'Participantes',
+				'Cantidad' => $request->has('participantes-m-'.$grupo['Id']) ? $request->input('participantes-m-'.$grupo['Id']) : 0
+			]);
+
+			//participantes femeninos
+			$sesion->gruposPoblacionales()->save($grupo, [
+				'Genero' => 'F',
+				'Grupo_Asistencia' => 'Participantes',
+				'Cantidad' => $request->has('participantes-f-'.$grupo['Id']) ? $request->input('participantes-f-'.$grupo['Id']) : 0
+			]);
+
+			//asistentes masculinos
+			$sesion->gruposPoblacionales()->save($grupo, [
+				'Genero' => 'M',
+				'Grupo_Asistencia' => 'Asistentes',
+				'Cantidad' => $request->has('asistentes-m-'.$grupo['Id']) ? $request->input('asistentes-m-'.$grupo['Id']) : 0
+			]);
+
+			//asistentes femeninos
+			$sesion->gruposPoblacionales()->save($grupo, [
+				'Genero' => 'F',
+				'Grupo_Asistencia' => 'Asistentes',
+				'Cantidad' => $request->has('asistentes-f-'.$grupo['Id']) ? $request->input('asistentes-f-'.$grupo['Id']) : 0
+			]);
 		}
 
+		if($request->input('origen') == 'profesor')
+		{
+			return redirect('/profesores/sesiones/'.$sesion['Id'].'/editar')->with(['status' => 'success', 'area' => 'Asistencia']);
+		} else if($request->input('origen') == 'gestor') {
+			return redirect('/gestores/sesiones/'.$sesion['Id'].'/editar')->with(['status' => 'success', 'area' => 'Asistencia']);
+		}
 	}
 
 	public function sesionesProfesor(Request $request)

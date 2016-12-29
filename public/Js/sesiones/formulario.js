@@ -21,4 +21,8 @@ $(function(e)
 			"url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/Spanish.json"
 		}
 	});
+
+	$('input[data-number]').on('focus', function(e) {
+		$(this).select();
+	});
 });

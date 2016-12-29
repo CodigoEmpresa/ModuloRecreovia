@@ -10,6 +10,12 @@ $(function()
 	    selector: '[data-toggle="tooltip"]'
 	});
 
+	$('body').delegate('input[type="text"][data-number]', 'keypress', function(event) {
+    	if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+			event.preventDefault();
+		}
+	});
+
 	//utilodades para datepickers
     function getDate(value) {
     	var date;
