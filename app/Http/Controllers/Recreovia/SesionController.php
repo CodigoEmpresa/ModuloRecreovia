@@ -236,7 +236,8 @@ class SesionController extends Controller {
 							->whereNull('deleted_at')
 							->where('Id_Recreopersona', $this->usuario['Recreopersona']->Id_Recreopersona)
 							->orderBy('Id', 'DESC')
-							->paginate($perPage);
+							->take(200)
+							->get();
 
 		$lista = [
 			'titulo' => 'Sesiones profesor',
@@ -262,7 +263,8 @@ class SesionController extends Controller {
 							})
 							->whereNull('deleted_at')
 							->orderBy('Id', 'DESC')
-							->paginate($perPage);
+							->take(200)
+							->get();
 
 		$lista = [
 			'titulo' => 'Sesiones gestor',

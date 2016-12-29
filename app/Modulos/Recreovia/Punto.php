@@ -38,6 +38,11 @@ class Punto extends Model
         return $this->hasMany('App\Modulos\Recreovia\Cronograma', 'Id_Punto');
     }
 
+    public function reportes()
+    {
+        return $this->hasMany('App\Modulos\Recreovia\Reporte', 'Id_Punto');
+    }
+
     public function recreopersonas()
     {
         return $this->belongsToMany('App\Modulos\Recreovia\Recreopersona', 'PuntosPersonas', 'Id_Punto', 'Id_Recreopersona')

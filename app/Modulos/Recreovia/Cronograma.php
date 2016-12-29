@@ -28,6 +28,11 @@ class Cronograma extends Model
     	return $this->belongsTo('App\Modulos\Recreovia\Jornada', 'Id_Jornada');
     }
 
+    public function reportes()
+    {
+        return $this->hasMany('App\Modulos\Recreovia\Reporte', 'Id_Cronograma');
+    }
+
     public function gestor()
     {
     	return $this->belongsTo('App\Modulos\Recreovia\Recreopersona', 'Id_Recreopersona');

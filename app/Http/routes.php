@@ -70,6 +70,9 @@ Route::group(['middleware' => ['web']], function()
 	route::get('/profesores/sesiones/{id_sesion}/editar', 'Recreovia\SesionController@editarSesionProfesor');
 	route::post('/sesiones/procesar', 'Recreovia\SesionController@procesar');
 	route::post('/asistencia/procesar', 'Recreovia\SesionController@asistencia');
+
+	route::get('/informes/jornadas', 'Recreovia\ReporteController@jornadas');
+	route::get('/informes/jornadas/crear', 'Recreovia\ReporteController@crearInformeJornadas');
 });
 /*
 |--------------------------------------------------------------------------

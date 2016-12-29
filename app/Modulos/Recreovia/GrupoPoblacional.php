@@ -4,7 +4,6 @@ namespace App\Modulos\Recreovia;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Iatstuti\Database\Support\CascadeSoftDeletes;
 
 class GrupoPoblacional extends Model
 {
