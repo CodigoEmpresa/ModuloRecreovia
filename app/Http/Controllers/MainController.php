@@ -28,7 +28,7 @@ class MainController extends Controller {
 
     public function index(Request $request)
 	{
-		$fake_permissions = ['5144', '1', '1', '1', '1', '1', '1', '1'];
+		$fake_permissions = ['5144', '1', '1', '1', '1', '1', '1', '1', '1'];
 		//$fake_permissions = null;
 
 		if ($request->has('vector_modulo') || $fake_permissions)
@@ -44,7 +44,8 @@ class MainController extends Controller {
 				'administrar_jornadas'=> intval($permissions_array[4]),
 				'programar_sesiones'=> intval($permissions_array[5]),
 				'revisar_sesiones_gestor'=> intval($permissions_array[6]),
-				'revisar_sesiones_profesor'=> intval($permissions_array[7])
+				'revisar_sesiones_profesor'=> intval($permissions_array[7]),
+				'gestionar_reportes_jornadas'=> intval($permissions_array[8])
 			];
 
 			$_SESSION['Usuario'] = $user_array;

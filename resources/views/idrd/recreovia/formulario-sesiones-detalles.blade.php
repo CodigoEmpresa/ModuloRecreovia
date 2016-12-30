@@ -15,153 +15,268 @@
 				</div>                                
 			</div>
 		@endif
-		<div class="col-xs-12"><br></div>
-		<div class="col-xs-12 col-md-12">
-			<div class="row">
-				<form action="{{ url('/sesiones/procesar') }}" method="post">
-					<fieldset>
-						<div class="col-md-12">
-							<label for="">Estado</label>
-							<?php
-                                switch ($sesion->Estado)
-                                {
-                                    case 'Pendiente':
-                                        $class = 'default';
-                                    break;
-                                    case 'Diligenciado':
-                                        $class = 'warning';
-                                    break;
-                                    case 'Aprobado':
-                                        $class = 'success';
-                                    break;
-                                    case 'Rechazado':
-                                        $class = 'danger';
-                                    break;
-                                }
-                            ?>
-							<p class="form-control-static text-{{ $class }}">
-								{{ $sesion->Estado }}
-							</p>
-						</div>
-						<div class="row">
-							<div class="col-md-12">
-								<div class="col-md-12">
-									<div class="row">
-										<div class="col-md-12 form-group">
-											<label for="">Programación</label>
-											<p class="form-control-static">{{ $sesion->cronograma->toString() }}</p>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="row">
-										<div class="col-md-12 form-group">
-											<label for="">Punto</label>
-											<p class="form-control-static">{{ $sesion->cronograma->punto->toString() }}</p>
-										</div>
-										<div class="col-md-12 form-group">
-											<label for="">Jornada</label>
-											<p class="form-control-static">{{ $sesion->cronograma->jornada->toString() }}</p>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div id="map" style="height:145px;"></div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-3 form-group">
-							<label for="">Fecha</label>
-							<p class="form-control-static">{{ $sesion['Fecha'] }}</p>
-						</div>
-						<div class="col-md-3 form-group">
-							<label for="">Inicio</label>
-							<p class="form-control-static">{{ $sesion['Inicio'] }}</p>
-						</div>
-						<div class="col-md-3 form-group">
-							<label for="">Fin</label>
-							<p class="form-control-static">{{ $sesion['Fin'] }}</p>
-						</div>
-						<div class="col-md-3 form-group">
-							<label for="">Profesor</label>
-							<p class="form-control-static">{{ $sesion->profesor->persona->toString() }}</p>
-						</div>
-						<div class="col-md-6 form-group">
-							<label for="">Objetivo general</label>
-							<select name="Objetivo_General" id="Objetivo_General" class="form-control" data-value="{{ $sesion ? $sesion['Objetivo_General'] : old('Objetivo_General') }}">
-								<option value="">Seleccionar</option>
-								<option value="Gimnasia de Mantenimiento (GM)">Gimnasia de Mantenimiento (GM)</option>
-								<option value="Estimulación Muscular (EM)">Estimulación Muscular (EM)</option>
-								<option value="Movilidad Articular (MA)">Movilidad Articular (MA)</option>
-								<option value="Rumba Tropical Folclorica (RTF)">Rumba Tropical Folclorica (RTF)</option>
-								<option value="Actividad Rítmica para Niños (ARN) Rumba para Niños.">Actividad Rítmica para Niños (ARN) Rumba para Niños.</option>
-								<option value="Gimnasia Aeróbica Musicalizada (GAM)">Gimnasia Aeróbica Musicalizada (GAM)</option>
-								<option value="Artes Marciales Musicalizadas (AMM)">Artes Marciales Musicalizadas (AMM)</option>
-								<option value="Gimnasia Psicofísica (GPF)">Gimnasia Psicofísica (GPF)</option>
-								<option value="Pilates (Pil)">Pilates (Pil)</option>
-								<option value="Taller de Danzas (TD)">Taller de Danzas (TD)</option>
-								<option value="Gimnasio Saludable al Aire Libre (GSAL)">Gimnasio Saludable al Aire Libre (GSAL)</option>
-							</select>
-						</div>
-						<div class="col-md-6 form-group">
-							<label for="">Objetivos especificos</label>
-							<textarea class="form-control" name="Objetivos_Especificos">{{ $sesion ? $sesion['Objetivos_Especificos'] : old('Objetivos_Especificos') }}</textarea>
-						</div>
-						<div class="col-md-12">
+		<div class="col-md-12">
+			<ul class="nav nav-tabs">
+				<li role="presentation" class="{{ $area != 'Asistencia' ? 'active' : '' }}"><a href="#Detalles" data-toggle="tab" aria-expanded="false">Detalles</a></li>
+				<li role="presentation" class="{{ $area == 'Asistencia' ? 'active' : '' }}"><a href="#Asistencia" data-toggle="tab" aria-expanded="false">Asistencia</a></li>
+			</ul>
+			<div id="myTabContent" class="tab-content">
+	  			<div class="tab-pane fade {{ $area != 'Asistencia' ? 'active in' : '' }}" id="Detalles">
+					<div class="row">
+						<div class="col-xs-12"><br></div>
+						<div class="col-xs-12 col-md-12">
 							<div class="row">
-								<div class="col-md-6 form-group">
-									<label for="">Metodologia a aplicar</label>
-									<textarea class="form-control" name="Metodologia_Aplicar">{{ $sesion ? $sesion['Metodologia_Aplicar'] : old('Metodologia_Aplicar') }}</textarea>
-								</div>
-								<div class="col-md-6 form-group">
-									<label for="">Recursos</label>
-									<textarea class="form-control" name="Recursos">{{ $sesion ? $sesion['Recursos'] : old('Recursos') }}</textarea>
-								</div>
+								<form action="{{ url('/sesiones/procesar') }}" method="post">
+									<fieldset>
+										<div class="col-md-12">
+											<label for="">Estado</label>
+											<?php
+				                                switch ($sesion->Estado)
+				                                {
+				                                    case 'Pendiente':
+				                                        $class = 'default';
+				                                    break;
+				                                    case 'Diligenciado':
+				                                        $class = 'warning';
+				                                    break;
+				                                    case 'Aprobado':
+				                                        $class = 'success';
+				                                    break;
+				                                    case 'Rechazado':
+				                                        $class = 'danger';
+				                                    break;
+				                                }
+				                            ?>
+											<p class="form-control-static text-{{ $class }}">
+												{{ $sesion->Estado }}
+											</p>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="col-md-12">
+													<div class="row">
+														<div class="col-md-12 form-group">
+															<label for="">Programación</label>
+															<p class="form-control-static">{{ $sesion->cronograma->toString() }}</p>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="row">
+														<div class="col-md-12 form-group">
+															<label for="">Punto</label>
+															<p class="form-control-static">{{ $sesion->cronograma->punto->toString() }}</p>
+														</div>
+														<div class="col-md-12 form-group">
+															<label for="">Jornada</label>
+															<p class="form-control-static">{{ $sesion->cronograma->jornada->toString() }}</p>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div id="map" style="height:145px;"></div>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-3 form-group">
+											<label for="">Fecha</label>
+											<p class="form-control-static">{{ $sesion['Fecha'] }}</p>
+										</div>
+										<div class="col-md-3 form-group">
+											<label for="">Inicio</label>
+											<p class="form-control-static">{{ $sesion['Inicio'] }}</p>
+										</div>
+										<div class="col-md-3 form-group">
+											<label for="">Fin</label>
+											<p class="form-control-static">{{ $sesion['Fin'] }}</p>
+										</div>
+										<div class="col-md-3 form-group">
+											<label for="">Profesor</label>
+											<p class="form-control-static">{{ $sesion->profesor->persona->toString() }}</p>
+										</div>
+										<div class="col-md-6 form-group">
+											<label for="">Objetivo general</label>
+											<select name="Objetivo_General" id="Objetivo_General" class="form-control" data-value="{{ $sesion ? $sesion['Objetivo_General'] : old('Objetivo_General') }}">
+												<option value="">Seleccionar</option>
+												<option value="Gimnasia de Mantenimiento (GM)">Gimnasia de Mantenimiento (GM)</option>
+												<option value="Estimulación Muscular (EM)">Estimulación Muscular (EM)</option>
+												<option value="Movilidad Articular (MA)">Movilidad Articular (MA)</option>
+												<option value="Rumba Tropical Folclorica (RTF)">Rumba Tropical Folclorica (RTF)</option>
+												<option value="Actividad Rítmica para Niños (ARN) Rumba para Niños.">Actividad Rítmica para Niños (ARN) Rumba para Niños.</option>
+												<option value="Gimnasia Aeróbica Musicalizada (GAM)">Gimnasia Aeróbica Musicalizada (GAM)</option>
+												<option value="Artes Marciales Musicalizadas (AMM)">Artes Marciales Musicalizadas (AMM)</option>
+												<option value="Gimnasia Psicofísica (GPF)">Gimnasia Psicofísica (GPF)</option>
+												<option value="Pilates (Pil)">Pilates (Pil)</option>
+												<option value="Taller de Danzas (TD)">Taller de Danzas (TD)</option>
+												<option value="Gimnasio Saludable al Aire Libre (GSAL)">Gimnasio Saludable al Aire Libre (GSAL)</option>
+											</select>
+										</div>
+										<div class="col-md-6 form-group">
+											<label for="">Objetivos especificos</label>
+											<textarea class="form-control" name="Objetivos_Especificos">{{ $sesion ? $sesion['Objetivos_Especificos'] : old('Objetivos_Especificos') }}</textarea>
+										</div>
+										<div class="col-md-12">
+											<div class="row">
+												<div class="col-md-6 form-group">
+													<label for="">Metodologia a aplicar</label>
+													<textarea class="form-control" name="Metodologia_Aplicar">{{ $sesion ? $sesion['Metodologia_Aplicar'] : old('Metodologia_Aplicar') }}</textarea>
+												</div>
+												<div class="col-md-6 form-group">
+													<label for="">Recursos</label>
+													<textarea class="form-control" name="Recursos">{{ $sesion ? $sesion['Recursos'] : old('Recursos') }}</textarea>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4 form-group">
+											<label for="">Fase inicial</label>
+											<textarea class="form-control x2 nivel1" name="Fase_Inicial">{{ $sesion ? $sesion['Fase_Inicial'] : old('Fase_Inicial') }}</textarea>
+										</div>
+										<div class="col-md-4 form-group">
+											<label for="">Fase central</label>
+											<textarea class="form-control x2 nivel2" name="Fase_Central">{{ $sesion ? $sesion['Fase_Central'] : old('Fase_Central') }}</textarea>
+										</div>
+										<div class="col-md-4 form-group">
+											<label for="">Fase final</label>
+											<textarea class="form-control x2 nivel3" name="Fase_Final">{{ $sesion ? $sesion['Fase_Final'] : old('Fase_Final') }}</textarea>
+										</div>
+				                        @if($tipo == "gestor")
+										<div class="col-md-12 form-group">
+											<label for="">Estado</label><br>
+				                            <label class="radio-inline">
+				                                <input type="radio" name="Estado" id="estado3" value="Aprobado" {{ ($sesion && $sesion['Estado'] == 'Aprobado') || old('Estado') == 'Aprobado' ? 'checked' : '' }}> Aprobado
+				                            </label>
+				                            <label class="radio-inline">
+				                                <input type="radio" name="Estado" id="estado4" value="Rechazado" {{ ($sesion && $sesion['Estado'] == 'Rechazado') || old('Estado') == 'Rechazado' ? 'checked' : '' }}> Rechazado
+				                            </label>
+										</div>
+				                        @endif
+										<div class="col-md-12">
+											<hr>
+										</div>
+										<div class="col-md-12">
+				                            <input type="hidden" name="_method" value="POST">
+				                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+											<input type="hidden" name="Id" value="{{ $sesion ? $sesion['Id'] : 0 }}">
+											<input type="hidden" name="origen" value="{{ $tipo }}">
+											<input type="hidden" name="area" value="Detalles">
+							                <input type="hidden" id="latitud" value="{{ $sesion->cronograma->punto ? $sesion->cronograma->punto['Latitud'] : 4.666575 }}">
+							                <input type="hidden" id="longitud" value="{{ $sesion->cronograma->punto ? $sesion->cronograma->punto['Longitud'] : -74.125786 }}">
+											@if($tipo == "profesor")
+												<input type="submit" class="btn btn-primary" value="Guardar" {{ $sesion && $sesion['Estado'] == 'Aprobado' ? 'disabled' : '' }}>
+				                            	<a href="{{ url('/profesores/sesiones') }}" class="btn btn-default">Volver</a>
+				                            @else
+												<input type="submit" class="btn btn-primary" value="Guardar">
+				                            	<a href="{{ url('/gestores/sesiones') }}" class="btn btn-default">Volver</a>
+				                            @endif
+										</div>
+									</fieldset>
+								</form>
 							</div>
 						</div>
-						<div class="col-md-4 form-group">
-							<label for="">Fase inicial</label>
-							<textarea class="form-control x2 nivel1" name="Fase_Inicial">{{ $sesion ? $sesion['Fase_Inicial'] : old('Fase_Inicial') }}</textarea>
+					</div>		
+				</div>
+				<div class="tab-pane fade {{ $area == 'Asistencia' ? 'active in' : '' }}" id="Asistencia">
+					<div class="row">
+						<div class="col-xs-12"><br></div>
+						<div class="col-xs-12">
+							<div class="row">
+								<form action="{{ url('/asistencia/procesar') }}" method="post">
+									<fieldset>
+										<div class="col-md-6 form-group">
+											<label for="">Participantes</label>
+											<table id="participantes" class="table table-striped" width="100%">
+												<thead>
+													<tr>
+														<th>Grupo</th>
+														<th width="57px" style="text-align:center;">M</th>
+														<th width="57px" style="text-align:center;">F</th>
+													</tr>
+												</thead>
+												<tbody>
+													@foreach($gruposPoblacionales as $grupo)
+														<?php
+															$participante_m = $sesion->gruposPoblacionales()->where('Id_Grupo', $grupo['Id'])
+																								->where('Genero', 'M')
+																								->where('Grupo_Asistencia', 'Participantes')
+																								->first();
+
+															$participante_f = $sesion->gruposPoblacionales()->where('Id_Grupo', $grupo['Id'])
+																								->where('Genero', 'F')
+																								->where('Grupo_Asistencia', 'Participantes')
+																								->first();
+
+														?>
+														<tr>
+															<td>
+																{{ $grupo['Edad_Inicio'].($grupo['Edad_Fin'] < 0 ? ' - mas' : ' a '.$grupo['Edad_Fin']) }}<br><small class="text-mutted">{{ $grupo['Grupo'] }}</small>
+															</td>
+															<td class="input">
+																<input type="text" name="participantes-m-{{ $grupo['Id'] }}" value="{{ $participante_m ? $participante_m->pivot['Cantidad'] : 0 }}" data-number>
+															</td>
+															<td class="input">
+																<input type="text" name="participantes-f-{{ $grupo['Id'] }}" value="{{ $participante_f ? $participante_f->pivot['Cantidad'] : 0 }}" data-number>
+															</td>
+														</tr>
+													@endforeach
+												</tbody>
+											</table>
+										</div>
+										<div class="col-md-6">
+											<label for="">Asistentes</label>
+											<table id="asistentes" class="table table-striped" width="100%">
+												<thead>
+													<tr>
+														<th>Grupo</th>
+														<th width="57px" style="text-align:center;">M</th>
+														<th width="57px" style="text-align:center;">F</th>
+													</tr>
+												</thead>
+												<tbody>
+													@foreach($gruposPoblacionales as $grupo)
+														<?php
+															$asistente_m = $sesion->gruposPoblacionales()->where('Id_Grupo', $grupo['Id'])
+																								->where('Genero', 'M')
+																								->where('Grupo_Asistencia', 'Asistentes')
+																								->first();
+
+															$asistente_f = $sesion->gruposPoblacionales()->where('Id_Grupo', $grupo['Id'])
+																								->where('Genero', 'F')
+																								->where('Grupo_Asistencia', 'Asistentes')
+																								->first();
+
+														?>
+														<tr>
+															<td>
+																{{ $grupo['Edad_Inicio'].($grupo['Edad_Fin'] < 0 ? ' - mas' : ' a '.$grupo['Edad_Fin']) }}<br><small class="text-mutted">{{ $grupo['Grupo'] }}</small>
+															</td>
+															<td class="input">
+																<input type="text" name="asistentes-m-{{ $grupo['Id'] }}" value="{{ $asistente_m ? $asistente_m->pivot['Cantidad'] : 0 }}" data-number>
+															</td>
+															<td class="input">
+																<input type="text" name="asistentes-f-{{ $grupo['Id'] }}" value="{{ $asistente_f ? $asistente_f->pivot['Cantidad'] : 0 }}" data-number>
+															</td>
+														</tr>
+													@endforeach
+												</tbody>
+											</table>
+										</div>
+										<div class="col-md-12">
+											<hr>
+										</div>
+										<div class="col-md-12">
+				                            <input type="hidden" name="_method" value="POST">
+				                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+											<input type="hidden" name="Id" value="{{ $sesion ? $sesion['Id'] : 0 }}">
+											<input type="hidden" name="origen" value="{{ $tipo }}">
+											<input type="hidden" name="area" value="Asistencia">
+											<input type="submit" class="btn btn-primary" value="Registrar asistencia">
+										</div>
+									</fieldset>
+								</form>
+							</div>
 						</div>
-						<div class="col-md-4 form-group">
-							<label for="">Fase central</label>
-							<textarea class="form-control x2 nivel2" name="Fase_Central">{{ $sesion ? $sesion['Fase_Central'] : old('Fase_Central') }}</textarea>
-						</div>
-						<div class="col-md-4 form-group">
-							<label for="">Fase final</label>
-							<textarea class="form-control x2 nivel3" name="Fase_Final">{{ $sesion ? $sesion['Fase_Final'] : old('Fase_Final') }}</textarea>
-						</div>
-                        @if($tipo == "gestor")
-						<div class="col-md-12 form-group">
-							<label for="">Estado</label><br>
-                            <label class="radio-inline">
-                                <input type="radio" name="Estado" id="estado3" value="Aprobado" {{ ($sesion && $sesion['Estado'] == 'Aprobado') || old('Estado') == 'Aprobado' ? 'checked' : '' }}> Aprobado
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="Estado" id="estado4" value="Rechazado" {{ ($sesion && $sesion['Estado'] == 'Rechazado') || old('Estado') == 'Rechazado' ? 'checked' : '' }}> Rechazado
-                            </label>
-						</div>
-                        @endif
-						<div class="col-md-12">
-							<hr>
-						</div>
-						<div class="col-md-12">
-                            <input type="hidden" name="_method" value="POST">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-							<input type="hidden" name="Id" value="{{ $sesion ? $sesion['Id'] : 0 }}">
-							<input type="hidden" name="origen" value="{{ $tipo }}">
-			                <input type="hidden" id="latitud" value="{{ $sesion->cronograma->punto ? $sesion->cronograma->punto['Latitud'] : 4.666575 }}">
-			                <input type="hidden" id="longitud" value="{{ $sesion->cronograma->punto ? $sesion->cronograma->punto['Longitud'] : -74.125786 }}">
-							@if($tipo == "profesor")
-								<input type="submit" class="btn btn-primary" value="Guardar" {{ $sesion && $sesion['Estado'] == 'Aprobado' ? 'disabled' : '' }}>
-                            	<a href="{{ url('/profesores/sesiones') }}" class="btn btn-default">Volver</a>
-                            @else
-								<input type="submit" class="btn btn-primary" value="Guardar">
-                            	<a href="{{ url('/gestores/sesiones') }}" class="btn btn-default">Volver</a>
-                            @endif
-						</div>
-					</fieldset>
-				</form>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -70,6 +70,5 @@
                 No se ha registrado ninguna sesión hasta el momento.
             @endif
         </div>
-        <div id="paginador" class="col-xs-12">{!! $elementos->render() !!}</div>
     </div>
 </div>

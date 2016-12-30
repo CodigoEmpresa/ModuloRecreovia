@@ -39,5 +39,11 @@ class Recreopersona extends Model
         return $this->hasMany('App\Modulos\Recreovia\Sesion', 'Id_Recreopersona');
     }
 
+    public function reportes()
+    {
+        return $this->belongsToMany('App\Modulos\Recreovia\Reporte', 'ReportesProfesor', 'Id_Profesor', 'Id_Reporte')
+                    ->withPivot('Hora_Llegada', 'Hora_Salida', 'Sesiones_Realizadas'. 'Planificacion', 'Sistema_De_Datos', 'Novedades');
+    }
+
     use SoftDeletes, CascadeSoftDeletes;
 }
