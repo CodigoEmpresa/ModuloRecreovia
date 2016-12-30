@@ -130,7 +130,7 @@ class SesionController extends Controller {
 		$sesion->Fecha = $request->input('Fecha');
 		$sesion->Inicio = $request->input('Inicio');
 		$sesion->Fin = $request->input('Fin');
-		$sesion->Estado = !$nuevo ? : 'Pendiente';
+		$sesion->Estado = !$nuevo ? $sesion->Estado : 'Pendiente';
 		$sesion->save();
 
 		if ($notificar)
