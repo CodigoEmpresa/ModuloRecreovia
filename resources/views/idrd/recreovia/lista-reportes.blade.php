@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="col-xs-12">
-            <a class="btn btn-primary" href="{{ url('informes/crear') }}">Crear</a>
+            <a class="btn btn-primary" href="{{ url('informes/jornadas/crear') }}">Crear</a>
         </div>
         <div class="col-xs-12"><br></div>
         <div class="col-xs-12">

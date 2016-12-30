@@ -49,26 +49,28 @@ $(function()
 
     $('input[data-role="datepicker"]').each(function(i, e)
     {
-    	var dias = $(this).data('dias') ? $(this).data('dias') : '';
-
-    	$(this).datepicker({
+		var _this = $(this);
+		_this.datepicker({
 		  	dateFormat: 'yy-mm-dd',
 		  	yearRange: "-80:+20",
 		  	changeMonth: true,
 		  	changeYear: true,
 		  	beforeShow: function(e, o)
 		  	{
-		  		$(e).datepicker('option', 'minDate', null);
-		  		$(e).datepicker('option', 'maxDate', null);
+		  		_this.datepicker('option', 'minDate', null);
+		  		_this.datepicker('option', 'maxDate', null);
 
-		  		if ($(e).attr('data-fecha-inicio'))
-		  			$(e).datepicker('option', 'minDate', $(e).attr('data-fecha-inicio'));
+		  		if (_this.attr('data-fecha-inicio'))
+		  			_this.datepicker('option', 'minDate', _this.attr('data-fecha-inicio'));
 				
-		  		if ($(e).attr('data-fecha-fin'))
-		  			$(e).datepicker('option', 'maxDate', $(e).attr('data-fecha-fin'));
+		  		if (_this.attr('data-fecha-fin'))
+		  			_this.datepicker('option', 'maxDate', _this.attr('data-fecha-fin'));
 		  	},
 		  	beforeShowDay: function(date)
 		  	{	
+		  		var dias = "";
+		  		dias = _this.attr('data-dias');
+
 		  		var day = date.getDay();
 		  		if(dias)
 		  		{

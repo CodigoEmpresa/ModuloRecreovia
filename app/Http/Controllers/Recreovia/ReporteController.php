@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Recreovia;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Modulos\Recreovia\Reporte;
+use App\Modulos\Recreovia\Recreopersona;
 use App\Modulos\Recreovia\Sesion;
 use App\Modulos\Recreovia\Punto;
 use App\Modulos\Recreovia\Cronograma;
@@ -38,5 +39,39 @@ class ReporteController extends Controller {
 		];
 
 		return view('list', $datos);
+	}
+
+	public function crearInformeJornadas()
+	{
+		$recreopersona = Recreopersona::with(['puntos' => function($query)
+										{
+											return $query->where('tipo', 'Gestor')
+														->whereNull('Puntos.deleted_at');
+										}, 'puntos.cronogramas' => function($query) 
+										{
+											return $query->whereNull('Cronogramas.deleted_at');
+										}, 'puntos.cronogramas.jornada'])->find($this->usuario['Recreopersona']->Id_Recreopersona);
+
+		foreach ($recreopersona->puntos as $punto) 
+		{
+			foreach ($punto->cronogramas as &$cronograma)
+			{
+				$cronograma->jornada->Label = $cronograma->jornada->toString();
+			}	
+		}
+
+		$formulario = [
+			'titulo' => 'Crear informe',
+	        'informe' => null,
+	        'puntos' => $recreopersona->puntos,
+	        'status' => session('status')
+	    ];
+
+	    $datos = [
+			'seccion' => 'Generar informe de actividades por punto',
+			'formulario' => view('idrd.recreovia.formulario-reporte-jornadas', $formulario)
+		];
+
+		return view('form', $datos);
 	}
 }
