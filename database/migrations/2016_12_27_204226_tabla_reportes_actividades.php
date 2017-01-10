@@ -18,7 +18,7 @@ class TablaReportesActividades extends Migration
             $table->integer('Id_Punto')->unsigned();
             $table->integer('Id_Cronograma')->unsigned();
             $table->date('Dia');
-            $table->enum('Condiciones_Climaticas', ['soleado', 'opaco', 'frio', 'lluvia']);
+            $table->enum('Condiciones_Climaticas', ['soleado', 'opaco', 'frio', 'lluvia'])->nullable();
             $table->timestamps();
             $table->softDeletes();
 
@@ -31,12 +31,12 @@ class TablaReportesActividades extends Migration
             $table->increments('Id');
             $table->integer('Id_Reporte')->unsigned();
             $table->integer('Id_Profesor')->unsigned();
-            $table->time('Hora_Llegada');
-            $table->time('Hora_Salida');
-            $table->integer('Sesiones_Realizadas');
-            $table->boolean('Planificacion');
-            $table->boolean('Sistema_De_Datos');
-            $table->text('Novedades');
+            $table->time('Hora_Llegada')->nullable();
+            $table->time('Hora_Salida')->nullable();
+            $table->integer('Sesiones_Realizadas')->nullable();
+            $table->boolean('Planificacion')->nullable();
+            $table->boolean('Sistema_De_Datos')->nullable();
+            $table->text('Novedades')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
@@ -46,12 +46,11 @@ class TablaReportesActividades extends Migration
 
         Schema::create('ReportesNovedades', function(Blueprint $table)
         {
-            $table->increments('Id');
             $table->integer('Id_Reporte')->unsigned();
-            $table->time('Cod_514_523');
-            $table->time('Cod_514_541');
-            $table->time('Cod_514_542');
-            $table->text('Novedades');
+            $table->time('Cod_514_523')->nullable();
+            $table->time('Cod_514_541')->nullable();
+            $table->time('Cod_514_542')->nullable();
+            $table->text('Novedades')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
@@ -60,16 +59,15 @@ class TablaReportesActividades extends Migration
 
         Schema::create('ReportesServicios', function(Blueprint $table)
         {
-            $table->increments('Id');
             $table->integer('Id_Reporte')->unsigned();
-            $table->time('Cod_514_523');
-            $table->time('Cod_514_541');
-            $table->time('Cod_514_542');
-            $table->enum('tipo', ['Sonido', 'Tarima']);
-            $table->string('Empresa');
-            $table->string('Placa_Camion');
-            $table->text('Operarios');
-            $table->text('Observaciones_Generales');
+            $table->time('Cod_514_523')->nullable();
+            $table->time('Cod_514_541')->nullable();
+            $table->time('Cod_514_542')->nullable();
+            $table->enum('tipo', ['Sonido', 'Tarima'])->nullable();
+            $table->string('Empresa')->nullable();
+            $table->string('Placa_Camion')->nullable();
+            $table->text('Operarios')->nullable();
+            $table->text('Observaciones_Generales')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
@@ -88,7 +86,6 @@ class TablaReportesActividades extends Migration
 
         Schema::create('Participaciones', function(Blueprint $table)
         {
-            $table->increments('Id');
             $table->integer('Id_Sesion')->unsigned();
             $table->integer('Id_Grupo')->unsigned();
             $table->enum('Genero', ['M', 'F']);

@@ -87,7 +87,7 @@
 						) &&
 						in_array('Gestor', $_SESSION['Usuario']['Roles'])
 					)
-						<li class="dropdown {{ $seccion && in_array($seccion, ['Programación', 'Sesiones gestor', 'Informes jornadas']) ? 'active' : '' }}">
+						<li class="dropdown {{ $seccion && in_array($seccion, ['Programación', 'Sesiones gestor', 'Informes jornadas', 'Generar informe de actividades por punto']) ? 'active' : '' }}">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestores <span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li class="{{ $seccion && $seccion == 'Programación' ? 'active' : '' }}">
@@ -96,7 +96,7 @@
 								<li class="{{ $seccion && $seccion == 'Sesiones gestor' ? 'active' : '' }}">
 									<a href="{{ url('/gestores/sesiones') }}">Revisar sesiones</a>
 								</li>
-								<li class="{{ $seccion && $seccion == 'Informes jornadas' ? 'active' : '' }}">
+								<li class="{{ $seccion && in_array($seccion, ['Informes jornadas', 'Generar informe de actividades por punto']) ? 'active' : '' }}">
 									<a href="{{ url('/informes/jornadas') }}">Informes jornadas</a>
 								</li>
 							</ul>

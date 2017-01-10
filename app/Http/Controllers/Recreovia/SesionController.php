@@ -282,7 +282,6 @@ class SesionController extends Controller {
 
 	private function notificar($sesion, $to)
 	{
-		/*
 		try {
 			$sesion = Sesion::with('cronograma', 'cronograma.gestor', 'cronograma.gestor.persona', 'cronograma.punto', 'cronograma.jornada', 'profesor', 'profesor.persona')
 							->whereNull('deleted_at')
@@ -324,6 +323,5 @@ class SesionController extends Controller {
 		} catch (Exception $e) {
 			
 		}
-		*/
 	}
 }

@@ -146,6 +146,14 @@ $(function()
 	    }
     });
 
+    $('body').on('focus', 'input[data-role="dynamic-clockpicker"]', function()
+    {
+    	$(this).datetimepicker({
+	        useCurrent:false,
+	        ignoreReadonly:true,
+	        format: 'HH:mm:ss'
+	    });
+    });
 
     if ($('input[data-hora-inicio]').length)
     	$('input[data-hora-inicio]').data('DateTimePicker').minDate($('input[data-hora-inicio]').data('hora-inicio')).maxDate($('input[data-hora-fin]').data('hora-fin'));

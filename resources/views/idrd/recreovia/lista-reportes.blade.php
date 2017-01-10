@@ -32,11 +32,11 @@
         <div class="col-xs-12"><br></div>
         <div class="col-xs-12">
             <ul class="list-group" id="personas">
-                @foreach($elementos as $persona)
+                @foreach($elementos as $reporte)
                     <li class="list-group-item">
                         <h5 class="list-group-item-heading">
-                             $persona->toString()
-                            <a href="#" class="pull-right btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Editar">
+                            {{ $reporte->punto->toString() }}
+                            <a href="{{ url('/informes/jornadas/'.$reporte['Id'].'/editar') }}" class="pull-right btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Editar">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </a>
                         </h5>
@@ -46,18 +46,24 @@
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-12 col-md-12">
                                             <small>
-                                                Identificación:  $persona->tipoDocumento['Nombre_TipoDocumento'].' '.$persona['Cedula']. <br>
-                                                Disponible en ( count($persona->recreopersona->puntos)) puntos. <br>
-                                                Ha realizado ( count($persona->recreopersona->cronogramas)) programaciones. <br>
-                                                Presente en ( count($persona->recreopersona->sesiones)) sesiones.
+                                                Reporte de actividades del punto {{ $reporte->toString() }}
                                             </small>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </p>
-                        <span class="label label-default capitalize"> $persona->recreopersona['contrato'] }}</span>
-                        <span class="label label-default capitalize"> $persona->recreopersona['correo'] }}</span>
+                        <span class="label label-default capitalize">Profesores: {{ count($reporte->profesores) }}</span>
+                        <span class="label label-default capitalize">
+                            Sesiones: {{ 
+                                count($reporte->cronograma->sesiones
+                                    ->filter(function($item) use ($reporte){ 
+                                        return $item->Fecha == $reporte->Dia; 
+                                    })->filter(function($item) { 
+                                        return $item->Estado == 'Aprobado'; 
+                                    })->all()) 
+                            }}
+                        </span>
                     </li>
                 @endforeach
             </ul>

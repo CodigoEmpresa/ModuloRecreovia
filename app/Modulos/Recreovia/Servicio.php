@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Servicio extends Model
 {
 	protected $table = 'ReportesServicios';
-    protected $primaryKey = 'Id';
     protected $connection = 'mysql';
 
     public function __construct()

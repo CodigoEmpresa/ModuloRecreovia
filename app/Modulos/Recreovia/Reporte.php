@@ -33,15 +33,20 @@ class Reporte extends Model
     	return $this->hasMany('App\Modulos\Recreovia\Servicio', 'Id_Reporte');
     }
 
-    public function novedades()
+    public function novedad()
     {
-    	return $this->hasMany('App\Modulos\Recreovia\Novedad', 'Id_Reporte');
+    	return $this->hasOne('App\Modulos\Recreovia\Novedad', 'Id_Reporte');
     }
 
     public function profesores()
     {
-    	return $this->belongsToMany('App\Modulos\Recreovia\Recreopersona', 'ReportesProfesor', 'Id_Reporte', 'Id_Profesor')
-                    ->withPivot('Hora_Llegada', 'Hora_Salida', 'Sesiones_Realizadas'. 'Planificacion', 'Sistema_De_Datos', 'Novedades');
+    	return $this->belongsToMany('App\Modulos\Recreovia\Recreopersona', 'ReportesProfesores', 'Id_Reporte', 'Id_Profesor')
+                    ->withPivot('Hora_Llegada', 'Hora_Salida', 'Sesiones_Realizadas', 'Planificacion', 'Sistema_De_Datos', 'Novedades');
+    }
+
+    public function toString()
+    {
+        return $this->Punto->toString().' para el dia '.$this->Dia;
     }
 
     use SoftDeletes, CascadeSoftDeletes;

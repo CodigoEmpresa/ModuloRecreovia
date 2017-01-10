@@ -41,8 +41,8 @@ class Recreopersona extends Model
 
     public function reportes()
     {
-        return $this->belongsToMany('App\Modulos\Recreovia\Reporte', 'ReportesProfesor', 'Id_Profesor', 'Id_Reporte')
-                    ->withPivot('Hora_Llegada', 'Hora_Salida', 'Sesiones_Realizadas'. 'Planificacion', 'Sistema_De_Datos', 'Novedades');
+        return $this->belongsToMany('App\Modulos\Recreovia\Reporte', 'ReportesProfesores', 'Id_Profesor', 'Id_Reporte')
+                    ->withPivot('Hora_Llegada', 'Hora_Salida', 'Sesiones_Realizadas', 'Planificacion', 'Sistema_De_Datos', 'Novedades');
     }
 
     use SoftDeletes, CascadeSoftDeletes;
