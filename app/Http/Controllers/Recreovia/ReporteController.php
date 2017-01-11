@@ -10,6 +10,8 @@ use App\Modulos\Recreovia\Sesion;
 use App\Modulos\Recreovia\Punto;
 use App\Modulos\Recreovia\Cronograma;
 use App\Modulos\Recreovia\GrupoPoblacional;
+use App\Modulos\Recreovia\Novedad;
+use App\Modulos\Recreovia\Servicio;
 use App\Http\Requests\GenerarInforme;
 
 class ReporteController extends Controller {
@@ -68,8 +70,7 @@ class ReporteController extends Controller {
 
 	public function editarInformeJornadas(Request $request, $id)
 	{
-		$informe = Reporte::with('profesores')->find($id);
-
+		$informe = Reporte::with('profesores', 'novedad', 'servicios')->find($id);
 		$recreopersona = $this->cronogramasPersonas();
 		$gruposPoblacionales = GrupoPoblacional::all();
 
@@ -145,11 +146,6 @@ class ReporteController extends Controller {
 		return redirect('/informes/jornadas')->with(['status' => 'success']);
 	}
 
-	public function sincronizarSesiones()
-	{
-
-	}
-
 	public function actualizarInformeJornadas(Request $request)
 	{
 		$reporte = Reporte::with('profesores', 'novedad', 'servicios')->find($request->input('Id'));
@@ -175,8 +171,38 @@ class ReporteController extends Controller {
 				$reporte->profesores()->sync($profesores);
 			break;
 			case 'novedades_especiales':
-				$reporte->novedad()->delete();
+				//novedad
+				if ($reporte->novedad)
+					$novedad = $reporte->novedad;
+				else
+					$novedad = new Novedad;
+
+				$novedad->Id_Reporte = $request->input('Id');
+				$novedad->Cod_514_523 = $request->input('Cod_514_523');
+				$novedad->Cod_514_541 = $request->input('Cod_514_541');
+				$novedad->Cod_514_542 = $request->input('Cod_514_542');
+				$novedad->Novedades = $request->input('Novedades');
+				$novedad->save();
+				
+				//servicios
 				$reporte->servicios()->delete();
+				$servicios = $request->input('Total_Servicios');
+				
+				for ($i = 0; $i < $servicios; $i++)
+				{
+					$servicio = new Servicio;
+					$servicio->Id_Reporte = $request->input('Id');
+					$servicio->Cod_514_523 = $request->input('Cod_514_523_'.$i);
+					$servicio->Cod_514_541 = $request->input('Cod_514_541_'.$i);
+					$servicio->Cod_514_542 = $request->input('Cod_514_542_'.$i);
+					$servicio->tipo = $request->input('tipo_'.$i);
+					$servicio->Empresa = $request->input('Empresa_'.$i);
+					$servicio->Placa_Camion = $request->input('Placa_Camion_'.$i);
+					$servicio->Operarios = $request->input('Operarios_'.$i);
+					$servicio->Observaciones_Generales = $request->input('Observaciones_Generales_'.$i);
+
+					$servicio->save();
+				}	
 			break;
 		}
 		$reporte->save();

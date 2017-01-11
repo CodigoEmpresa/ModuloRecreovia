@@ -7,12 +7,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Novedad extends Model
 {
-	protected $table = 'ReportesNovedades';
+    protected $primaryKey = 'Id';
+	protected $table = 'ReporteNovedad';
     protected $connection = 'mysql';
+    protected $fillable = ['Id_Reporte', 'Cod_514_523', 'Cod_514_541', 'Cod_514_542', 'Novedades'];
 
     public function __construct()
     {
-        $this->table = config('database.connections.mysql.database').'.ReportesNovedades';
+        $this->table = config('database.connections.mysql.database').'.ReporteNovedad';
     }
 
     public function reporte()

@@ -7,8 +7,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Servicio extends Model
 {
+
+    protected $primaryKey = 'Id';
 	protected $table = 'ReportesServicios';
     protected $connection = 'mysql';
+    protected $fillable = ['Cod_514_523', 'Cod_514_541', 'Cod_514_542', 'tipo', 'Empresa', 'Placa_Camion', 'Operarios', 'Observaciones_Generales'];
 
     public function __construct()
     {

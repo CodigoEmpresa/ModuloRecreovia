@@ -30,7 +30,7 @@
 }
 
 .table-min{
-	font-size: 9px;
+	font-size: 10px;
 }
 
 .clear-both { clear: both; }
@@ -55,7 +55,7 @@ td.select {
 }
 
 td.input input,
-td.input select {
+td.select select {
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;

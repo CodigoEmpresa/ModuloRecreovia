@@ -44,8 +44,9 @@ class TablaReportesActividades extends Migration
             $table->foreign('Id_Profesor')->references('Id_Recreopersona')->on('Recreopersonas')->onDelete('cascade');
         });
 
-        Schema::create('ReportesNovedades', function(Blueprint $table)
+        Schema::create('ReporteNovedad', function(Blueprint $table)
         {
+            $table->increments('Id');
             $table->integer('Id_Reporte')->unsigned();
             $table->time('Cod_514_523')->nullable();
             $table->time('Cod_514_541')->nullable();
@@ -59,6 +60,7 @@ class TablaReportesActividades extends Migration
 
         Schema::create('ReportesServicios', function(Blueprint $table)
         {
+            $table->increments('Id');
             $table->integer('Id_Reporte')->unsigned();
             $table->time('Cod_514_523')->nullable();
             $table->time('Cod_514_541')->nullable();

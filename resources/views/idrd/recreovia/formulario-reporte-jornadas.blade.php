@@ -253,19 +253,19 @@
                                                                     </select>
                                                                 </td>
                                                                 <td class="input">
-                                                                    <input name="Cod_514_523" data-name="Cod_514_523" type="text" data-role="dynamic-clockpicker" placeholder="HH:MM:SS" value="">
+                                                                    <input name="Cod_514_523_" data-name="Cod_514_523" type="text" data-role="dynamic-clockpicker" placeholder="HH:MM:SS" value="">
                                                                 </td>
                                                                 <td class="input">
-                                                                    <input name="Cod_514_541" data-name="Cod_514_541" type="text" data-role="dynamic-clockpicker" placeholder="HH:MM:SS" value="">
+                                                                    <input name="Cod_514_541_" data-name="Cod_514_541" type="text" data-role="dynamic-clockpicker" placeholder="HH:MM:SS" value="">
                                                                 </td>
                                                                 <td class="input">
-                                                                    <input name="Cod_514_542" data-name="Cod_514_542" type="text" data-role="dynamic-clockpicker" placeholder="HH:MM:SS" value="">
+                                                                    <input name="Cod_514_542_" data-name="Cod_514_542" type="text" data-role="dynamic-clockpicker" placeholder="HH:MM:SS" value="">
                                                                 </td>
                                                                 <td class="input">
                                                                     <input name="Empresa" data-name="Empresa" type="text" placeholder="Empresa" style="text-align:left;">
                                                                 </td>
                                                                 <td class="input">
-                                                                    <input name="Placa" data-name="Placa" type="text" placeholder="Placa" style="text-align:left;">
+                                                                    <input name="Placa_Camion" data-name="Placa" type="text" placeholder="Placa" style="text-align:left;">
                                                                 </td>
                                                                 <td class="input">
                                                                     <input name="Operarios" data-name="Operarios" type="text" placeholder="Operarios" style="text-align:left;">
@@ -277,6 +277,45 @@
                                                                     <a href="#" class="btn btn-default btn-xs" data-role="eliminar" data-toggle="tooltip" data-placement="bottom" title="Eliminar"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                                                 </td>
                                                             </tr>
+                                                            <?php 
+                                                                $i = 0; 
+                                                            ?>
+                                                            @foreach($informe->servicios as $servicio)
+                                                                <?php $i++; ?>
+                                                                <tr id="plantilla_servicio">
+                                                                    <td data-role="item">{{ $i }}</td>
+                                                                    <td class="select">
+                                                                        <select name="tipo_{{ $i-1 }}" data-name="tipo" data-value="{{ $servicio->tipo }}">
+                                                                            <option value="Sonido">Sonido</option>
+                                                                            <option value="Tarima">Tarima</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td class="input">
+                                                                        <input name="Cod_514_523_{{ $i-1 }}" data-name="Cod_514_523" type="text" data-role="dynamic-clockpicker" placeholder="HH:MM:SS" value="{{ $servicio['Cod_514_523'] }}">
+                                                                    </td>
+                                                                    <td class="input">
+                                                                        <input name="Cod_514_541_{{ $i-1 }}" data-name="Cod_514_541" type="text" data-role="dynamic-clockpicker" placeholder="HH:MM:SS" value="{{ $servicio['Cod_514_541'] }}">
+                                                                    </td>
+                                                                    <td class="input">
+                                                                        <input name="Cod_514_542_{{ $i-1 }}" data-name="Cod_514_542" type="text" data-role="dynamic-clockpicker" placeholder="HH:MM:SS" value="{{ $servicio['Cod_514_542'] }}">
+                                                                    </td>
+                                                                    <td class="input">
+                                                                        <input name="Empresa_{{ $i-1 }}" data-name="Empresa" type="text" placeholder="Empresa" style="text-align:left;" value="{{ $servicio['Empresa'] }}">
+                                                                    </td>
+                                                                    <td class="input">
+                                                                        <input name="Placa_Camion_{{ $i-1 }}" data-name="Placa" type="text" placeholder="Placa" style="text-align:left;" value="{{ $servicio['Placa_Camion'] }}">
+                                                                    </td>
+                                                                    <td class="input">
+                                                                        <input name="Operarios_{{ $i-1 }}" data-name="Operarios" type="text" placeholder="Operarios" style="text-align:left;" value="{{ $servicio['Operarios'] }}">
+                                                                    </td>
+                                                                    <td class="input">
+                                                                        <input name="Observaciones_Generales_{{ $i-1 }}" data-name="Observaciones_Generales" type="text" placeholder="Observaciones generales" value="{{ $servicio['Observaciones_Generales'] }}" style="text-align:left;">
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="#" class="btn btn-default btn-xs" data-role="eliminar" data-toggle="tooltip" data-placement="bottom" title="Eliminar"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
                                                         </tbody>
                                                         <tfoot>
                                                             <tr>
