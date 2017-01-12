@@ -124,7 +124,11 @@ class SesionController extends Controller {
 		} else {
 			$sesion = Sesion::find($request->input('Id'));
 			if ($sesion->Id_Recreopersona != $request->input('Id_Recreopersona'))
+			{
 				$notificar = true;
+				//si el estado de ejecucion es realizado no es necesario cambiar el estado de ejecución
+				$sesion->Estado_Ejecucion = $sesion->Estado_Ejecucion != 'Realizado' ? 'Reasignado' : $sesion->Estado_Ejecucion;
+			}
 
 			$nuevo = false;
 		}
@@ -159,11 +163,48 @@ class SesionController extends Controller {
 		$sesion->Fase_Inicial = $request->input('Fase_Inicial');
 		$sesion->Fase_Central = $request->input('Fase_Central');
 		$sesion->Fase_Final = $request->input('Fase_Final');
+		$sesion->Observaciones = $request->input('Observaciones');
 		$sesion->Estado = $request->has('Estado') ? $request->input('Estado') : $sesion->Estado;
 		
-		if ($sesion->Estado != 'Aprobado' && $request->input('origen') == 'profesor')
+		if ($request->input('origen') == 'profesor')
 		{
-			$sesion->Estado = 'Diligenciado';
+			switch ($sesion->Estado) 
+			{
+				case 'Aprobado':
+				break;
+
+				case 'Pendiente':
+				case 'Diligenciado':
+				case 'Rechazado':
+				case 'Corregir':
+					$sesion->Estado = 'Diligenciado';
+				default:
+				break;
+			}
+		}
+
+		if ($request->input('origen') == 'gestor')
+		{
+			switch ($sesion->Estado) 
+			{
+				case 'Diligenciado':
+				case 'Pendiente':
+				case 'Corregir':
+				break;
+
+				case 'Aprobado':
+					$sesion->Estado_Ejecucion = 'Pendiente';
+				break;
+
+				case 'Rechazado':
+					$sesion->Metodologia_Aplicar = '';
+					$sesion->Recursos = '';
+					$sesion->Fase_Inicial = '';
+					$sesion->Fase_Central = '';
+					$sesion->Fase_Final = '';
+				default:
+				break;
+			}
 		}
 
 		$sesion->save();
@@ -220,6 +261,9 @@ class SesionController extends Controller {
 				'Cantidad' => $request->has('asistentes-f-'.$grupo['Id']) ? $request->input('asistentes-f-'.$grupo['Id']) : 0
 			]);
 		}
+
+		$sesion->Estado_Ejecucion = 'Realizado';
+		$sesion->save();
 
 		if($request->input('origen') == 'profesor')
 		{

@@ -18,6 +18,7 @@
 				<link rel="stylesheet" href="{{ asset('public/Css/bootstrap.css') }}" media="screen">    
 				<link rel="stylesheet" href="{{ asset('public/components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css') }}" media="screen">
 				<link rel="stylesheet" href="{{ asset('public/components/datatables.net-bs/css/dataTables.bootstrap.css') }}" media="screen">
+				<link rel="stylesheet" href="{{ asset('public/components/loaders.css/loaders.min.css') }}" media="screen">
 				<link rel="stylesheet" href="{{ asset('public/Css/main.css') }}" media="screen">    
 		@show
 
@@ -169,7 +170,10 @@
 					<br><br><br>
 				</div>
 			</div>
-		</div>      
+		</div> 
+		<div class="ajaxloader">
+			<div class="ball-scale-multiple"><div></div><div></div><div></div></div>
+		</div>
 		<!-- FIN Contenedor panel principal -->
 	</body>
 </html>

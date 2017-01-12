@@ -53,9 +53,9 @@ class ReporteController extends Controller {
 
 		$formulario = [
 			'titulo' => 'Generar informe de actividades por punto',
-	        'informe' => null,
 	        'puntos' => $recreopersona->puntos,
-	        'sesiones' => $sesiones,
+	        'informe' => null,
+	        'sesiones' => null,
 	        'gruposPoblacionales' => $gruposPoblacionales,
 	        'status' => session('status')
 	    ];

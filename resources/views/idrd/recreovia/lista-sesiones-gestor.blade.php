@@ -47,6 +47,7 @@
                                         $class = 'success';
                                     break;
                                     case 'Rechazado':
+                                    case 'Corregir':
                                         $class = 'danger';
                                     break;
                                 }

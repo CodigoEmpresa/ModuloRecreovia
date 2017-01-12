@@ -6,6 +6,15 @@ $(function()
         }
     });
 
+    $(document)
+	.ajaxStart(function(){
+		console.log('start ajax');
+	    $('div.ajaxloader').fadeIn();
+	})
+	.ajaxStop(function(){
+	    $('div.ajaxloader').fadeOut();
+	});
+
 	$('body').tooltip({
 	    selector: '[data-toggle="tooltip"]'
 	});

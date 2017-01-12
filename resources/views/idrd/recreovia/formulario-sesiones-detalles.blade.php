@@ -18,7 +18,9 @@
 		<div class="col-md-12">
 			<ul class="nav nav-tabs">
 				<li role="presentation" class="{{ $area != 'Asistencia' ? 'active' : '' }}"><a href="#Detalles" data-toggle="tab" aria-expanded="false">Detalles</a></li>
-				<li role="presentation" class="{{ $area == 'Asistencia' ? 'active' : '' }}"><a href="#Asistencia" data-toggle="tab" aria-expanded="false">Asistencia</a></li>
+				@if($sesion['Estado'] == 'Aprobado')
+					<li role="presentation" class="{{ $area == 'Asistencia' ? 'active' : '' }}"><a href="#Asistencia" data-toggle="tab" aria-expanded="false">Asistencia</a></li>
+				@endif
 			</ul>
 			<div id="myTabContent" class="tab-content">
 	  			<div class="tab-pane fade {{ $area != 'Asistencia' ? 'active in' : '' }}" id="Detalles">
@@ -43,6 +45,7 @@
 				                                        $class = 'success';
 				                                    break;
 				                                    case 'Rechazado':
+				                                    case 'Corregir':
 				                                        $class = 'danger';
 				                                    break;
 				                                }
@@ -112,13 +115,13 @@
 											</select>
 										</div>
 										<div class="col-md-6 form-group">
-											<label for="">Objetivos especificos</label>
+											<label for="">Objetivos específicos</label>
 											<textarea class="form-control" name="Objetivos_Especificos">{{ $sesion ? $sesion['Objetivos_Especificos'] : old('Objetivos_Especificos') }}</textarea>
 										</div>
 										<div class="col-md-12">
 											<div class="row">
 												<div class="col-md-6 form-group">
-													<label for="">Metodologia a aplicar</label>
+													<label for="">Metodología a aplicar</label>
 													<textarea class="form-control" name="Metodologia_Aplicar">{{ $sesion ? $sesion['Metodologia_Aplicar'] : old('Metodologia_Aplicar') }}</textarea>
 												</div>
 												<div class="col-md-6 form-group">
@@ -127,28 +130,35 @@
 												</div>
 											</div>
 										</div>
-										<div class="col-md-4 form-group">
+										<div class="col-md-4 form-group next">
 											<label for="">Fase inicial</label>
-											<textarea class="form-control x2 nivel1" name="Fase_Inicial">{{ $sesion ? $sesion['Fase_Inicial'] : old('Fase_Inicial') }}</textarea>
+											<textarea class="form-control x2" name="Fase_Inicial">{{ $sesion ? $sesion['Fase_Inicial'] : old('Fase_Inicial') }}</textarea>
 										</div>
-										<div class="col-md-4 form-group">
+										<div class="col-md-4 form-group next">
 											<label for="">Fase central</label>
-											<textarea class="form-control x2 nivel2" name="Fase_Central">{{ $sesion ? $sesion['Fase_Central'] : old('Fase_Central') }}</textarea>
+											<textarea class="form-control x2" name="Fase_Central">{{ $sesion ? $sesion['Fase_Central'] : old('Fase_Central') }}</textarea>
 										</div>
 										<div class="col-md-4 form-group">
 											<label for="">Fase final</label>
-											<textarea class="form-control x2 nivel3" name="Fase_Final">{{ $sesion ? $sesion['Fase_Final'] : old('Fase_Final') }}</textarea>
+											<textarea class="form-control x2" name="Fase_Final">{{ $sesion ? $sesion['Fase_Final'] : old('Fase_Final') }}</textarea>
 										</div>
-				                        @if($tipo == "gestor")
 										<div class="col-md-12 form-group">
-											<label for="">Estado</label><br>
-				                            <label class="radio-inline">
-				                                <input type="radio" name="Estado" id="estado3" value="Aprobado" {{ ($sesion && $sesion['Estado'] == 'Aprobado') || old('Estado') == 'Aprobado' ? 'checked' : '' }}> Aprobado
-				                            </label>
-				                            <label class="radio-inline">
-				                                <input type="radio" name="Estado" id="estado4" value="Rechazado" {{ ($sesion && $sesion['Estado'] == 'Rechazado') || old('Estado') == 'Rechazado' ? 'checked' : '' }}> Rechazado
-				                            </label>
+											<label for="">Observaciones</label>
+											<textarea class="form-control" name="Observaciones">{{ $sesion ? $sesion['Observaciones'] : old('Observaciones') }}</textarea>
 										</div>
+				                        @if ($tipo == "gestor")
+											<div class="col-md-12 form-group">
+												<label for="">Estado</label><br>
+					                            <label class="radio-inline">
+					                                <input type="radio" name="Estado" id="estado3" value="Aprobado" {{ ($sesion && $sesion['Estado'] == 'Aprobado') || old('Estado') == 'Aprobado' ? 'checked' : '' }}> Aprobado
+					                            </label>
+					                            <label class="radio-inline">
+					                                <input type="radio" name="Estado" id="estado4" value="Rechazado" {{ ($sesion && $sesion['Estado'] == 'Rechazado') || old('Estado') == 'Rechazado' ? 'checked' : '' }}> Rechazado
+					                            </label>
+					                            <label class="radio-inline">
+					                                <input type="radio" name="Estado" id="estado4" value="Corregir" {{ ($sesion && $sesion['Estado'] == 'Corregir') || old('Estado') == 'Corregir' ? 'checked' : '' }}> Corregir
+					                            </label>
+											</div>
 				                        @endif
 										<div class="col-md-12">
 											<hr>
@@ -175,108 +185,110 @@
 						</div>
 					</div>		
 				</div>
-				<div class="tab-pane fade {{ $area == 'Asistencia' ? 'active in' : '' }}" id="Asistencia">
-					<div class="row">
-						<div class="col-xs-12"><br></div>
-						<div class="col-xs-12">
-							<div class="row">
-								<form action="{{ url('/asistencia/procesar') }}" method="post">
-									<fieldset>
-										<div class="col-md-6 form-group">
-											<label for="">Participantes</label>
-											<table id="participantes" class="table table-striped" width="100%">
-												<thead>
-													<tr>
-														<th>Grupo</th>
-														<th width="57px" style="text-align:center;">M</th>
-														<th width="57px" style="text-align:center;">F</th>
-													</tr>
-												</thead>
-												<tbody>
-													@foreach($gruposPoblacionales as $grupo)
-														<?php
-															$participante_m = $sesion->gruposPoblacionales()->where('Id_Grupo', $grupo['Id'])
-																								->where('Genero', 'M')
-																								->where('Grupo_Asistencia', 'Participantes')
-																								->first();
-
-															$participante_f = $sesion->gruposPoblacionales()->where('Id_Grupo', $grupo['Id'])
-																								->where('Genero', 'F')
-																								->where('Grupo_Asistencia', 'Participantes')
-																								->first();
-
-														?>
+				@if($sesion['Estado'] == 'Aprobado')
+					<div class="tab-pane fade {{ $area == 'Asistencia' ? 'active in' : '' }}" id="Asistencia">
+						<div class="row">
+							<div class="col-xs-12"><br></div>
+							<div class="col-xs-12">
+								<div class="row">
+									<form action="{{ url('/asistencia/procesar') }}" method="post">
+										<fieldset>
+											<div class="col-md-6 form-group">
+												<label for="">Participantes</label>
+												<table id="participantes" class="table table-striped" width="100%">
+													<thead>
 														<tr>
-															<td>
-																{{ $grupo['Edad_Inicio'].($grupo['Edad_Fin'] < 0 ? ' - mas' : ' a '.$grupo['Edad_Fin']) }}<br><small class="text-mutted">{{ $grupo['Grupo'] }}</small>
-															</td>
-															<td class="input">
-																<input type="text" name="participantes-m-{{ $grupo['Id'] }}" value="{{ $participante_m ? $participante_m->pivot['Cantidad'] : 0 }}" data-number>
-															</td>
-															<td class="input">
-																<input type="text" name="participantes-f-{{ $grupo['Id'] }}" value="{{ $participante_f ? $participante_f->pivot['Cantidad'] : 0 }}" data-number>
-															</td>
+															<th>Grupo</th>
+															<th width="57px" style="text-align:center;">M</th>
+															<th width="57px" style="text-align:center;">F</th>
 														</tr>
-													@endforeach
-												</tbody>
-											</table>
-										</div>
-										<div class="col-md-6">
-											<label for="">Asistentes</label>
-											<table id="asistentes" class="table table-striped" width="100%">
-												<thead>
-													<tr>
-														<th>Grupo</th>
-														<th width="57px" style="text-align:center;">M</th>
-														<th width="57px" style="text-align:center;">F</th>
-													</tr>
-												</thead>
-												<tbody>
-													@foreach($gruposPoblacionales as $grupo)
-														<?php
-															$asistente_m = $sesion->gruposPoblacionales()->where('Id_Grupo', $grupo['Id'])
-																								->where('Genero', 'M')
-																								->where('Grupo_Asistencia', 'Asistentes')
-																								->first();
+													</thead>
+													<tbody>
+														@foreach($gruposPoblacionales as $grupo)
+															<?php
+																$participante_m = $sesion->gruposPoblacionales()->where('Id_Grupo', $grupo['Id'])
+																									->where('Genero', 'M')
+																									->where('Grupo_Asistencia', 'Participantes')
+																									->first();
 
-															$asistente_f = $sesion->gruposPoblacionales()->where('Id_Grupo', $grupo['Id'])
-																								->where('Genero', 'F')
-																								->where('Grupo_Asistencia', 'Asistentes')
-																								->first();
+																$participante_f = $sesion->gruposPoblacionales()->where('Id_Grupo', $grupo['Id'])
+																									->where('Genero', 'F')
+																									->where('Grupo_Asistencia', 'Participantes')
+																									->first();
 
-														?>
+															?>
+															<tr>
+																<td>
+																	{{ $grupo['Edad_Inicio'].($grupo['Edad_Fin'] < 0 ? ' - mas' : ' a '.$grupo['Edad_Fin']) }}<br><small class="text-mutted">{{ $grupo['Grupo'] }}</small>
+																</td>
+																<td class="input">
+																	<input type="text" name="participantes-m-{{ $grupo['Id'] }}" value="{{ $participante_m ? $participante_m->pivot['Cantidad'] : 0 }}" data-number>
+																</td>
+																<td class="input">
+																	<input type="text" name="participantes-f-{{ $grupo['Id'] }}" value="{{ $participante_f ? $participante_f->pivot['Cantidad'] : 0 }}" data-number>
+																</td>
+															</tr>
+														@endforeach
+													</tbody>
+												</table>
+											</div>
+											<div class="col-md-6">
+												<label for="">Asistentes</label>
+												<table id="asistentes" class="table table-striped" width="100%">
+													<thead>
 														<tr>
-															<td>
-																{{ $grupo['Edad_Inicio'].($grupo['Edad_Fin'] < 0 ? ' - mas' : ' a '.$grupo['Edad_Fin']) }}<br><small class="text-mutted">{{ $grupo['Grupo'] }}</small>
-															</td>
-															<td class="input">
-																<input type="text" name="asistentes-m-{{ $grupo['Id'] }}" value="{{ $asistente_m ? $asistente_m->pivot['Cantidad'] : 0 }}" data-number>
-															</td>
-															<td class="input">
-																<input type="text" name="asistentes-f-{{ $grupo['Id'] }}" value="{{ $asistente_f ? $asistente_f->pivot['Cantidad'] : 0 }}" data-number>
-															</td>
+															<th>Grupo</th>
+															<th width="57px" style="text-align:center;">M</th>
+															<th width="57px" style="text-align:center;">F</th>
 														</tr>
-													@endforeach
-												</tbody>
-											</table>
-										</div>
-										<div class="col-md-12">
-											<hr>
-										</div>
-										<div class="col-md-12">
-				                            <input type="hidden" name="_method" value="POST">
-				                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-											<input type="hidden" name="Id" value="{{ $sesion ? $sesion['Id'] : 0 }}">
-											<input type="hidden" name="origen" value="{{ $tipo }}">
-											<input type="hidden" name="area" value="Asistencia">
-											<input type="submit" class="btn btn-primary" value="Registrar asistencia">
-										</div>
-									</fieldset>
-								</form>
+													</thead>
+													<tbody>
+														@foreach($gruposPoblacionales as $grupo)
+															<?php
+																$asistente_m = $sesion->gruposPoblacionales()->where('Id_Grupo', $grupo['Id'])
+																									->where('Genero', 'M')
+																									->where('Grupo_Asistencia', 'Asistentes')
+																									->first();
+
+																$asistente_f = $sesion->gruposPoblacionales()->where('Id_Grupo', $grupo['Id'])
+																									->where('Genero', 'F')
+																									->where('Grupo_Asistencia', 'Asistentes')
+																									->first();
+
+															?>
+															<tr>
+																<td>
+																	{{ $grupo['Edad_Inicio'].($grupo['Edad_Fin'] < 0 ? ' - mas' : ' a '.$grupo['Edad_Fin']) }}<br><small class="text-mutted">{{ $grupo['Grupo'] }}</small>
+																</td>
+																<td class="input">
+																	<input type="text" name="asistentes-m-{{ $grupo['Id'] }}" value="{{ $asistente_m ? $asistente_m->pivot['Cantidad'] : 0 }}" data-number>
+																</td>
+																<td class="input">
+																	<input type="text" name="asistentes-f-{{ $grupo['Id'] }}" value="{{ $asistente_f ? $asistente_f->pivot['Cantidad'] : 0 }}" data-number>
+																</td>
+															</tr>
+														@endforeach
+													</tbody>
+												</table>
+											</div>
+											<div class="col-md-12">
+												<hr>
+											</div>
+											<div class="col-md-12">
+					                            <input type="hidden" name="_method" value="POST">
+					                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+												<input type="hidden" name="Id" value="{{ $sesion ? $sesion['Id'] : 0 }}">
+												<input type="hidden" name="origen" value="{{ $tipo }}">
+												<input type="hidden" name="area" value="Asistencia">
+												<input type="submit" class="btn btn-primary" value="Registrar asistencia">
+											</div>
+										</fieldset>
+									</form>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+				@endif
 			</div>
 		</div>
 	</div>

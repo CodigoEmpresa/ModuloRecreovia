@@ -119,7 +119,7 @@ class TablaReportesActividades extends Migration
             $table->dropForeign(['Id_Reporte']);
         });
 
-        Schema::table('ReportesNovedades', function(Blueprint $table) 
+        Schema::table('ReporteNovedad', function(Blueprint $table) 
         {
             $table->dropForeign(['Id_Reporte']);
         });

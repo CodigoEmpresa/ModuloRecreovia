@@ -38,6 +38,7 @@ class Authenticate
         {
             $_SESSION['Usuario'] = '';
         }
+
         
         if($_SESSION['Usuario'] == '')
         {
@@ -58,7 +59,7 @@ class Authenticate
                 }
             }
         }
-
+        
         return $next($request);
     }
 }

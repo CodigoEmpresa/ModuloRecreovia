@@ -44,8 +44,9 @@ class TablaSesiones extends Migration
             $table->date('Fecha')->nullable();
             $table->time('Inicio')->nullable();
             $table->time('Fin')->nullable();
-            $table->enum('Estado', ['Pendiente', 'Diligenciado', 'Aprobado', 'Rechazado'])->nullable();
-            $table->enum('Estado_Ejecucion', ['Pendiente', 'Realizado', 'Cancelado', 'Reasignado'])->nullable();
+            $table->text('Observaciones')->nullable();
+            $table->enum('Estado', ['Pendiente', 'Diligenciado', 'Aprobado', 'Rechazado', 'Corregir'])->nullable();
+            $table->enum('Estado_Ejecucion', ['Pendiente', 'Realizado', 'Reasignado'])->nullable();
             $table->timestamps();
             $table->softDeletes();
 
