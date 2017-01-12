@@ -17,9 +17,14 @@ $(function(e)
 	});
 
 	$('#sesiones').DataTable({
-		"language": {
-			"url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/Spanish.json"
-		}
+		responsive: true,
+		columnDefs: [
+			{
+				targets: 5,
+        		searchable: false,
+        		orderable: false
+        	}
+      	]
 	});
 
 	$('input[data-number]').on('focus', function(e) {

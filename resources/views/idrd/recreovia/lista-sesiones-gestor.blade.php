@@ -21,15 +21,16 @@
         <div class="col-xs-12"><br></div>
         <div class="col-xs-12">
             @if (count($elementos) > 0)
-                <table id="sesiones" class="table table-striped">
+                <table id="sesiones" class="display nowrap table table-striped table-min">
                     <thead>
                         <tr>
                             <th>Sesión</th>
+                            <th>Punto / Jornada</th>
                             <th>Fecha</th>
                             <th>H. Inicio</th>
                             <th>H. Fin</th>
                             <th>Estado</th>
-                            <th></th>
+                            <th data-priority="2"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,11 +55,12 @@
                             ?>
                             <tr class="{{ $class }}">
                                 <td>{{ $sesion->Objetivo_General }}<br><small class="text-mutted">{{ $sesion->profesor->persona->toFriendlyString() }}</small></td>
+                                <td>{{ $sesion->cronograma->punto->toString() }}<br><small class="text-mutted">{{ $sesion->cronograma->jornada->toString() }}</small></td>
                                 <td>{{ $sesion->Fecha }}</td>
                                 <td>{{ $sesion->Inicio }}</td>
                                 <td>{{ $sesion->Fin }}</td>
                                 <td>{{ $sesion->Estado }}</td>
-                                <td> 
+                                <td data-priority="2"> 
                                     <a data-role="editar" href="{{ url('/gestores/sesiones/'.$sesion['Id'].'/editar') }}" class="pull-right btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Editar">
                                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                     </a>

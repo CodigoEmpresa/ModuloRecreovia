@@ -19,11 +19,11 @@ $(function()
     }
 
     $('#participaciones').DataTable({
-        "paging": false
+        paging: false
     });
 
     $('#asistencias').DataTable({
-        "paging": false
+        paging: false
     });
 
     $('select[name="Id_Punto"]').on('change', function(e)
