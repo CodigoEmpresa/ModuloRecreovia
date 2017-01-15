@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Modulos\Recreovia\Recreopersona;
 use Idrd\Usuarios\Repo\PersonaInterface;
 use Illuminate\Http\Request;
+use App\Modulos\Recreovia\Sesion;
 
 class MainController extends Controller {
 
@@ -22,6 +23,35 @@ class MainController extends Controller {
 
 	public function welcome()
 	{
+		$programadas = null;
+		$asignadas = null;
+
+		if (in_array('Gestor', $_SESSION['Usuario']['Roles']))
+		{
+			$programadas = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'profesor.persona', 'gruposPoblacionales')
+				->whereHas('cronograma', function($query)
+				{
+					$query->where('Id_Recreopersona', $this->Usuario['Recreopersona']->Id_Recreopersona);
+				})
+				->whereNull('deleted_at')
+				->orderBy('Id', 'DESC')
+				->get();
+		}
+
+		if (in_array('Profesor', $_SESSION['Usuario']['Roles'])) {
+			$asignadas = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'profesor.persona', 'gruposPoblacionales')
+				->whereNull('deleted_at')
+				->where('Id_Recreopersona', $this->Usuario['Recreopersona']->Id_Recreopersona)
+				->orderBy('Id', 'DESC')
+				->get();
+		}
+
+		$data = [
+			'programadas' => $programadas,
+			'asignadas' => $programadas,
+			'recreopersona' => $this->Usuario['Recreopersona']
+		];
+
 		$data['seccion'] = '';
 		return view('welcome', $data);
 	}

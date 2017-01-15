@@ -1,7 +1,4 @@
 <!DOCTYPE html>
-
-
-
 <html lang="es">
 	<head>
 		<meta charset="utf-8">
@@ -143,22 +140,22 @@
 		<!-- Contenedor información módulo -->
 		</br></br>
 		<div class="container">
-				<div class="page-header" id="banner">
-					<div class="row">
-						<div class="col-lg-8 col-md-7 col-sm-6">
-							<h1>Recreovía</h1>
-							<p class="lead"><h4>Módulo para la gestión y control de actividades del programa recreovía</h4></p>
-						</div>
-						<div class="col-lg-4 col-md-5 col-sm-6">
-							 <div align="right"> 
-									<img src="{{ asset('public/Img/IDRD.JPG') }}" width="50%" heigth="40%"/>
-							 </div>                    
-						</div>
-						<div class="col-sm-12">
-							<p class="text-primary">{{ $seccion ? $seccion : '' }}</p>
-						</div>
+			<div class="page-header" id="banner">
+				<div class="row">
+					<div class="col-lg-8 col-md-7 col-sm-6">
+						<h1>Recreovía</h1>
+						<p class="lead"><h4>Módulo para la gestión y control de actividades del programa recreovía</h4></p>
 					</div>
-				</div>        
+					<div class="col-lg-4 col-md-5 col-sm-6">
+						 <div align="right"> 
+								<img src="{{ asset('public/Img/IDRD.JPG') }}" width="50%" heigth="40%"/>
+						 </div>                    
+					</div>
+					<div class="col-sm-12">
+						<p class="text-primary">{{ $seccion ? $seccion : '' }}</p>
+					</div>
+				</div>
+			</div>        
 		</div>
 		<!-- FIN Contenedor información módulo -->
 
@@ -175,6 +172,7 @@
 		</div> 
 		<div class="ajaxloader">
 			<div class="ball-scale-multiple"><div></div><div></div><div></div></div>
+			<span>PROCESANDO</span>
 		</div>
 		<!-- FIN Contenedor panel principal -->
 	</body>
