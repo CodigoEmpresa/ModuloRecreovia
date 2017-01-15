@@ -34,6 +34,7 @@ class MainController extends Controller {
 					$query->where('Id_Recreopersona', $this->Usuario['Recreopersona']->Id_Recreopersona);
 				})
 				->whereNull('deleted_at')
+				->whereYear('created_at', '=', date('Y'))
 				->orderBy('Id', 'DESC')
 				->get();
 		}
@@ -42,13 +43,14 @@ class MainController extends Controller {
 			$asignadas = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'profesor.persona', 'gruposPoblacionales')
 				->whereNull('deleted_at')
 				->where('Id_Recreopersona', $this->Usuario['Recreopersona']->Id_Recreopersona)
+				->whereYear('created_at', '=', date('Y'))
 				->orderBy('Id', 'DESC')
 				->get();
 		}
 
 		$data = [
 			'programadas' => $programadas,
-			'asignadas' => $programadas,
+			'asignadas' => $asignadas,
 			'recreopersona' => $this->Usuario['Recreopersona']
 		];
 

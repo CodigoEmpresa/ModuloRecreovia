@@ -149,18 +149,15 @@ div.next:after {
 	font-weight: bold;
 }
 
-.circle {
-	margin: 0 auto;
-	width: 150px;
-	height: 150px;
-	border: 3px solid #54b4eb;
-	text-align: center;
-	border-radius: 50%;
+p.lead {
+	font-size: 15px !important;
 }
 
-.circle small
-{
-	font-weight: bold;
-	color: #317eac;
-	opacity: .8;
+div.center {
+	text-align: center;
+}
+
+div.resaltar {
+	padding: 20px 0px;
+	background-color: #fcfcfc;
 }
