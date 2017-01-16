@@ -8,10 +8,13 @@ use Iatstuti\Database\Support\CascadeSoftDeletes;
 
 class Jornada extends Model
 {
+    use SoftDeletes, CascadeSoftDeletes;
+    
 	protected $table = 'Jornadas';
     protected $primaryKey = 'Id_Jornada';
     protected $connection = 'mysql';
     protected $cascadeDeletes = ['cronogramas'];
+    protected $dates = ['deleted_at'];
 
     public function __construct()
     {
@@ -70,6 +73,4 @@ class Jornada extends Model
 
         return $label;
     }
-
-    use SoftDeletes, CascadeSoftDeletes;
 }

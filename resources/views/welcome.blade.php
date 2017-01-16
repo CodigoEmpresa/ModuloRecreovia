@@ -1,7 +1,23 @@
 @extends('master')                              
 
+@section('script')
+	@parent	
+	<script src="{{ asset('public/Js/dashboard.js') }}"></script>
+@stop
+
 @section('content')    
     <div class="content">
+    	<?php
+    		$perfil = '';
+
+    		if(in_array('Gestor', $_SESSION['Usuario']['Roles']))
+    		{
+    			$perfil = 'Gestor';
+    		} elseif (in_array('Profesor', $_SESSION['Usuario']['Roles'])) {
+    			$perfil = 'Profesor';
+    		}
+    	?>
+    	<input type="hidden" name="perfil" value="{{ $perfil }}">
     	<div class="row">
     		<div class="col-md-12">
     			<br>
@@ -106,7 +122,18 @@
 						<div class="col-md-12">
 							<br><br>
 						</div>
-		    			<div class="col-md-6">
+						<div class="col-md-6">
+							<input type="hidden" name="grupos_impacto_participantes" data-json="{!! htmlspecialchars(json_encode($grupos_impacto)) !!}">
+							<div id="grupos_impacto_participantes" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+						</div>
+						<div class="col-md-6">
+							<input type="hidden" name="grupos_impacto_asistentes" data-json="{!! htmlspecialchars(json_encode($grupos_impacto)) !!}">
+							<div id="grupos_impacto_asistentes" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+						</div>
+						<div class="col-md-12">
+							<br><br>
+						</div>
+		    			<div class="col-md-12">
 							<p class="lead">La sesión con mayor afluencia fue:</p>
 							{{ $sesion_mayor_afluencia->toSuccessString() }} <br>
 							Realizada por: {{ $sesion->profesor->persona->toFriendlyString() }} <br>
@@ -117,10 +144,10 @@
 					</div>
 				@endif
     		@elseif (in_array('Profesor', $_SESSION['Usuario']['Roles']))
-				@if (count($asignadas->where('Estado', '!=', 'Aprobado')->all()))
+				@if (count($asignadas->whereIn('Estado', ['Pendiente', 'Rechazado', 'Corregir'])->all()))
 	    			<div class="col-md-12">
 						<p class="lead">
-							Hay ({{ count($asignadas->where('Estado', '!=', 'Aprobado')->all()) }}) sesiones pendientes por revisar, para consultarlas has click <a href="{{ url('/gestores/sesiones') }}" class="alert-link">aquí.</a>
+							Hay ({{ count($asignadas->whereIn('Estado', ['Pendiente', 'Rechazado', 'Corregir'])->all()) }}) sesiones pendientes por revisar, para consultarlas has click <a href="{{ url('/profesores/sesiones') }}" class="alert-link">aquí.</a>
 						</p>
 	    			</div>
 		    	@else
@@ -217,6 +244,17 @@
 						<br><br>
 					</div>
 					<div class="col-md-6">
+						<input type="hidden" name="grupos_impacto_participantes" data-json="{!! htmlspecialchars(json_encode($grupos_impacto)) !!}">
+						<div id="grupos_impacto_participantes" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+					</div>
+					<div class="col-md-6">
+						<input type="hidden" name="grupos_impacto_asistentes" data-json="{!! htmlspecialchars(json_encode($grupos_impacto)) !!}">
+						<div id="grupos_impacto_asistentes" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+					</div>
+					<div class="col-md-12">
+						<br><br>
+					</div>
+					<div class="col-md-12">
 						<p class="lead">La sesión con mayor afluencia fue:</p>
 						{{ $sesion_mayor_afluencia->toSuccessString() }} <br>
 						<small>

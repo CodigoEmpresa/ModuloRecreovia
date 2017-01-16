@@ -72,25 +72,25 @@
                             <div class="form-group">
                                 <label for="control-label">Días</label> <br>
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" id="dia1" name="Dias[]" value="lunes" {{ ($jornada && $jornada->validarDia('lunes')) || in_array('lunes', explode(',', old('Dias'))) ? 'checked' : '' }}> Lunes
+                                    <input type="checkbox" id="dia1" name="Dias[]" value="lunes" {{ ($jornada && $jornada->validarDia('lunes')) || (is_array(old('Dias')) && in_array('lunes', old('Dias'))) ? 'checked' : '' }}> Lunes
                                 </label>
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" id="dia2" name="Dias[]" value="martes" {{ ($jornada && $jornada->validarDia('martes')) || in_array('martes', explode(',', old('Dias'))) ? 'checked' : '' }}> Martes 
+                                    <input type="checkbox" id="dia2" name="Dias[]" value="martes" {{ ($jornada && $jornada->validarDia('martes')) || (is_array(old('Dias')) && in_array('martes', old('Dias'))) ? 'checked' : '' }}> Martes 
                                 </label>
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" id="dia3" name="Dias[]" value="miercoles" {{ ($jornada && $jornada->validarDia('miercoles')) || in_array('miercoles', explode(',', old('Dias'))) ? 'checked' : '' }}> Miercoles
+                                    <input type="checkbox" id="dia3" name="Dias[]" value="miercoles" {{ ($jornada && $jornada->validarDia('miercoles')) || (is_array(old('Dias')) && in_array('miercoles', old('Dias'))) ? 'checked' : '' }}> Miercoles
                                 </label>
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" id="dia4" name="Dias[]" value="jueves" {{ ($jornada && $jornada->validarDia('jueves')) || in_array('jueves', explode(',', old('Dias'))) ? 'checked' : '' }}> Jueves
+                                    <input type="checkbox" id="dia4" name="Dias[]" value="jueves" {{ ($jornada && $jornada->validarDia('jueves')) || (is_array(old('Dias')) && in_array('jueves', old('Dias'))) ? 'checked' : '' }}> Jueves
                                 </label>
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" id="dia5" name="Dias[]" value="viernes" {{ ($jornada && $jornada->validarDia('viernes')) || in_array('viernes', explode(',', old('Dias'))) ? 'checked' : '' }}> Viernes
+                                    <input type="checkbox" id="dia5" name="Dias[]" value="viernes" {{ ($jornada && $jornada->validarDia('viernes')) || (is_array(old('Dias')) && in_array('viernes', old('Dias'))) ? 'checked' : '' }}> Viernes
                                 </label>
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" id="dia6" name="Dias[]" value="sabado" {{ ($jornada && $jornada->validarDia('sabado')) || in_array('sabado', explode(',', old('Dias'))) ? 'checked' : '' }}> Sabado
+                                    <input type="checkbox" id="dia6" name="Dias[]" value="sabado" {{ ($jornada && $jornada->validarDia('sabado')) || (is_array(old('Dias')) && in_array('sabado', old('Dias'))) ? 'checked' : '' }}> Sabado
                                 </label>
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" id="dia7" name="Dias[]" value="domingo" {{ ($jornada && $jornada->validarDia('domingo')) || in_array('domingo', explode(',', old('Dias'))) ? 'checked' : '' }}> Domingo
+                                    <input type="checkbox" id="dia7" name="Dias[]" value="domingo" {{ ($jornada && $jornada->validarDia('domingo')) || (is_array(old('Dias')) && in_array('domingo', old('Dias'))) ? 'checked' : '' }}> Domingo
                                 </label>
                             </div>
                         </div>

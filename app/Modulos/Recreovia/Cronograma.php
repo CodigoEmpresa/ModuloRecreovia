@@ -8,10 +8,13 @@ use Iatstuti\Database\Support\CascadeSoftDeletes;
 
 class Cronograma extends Model
 {
+    use SoftDeletes, CascadeSoftDeletes;
+
 	protected $table = 'Cronogramas';
     protected $primaryKey = 'Id';
     protected $connection = 'mysql';
     protected $cascadeDeletes = ['sesiones'];
+    protected $dates = ['deleted_at'];
 
     public function __construct()
     {
@@ -47,6 +50,4 @@ class Cronograma extends Model
     {
         return 'Cronograma de sesiones desde '.$this->Desde.' hasta '.$this->Hasta;
     }
-    
-    use SoftDeletes, CascadeSoftDeletes;
 }

@@ -11,7 +11,6 @@ class Reporte extends Model
 	protected $table = 'Reportes';
     protected $primaryKey = 'Id';
     protected $connection = 'mysql';
-    protected $cascadeDeletes = ['cronogramas'];
 
     public function __construct()
     {

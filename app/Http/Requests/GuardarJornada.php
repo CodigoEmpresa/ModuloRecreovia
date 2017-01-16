@@ -29,6 +29,7 @@ class GuardarJornada extends Request
             'Fecha_Evento_Fin' => 'required_if:Jornada,clases_grupales,mega_eventos',
             'Inicio' => 'required',
             'Fin' => 'required',
+            'Dias' => 'required',
         ];
     }
 
@@ -38,7 +39,8 @@ class GuardarJornada extends Request
             'Fecha_Evento_Inicio.required_if' => 'El campo fecha de inicio es requerido cuando jornada es igual a :value',
             'Fecha_Evento_Fin.required_if' => 'El campo fecha de finalización es requerido cuando jornada es igual a :value',
             'Inicio.required' => 'El campo hora inicio es requerido',
-            'Fin.required' => 'El campo hora fin es requerido'
+            'Fin.required' => 'El campo hora fin es requerido',
+            'Dias.required' => 'El campo dias es requerido'
         ];
     }
 }
