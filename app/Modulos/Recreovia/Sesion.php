@@ -33,5 +33,10 @@ class Sesion extends Model
         return $this->Objetivo_General.' programada para el dia '.$this->Fecha.' de '.$this->Inicio.' a '.$this->Fin;
     }
 
+    public function toSuccessString()
+    {
+        return $this->Objetivo_General.' realizada el dia '.$this->Fecha.' de '.$this->Inicio.' a '.$this->Fin;
+    }
+
     use SoftDeletes;
 }

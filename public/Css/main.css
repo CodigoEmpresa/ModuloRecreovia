@@ -30,7 +30,7 @@
 }
 
 .table-min{
-	font-size: 10px;
+	font-size: 12px;
 }
 
 .clear-both { clear: both; }
@@ -160,4 +160,10 @@ div.center {
 div.resaltar {
 	padding: 20px 0px;
 	background-color: #fcfcfc;
+}
+
+@media (min-width: 1200px) {
+	.container {
+		width: 1280px;
+	}
 }
