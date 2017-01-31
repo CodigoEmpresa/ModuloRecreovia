@@ -26,8 +26,7 @@ class GuardarSesionGestor extends Request
          return [
             'Fecha' => 'required',
             'Inicio' => 'required',
-            'Fin' => 'required',
-            'Id_Recreopersona' => 'required'
+            'Fin' => 'required'
         ];
     }
 
@@ -35,8 +34,7 @@ class GuardarSesionGestor extends Request
     {
         return [
             'Inicio.required' => 'El campo hora inicio es requerido',
-            'Fin.required' => 'El campo hora fin es requerido',
-            'Id_Recreopersona.required' => 'El campo profesor es requerido'
+            'Fin.required' => 'El campo hora fin es requerido'
         ];
     }
 }

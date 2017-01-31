@@ -109,12 +109,13 @@ $(function()
                 {},
                 function(data)
                 {
-                    if(data)
+                    if(data.length > 0)
                     {
                         $('input[name="Direccion"]').val(data[0].Direccion);
                         $('input[name="Escenario"]').val(data[0].Nombre);
                         $.when($('select[name="Id_Localidad"]').val(data[0].Id_Localidad).trigger('change')).done(function(){
-                            $('select[name="Id_Upz"]').val(data[0].upz['Id_Upz']);
+                            if(data[0].upz)
+                                $('select[name="Id_Upz"]').val(data[0].upz['Id_Upz']);
                         });
                     }
                 },

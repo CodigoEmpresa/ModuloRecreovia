@@ -95,7 +95,13 @@
 										</div>
 										<div class="col-md-3 form-group">
 											<label for="">Profesor</label>
-											<p class="form-control-static">{{ $sesion->profesor->persona->toString() }}</p>
+											<p class="form-control-static">
+												@if($sesion->profesor) 
+	                            					{{ $sesion->profesor->persona->toString() }} 
+	                            				@else 
+	                            					Sin profesor asignado
+	                            				@endif
+											</p>
 										</div>
 										<div class="col-md-6 form-group">
 											<label for="">Objetivo general</label>
