@@ -27,8 +27,10 @@ class ReporteController extends Controller {
 	public function jornadas()
 	{
 		$perPage = config('app.page_size');
+		$recreopersona = $this->cronogramasPersona();
 		$elementos = Reporte::with(['profesores', 'cronograma', 'cronograma.sesiones'])
 							->whereNull('deleted_at')
+							->whereIn('Id_Cronograma', $recreopersona->cronogramas->pluck('Id')->toArray())
 							->orderBy('Id', 'DESC')
 							->paginate($perPage);
 
@@ -48,7 +50,7 @@ class ReporteController extends Controller {
 
 	public function crearInformeJornadas()
 	{
-		$recreopersona = $this->cronogramasPersonas();
+		$recreopersona = $this->cronogramasPersona();
 		$gruposPoblacionales = GrupoPoblacional::all();
 
 		$formulario = [
@@ -71,7 +73,7 @@ class ReporteController extends Controller {
 	public function editarInformeJornadas(Request $request, $id)
 	{
 		$informe = Reporte::with('profesores', 'novedad', 'servicios')->find($id);
-		$recreopersona = $this->cronogramasPersonas();
+		$recreopersona = $this->cronogramasPersona();
 		$gruposPoblacionales = GrupoPoblacional::all();
 
 		$sesiones = Sesion::with('gruposPoblacionales', 'profesor', 'profesor.persona')
@@ -122,14 +124,17 @@ class ReporteController extends Controller {
 			//sincronizar profesores
 			foreach ($sesiones as $sesion) 
 			{
-				$profesores[$sesion['Id_Recreopersona']] = [
-					'Hora_Llegada' => null,
-					'Hora_Salida' => null,
-					'Sesiones_Realizadas' => count($sesiones->where('Id_Recreopersona', $sesion['Id_Recreopersona'])->all()),
-					'Planificacion' => '',
-					'Sistema_De_Datos' => '',
-					'Novedades' => ''
-				];
+				if($sesion['Id_Recreopersona'])
+				{
+					$profesores[$sesion['Id_Recreopersona']] = [
+						'Hora_Llegada' => null,
+						'Hora_Salida' => null,
+						'Sesiones_Realizadas' => count($sesiones->where('Id_Recreopersona', $sesion['Id_Recreopersona'])->all()),
+						'Planificacion' => '',
+						'Sistema_De_Datos' => '',
+						'Novedades' => ''
+					];
+				}
 			}
 		}
 
@@ -210,23 +215,26 @@ class ReporteController extends Controller {
 		return response()->json([true]);
 	}
 
-	private function cronogramasPersonas()
-	{
-		$recreopersona = Recreopersona::with(['puntos' => function($query)
-										{
-											return $query->where('tipo', 'Gestor')
-														->whereNull('Puntos.deleted_at');
-										}, 'puntos.cronogramas' => function($query) 
-										{
-											return $query->whereNull('Cronogramas.deleted_at');
-										}, 'puntos.cronogramas.jornada'])->find($this->usuario['Recreopersona']->Id_Recreopersona);
+	private function cronogramasPersona()
+	{		
+		$recreopersona = Recreopersona::with('cronogramas', 'cronogramas.jornada', 'cronogramas.punto.cronogramas.jornada')->find($this->usuario['Recreopersona']->Id_Recreopersona);
+		$recreopersona->puntos = collect();
 
-		foreach ($recreopersona->puntos as $punto) 
+		foreach ($recreopersona->cronogramas as $cronograma) 
 		{
-			foreach ($punto->cronogramas as &$cronograma)
+			$key = $cronograma->punto['Id_Punto'];
+			$exists = $recreopersona->puntos->search(function($item, $key)
 			{
-				$cronograma->jornada->Label = $cronograma->jornada->toString();
-			}	
+				$item['Id_Punto'] == $key;
+			});
+
+			if (!$exists)
+			{
+				$recreopersona->puntos->push($cronograma->punto);
+
+				foreach ($cronograma->punto->cronogramas as &$cronograma)
+					$cronograma->jornada->Label = $cronograma->jornada->toString();
+			}
 		}
 
 		return $recreopersona;

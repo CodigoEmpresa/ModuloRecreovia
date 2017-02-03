@@ -1,6 +1,9 @@
 $(function()
 {
     var PUNTOS = $.parseJSON(JSON.stringify($('select[name="Id_Cronograma"]').data('json')));
+
+    console.log(PUNTOS);
+    
     var URL = $('#main').data('url');
 
     var reindexarServicios = function()

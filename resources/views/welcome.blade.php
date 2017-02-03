@@ -133,11 +133,17 @@
 						<div class="col-md-12">
 							<br><br>
 						</div>
-						@if($sesion_mayor_afluencia)
+						@if ($sesion_mayor_afluencia)
 			    			<div class="col-md-12">
 								<p class="lead">La sesión con mayor afluencia fue:</p>
 								{{ $sesion_mayor_afluencia->toSuccessString() }} <br>
-								Realizada por: {{ $sesion->profesor->persona->toFriendlyString() }} <br>
+								Realizada por:
+								@if ($sesion_mayor_afluencia->profesor)
+									{{ $sesion_mayor_afluencia->profesor->persona->toFriendlyString() }} 
+								@else
+									Sin profesor asignado.
+								@endif 
+								<br>
 								<small>
 									{{ $total_mayor_afluencia }} personas.
 								</small>

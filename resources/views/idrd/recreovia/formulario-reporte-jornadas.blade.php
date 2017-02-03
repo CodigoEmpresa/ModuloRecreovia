@@ -48,7 +48,7 @@
                         </div>
                         <div class="col-md-8 form-group {{ $errors->has('Id_Cronograma') ? 'has-error' : '' }}">
                             <label for="">Periodo y jornada</label>
-                            <select name="Id_Cronograma" id="Id_Cronograma" class="form-control" data-json="{{ $puntos }}" data-value="{{ $informe ? $informe['Id_Cronograma'] : old('Id_Cronograma') }}">
+                            <select name="Id_Cronograma" id="Id_Cronograma" class="form-control" data-json="{{ json_encode($puntos) }}" data-value="{{ $informe ? $informe['Id_Cronograma'] : old('Id_Cronograma') }}">
                                 <option value="">Seleccionar</option>
                             </select>
                         </div>
@@ -386,7 +386,13 @@
                                                 <td>{{ ++$i }}</td>
                                                 <td>{{ $sesion['Objetivo_General'] }}</td>
                                                 <td>{{ $sesion['Inicio'] }}</td>
-                                                <td>{{ $sesion->profesor->persona->toFriendlyString() }}</td>
+                                                <td>
+                                                    @if($sesion->profesor) 
+                                                        {{ $sesion->profesor->persona->toFriendlyString() }} 
+                                                    @else 
+                                                        Sin profesor asignado
+                                                    @endif
+                                                </td>
                                                 @foreach ($gruposPoblacionales as $grupo)
                                                     @if (count($sesion->gruposPoblacionales))
                                                         <?php 
@@ -490,7 +496,13 @@
                                                 <td>{{ ++$i }}</td>
                                                 <td>{{ $sesion['Objetivo_General'] }}</td>
                                                 <td>{{ $sesion['Inicio'] }}</td>
-                                                <td>{{ $sesion->profesor->persona->toFriendlyString() }}</td>
+                                                <td>
+                                                    @if($sesion->profesor) 
+                                                        {{ $sesion->profesor->persona->toFriendlyString() }} 
+                                                    @else 
+                                                        Sin profesor asignado
+                                                    @endif
+                                                </td>
                                                 @foreach ($gruposPoblacionales as $grupo)
                                                     @if (count($sesion->gruposPoblacionales))
                                                         <?php 
