@@ -139,7 +139,7 @@ class TablaReportesActividades extends Migration
         Schema::drop('Participaciones');
         Schema::drop('GruposPoblacionales');
         Schema::drop('ReportesServicios');
-        Schema::drop('ReportesNovedades');
+        Schema::drop('ReporteNovedad');
         Schema::drop('ReportesProfesores');
         Schema::drop('Reportes');
     }
