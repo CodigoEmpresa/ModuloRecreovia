@@ -134,7 +134,7 @@ class SesionController extends Controller {
 		}
 
 		$sesion->Id_Cronograma = $request->input('Id_Cronograma');
-		$sesion->Id_Recreopersona = $request->input('Id_Recreopersona');
+		$sesion->Id_Recreopersona = $request->input('Id_Recreopersona') == '' ? null : $request->input('Id_Recreopersona');
 		$sesion->Objetivo_General = $request->input('Objetivo_General');
 		$sesion->Recursos = $request->input('Recursos');
 		$sesion->Fecha = $request->input('Fecha');
@@ -143,7 +143,7 @@ class SesionController extends Controller {
 		$sesion->Estado = !$nuevo ? $sesion->Estado : 'Pendiente';
 		$sesion->save();
 
-		if ($notificar)
+		if ($notificar && $sesion->profesor)
 			$this->notificar($sesion, 'profesor');
 
 		return redirect('/gestores/'.$request->input('Id_Cronograma').'/sesiones')->with(['status' => 'success']);
@@ -348,22 +348,25 @@ class SesionController extends Controller {
 					break;
 			}
 
-			$datos = [
-				'titulo' => 'Notificación',
-				'destinatario' => $destinatario->persona->toFriendlyString(),
-				'notificacion' => $notificacion,
-				'link' => [
-					'url' => 'http://www.idrd.gov.co/SIM/Presentacion/',
-					'texto' => 'Ingresar al SIM'
-				],
-				'pie' => 'Gracias.',
-			];
-
-			Mail::send('email.notificacion', $datos, function($m) use ($destinatario)
+			if($destinatario)
 			{
-				$m->from('mails@idrd.gov.co', 'Recreovía');
-				$m->to($destinatario->correo, $destinatario->persona->toFriendlyString())->subject('Notificación');
-			});
+				$datos = [
+					'titulo' => 'Notificación',
+					'destinatario' => $destinatario->persona->toFriendlyString(),
+					'notificacion' => $notificacion,
+					'link' => [
+						'url' => 'http://www.idrd.gov.co/SIM/Presentacion/',
+						'texto' => 'Ingresar al SIM'
+					],
+					'pie' => 'Gracias.',
+				];
+
+				Mail::send('email.notificacion', $datos, function($m) use ($destinatario)
+				{
+					$m->from('mails@idrd.gov.co', 'Recreovía');
+					$m->to($destinatario->correo, $destinatario->persona->toFriendlyString())->subject('Notificación');
+				});
+			}
 		} catch (Exception $e) {
 			
 		}

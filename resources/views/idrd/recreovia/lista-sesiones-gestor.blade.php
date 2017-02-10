@@ -54,7 +54,17 @@
                                 }
                             ?>
                             <tr class="{{ $class }}">
-                                <td>{{ $sesion->Objetivo_General }}<br><small class="text-mutted">{{ $sesion->profesor->persona->toFriendlyString() }}</small></td>
+                                <td>
+                                    {{ $sesion->Objetivo_General }}
+                                    <br>
+                                    <small class="text-mutted">
+                                        @if($sesion->profesor) 
+                                            {{ $sesion->profesor->persona->toFriendlyString() }} 
+                                        @else 
+                                            Sin profesor asignado
+                                        @endif
+                                    </small>
+                                </td>
                                 <td>{{ $sesion->cronograma->punto->toString() }}<br><small class="text-mutted">{{ $sesion->cronograma->jornada->toString() }}</small></td>
                                 <td>{{ $sesion->Fecha }}</td>
                                 <td>{{ $sesion->Inicio }}</td>
