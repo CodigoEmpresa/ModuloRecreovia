@@ -1,10 +1,4 @@
-@section('script')
-    @parent
-
-    <script src="{{ asset('public/Js/puntos/buscador.js') }}"></script>
-@stop
-    
-<div class="content">
+    <div class="content">
     <div id="main" class="row" data-url="{{ url('jornadas') }}">
         @if ($status == 'success')
             <div id="alerta" class="col-xs-12">
@@ -23,33 +17,32 @@
         </div>
         <div class="col-xs-12"><br></div>
         <div class="col-xs-12">
-            <ul class="list-group" id="principal">
-                @foreach($elementos as $jornada)
-                    <li class="list-group-item">
-                        <h5 class="list-group-item-heading">
+            <table class="default table table-striped">
+                <thead>
+                    <tr>
+                        <th>
                             Jornada
+                        </th>
+                        <th class="no-sort" style="width: 35px;">
+                            
+                        </th>
+                    </tr>
+                </thead>
+                @foreach($elementos as $jornada)
+                    <tr>
+                        <td>
+                            JORNADA {{ strtoupper($jornada->toString()) }} <br>
+                            <small>Disponible en {{ count($jornada->puntos) }} puntos</small>
+                        </td>
+                        <td>
                             <a data-role="editar" href="{{ url('jornadas/'.$jornada['Id_Jornada'].'/editar') }}" class="pull-right btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Editar">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </a>
-                        </h5>
-                        <p class="list-group-item-text">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-6 col-md-12">
-                                            <small>
-                                                Descripción: {{ $jornada->toString() }}. <br>
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </p>
-                        <span class="label label-default">Disponible en {{ count($jornada->puntos) }} puntos</span> 
-                    </li>
-                @endforeach
+                        </td>
+                    </tr>
+                    @endforeach
+                </table>
             </ul>
         </div>
-        <div id="paginador" class="col-xs-12">{!! $elementos->render() !!}</div>
     </div>
 </div>
