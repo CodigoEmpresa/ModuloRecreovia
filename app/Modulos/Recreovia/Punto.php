@@ -43,26 +43,6 @@ class Punto extends Model
         return $this->hasMany('App\Modulos\Recreovia\Reporte', 'Id_Punto');
     }
 
-    public function recreopersonas()
-    {
-        return $this->belongsToMany('App\Modulos\Recreovia\Recreopersona', 'PuntosPersonas', 'Id_Punto', 'Id_Recreopersona')
-                    ->withPivot('tipo');
-    }
-
-    public function profesores()
-    {
-         return $this->belongsToMany('App\Modulos\Recreovia\Recreopersona', 'PuntosPersonas', 'Id_Punto', 'Id_Recreopersona')
-                    ->withPivot('tipo')
-                    ->where('tipo', 'Profesor');
-    }
-
-    public function gestores()
-    {
-         return $this->belongsToMany('App\Modulos\Recreovia\Recreopersona', 'PuntosPersonas', 'Id_Punto', 'Id_Recreopersona')
-                    ->withPivot('tipo')
-                    ->where('tipo', 'Gestor');
-    }
-
     public function toString()
     {
         return $this->Escenario;
