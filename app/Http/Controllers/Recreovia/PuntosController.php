@@ -16,10 +16,10 @@ class PuntosController extends Controller {
 	public function index()
 	{
 		$perPage = config('app.page_size');
-		$elementos = Punto::with('localidad', 'profesores', 'gestores', 'jornadas', 'upz')
+		$elementos = Punto::with('localidad', 'jornadas', 'upz')
 							->whereNull('deleted_at')
 							->orderBy('Cod_IDRD', 'ASC')
-							->paginate($perPage);
+							->get();
 
 		$lista = [
 			'titulo' => 'Puntos',

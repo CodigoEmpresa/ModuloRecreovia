@@ -23,9 +23,9 @@ class Recreopersona extends Model
     	return $this->belongsTo('App\Modulos\Personas\Persona', 'Id_Persona');
     }
 
-    public function puntos()
+    public function localidades()
     {
-        return $this->belongsToMany('App\Modulos\Recreovia\Punto', config('database.connections.mysql.database').'.PuntosPersonas', 'Id_Recreopersona', 'Id_Punto')
+        return $this->belongsToMany('App\Modulos\Parque\Localidad', config('database.connections.mysql.database').'.LocalidadesPersonas', 'Id_Recreopersona', 'Id_Localidad')
                     ->withPivot('tipo');
     }
 

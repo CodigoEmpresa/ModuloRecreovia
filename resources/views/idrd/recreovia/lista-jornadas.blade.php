@@ -28,21 +28,22 @@
                         </th>
                     </tr>
                 </thead>
-                @foreach($elementos as $jornada)
-                    <tr>
-                        <td>
-                            JORNADA {{ strtoupper($jornada->toString()) }} <br>
-                            <small>Disponible en {{ count($jornada->puntos) }} puntos</small>
-                        </td>
-                        <td>
-                            <a data-role="editar" href="{{ url('jornadas/'.$jornada['Id_Jornada'].'/editar') }}" class="pull-right btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Editar">
-                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                            </a>
-                        </td>
-                    </tr>
+                <tbody>
+                    @foreach($elementos as $jornada)
+                        <tr>
+                            <td>
+                                JORNADA {{ strtoupper($jornada->toString()) }} <br>
+                                <small>Disponible en {{ count($jornada->puntos) }} puntos</small>
+                            </td>
+                            <td>
+                                <a data-role="editar" href="{{ url('jornadas/'.$jornada['Id_Jornada'].'/editar') }}" class="pull-right btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Editar">
+                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                </a>
+                            </td>
+                        </tr>
                     @endforeach
-                </table>
-            </ul>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
