@@ -66,7 +66,10 @@
                                         <input type="radio" name="recreovia" id="recreovia2" value="RESN" {{ ($cronograma && $cronograma['recreovia'] == 'RESN') || old('recreovia') == 'RESN' ? 'checked' : '' }}> RESN
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="recreovia" id="recreovia3" value="REFS" {{ ($cronograma && $cronograma['recreovia'] == 'REFS') || old('recreovia') == 'REFS' ? 'checked' : '' }}> REFS
+                                        <input type="radio" name="recreovia" id="recreovia3" value="RFDS" {{ ($cronograma && $cronograma['recreovia'] == 'RFDS') || old('recreovia') == 'RFDS' ? 'checked' : '' }}> RFDS
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="recreovia" id="recreovia4" value="CG" {{ ($cronograma && $cronograma['recreovia'] == 'CG') || old('recreovia') == 'CG' ? 'checked' : '' }}> CG
                                     </label>
                                 </div>
                             </div>

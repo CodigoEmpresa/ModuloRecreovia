@@ -25,7 +25,7 @@ class Recreopersona extends Model
 
     public function localidades()
     {
-        return $this->belongsToMany('App\Modulos\Parque\Localidad', config('database.connections.mysql.database').'.LocalidadesPersonas', 'Id_Recreopersona', 'Id_Localidad')
+        return $this->belongsToMany('App\Modulos\Parques\Localidad', config('database.connections.mysql.database').'.LocalidadesPersonas', 'Id_Recreopersona', 'Id_Localidad')
                     ->withPivot('tipo');
     }
 

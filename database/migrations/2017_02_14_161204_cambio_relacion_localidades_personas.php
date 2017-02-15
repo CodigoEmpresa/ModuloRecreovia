@@ -24,7 +24,7 @@ class CambioRelacionLocalidadesPersonas extends Migration
             $table->foreign('Id_Recreopersona')->references('Id_Recreopersona')->on('Recreopersonas')->onDelete('cascade');
         });
 
-        $puntos_asignados = DB::select('SELECT PuntosPersonas.*, Puntos.Id_Localidad FROM PuntosPersonas, Puntos WHERE PuntosPersonas.`Id_Punto` = Puntos.`Id_Punto`');
+        $puntos_asignados = DB::select('SELECT DISTINCT PuntosPersonas.*, Puntos.Id_Localidad FROM PuntosPersonas, Puntos WHERE PuntosPersonas.`Id_Punto` = Puntos.`Id_Punto` GROUP BY Id_Recreopersona, Id_Localidad');
         
         if ($puntos_asignados)
         {

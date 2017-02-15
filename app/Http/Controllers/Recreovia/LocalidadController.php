@@ -35,15 +35,14 @@ class LocalidadController extends Controller {
 	{
 		$formulario = [
 			'titulo' => 'Administrar personal punto',
-			'localidad' => Localidad::with('puntos')
+			'localidad' => Localidad::with('recreopersonas')
 									->find($id_localidad),
-			'punto' => $id_punto == 0 ? null : Punto::with('recreopersonas')->find($id_punto),
 			'status' => session('status')
 		];
 
 		$datos = [
 			'seccion' => 'Administrar localidades',
-			'formulario' => view('idrd.recreovia.formulario-personas-puntos', $formulario)
+			'formulario' => view('idrd.recreovia.formulario-personas-localidades', $formulario)
 		];
 
 		return view('form', $datos);
@@ -51,26 +50,29 @@ class LocalidadController extends Controller {
 
 	public function agregarPersonal(AgregarPersonalLocalidad $request)
 	{
-		$punto = Punto::with('recreopersonas')->find($request->input('id_punto'));
+		$localidad = Localidad::with('recreopersonas')->find($request->input('id_localidad'));
 
-		if ($punto)
+		if ($localidad)
 		{
-			$punto->recreopersonas()->detach($request->input('id_persona'));
-			$punto->recreopersonas()->attach($request->input('id_persona'), ['tipo' => $request->input('tipo')]);
+			$localidad->recreopersonas()->detach($request->input('id_persona'));
+			$localidad->recreopersonas()->attach($request->input('id_persona'), ['tipo' => $request->input('tipo')]);
+			
+			return redirect('/localidades/'.$request->input('id_localidad').'/administrar/'.$request->input('id_punto'))->with(['status' => 'success']); 
+		} else {
+			return redirect('/localidades/administrar/'); 
 		}
 
-		return redirect('/localidades/'.$request->input('id_localidad').'/administrar/'.$request->input('id_punto'))->with(['status' => 'success']); 
 	}
 
-	public function removerPersonal(Request $request, $id_localidad, $id_punto, $id_persona)
+	public function removerPersonal(Request $request, $id_localidad, $id_persona)
 	{
-		$punto = Punto::with('recreopersonas')->find($id_punto);
+		$localidad = Localidad::with('recreopersonas')->find($id_localidad);
 
-		if ($punto)
+		if ($localidad)
 		{
-			$punto->recreopersonas()->detach($id_persona);
+			$localidad->recreopersonas()->detach($id_persona);
 		}
 
-		return redirect('/localidades/'.$id_localidad.'/administrar/'.$id_punto)->with(['status' => 'success']); 
+		return redirect('/localidades/'.$id_localidad.'/administrar/')->with(['status' => 'success']); 
 	}
 }

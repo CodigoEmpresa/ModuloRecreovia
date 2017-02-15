@@ -19,12 +19,11 @@ class ProgramacionController extends Controller {
 
 	public function index()
 	{
-		$perPage = config('app.page_size');
 		$elementos = Cronograma::with('punto', 'jornada', 'sesiones')
 							->whereNull('deleted_at')
 							->where('Id_Recreopersona', $this->usuario['Recreopersona']->Id_Recreopersona)
 							->orderBy('created_at', 'DESC')
-							->paginate($perPage);
+							->get();
 
 		$lista = [
 			'titulo' => 'Programación',
@@ -42,22 +41,16 @@ class ProgramacionController extends Controller {
 
 	public function crear() 
 	{
-		$recreopersona = Recreopersona::with(['puntos' => function($query)
+		$recreopersona = Recreopersona::with(['localidades' => function($query)
 										{
-											return $query->where('tipo', 'Gestor')
-														->whereNull('Puntos.deleted_at');
-										}, 'puntos.jornadas' => function($query) 
+											return $query->where('tipo', 'Gestor');
+										}, 'localidades.puntos.jornadas' => function($query) 
 										{
 											return $query->whereNull('Jornadas.deleted_at');
 										}])->find($this->usuario['Recreopersona']->Id_Recreopersona);
-
-		foreach ($recreopersona->puntos as $punto) 
-		{
-			foreach($punto->jornadas as &$jornada)
-			{
-				$jornada->Label = $jornada->toString();
-			}	
-		}
+		
+		$puntos = $this->obtenerPuntosLocalidades($recreopersona->localidades);
+		$recreopersona->puntos = $puntos;
 
 		$formulario = [
 			'titulo' => 'Crear ó editar cronograma de sesiones',
@@ -77,22 +70,17 @@ class ProgramacionController extends Controller {
 	public function editar(Request $request, $id_cronograma)
 	{
 		$cronograma = Cronograma::find($id_cronograma);
-		$recreopersona = Recreopersona::with(['puntos' => function($query)
+		
+		$recreopersona = Recreopersona::with(['localidades' => function($query)
 										{
-											return $query->where('tipo', 'Gestor')
-														->whereNull('Puntos.deleted_at');
-										}, 'puntos.jornadas' => function($query) 
+											return $query->where('tipo', 'Gestor');
+										}, 'localidades.puntos.jornadas' => function($query) 
 										{
 											return $query->whereNull('Jornadas.deleted_at');
 										}])->find($this->usuario['Recreopersona']->Id_Recreopersona);
-
-		foreach ($recreopersona->puntos as $punto) 
-		{
-			foreach($punto->jornadas as &$jornada)
-			{
-				$jornada->Label = $jornada->toString();
-			}	
-		}
+		
+		$puntos = $this->obtenerPuntosLocalidades($recreopersona->localidades);
+		$recreopersona->puntos = $puntos;
 
 		$formulario = [
 			'titulo' => 'Crear ó editar cronograma de sesiones',
@@ -138,6 +126,26 @@ class ProgramacionController extends Controller {
 
 		return redirect('/programacion/gestores/')
 					->with('status', 'success');
+	}
+
+	private function obtenerPuntosLocalidades($localidades)
+	{
+		$puntos = collect();
+
+		foreach ($localidades as $localidad) 
+		{
+			foreach($localidad->puntos as $punto)
+			{
+				foreach($punto->jornadas as &$jornada)
+				{
+					$jornada->Label = $jornada->toString();
+				}
+
+				$puntos->push($punto);
+			}	
+		}
+
+		return $puntos;
 	}
 
 }

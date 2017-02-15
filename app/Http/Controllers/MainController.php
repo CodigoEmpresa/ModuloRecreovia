@@ -25,7 +25,6 @@ class MainController extends Controller {
 	{
 		$programadas = null;
 		$asignadas = null;
-
 		if (in_array('Gestor', $_SESSION['Usuario']['Roles']))
 		{
 			$programadas = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'profesor.persona', 'gruposPoblacionales')
@@ -55,6 +54,7 @@ class MainController extends Controller {
 		];
 
 		$data['seccion'] = '';
+
 		return view('welcome', $data);
 	}
 

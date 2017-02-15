@@ -10,7 +10,6 @@
         <div class="col-xs-12"><br></div>
         <div class="col-xs-12">
             <div class="row">
-    
                 @foreach($localidades as $localidad)
                     <div class="col-md-4">
                         <div class="squad-grid">
