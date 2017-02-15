@@ -5,7 +5,7 @@
 @stop
     
 <div class="content">
-    <div id="main" class="row" data-url="{{ url('personas') }}">
+    <div id="main" class="row" data-url="{{ url('personas') }}" data-url-profesores="{{ url('profesores') }}">
         @if ($status == 'success')
             <div id="alerta" class="col-xs-12">
                 <div class="alert alert-success alert-dismissible" role="alert">

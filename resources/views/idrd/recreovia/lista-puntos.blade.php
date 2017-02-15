@@ -1,9 +1,3 @@
-@section('script')
-    @parent
-
-    <script src="{{ asset('public/Js/puntos/buscador.js') }}"></script>
-@stop
-    
 <div class="content">
     <div id="main" class="row" data-url="{{ url('puntos') }}">
         @if ($status == 'success')
@@ -26,13 +20,13 @@
              <table class="default table table-striped">
                 <thead>
                     <tr>
-                        <th>
+                        <th style="width: 250px;">
                             Punto
                         </th>
                         <th>
-                            Jornadas realizadas
+                            Dirección
                         </th>
-                        <th>
+                        <th style="width: 100px;">
                             Localidad
                         </th>
                         <th>
@@ -46,16 +40,8 @@
                 <tbody>
                     @foreach($elementos as $punto)
                         <tr>
-                            <td>
-                                {{ strtoupper($punto['Escenario']) }} <br> 
-                                <small>
-                                    Dirección: {{ $punto['Direccion'] }}. <br>
-                                    Jornadas realizadas: {{ count($punto->jornadas) }}. <br>
-                                    Total gestores: {{ count($punto->gestores) }}. <br>
-                                    Total profesores: {{ count($punto->profesores) }}.
-                                </small>
-                            </td>
-                            <td>{{ count($punto->jornadas) }}</td>
+                            <td>{{ strtoupper($punto['Escenario']) }}</td>
+                            <td>{{ strtoupper($punto['Direccion']) }}</td>
                             <td>{{ $punto->localidad['Id_Localidad'].' - '.$punto->localidad['Localidad'] }}</td>
                             <td>{{ $punto->Upz['Id_Upz'].' - '.$punto->upz['Upz'] }}</td>
                             <td>

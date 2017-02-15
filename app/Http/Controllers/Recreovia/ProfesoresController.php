@@ -24,11 +24,10 @@ class ProfesoresController extends Controller {
 
 	public function index()
 	{
-		$perPage = config('app.page_size');
 		$elementos = Persona::has('recreopersona')
-							->with('recreopersona', 'recreopersona.cronogramas', 'recreopersona.sesiones', 'recreopersona.puntos')
+							->with('recreopersona', 'recreopersona.cronogramas', 'recreopersona.sesiones', 'recreopersona.localidades')
 							->orderBy('Cedula', 'ASC')
-							->paginate($perPage);
+							->get();
 
 		$lista = [
 			'titulo' => 'Profesores',
@@ -67,7 +66,7 @@ class ProfesoresController extends Controller {
 	public function editar(Request $request, $id)
 	{
 		$persona = $this->repositorio_personas->obtener($id);
-		$profesor = Persona::with('recreopersona', 'recreopersona.cronogramas', 'recreopersona.sesiones', 'recreopersona.puntos', 'tipoDocumento')
+		$profesor = Persona::with('recreopersona', 'recreopersona.cronogramas', 'recreopersona.sesiones', 'recreopersona.localidades', 'tipoDocumento')
 						->where('Id_Persona', $persona->Id_Persona)
 						->first();
 
@@ -95,11 +94,11 @@ class ProfesoresController extends Controller {
 		
 		if(!$strict)
 		{
-			$profesores = Persona::with('recreopersona', 'recreopersona.cronogramas', 'recreopersona.sesiones', 'recreopersona.puntos', 'tipoDocumento')
+			$profesores = Persona::with('recreopersona', 'recreopersona.cronogramas', 'recreopersona.sesiones', 'recreopersona.localidades', 'tipoDocumento')
 								->whereIn('Id_Persona', $resultados->lists('Id_Persona'))
 								->get();
 		} else {
-			$profesores = Persona::with('recreopersona', 'recreopersona.cronogramas', 'recreopersona.sesiones', 'recreopersona.puntos', 'tipoDocumento')
+			$profesores = Persona::with('recreopersona', 'recreopersona.cronogramas', 'recreopersona.sesiones', 'recreopersona.localidades', 'tipoDocumento')
 								->whereHas('recreopersona', function($query) use ($resultados)
 								{
 									$query->whereIn('Id_Persona', $resultados->lists('Id_Persona'));

@@ -50,7 +50,7 @@ Route::group(['middleware' => ['web']], function()
 
 	Route::get('/localidades/administrar', 'Recreovia\LocalidadController@index');
 	Route::get('/localidades/{id_localidad}/administrar/{id_punto?}', 'Recreovia\LocalidadController@editar');
-	Route::get('/localidades/{id_localidad}/punto/{id_punto}/personal/{id_persona}/remover', 'Recreovia\LocalidadController@removerPersonal');
+	Route::get('/localidades/{id_localidad}/personal/{id_persona}/remover', 'Recreovia\LocalidadController@removerPersonal');
 	Route::post('/localidades/personal/agregar', 'Recreovia\LocalidadController@agregarPersonal');
 
 	route::get('/programacion', 'Recreovia\ProgramacionController@index');
