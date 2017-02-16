@@ -210,7 +210,7 @@
 		    			</div>
 		    			<div class="col-md-3 col-sm-6 resaltar">
 							<?php
-								$grupo_mayor_impacto = '';
+								$grupo_mayor_impacto = 'N\P';
 								$total = 0;
 
 								foreach ($grupos_impacto as $key => $grupo) 
@@ -244,13 +244,15 @@
 					<div class="col-md-12">
 						<br><br>
 					</div>
-					<div class="col-md-12">
-						<p class="lead">La sesión con mayor afluencia fue:</p>
-						{{ $sesion_mayor_afluencia->toSuccessString() }} <br>
-						<small>
-							{{ $total_mayor_afluencia }} personas.
-						</small>
-					</div>
+					@if($sesion_mayor_afluencia)
+						<div class="col-md-12">
+							<p class="lead">La sesión con mayor afluencia fue:</p>
+							{{ $sesion_mayor_afluencia->toSuccessString() }} <br>
+							<small>
+								{{ $total_mayor_afluencia }} personas.
+							</small>
+						</div>
+					@endif
 				@endif
     		@endif
     	</div>

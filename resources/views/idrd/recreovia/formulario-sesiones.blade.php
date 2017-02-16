@@ -74,7 +74,7 @@
 									<label for="">Profesor</label>
 									<select name="Id_Recreopersona" id="Id_Recreopersona" class="form-control" data-value="{{ $sesion ? $sesion['Id_Recreopersona'] : old('Id_Recreopersona') }}">
 										<option value="">Seleccionar</option>
-										@foreach($cronograma->punto->profesores as $profesor)
+										@foreach($cronograma->punto->localidad->profesores as $profesor)
 											<option value="{{ $profesor->Id_Recreopersona }}">{{ $profesor->persona->toString() }}</option>
 										@endforeach
 									</select>

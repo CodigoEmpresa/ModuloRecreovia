@@ -41,7 +41,7 @@ class SesionController extends Controller {
 
 	public function editarSesionesGestor(Request $request, $id_cronograma, $id_sesion)
 	{
-		$cronograma = Cronograma::with(['punto', 'punto.profesores.persona', 'jornada', 'sesiones'])->find($id_cronograma);
+		$cronograma = Cronograma::with(['punto', 'punto.localidad.profesores.persona', 'jornada', 'sesiones'])->find($id_cronograma);
 
 		$sesion = Sesion::find($id_sesion);
 											
