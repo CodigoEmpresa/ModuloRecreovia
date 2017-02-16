@@ -163,6 +163,10 @@ div.resaltar {
 	background-color: #fcfcfc;
 }
 
+div.oculto {
+	display: none;
+}
+
 @media (min-width: 1200px) {
 	.container {
 		width: 1280px;

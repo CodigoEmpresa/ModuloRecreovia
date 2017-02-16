@@ -61,11 +61,47 @@ $(function()
 			return jornada.Id_Jornada == Id_Jornada;
 		})[0];
 
+
 		$('input[name="Desde"]').attr('data-fecha-inicio', '').attr('data-fecha-fin', '');
 		$('input[name="Hasta"]').attr('data-fecha-inicio', '').attr('data-fecha-fin', '');
 
 		if(jornada)
 		{
+			if (jornada.Contacto_Nombre || jornada.Contacto_Telefono || jornada.Contacto_Correo)
+			{
+                var html = '';
+                html += jornada.Contacto_Nombre ? 'Nombre: '+jornada.Contacto_Nombre+'<br>' : '';
+                html += jornada.Contacto_Telefono ? 'Telefono: '+jornada.Contacto_Telefono+'<br>' : '';
+                html += jornada.Contacto_Correo ? 'Correo: '+jornada.Contacto_Correo+'<br>' : '';
+
+                $('#datos_contacto p').html(html);
+                $('#datos_contacto').fadeIn();
+			} else {
+                $('#datos_contacto p').html('');
+                $('#datos_contacto').fadeOut();
+			}
+
+			switch (jornada.Jornada)
+			{
+				case 'dia':
+					$('input[name="recreovia"][value="RESD"]').trigger('click');
+				break;
+				case 'noche':
+					$('input[name="recreovia"][value="RESN"]').trigger('click');
+				break;
+				case 'fds':
+					$('input[name="recreovia"][value="RFDS"]').trigger('click');
+				break;
+				case 'clases_grupales':
+					$('input[name="recreovia"][value="CG"]').trigger('click');
+				break;
+				case 'clases_grupales_institucionales':
+					$('input[name="recreovia"][value="CGI"]').trigger('click');
+				break;
+				case 'mega_eventos':
+				break;
+			}
+
 			if (jornada.Fecha_Evento_Inicio)
 		    {
 				var fecha_inicio = moment(jornada.Fecha_Evento_Inicio);//.subtract(1, 'days');
