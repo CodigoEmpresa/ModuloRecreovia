@@ -71,6 +71,13 @@
                                     <label class="radio-inline">
                                         <input type="radio" name="recreovia" id="recreovia4" value="CG" {{ ($cronograma && $cronograma['recreovia'] == 'CG') || old('recreovia') == 'CG' ? 'checked' : '' }}> CG
                                     </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="recreovia" id="recreovia5" value="CGI" {{ ($cronograma && $cronograma['recreovia'] == 'CGI') || old('recreovia') == 'CGI' ? 'checked' : '' }}> CGI
+                                    </label>
+                                </div>
+                                <div id="datos_contacto" class="col-md-12 form-group oculto">
+                                    <label for="">Datos de contacto</label>
+                                    <p></p>
                                 </div>
                             </div>
                         </div>

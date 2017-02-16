@@ -31,7 +31,7 @@
             <div class="row">
                 <form action="{{ url('jornadas/procesar') }}" method="post">
                     <fieldset>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group {{ $errors->has('Jornada') ? 'has-error' : '' }}">
                                 <label for="control-label">Jornada</label>
                                 <select name="Jornada" id="Jornada" class="form-control" data-value="{{ $jornada ? $jornada['Jornada'] : old('Jornada') }}">
@@ -40,6 +40,7 @@
                                     <option data-tipo="Periodico" value="noche">Noche</option>
                                     <option data-tipo="Periodico" value="fds">FDS</option>
                                     <option data-tipo="Eventual" value="clases_grupales">Clases grupales</option>
+                                    <option data-tipo="Eventual" value="clases_grupales_institucionales">Clases grupales institucionales</option>
                                     <option data-tipo="Eventual" value="mega_eventos">Mega eventos de actividad física</option>
                                 </select>
                             </div>
@@ -92,6 +93,26 @@
                                 <label class="checkbox-inline">
                                     <input type="checkbox" id="dia7" name="Dias[]" value="domingo" {{ ($jornada && $jornada->validarDia('domingo')) || (is_array(old('Dias')) && in_array('domingo', old('Dias'))) ? 'checked' : '' }}> Domingo
                                 </label>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <hr>
+                        </div>
+                        <div class="col-xs-12">
+                            <label for="">Datos de contacto <small class="text-muted">(En caso de ser requerido)</small></label>
+                            <div class="row">
+                                <div class="col-xs-4 form-group">
+                                    <label for="">Nombre</label>
+                                    <input type="text" name="Contacto_Nombre" class="form-control" value="{{ $jornada ? $jornada['Contacto_Nombre'] : old('Contacto_Nombre') }}">
+                                </div>
+                                <div class="col-xs-4 form-group">
+                                    <label for="">Teléfono</label>
+                                    <input type="text" name="Contacto_Telefono" class="form-control" value="{{ $jornada ? $jornada['Contacto_Telefono'] : old('Contacto_Telefono') }}">
+                                </div>
+                                <div class="col-xs-4 form-group">
+                                    <label for="">Correo</label>
+                                    <input type="text" name="Contacto_Correo" class="form-control" value="{{ $jornada ? $jornada['Contacto_Correo'] : old('Contacto_Correo') }}">
+                                </div>                                
                             </div>
                         </div>
                         <div class="col-xs-12">

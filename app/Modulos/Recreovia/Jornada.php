@@ -44,7 +44,7 @@ class Jornada extends Model
         $periodo = '';
         $periodo_dias = '';
 
-        if($this->Fecha_Evento_Fin)
+        if($this->Fecha_Evento_Fin && ($this->Fecha_Evento_Inicio != $this->Fecha_Evento_Fin))
             $periodo = 'del '.$this->Fecha_Evento_Inicio.' al '.$this->Fecha_Evento_Fin;
         else
             $periodo = 'el dia '.$this->Fecha_Evento_Inicio;
@@ -65,6 +65,9 @@ class Jornada extends Model
             break;
             case 'clases_grupales':
                 $label = 'Clase grupal '.$periodo.' '.$periodo_dias.' de '.$this->Inicio.' a '.$this->Fin;
+            break;
+            case 'clases_grupales_institucionales':
+                $label = 'Clase grupal institucional '.$periodo.' '.$periodo_dias.' de '.$this->Inicio.' a '.$this->Fin;
             break;
             case 'mega_eventos': 
                 $label = 'Mega evento de actividad física '.$periodo.' '.$periodo_dias.' de '.$this->Inicio.' a '.$this->Fin;
