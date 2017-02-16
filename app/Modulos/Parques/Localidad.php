@@ -10,4 +10,24 @@ class Localidad extends MLocalidad
     {
     	return $this->hasMany('App\Modulos\Recreovia\Punto', 'Id_Localidad');
     }
+
+    public function recreopersonas()
+    {
+        return $this->belongsToMany('App\Modulos\Recreovia\Recreopersona', 'LocalidadesPersonas', 'Id_Localidad', 'Id_Recreopersona')
+                    ->withPivot('tipo');
+    }
+
+    public function profesores()
+    {
+         return $this->belongsToMany('App\Modulos\Recreovia\Recreopersona', 'LocalidadesPersonas', 'Id_Localidad', 'Id_Recreopersona')
+                    ->withPivot('tipo')
+                    ->where('tipo', 'Profesor');
+    }
+
+    public function gestores()
+    {
+         return $this->belongsToMany('App\Modulos\Recreovia\Recreopersona', 'LocalidadesPersonas', 'Id_Localidad', 'Id_Recreopersona')
+                    ->withPivot('tipo')
+                    ->where('tipo', 'Gestor');
+    }
 }

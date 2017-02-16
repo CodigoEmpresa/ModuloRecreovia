@@ -1,9 +1,3 @@
-@section('script')
-    @parent
-
-    <script src="{{ asset('public/Js/profesores/buscador.js') }}"></script>
-@stop
-    
 <div class="content">
     <div id="main" class="row" data-url="{{ url('profesores') }}">
         @if ($status == 'success')
@@ -14,14 +8,6 @@
                 </div>                                
             </div>
         @endif
-        <div class="col-xs-12 form-group">
-            <div class="input-group">
-                <input name="buscador" type="text" class="form-control" placeholder="Buscar" id="buscador">
-                <span class="input-group-btn">
-                    <button id="buscar" data-role="buscar" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                </span>
-            </div>
-        </div>
         <div class="col-xs-12">
             <a class="btn btn-primary" href="{{ url('profesores/crear') }}">Crear</a>
         </div>
@@ -31,37 +17,51 @@
         </div>
         <div class="col-xs-12"><br></div>
         <div class="col-xs-12">
-            <ul class="list-group" id="personas">
-                @foreach($elementos as $persona)
-                    <li class="list-group-item">
-                        <h5 class="list-group-item-heading">
-                            {{ $persona->toString() }}
-                            <a href="{{ url('profesores/'.$persona['Id_Persona'].'/editar') }}" class="pull-right btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Editar">
-                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                            </a>
-                        </h5>
-                        <p class="list-group-item-text">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-12 col-md-12">
-                                            <small>
-                                                Identificación: {{ $persona->tipoDocumento['Nombre_TipoDocumento'].' '.$persona['Cedula'] }}. <br>
-                                                Disponible en ({{ count($persona->recreopersona->puntos) }}) puntos. <br>
-                                                Ha realizado ({{ count($persona->recreopersona->cronogramas) }}) programaciones. <br>
-                                                Presente en ({{ count($persona->recreopersona->sesiones) }}) sesiones.
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </p>
-                        <span class="label label-default capitalize">{{ $persona->recreopersona['contrato'] }}</span>
-                        <span class="label label-default capitalize">{{ $persona->recreopersona['correo'] }}</span>
-                    </li>
-                @endforeach
+             <table class="default table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            Persona
+                        </th>
+                        <th>
+                            Identificación
+                        </th>
+                        <th>
+                            Contrato
+                        </th>
+                        <th>
+                            Correo
+                        </th>
+                        <th class="no-sort" style="width: 35px;">
+                            
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($elementos as $persona)
+                        <tr>
+                            <td>
+                                {{ $persona->toString() }}
+                            </td>
+                            <td>
+                                {{ $persona['Cedula'] }}
+                            </td>
+                            <td>
+                                {{ $persona->recreopersona['contrato'] }}
+                            </td>
+                            <td>
+                                {{ $persona->recreopersona['correo'] }}
+                            </td>
+                            <td>
+                                <a href="{{ url('profesores/'.$persona['Id_Persona'].'/editar') }}" class="pull-right btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Editar">
+                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
             </ul>
         </div>
-        <div id="paginador" class="col-xs-12">{!! $elementos->render() !!}</div>
     </div>
 </div>

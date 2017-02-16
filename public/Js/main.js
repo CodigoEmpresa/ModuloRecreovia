@@ -191,4 +191,13 @@ $(function()
 	  	}
 	  	$(this).trigger('change');
 	});
+
+	$('table.default').DataTable({
+		columnDefs: [
+			{
+				targets: 'no-sort', 
+				orderable: false
+			}
+		]
+	});
 });

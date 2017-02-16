@@ -52,19 +52,13 @@
 						<br>
 					</div>
 					<div class="col-md-12">
-						<div class="col-md-3 col-sm-6 resaltar">
-							<div class="center">
-			    				<h4>{{ count($recreopersona->puntos) }}</h4>
-			    				<small> PUNTOS <br> ASIGNADOS </small>
-							</div>
-						</div>
-						<div class="col-md-3 col-sm-6 resaltar">
+						<div class="col-md-4 col-sm-6 resaltar">
 		    				<div class="center">
 			    				<h4>{{ count($programadas->where('Estado', 'Aprobado')->all()) }}</h4>
 			    				<small> SESIONES <br> PROGRAMADAS </small>
 		    				</div>
 		    			</div>
-		    			<div class="col-md-3 col-sm-6 resaltar">
+		    			<div class="col-md-4 col-sm-6 resaltar">
 		    				<div class="center">
 		    					<?php
 		    						$total_participaciones = 0;
@@ -99,17 +93,17 @@
 			    				<small> PARTICIPANTES <br> REGISTRADOS </small>
 		    				</div>
 		    			</div>
-		    			<div class="col-md-3 col-sm-6 resaltar">
+		    			<div class="col-md-4 col-sm-12 resaltar">
 							<?php
 								$grupo_mayor_impacto = 'N/P<br><small>0</small>';
 								$total = 0;
-
 								foreach ($grupos_impacto as $key => $grupo) 
 								{
 									$sub_total = $grupo['Participantes']['M'] + $grupo['Participantes']['F'] + $grupo['Asistentes']['M'] + $grupo['Asistentes']['F'];
+									
 									if($sub_total > $total)
 									{
-
+										$total = $sub_total;
 										$grupo_mayor_impacto = $key.'<br><small>'.$grupo['Edad'].'</small>';
 									}
 								}
@@ -137,13 +131,7 @@
 			    			<div class="col-md-12">
 								<p class="lead">La sesión con mayor afluencia fue:</p>
 								{{ $sesion_mayor_afluencia->toSuccessString() }} <br>
-								Realizada por:
-								@if ($sesion_mayor_afluencia->profesor)
-									{{ $sesion_mayor_afluencia->profesor->persona->toFriendlyString() }} 
-								@else
-									Sin profesor asignado.
-								@endif 
-								<br>
+								Realizada por: {{ $sesion->profesor ? $sesion->profesor->persona->toFriendlyString() : 'Sin profesor asignado' }} <br>
 								<small>
 									{{ $total_mayor_afluencia }} personas.
 								</small>
@@ -179,12 +167,6 @@
 						<br>
 					</div>
 					<div class="col-md-12">
-						<div class="col-md-3 col-sm-6 resaltar">
-							<div class="center">
-			    				<h4>{{ count($recreopersona->puntos) }}</h4>
-			    				<small> PUNTOS <br> ASIGNADOS </small>
-							</div>
-						</div>
 						<div class="col-md-3 col-sm-6 resaltar">
 		    				<div class="center">
 			    				<h4>{{ count($asignadas->where('Estado', 'Aprobado')->all()) }}</h4>
