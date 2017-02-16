@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Modulos\Recreovia\Cronograma;
 use App\Modulos\Recreovia\Recreopersona;
 use App\Modulos\Recreovia\Sesion;
+use App\Modulos\Recreovia\Punto;
 use App\Http\Requests\GuardarCronograma;
 use Illuminate\Http\Request;
 
@@ -80,6 +81,20 @@ class ProgramacionController extends Controller {
 										}])->find($this->usuario['Recreopersona']->Id_Recreopersona);
 		
 		$puntos = $this->obtenerPuntosLocalidades($recreopersona->localidades);
+
+		if (!$puntos->search(function($item, $key) use ($cronograma) { return $item['Id_Punto'] == $cronograma['Id_Punto']; }))
+		{
+			$puntos = Punto::with('jornadas')->where('Id_Punto', $cronograma['Id_Punto'])->get();
+
+			foreach($puntos as $punto)
+			{
+				foreach($punto->jornadas as &$jornada)
+				{
+					$jornada->Label = $jornada->toString();
+				}
+			}
+		}
+
 		$recreopersona->puntos = $puntos;
 
 		$formulario = [
