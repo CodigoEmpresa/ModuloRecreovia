@@ -21,7 +21,7 @@ class SesionController extends Controller {
 
 	public function crearSesionesGestor(Request $request, $id_cronograma)
 	{
-		$cronograma = Cronograma::with(['punto', 'punto.profesores.persona', 'jornada', 'sesiones', 'sesiones.profesor'])
+		$cronograma = Cronograma::with(['punto', 'punto.localidad.profesores.persona', 'jornada', 'sesiones', 'sesiones.profesor'])
 											->find($id_cronograma);
 											
 		$formulario = [

@@ -45,17 +45,17 @@ class Authenticate
             return redirect()->to('/');
         } else {
             $persona = $this->repositorio_personas->obtener($_SESSION['Usuario'][0]);
-            $recreopersona = Recreopersona::with('puntos')->where('Id_Persona', $persona['Id_Persona'])->first();
+            $recreopersona = Recreopersona::with('localidades')->where('Id_Persona', $persona['Id_Persona'])->first();
 
             if ($recreopersona)
             {
                 $_SESSION['Usuario']['Recreopersona'] = $recreopersona;
                 $_SESSION['Usuario']['Roles'] = [];
                 
-                foreach ($recreopersona->puntos as $punto)
+                foreach ($recreopersona->localidades as $localidad)
                 {
-                    if (!in_array($punto->pivot['tipo'], $_SESSION['Usuario']['Roles']))
-                        $_SESSION['Usuario']['Roles'][] = $punto->pivot['tipo'];
+                    if (!in_array($localidad->pivot['tipo'], $_SESSION['Usuario']['Roles']))
+                        $_SESSION['Usuario']['Roles'][] = $localidad->pivot['tipo'];
                 }
             }
         }

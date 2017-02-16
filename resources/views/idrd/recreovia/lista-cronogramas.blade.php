@@ -13,40 +13,38 @@
         </div>
         <div class="col-xs-12"><br></div>
         <div class="col-xs-12">
-            <ul class="list-group" id="principal">
-                @foreach($elementos as $cronograma)
-                    <li class="list-group-item">
-                        <h5 class="list-group-item-heading">
-                            Cronograma
-                            <a data-role="editar" href="{{ url('/programacion/'.$cronograma['Id'].'/editar') }}" class="pull-right btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Editar">
-                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                            </a>
-                            <a data-role="sesiones" target="_blank" href="{{ url('/gestores/'.$cronograma['Id'].'/sesiones') }}" class="pull-right btn btn-default btn-xs separe-right" data-toggle="tooltip" data-placement="bottom" title="Sesiones">
-                                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-                            </a>
-                        </h5>
-                        <p class="list-group-item-text">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-12 col-md-12">
-                                            <small>
-                                                {{ $cronograma->toString() }}.
-                                                <br>
-                                                Punto: {{ $cronograma->punto->toString() }}.
-                                                <br>
-                                                Jornada: {{ $cronograma->jornada->toString() }}.
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </p>
-                        <span class="label label-default">Total sesiones: {{ count($cronograma->sesiones) }}</span> 
-                    </li>
-                @endforeach
-            </ul>
+            <table class="default table table-striped">
+                <thead>
+                    <tr>
+                        <th>Cronograma</th>
+                        <th>Jornada</th>
+                        <th>Sesiones</th>
+                        <th class="no-sort" style="width: 35px;"> 
+                        </th>
+                        <th class="no-sort" style="width: 35px;">
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($elementos as $cronograma)
+                        <tr>
+                            <td>{{ $cronograma->punto->toString() }}<br>{{ $cronograma->toString() }}</td>
+                            <td>{{ $cronograma->jornada->toString() }}</td>
+                            <td>{{ count($cronograma->sesiones) }}</td>
+                            <td>
+                                <a data-role="sesiones" target="_blank" href="{{ url('/gestores/'.$cronograma['Id'].'/sesiones') }}" class="pull-right btn btn-default btn-xs separe-right" data-toggle="tooltip" data-placement="bottom" title="Sesiones"> 
+                                    <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 
+                                </a> 
+                            </td>
+                            <td>
+                                <a data-role="editar" href="{{ url('/programacion/'.$cronograma['Id'].'/editar') }}" class="pull-right btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Editar">
+                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                 </tbody>
+            </table>
         </div>
-        <div id="paginador" class="col-xs-12">{!! $elementos->render() !!}</div>
     </div>
 </div>

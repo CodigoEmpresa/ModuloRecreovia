@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Recreovia;
 use App\Http\Requests\GuardarJornada;
 use App\Http\Controllers\Controller;
 use App\Modulos\Recreovia\Jornada;
+use App\Modulos\Recreovia\Punto;
 use Illuminate\Http\Request;
 
 class JornadaController extends Controller {
@@ -19,10 +20,9 @@ class JornadaController extends Controller {
 
 	public function index()
 	{
-		$perPage = config('app.page_size');
 		$elementos = Jornada::whereNull('deleted_at')
 							->orderBy('Id_Jornada', 'ASC')
-							->paginate($perPage);
+							->get();
 
 		$lista = [
 			'titulo' => 'Jornadas',
@@ -40,9 +40,14 @@ class JornadaController extends Controller {
 
 	public function crear()
 	{
+		$puntos = Punto::whereNull('deleted_at')
+							->orderBy('Escenario', 'ASC')
+							->get();
+
 		$formulario = [
 			'titulo' => 'Crear ó editar jornadas',
 			'jornada' => null,
+			'puntos' => $puntos,
 	        'status' => session('status')
 		];
 
@@ -56,9 +61,14 @@ class JornadaController extends Controller {
 
 	public function editar(Request $request, $id)
 	{
+		$puntos = Punto::whereNull('deleted_at')
+							->orderBy('Escenario', 'ASC')
+							->get();
+
 		$formulario = [
 			'titulo' => 'Crear ó editar jornadas',
-			'jornada' => Jornada::find($id),
+			'puntos' => $puntos,
+			'jornada' => Jornada::with('puntos')->find($id),
 	        'status' => session('status')
 		];
 
@@ -96,6 +106,9 @@ class JornadaController extends Controller {
 		$jornada->Fin = $request['Fin'];
 		$jornada->Tipo = $request['Tipo'];
 		$jornada->save();
+
+		if (array_key_exists('puntos', $request->all()))
+			$jornada->puntos()->sync($request['puntos']);
 
        	return redirect('/jornadas/'.$jornada->Id_Jornada.'/editar')->with(['status' => 'success']);
 	}

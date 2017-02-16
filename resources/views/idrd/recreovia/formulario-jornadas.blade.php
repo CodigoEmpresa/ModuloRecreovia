@@ -97,6 +97,25 @@
                         <div class="col-xs-12">
                             <hr>
                         </div>
+                        <div class="col-xs-12">
+                            <label for="">Puntos</label>
+                            <div class="row">
+                                @foreach ($puntos->chunk(count($puntos) / 2) as $chunk)
+                                    <div class="col-md-6">
+                                        @foreach ($chunk as $punto)
+                                            <div class="checkbox">
+                                                <label>
+                                                     <input type="checkbox" name="puntos[]" value="{{ $punto['Id_Punto'] }}" {{ ($jornada && in_array($punto['Id_Punto'], $jornada->puntos->pluck('Id_Punto')->toArray())) || (in_array($punto['Id_Punto'], is_array(old('puntos')) ? old('puntos') : [])) ? 'checked' : '' }}> {{ strtoupper($punto->toString()) }}
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <hr>
+                        </div>
                         <div class="col-md-12">
                             <input type="hidden" name="_method" value="POST">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
