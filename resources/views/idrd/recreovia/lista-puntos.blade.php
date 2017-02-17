@@ -17,7 +17,7 @@
         </div>
         <div class="col-xs-12"><br></div>
         <div class="col-xs-12">
-             <table class="default table table-striped">
+             <table class="default display responsive no-wrap table table-min table-striped" width="100%">
                 <thead>
                     <tr>
                         <th style="width: 250px;">
@@ -32,7 +32,7 @@
                         <th>
                             UPZ
                         </th>
-                        <th class="no-sort" style="width: 35px;">
+                        <th data-priority="2" class="no-sort" style="width: 35px;">
                             
                         </th>
                     </tr>

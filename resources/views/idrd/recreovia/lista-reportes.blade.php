@@ -14,14 +14,6 @@
                 </div>                                
             </div>
         @endif
-        <div class="col-xs-12 form-group">
-            <div class="input-group">
-                <input name="buscador" type="text" class="form-control" placeholder="Buscar" id="buscador">
-                <span class="input-group-btn">
-                    <button id="buscar" data-role="buscar" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                </span>
-            </div>
-        </div>
         <div class="col-xs-12">
             <a class="btn btn-primary" href="{{ url('informes/jornadas/crear') }}">Crear</a>
         </div>
@@ -31,42 +23,41 @@
         </div>
         <div class="col-xs-12"><br></div>
         <div class="col-xs-12">
-            <ul class="list-group" id="personas">
-                @foreach($elementos as $reporte)
-                    <li class="list-group-item">
-                        <h5 class="list-group-item-heading">
-                            {{ $reporte->punto->toString() }}
-                            <a href="{{ url('/informes/jornadas/'.$reporte['Id'].'/editar') }}" class="pull-right btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Editar">
-                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                            </a>
-                        </h5>
-                        <p class="list-group-item-text">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-12 col-md-12">
-                                            <small>
-                                                Reporte de actividades del punto {{ $reporte->toString() }}
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </p>
-                        <span class="label label-default capitalize">Profesores: {{ count($reporte->profesores) }}</span>
-                        <span class="label label-default capitalize">
-                            Sesiones: {{ 
-                                count($reporte->cronograma->sesiones
-                                    ->filter(function($item) use ($reporte){ 
-                                        return $item->Fecha == $reporte->Dia; 
-                                    })->filter(function($item) { 
-                                        return $item->Estado == 'Aprobado'; 
-                                    })->all()) 
-                            }}
-                        </span>
-                    </li>
-                @endforeach
-            </ul>
+            <table class="default display no-wrap responsive table table-min table-striped" width="100%">
+                <thead>
+                    <tr>
+                        <th>Reporte</th>
+                        <th>Punto</th>
+                        <th style="width: 100px;">Profesores</th>
+                        <th style="width: 100px;">Sesiones</th>
+                        <th data-priority="2"  class="no-sort" style="width: 35px;">
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($elementos as $reporte)
+                        <tr>
+                            <td>{{ $reporte->punto->toString() }}</td>
+                            <td>{{ $reporte->toString() }}</td>
+                            <td>{{ count($reporte->profesores) }}</td>
+                            <td>{{ 
+                                    count($reporte->cronograma->sesiones
+                                        ->filter(function($item) use ($reporte){ 
+                                            return $item->Fecha == $reporte->Dia; 
+                                        })->filter(function($item) { 
+                                            return $item->Estado == 'Aprobado'; 
+                                        })->all()) 
+                                }}
+                            </td>
+                            <td>
+                                <a href="{{ url('/informes/jornadas/'.$reporte['Id'].'/editar') }}" class="pull-right btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Editar">
+                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
         <div id="paginador" class="col-xs-12">{!! $elementos->render() !!}</div>
     </div>
