@@ -13,7 +13,7 @@
         </div>
         <div class="col-xs-12"><br></div>
         <div class="col-xs-12">
-            <table class="default table table-striped">
+            <table class="default table table-min table-striped">
                 <thead>
                     <tr>
                         <th>Cronograma</th>
