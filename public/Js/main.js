@@ -193,6 +193,7 @@ $(function()
 	});
 
 	$('table.default').DataTable({
+		responsive: true,
 		columnDefs: [
 			{
 				targets: 'no-sort', 
