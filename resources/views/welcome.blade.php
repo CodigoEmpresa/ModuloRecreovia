@@ -167,13 +167,13 @@
 						<br>
 					</div>
 					<div class="col-md-12">
-						<div class="col-md-3 col-sm-6 resaltar">
+						<div class="col-md-4 col-sm-6 resaltar">
 		    				<div class="center">
 			    				<h4>{{ count($asignadas->where('Estado', 'Aprobado')->all()) }}</h4>
 			    				<small> SESIONES <br> REALIZADAS </small>
 		    				</div>
 		    			</div>
-		    			<div class="col-md-3 col-sm-6 resaltar">
+		    			<div class="col-md-4 col-sm-6 resaltar">
 		    				<div class="center">
 		    					<?php
 		    						$total_participaciones = 0;
@@ -208,7 +208,7 @@
 			    				<small> PARTICIPANTES <br> REGISTRADOS </small>
 		    				</div>
 		    			</div>
-		    			<div class="col-md-3 col-sm-6 resaltar">
+		    			<div class="col-md-4 col-sm-6 resaltar">
 							<?php
 								$grupo_mayor_impacto = 'N\P';
 								$total = 0;

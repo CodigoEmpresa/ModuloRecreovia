@@ -112,7 +112,11 @@
 										<option value="Gimnasio Saludable al Aire Libre (GSAL)">Gimnasio Saludable al Aire Libre (GSAL)</option>
 									</select>
 								</div>
-								<div class="col-md-6 form-group">
+								<div class="col-md-12 form-group">
+									<label for="detalle_objetivo_general">Objetivo general</label>
+									<p id="detalle_objetivo_general" class="form-control-static"></p>
+								</div>
+								<div class="col-md-12 form-group">
 									<label for="">Materiales</label>
 									<textarea class="form-control" class="form-control" name="Recursos">{{ $sesion ? $sesion['Recursos'] : old('Recursos') }}</textarea>
 								</div>

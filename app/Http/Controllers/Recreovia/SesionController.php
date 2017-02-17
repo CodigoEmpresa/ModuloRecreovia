@@ -158,6 +158,9 @@ class SesionController extends Controller {
 			$notificar = true;
 		
 		$sesion->Objetivos_Especificos = $request->input('Objetivos_Especificos');
+		$sesion->Objetivos_Especificos_1 = $request->input('Objetivos_Especificos_1');
+		$sesion->Objetivos_Especificos_2 = $request->input('Objetivos_Especificos_2');
+		$sesion->Objetivos_Especificos_3 = $request->input('Objetivos_Especificos_3');
 		$sesion->Metodologia_Aplicar = $request->input('Metodologia_Aplicar');
 		$sesion->Recursos = $request->input('Recursos');
 		$sesion->Fase_Inicial = $request->input('Fase_Inicial');
