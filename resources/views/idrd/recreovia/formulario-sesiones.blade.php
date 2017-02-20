@@ -76,7 +76,7 @@
 							<div class="row">
 								<div class="col-md-3 form-group {{ $errors->has('Fecha') ? 'has-error' : '' }}">
 									<label for="">Fecha</label>
-									<input type="text" class="form-control" value="{{ $sesion ? $sesion['Fecha'] : old('Fecha') }}" data-role="datepicker" name="Fecha" data-fecha-inicio="{{ $cronograma->Desde }}" data-fecha-fin="{{ $cronograma->Hasta }}" data-dias="{{ $cronograma->jornada->Dias }}">
+									<input type="text" class="form-control" value="{{ $sesion ? $sesion['Fecha'] : old('Fecha') }}" data-role="datepicker" name="Fecha" data-fecha-inicio="{{ $cronograma->Desde }}" data-fecha-fin="{{ $cronograma->Hasta }}" data-fechas-importantes="{{ Festivos::create()->datesToString() }}" data-dias="{{ $cronograma->jornada->Dias }}">
 								</div>
 								<div class="col-md-3 form-group {{ $errors->has('Inicio') ? 'has-error' : '' }}">
 									<label for="">Inicio</label>

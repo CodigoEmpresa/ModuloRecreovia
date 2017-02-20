@@ -38,7 +38,7 @@
 	    				</p>
 	    			</div>
     			@endif
-
+				
 				@if(count($programadas))
 					<div class="col-md-12">
 						<br>

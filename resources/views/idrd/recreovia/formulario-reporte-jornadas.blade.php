@@ -54,7 +54,7 @@
                         </div>
                         <div class="col-md-4 form-group {{ $errors->has('Dia') ? 'has-error' : '' }}">
                             <label for="">Día</label>
-                            <input type="text" name="Dia" class="form-control" data-role="datepicker" data-fecha-inicio="" data-fecha-fin="" data-dias="" value="{{ $informe ? $informe['Dia'] : old('Dia') }}">
+                            <input type="text" name="Dia" class="form-control" data-role="datepicker" data-fecha-inicio="" data-fecha-fin="" data-dias="" data-fechas-importantes="{{ Festivos::create()->datesToString() }}" value="{{ $informe ? $informe['Dia'] : old('Dia') }}">
                         </div>
                         <div class="col-xs-12">
                             <hr>
