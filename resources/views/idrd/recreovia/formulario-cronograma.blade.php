@@ -51,11 +51,11 @@
                                 </div>
                                 <div class="col-md-6 form-group {{ $errors->has('Desde') ? 'has-error' : '' }}">
                                     <label for="">Desde</label>
-                                    <input type="text" class="form-control" name="Desde" data-role="datepicker" data-rel="fecha_inicio" data-fecha-inicio="" data-fecha-fin="" value="{{ $cronograma ? $cronograma['Desde'] : old('Desde') }}" placeholder="Desde">
+                                    <input type="text" class="form-control" name="Desde" data-role="datepicker" data-rel="fecha_inicio" data-fecha-inicio="" data-fecha-fin="" data-fechas-importantes="{{ Festivos::create()->datesToString() }}" value="{{ $cronograma ? $cronograma['Desde'] : old('Desde') }}" placeholder="Desde">
                                 </div>
                                 <div class="col-md-6 form-group {{ $errors->has('Hasta') ? 'has-error' : '' }}">
                                     <label for="">Hasta</label>
-                                    <input type="text" class="form-control" name="Hasta" data-role="datepicker" data-rel="fecha_fin" data-fecha-inicio="" data-fecha-fin="" value="{{ $cronograma ? $cronograma['Hasta'] : old('Hasta') }}" placeholder="Hasta">
+                                    <input type="text" class="form-control" name="Hasta" data-role="datepicker" data-rel="fecha_fin" data-fecha-inicio="" data-fecha-fin="" data-fechas-importantes="{{ Festivos::create()->datesToString() }}" value="{{ $cronograma ? $cronograma['Hasta'] : old('Hasta') }}" placeholder="Hasta">
                                 </div>
                                 <div class="col-md-12 form-group {{ $errors->has('recreovia') ? 'has-error' : '' }}">
                                     <label for="">Recreovía</label><br>

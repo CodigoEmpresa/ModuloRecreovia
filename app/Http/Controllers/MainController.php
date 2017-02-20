@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Modulos\Recreovia\Recreopersona;
+use App\Modulos\Recreovia\Sesion;
+use App\Util\Festivos;
 use Idrd\Usuarios\Repo\PersonaInterface;
 use Illuminate\Http\Request;
-use App\Modulos\Recreovia\Sesion;
+
 
 class MainController extends Controller {
 
@@ -25,6 +27,7 @@ class MainController extends Controller {
 	{
 		$programadas = null;
 		$asignadas = null;
+
 		if (in_array('Gestor', $_SESSION['Usuario']['Roles']))
 		{
 			$programadas = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'profesor.persona', 'gruposPoblacionales')

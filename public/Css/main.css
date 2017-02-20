@@ -167,6 +167,12 @@ div.oculto {
 	display: none;
 }
 
+.festivo a
+{
+	background-color: #1E88E5 !important;
+	color: #fff !important;
+}
+
 @media (min-width: 1200px) {
 	.container {
 		width: 1280px;
