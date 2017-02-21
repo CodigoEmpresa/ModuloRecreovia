@@ -119,7 +119,7 @@
 											</p>
 										</div>
 										<div class="col-md-6 form-group">
-											<label for="">Objetivo general</label>
+											<label for="">Sesión</label>
 											<select name="Objetivo_General" id="Objetivo_General" class="form-control" data-value="{{ $sesion ? $sesion['Objetivo_General'] : old('Objetivo_General') }}" {{ $tipo == 'profesor' ? 'disabled' : '' }}>
 												<option value="">Seleccionar</option>
 												<option value="Gimnasia de Mantenimiento (GM)">Gimnasia de Mantenimiento (GM)</option>
@@ -140,19 +140,19 @@
 											<p id="detalle_objetivo_general" class="form-control-static"></p>
 										</div>
 										<div class="col-md-6 form-group">
-											<label for="">Objetivo 1</label>
+											<label for="">Objetivo específico 1</label>
 											<textarea class="form-control" name="Objetivos_Especificos">{{ $sesion ? $sesion['Objetivos_Especificos'] : old('Objetivos_Especificos') }}</textarea>
 										</div>
 										<div class="col-md-6 form-group">
-											<label for="">Objetivo 2</label>
+											<label for="">Objetivo específico 2</label>
 											<textarea class="form-control" name="Objetivos_Especificos_1">{{ $sesion ? $sesion['Objetivos_Especificos_1'] : old('Objetivos_Especificos_1') }}</textarea>
 										</div>
 										<div class="col-md-6 form-group">
-											<label for="">Objetivo 3</label>
+											<label for="">Objetivo específico 3</label>
 											<textarea class="form-control" name="Objetivos_Especificos_2">{{ $sesion ? $sesion['Objetivos_Especificos_2'] : old('Objetivos_Especificos_2') }}</textarea>
 										</div>
 										<div class="col-md-6 form-group">
-											<label for="">Objetivo 4</label>
+											<label for="">Objetivo específico 4</label>
 											<textarea class="form-control" name="Objetivos_Especificos_3">{{ $sesion ? $sesion['Objetivos_Especificos_3'] : old('Objetivos_Especificos_3') }}</textarea>
 										</div>
 										<div class="col-md-12">

@@ -106,7 +106,8 @@
 					@endif
 					@if(
 						(
-						$_SESSION['Usuario']['Permisos']['revisar_sesiones_profesor']
+						$_SESSION['Usuario']['Permisos']['revisar_sesiones_profesor'] ||
+						$_SESSION['Usuario']['Permisos']['gestionar_reportes_jornadas']
 						) &&
 						in_array('Profesor', $_SESSION['Usuario']['Roles'])
 					)
@@ -115,6 +116,9 @@
 							<ul class="dropdown-menu">
 								<li class="{{ $seccion && $seccion == 'Sesiones profesor' ? 'active' : '' }}">
 									<a href="{{ url('/profesores/sesiones') }}">Consultar sesiones</a>
+								</li>
+								<li class="{{ $seccion && in_array($seccion, ['Informes jornadas', 'Generar informe de actividades por punto']) ? 'active' : '' }}">
+									<a href="{{ url('/informes/jornadas/profesor') }}">Informes jornadas</a>
 								</li>
 							</ul>
 						</li>

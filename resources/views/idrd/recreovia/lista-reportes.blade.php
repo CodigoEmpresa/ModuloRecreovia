@@ -30,6 +30,7 @@
                         <th>Punto</th>
                         <th style="width: 100px;">Profesores</th>
                         <th style="width: 100px;">Sesiones</th>
+                        <th style="width: 100px;">U. Actualización</th>
                         <th data-priority="2"  class="no-sort" style="width: 35px;">
                         </th>
                     </tr>
@@ -49,6 +50,7 @@
                                         })->all()) 
                                 }}
                             </td>
+                            <td>{{ $reporte->updated_at }}</td>
                             <td>
                                 <a href="{{ url('/informes/jornadas/'.$reporte['Id'].'/editar') }}" class="pull-right btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Editar">
                                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
@@ -59,6 +61,5 @@
                 </tbody>
             </table>
         </div>
-        <div id="paginador" class="col-xs-12">{!! $elementos->render() !!}</div>
     </div>
 </div>

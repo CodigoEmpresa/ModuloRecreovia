@@ -26,17 +26,39 @@ class ReporteController extends Controller {
 
 	public function jornadas()
 	{
-		$perPage = config('app.page_size');
 		$recreopersona = $this->cronogramasPersona();
 		$elementos = Reporte::with(['profesores', 'cronograma', 'cronograma.sesiones'])
 							->whereNull('deleted_at')
 							->whereIn('Id_Cronograma', $recreopersona->cronogramas->pluck('Id')->toArray())
 							->orderBy('Id', 'DESC')
-							->paginate($perPage);
+							->get();
 
 		$lista = [
 			'titulo' => 'Informes jornadas',
 	        'elementos' => $elementos,
+	        'status' => session('status')
+		];
+
+		$datos = [
+			'seccion' => 'Informes jornadas',
+			'lista'	=> view('idrd.recreovia.lista-reportes', $lista)
+		];
+
+		return view('list', $datos);
+	}
+
+	public function jornadas_profesor()
+	{
+		$recreopersona = Recreopersona::with(['reportes' => function($query)
+									{
+										return $query->whereNull('Reportes.deleted_at')
+													 ->orderBy('Id', 'DESC');
+									}, 'reportes.profesores', 'reportes.cronograma', 'reportes.cronograma.sesiones'])
+									->find($this->usuario['Recreopersona']->Id_Recreopersona);
+
+		$lista = [
+			'titulo' => 'Informes jornadas',
+	        'elementos' => $recreopersona->reportes,
 	        'status' => session('status')
 		];
 
@@ -158,6 +180,7 @@ class ReporteController extends Controller {
 		switch ($request->input('Area')) {
 			case 'datos_generales':
 				$reporte->Condiciones_Climaticas = $request->has('Condiciones_Climaticas') ? $request->input('Condiciones_Climaticas') : null;
+				$reporte->Observaciones = $request->input('Observaciones');
 			break;
 			case 'informacion_profesores_de_actividad_fisica':
 				$profesores = [];
@@ -210,6 +233,7 @@ class ReporteController extends Controller {
 				}	
 			break;
 		}
+
 		$reporte->save();
 
 		return response()->json([true]);

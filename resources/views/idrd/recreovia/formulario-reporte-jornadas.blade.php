@@ -34,56 +34,55 @@
         </div>
         <div class="col-xs-12"><br></div>
         <div class="col-xs-12 col-md-12">
-            <div class="row">
-                <form action="{{ url('informes/jornadas/generar') }}" method="post">
-                    <fieldset>
-                        <div class="col-md-4 form-group {{ $errors->has('Id_Punto') ? 'has-error' : '' }}">
-                            <label for="">Punto</label>
-                            <select name="Id_Punto" id="Id_Punto" class="form-control" data-value="{{ $informe ? $informe['Id_Punto'] : old('Id_Punto') }}">
-                                <option value="">Seleccionar</option>
-                                @foreach($puntos as $punto)
-                                    <option value="{{ $punto['Id_Punto'] }}">{{ $punto->toString() }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-8 form-group {{ $errors->has('Id_Cronograma') ? 'has-error' : '' }}">
-                            <label for="">Periodo y jornada</label>
-                            <select name="Id_Cronograma" id="Id_Cronograma" class="form-control" data-json="{{ json_encode($puntos) }}" data-value="{{ $informe ? $informe['Id_Cronograma'] : old('Id_Cronograma') }}">
-                                <option value="">Seleccionar</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4 form-group {{ $errors->has('Dia') ? 'has-error' : '' }}">
-                            <label for="">Día</label>
-                            <input type="text" name="Dia" class="form-control" data-role="datepicker" data-fecha-inicio="" data-fecha-fin="" data-dias="" data-fechas-importantes="{{ Festivos::create()->datesToString() }}" value="{{ $informe ? $informe['Dia'] : old('Dia') }}">
-                        </div>
-                        <div class="col-xs-12">
-                            <hr>
-                        </div>
-                        @if ($informe)
-                            <div class="col-xs-12">
-                                
-                            </div>
-                        @endif
-                        <div class="col-md-12">
-                            <input type="hidden" name="_method" value="POST">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <input type="hidden" name="Id" value="{{ $informe ? $informe['Id'] : 0 }}">
-                            <input type="submit" value="{{ $informe ? 'Regenerar reporte' : 'Generar reporte' }}" id="generar" class="btn btn-primary">
-                            @if ($informe)
-                                <a data-toggle="modal" data-target="#modal-eliminar" class="btn btn-danger">Eliminar</a>
-                            @endif
-                            <a href="{{ url('informes/jornadas') }}" class="btn btn-default">Volver</a>
-                        </div>
-                    </fieldset>
-                </form>
-            </div>
-            @if ($informe)
+            @if(count($puntos) > 0)
                 <div class="row">
-                    <div class="col-md-12">
-                        <br>
-                        <br>
-                    </div>
+                    <form action="{{ url('informes/jornadas/generar') }}" method="post">
+                        <fieldset>
+                            <div class="col-md-4 form-group {{ $errors->has('Id_Punto') ? 'has-error' : '' }}">
+                                <label for="">Punto</label>
+                                <select name="Id_Punto" id="Id_Punto" class="form-control" data-value="{{ $informe ? $informe['Id_Punto'] : old('Id_Punto') }}">
+                                    <option value="">Seleccionar</option>
+                                    @foreach($puntos as $punto)
+                                        <option value="{{ $punto['Id_Punto'] }}">{{ $punto->toString() }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-8 form-group {{ $errors->has('Id_Cronograma') ? 'has-error' : '' }}">
+                                <label for="">Periodo y jornada</label>
+                                <select name="Id_Cronograma" id="Id_Cronograma" class="form-control" data-json="{{ json_encode($puntos) }}" data-value="{{ $informe ? $informe['Id_Cronograma'] : old('Id_Cronograma') }}">
+                                    <option value="">Seleccionar</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 form-group {{ $errors->has('Dia') ? 'has-error' : '' }}">
+                                <label for="">Día</label>
+                                <input type="text" name="Dia" class="form-control" data-role="datepicker" data-fecha-inicio="" data-fecha-fin="" data-dias="" data-fechas-importantes="{{ Festivos::create()->datesToString() }}" value="{{ $informe ? $informe['Dia'] : old('Dia') }}">
+                            </div>
+                            <div class="col-xs-12">
+                                <hr>
+                            </div>
+                            @if ($informe)
+                                <div class="col-xs-12">
+                                    
+                                </div>
+                            @endif
+                            <div class="col-md-12">
+                                <input type="hidden" name="_method" value="POST">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input type="hidden" name="Id" value="{{ $informe ? $informe['Id'] : 0 }}">
+                                <input type="submit" value="{{ $informe ? 'Regenerar reporte' : 'Generar reporte' }}" id="generar" class="btn btn-primary">
+                                @if ($informe)
+                                    <a data-toggle="modal" data-target="#modal-eliminar" class="btn btn-danger">Eliminar</a>
+                                @endif
+                                <a href="{{ url('informes/jornadas') }}" class="btn btn-default">Volver</a>
+                            </div>
+                        </fieldset>
+                    </form>
                 </div>
+                <div class="col-md-12">
+                    <br><br>
+                </div>
+            @endif 
+            @if ($informe)
                 <div class="row" id="formularios_complementarios">
                     <div class="col-md-12">
                         <div class="row">
@@ -95,10 +94,18 @@
                             <div class="col-md-12">
                                 <br>
                             </div>
+                            <div class="col-md-12 form-group">
+                                <label for="">Última actualización</label>
+                                <p class="form-control-static">{{ $informe->updated_at }}</p>
+                            </div>
                             <div class="col-md-12">
                                 <div class="row">
                                     <form action="{{ url('informes/jornadas/actualizar') }}" method="post">
                                         <fieldset>
+                                            <div class="col-md-12 form-group">
+                                                <label for="">Observaciones</label>
+                                                <textarea name="Observaciones" class="form-control">{{ $informe['Observaciones'] }}</textarea>
+                                            </div>
                                             <div class="col-md-12 form-group">
                                                 <label for="">Condiciones climáticas</label> <br>
                                                 <label class="radio-inline">
