@@ -86,6 +86,7 @@ Route::group(['middleware' => ['web']], function()
 	route::post('/asistencia/procesar', 'Recreovia\SesionController@asistencia');
 
 	route::get('/informes/jornadas', 'Recreovia\ReporteController@jornadas');
+	route::get('/informes/jornadas/profesor', 'Recreovia\ReporteController@jornadas_profesor');
 	route::get('/informes/jornadas/crear', 'Recreovia\ReporteController@crearInformeJornadas');
 	route::get('/informes/jornadas/{id}/editar', 'Recreovia\ReporteController@editarInformeJornadas');
 	route::get('/informes/jornadas/{id}/eliminar', 'Recreovia\ReporteController@eliminarInformeJornadas');
