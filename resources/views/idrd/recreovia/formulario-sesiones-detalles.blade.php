@@ -18,7 +18,7 @@
 		<div class="col-md-12">
 			<ul class="nav nav-tabs">
 				<li role="presentation" class="{{ $area != 'Asistencia' ? 'active' : '' }}"><a href="#Detalles" data-toggle="tab" aria-expanded="false">Detalles</a></li>
-				@if($sesion['Estado'] == 'Aprobado')
+				@if($sesion && in_array($sesion['Estado'], ['Aprobado', 'Finalizado']))
 					<li role="presentation" class="{{ $area == 'Asistencia' ? 'active' : '' }}"><a href="#Asistencia" data-toggle="tab" aria-expanded="false">Asistencia</a></li>
 				@endif
 			</ul>
@@ -44,9 +44,15 @@
 				                                    case 'Aprobado':
 				                                        $class = 'success';
 				                                    break;
+				                                    case 'Finalizado':
+				                                        $class = 'info';
+				                                    break;
 				                                    case 'Rechazado':
 				                                    case 'Corregir':
 				                                        $class = 'danger';
+				                                    break;
+				                                    default:
+				                                        $class= 'default';
 				                                    break;
 				                                }
 				                            ?>
@@ -190,6 +196,9 @@
 					                                <input type="radio" name="Estado" id="estado3" value="Aprobado" {{ ($sesion && $sesion['Estado'] == 'Aprobado') || old('Estado') == 'Aprobado' ? 'checked' : '' }}> Aprobado
 					                            </label>
 					                            <label class="radio-inline">
+					                                <input type="radio" name="Estado" id="estado5" value="Finalizado" {{ ($sesion && $sesion['Estado'] == 'Finalizado') || old('Estado') == 'Finalizado' ? 'checked' : '' }}> Finalizado
+					                            </label>
+					                            <label class="radio-inline">
 					                                <input type="radio" name="Estado" id="estado4" value="Rechazado" {{ ($sesion && $sesion['Estado'] == 'Rechazado') || old('Estado') == 'Rechazado' ? 'checked' : '' }}> Rechazado
 					                            </label>
 					                            <label class="radio-inline">
@@ -198,9 +207,6 @@
 											</div>
 				                        @endif
 										<div class="col-md-12">
-											<hr>
-										</div>
-										<div class="col-md-12">
 				                            <input type="hidden" name="_method" value="POST">
 				                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
 											<input type="hidden" name="Id" value="{{ $sesion ? $sesion['Id'] : 0 }}">
@@ -208,13 +214,31 @@
 											<input type="hidden" name="area" value="Detalles">
 							                <input type="hidden" id="latitud" value="{{ $sesion->cronograma->punto ? $sesion->cronograma->punto['Latitud'] : 4.666575 }}">
 							                <input type="hidden" id="longitud" value="{{ $sesion->cronograma->punto ? $sesion->cronograma->punto['Longitud'] : -74.125786 }}">
-											@if($tipo == "profesor")
-												<input type="submit" class="btn btn-primary" value="Guardar" {{ $sesion && $sesion['Estado'] == 'Aprobado' ? 'disabled' : '' }}>
-				                            	<a href="{{ url('/profesores/sesiones') }}" class="btn btn-default">Volver</a>
-				                            @else
-												<input type="submit" class="btn btn-primary" value="Guardar">
-				                            	<a href="{{ url('/gestores/sesiones') }}" class="btn btn-default">Volver</a>
-				                            @endif
+											@if($sesion && $sesion['Estado'] != 'Finalizado')
+												<div class="row">
+													<div class="col-md-12"><hr></div>
+													<div class="col-md-12">
+														@if($tipo == "profesor")
+															<input type="submit" class="btn btn-primary" value="Guardar" {{ $sesion && $sesion['Estado'] == 'Aprobado' ? 'disabled' : '' }}>
+							                            	<a href="{{ url('/profesores/sesiones') }}" class="btn btn-default">Volver</a>
+							                            @else
+															<input type="submit" class="btn btn-primary" value="Guardar">
+							                            	<a href="{{ url('/gestores/sesiones') }}" class="btn btn-default">Volver</a>
+							                            @endif
+						                            </div>
+						                        </div>
+						                    @else
+						                    	<div class="row">
+													<div class="col-md-12"><hr></div>
+													<div class="col-md-12">
+														@if($tipo == "profesor")
+															<a href="{{ url('/profesores/sesiones') }}" class="btn btn-default">Volver</a>
+							                            @else
+							                            	<a href="{{ url('/gestores/sesiones') }}" class="btn btn-default">Volver</a>
+							                            @endif
+						                            </div>
+						                        </div>
+					                        @endif
 										</div>
 									</fieldset>
 								</form>
@@ -222,7 +246,7 @@
 						</div>
 					</div>		
 				</div>
-				@if($sesion['Estado'] == 'Aprobado')
+				@if($sesion && in_array($sesion['Estado'], ['Aprobado', 'Finalizado']))
 					<div class="tab-pane fade {{ $area == 'Asistencia' ? 'active in' : '' }}" id="Asistencia">
 						<div class="row">
 							<div class="col-xs-12"><br></div>
@@ -309,15 +333,17 @@
 												</table>
 											</div>
 											<div class="col-md-12">
-												<hr>
-											</div>
-											<div class="col-md-12">
 					                            <input type="hidden" name="_method" value="POST">
 					                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
 												<input type="hidden" name="Id" value="{{ $sesion ? $sesion['Id'] : 0 }}">
 												<input type="hidden" name="origen" value="{{ $tipo }}">
 												<input type="hidden" name="area" value="Asistencia">
-												<input type="submit" class="btn btn-primary" value="Registrar asistencia">
+												@if($sesion && $sesion['Estado'] != 'Finalizado')
+													<div class="row">
+														<div class="col-md-12"><hr></div>
+														<div class="col-xs-12"><input type="submit" class="btn btn-primary" value="Registrar asistencia"></div>
+													</div>
+												@endif
 											</div>
 										</fieldset>
 									</form>

@@ -1,6 +1,6 @@
 $(function()
 {
-    var PUNTOS = $('select[name="Id_Cronograma"]').lenght ? $.parseJSON(JSON.stringify($('select[name="Id_Cronograma"]').data('json'))) : {} ;
+    var PUNTOS = $('select[name="Id_Cronograma"]').length ? $.parseJSON(JSON.stringify($('select[name="Id_Cronograma"]').data('json'))) : {};
     
     var URL = $('#main').data('url');
 

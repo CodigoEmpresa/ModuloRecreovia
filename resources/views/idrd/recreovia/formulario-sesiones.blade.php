@@ -171,9 +171,15 @@
 		                        		case 'Aprobado':
 		                        			$class = 'success';
 		                        		break;
+		                        		case 'Finalizado':
+		                        			$class = 'info';
+		                        		break;
 		                        		case 'Rechazado':
 		                        			$class = 'danger';
 		                        		break;
+	                                    default:
+	                                        $class= 'default';
+	                                    break;
 		                        	}
 		                        ?>
 								<tr class="{{ $class }}">
@@ -193,12 +199,14 @@
 									<td>{{ $sesion->Fin }}</td>
 									<td>{{ $sesion->Estado }}</td>
 									<td data-priority="2"> 
-										<a data-role="editar" href="{{ url('/gestores/'.$cronograma['Id'].'/sesiones/'.$sesion['Id'].'/editar') }}" class="pull-right btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Editar">
-		                                	<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-		                            	</a>
-		                            	<a data-role="validar" target="_blank" href="{{ url('/gestores/sesiones/'.$sesion['Id'].'/editar') }}" class="pull-right separe-right btn btn-default btn-xs" data-toggle="tooltip" data-placement="bottom" title="Detalles">
-		                                	<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-		                            	</a>
+										@if($sesion->Estado != 'Finalizado')
+											<a data-role="editar" href="{{ url('/gestores/'.$cronograma['Id'].'/sesiones/'.$sesion['Id'].'/editar') }}" class="pull-right btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Editar">
+			                                	<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+			                            	</a>
+			                            	<a data-role="validar" target="_blank" href="{{ url('/gestores/sesiones/'.$sesion['Id'].'/editar') }}" class="pull-right separe-right btn btn-default btn-xs" data-toggle="tooltip" data-placement="bottom" title="Detalles">
+			                                	<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+			                            	</a>
+			                            @endif
 		                            </td>
 								</tr>
 							@endforeach

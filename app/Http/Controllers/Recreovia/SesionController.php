@@ -174,6 +174,7 @@ class SesionController extends Controller {
 			switch ($sesion->Estado) 
 			{
 				case 'Aprobado':
+				case 'Finalizado':
 				break;
 
 				case 'Pendiente':
@@ -191,6 +192,7 @@ class SesionController extends Controller {
 			switch ($sesion->Estado) 
 			{
 				case 'Diligenciado':
+				case 'Finalizado':
 				case 'Pendiente':
 				case 'Corregir':
 				break;

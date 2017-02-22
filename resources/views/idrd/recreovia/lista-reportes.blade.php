@@ -14,9 +14,11 @@
                 </div>                                
             </div>
         @endif
-        <div class="col-xs-12">
-            <a class="btn btn-primary" href="{{ url('informes/jornadas/crear') }}">Crear</a>
-        </div>
+        @if(in_array('Gestor', $_SESSION['Usuario']['Roles']))
+            <div class="col-xs-12">
+                <a class="btn btn-primary" href="{{ url('informes/jornadas/crear') }}">Crear</a>
+            </div>
+        @endif
         <div class="col-xs-12"><br></div>
         <div class="col-xs-12">
             Total de reportes creados: {{ count($elementos) }}

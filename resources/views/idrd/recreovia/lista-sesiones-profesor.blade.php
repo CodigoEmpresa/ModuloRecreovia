@@ -47,9 +47,15 @@
                                     case 'Aprobado':
                                         $class = 'success';
                                     break;
+                                    case 'Finalizado':
+                                        $class = 'info';
+                                    break;
                                     case 'Rechazado':
                                     case 'Corregir':
                                         $class = 'danger';
+                                    break;
+                                    default:
+                                        $class= 'default';
                                     break;
                                 }
                             ?>
