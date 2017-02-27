@@ -26,7 +26,7 @@ class ReporteController extends Controller {
 
 	public function jornadas()
 	{
-		$recreopersona = $this->cronogramasPersona();
+		$recreopersona = $this->cronogramasPersona($this->usuario['Recreopersona']->Id_Recreopersona);
 		$elementos = Reporte::with(['profesores', 'cronograma', 'cronograma.sesiones'])
 							->whereNull('deleted_at')
 							->whereIn('Id_Cronograma', $recreopersona->cronogramas->pluck('Id')->toArray())
@@ -70,9 +70,35 @@ class ReporteController extends Controller {
 		return view('list', $datos);
 	}
 
+	public function obtenerInformes()
+	{
+		$elementos = Reporte::with(['profesores', 'cronograma', 'cronograma.jornada', 'cronograma.sesiones'])
+							->where(function($query)
+							{
+								return $query->where('Estado', '<>', 'Finalizado')
+											->orWhereNull('Estado');
+							})
+							->whereNull('deleted_at')
+							->orderBy('Id', 'DESC')
+							->get();
+
+		$lista = [
+			'titulo' => 'Aprobar informes de jornadas',
+	        'elementos' => $elementos,
+	        'status' => session('status')
+		];
+
+		$datos = [
+			'seccion' => 'Revisar informes',
+			'lista'	=> view('idrd.recreovia.lista-revisar-reportes', $lista)
+		];
+
+		return view('list', $datos);
+	}
+
 	public function crearInformeJornadas()
 	{
-		$recreopersona = $this->cronogramasPersona();
+		$recreopersona = $this->cronogramasPersona($this->usuario['Recreopersona']->Id_Recreopersona);
 		$gruposPoblacionales = GrupoPoblacional::all();
 
 		$formulario = [
@@ -94,14 +120,14 @@ class ReporteController extends Controller {
 
 	public function editarInformeJornadas(Request $request, $id)
 	{
-		$informe = Reporte::with('profesores', 'novedad', 'servicios')->find($id);
-		$recreopersona = $this->cronogramasPersona();
+		$informe = Reporte::with('profesores', 'novedad', 'servicios', 'cronograma', 'cronograma.gestor')->find($id);
+		$recreopersona = $this->cronogramasPersona($informe->cronograma->gestor['Id_Recreopersona']);
 		$gruposPoblacionales = GrupoPoblacional::all();
 
 		$sesiones = Sesion::with('gruposPoblacionales', 'profesor', 'profesor.persona')
 							->where('Id_Cronograma', $informe['Id_Cronograma'])
 							->where('Fecha', $informe['Dia'])
-							->where('Estado', 'Aprobado')
+							->where('Estado', 'Finalizado')
 							->get();
 
 		$formulario = [
@@ -132,12 +158,13 @@ class ReporteController extends Controller {
 		$reporte->Id_Cronograma = $request->input('Id_Cronograma');
 		$reporte->Dia = $request->input('Dia');
 		$reporte->Condiciones_Climaticas = null;
+		$reporte->Estado = 'Pendiente';
 		$reporte->save();
 
 		$sesiones = Sesion::with('gruposPoblacionales')
 							->where('Id_Cronograma', $request->input('Id_Cronograma'))
 							->where('Fecha', $request->input('Dia'))
-							->where('Estado', 'Aprobado')
+							->where('Estado', 'Finalizado')
 							->get();
 
 		if ($sesiones)
@@ -180,6 +207,7 @@ class ReporteController extends Controller {
 		switch ($request->input('Area')) {
 			case 'datos_generales':
 				$reporte->Condiciones_Climaticas = $request->has('Condiciones_Climaticas') ? $request->input('Condiciones_Climaticas') : null;
+				$reporte->Estado = $request->has('Estado') ? $request->input('Estado') : $reporte->Estado;
 				$reporte->Observaciones = $request->input('Observaciones');
 			break;
 			case 'informacion_profesores_de_actividad_fisica':
@@ -239,9 +267,9 @@ class ReporteController extends Controller {
 		return response()->json([true]);
 	}
 
-	private function cronogramasPersona()
-	{		
-		$recreopersona = Recreopersona::with('cronogramas', 'cronogramas.jornada', 'cronogramas.punto.cronogramas.jornada')->find($this->usuario['Recreopersona']->Id_Recreopersona);
+	private function cronogramasPersona($recreopersona)
+	{
+		$recreopersona = Recreopersona::with('cronogramas', 'cronogramas.jornada', 'cronogramas.punto.cronogramas.jornada')->find($recreopersona);
 		$recreopersona->puntos = collect();
 
 		foreach ($recreopersona->cronogramas as $cronograma) 

@@ -73,14 +73,15 @@ class MainController extends Controller {
 			$permissions_array = $user_array;
 
 			$permisos = [
-				'editar_profesores' => intval($permissions_array[1]),
-				'editar_puntos' => intval($permissions_array[2]),
-				'administrar_localidades' => intval($permissions_array[3]),
-				'administrar_jornadas'=> intval($permissions_array[4]),
-				'programar_sesiones'=> intval($permissions_array[5]),
-				'revisar_sesiones_gestor'=> intval($permissions_array[6]),
-				'revisar_sesiones_profesor'=> intval($permissions_array[7]),
-				'gestionar_reportes_jornadas'=> intval($permissions_array[8])
+				'editar_profesores' => array_key_exists(1, $permissions_array) ? intval($permissions_array[1]) : 0,
+				'editar_puntos' => array_key_exists(2, $permissions_array) ? intval($permissions_array[2]) : 0,
+				'administrar_localidades' => array_key_exists(3, $permissions_array) ? intval($permissions_array[3]) : 0,
+				'administrar_jornadas'=> array_key_exists(4, $permissions_array) ? intval($permissions_array[4]) : 0,
+				'programar_sesiones'=> array_key_exists(5, $permissions_array) ? intval($permissions_array[5]) : 0,
+				'revisar_sesiones_gestor'=> array_key_exists(6, $permissions_array) ? intval($permissions_array[6]) : 0,
+				'revisar_sesiones_profesor'=> array_key_exists(7, $permissions_array) ? intval($permissions_array[7]) : 0,
+				'gestionar_reportes_jornadas'=> array_key_exists(8, $permissions_array) ? intval($permissions_array[8]) : 0,
+				'validar_reportes_jornadas' => array_key_exists(9, $permissions_array) ? intval($permissions_array[9]) : 0
 			];
 
 			$_SESSION['Usuario'] = $user_array;

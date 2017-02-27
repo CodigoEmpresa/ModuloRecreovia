@@ -57,6 +57,11 @@ class Authenticate
                     if (!in_array($localidad->pivot['tipo'], $_SESSION['Usuario']['Roles']))
                         $_SESSION['Usuario']['Roles'][] = $localidad->pivot['tipo'];
                 }
+            } else {
+                $_SESSION['Usuario']['Recreopersona'] = [
+                    'Id_Recreopersona' => null,
+                ];
+                $_SESSION['Usuario']['Roles'] = [];
             }
         }
         
