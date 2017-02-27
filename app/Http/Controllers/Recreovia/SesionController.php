@@ -164,8 +164,11 @@ class SesionController extends Controller {
 		$sesion->Metodologia_Aplicar = $request->input('Metodologia_Aplicar');
 		$sesion->Recursos = $request->input('Recursos');
 		$sesion->Fase_Inicial = $request->input('Fase_Inicial');
+		$sesion->Tiempo_Inicial = $request->input('Tiempo_Inicial');
 		$sesion->Fase_Central = $request->input('Fase_Central');
+		$sesion->Tiempo_Central = $request->input('Tiempo_Central');
 		$sesion->Fase_Final = $request->input('Fase_Final');
+		$sesion->Tiempo_Final = $request->input('Tiempo_Final');
 		$sesion->Observaciones = $request->input('Observaciones');
 		$sesion->Estado = $request->has('Estado') ? $request->input('Estado') : $sesion->Estado;
 		

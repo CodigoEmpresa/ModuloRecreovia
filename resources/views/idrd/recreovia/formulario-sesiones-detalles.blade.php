@@ -174,17 +174,42 @@
 											</div>
 										</div>
 										<div class="col-md-4 form-group next">
-											<label for="">Fase inicial</label>
-											<textarea class="form-control x2" name="Fase_Inicial">{{ $sesion ? $sesion['Fase_Inicial'] : old('Fase_Inicial') }}</textarea>
+											<div class="row">
+												<div class="col-md-12 form-group">
+													<label for="">Fase inicial</label>
+													<textarea class="form-control x2" name="Fase_Inicial">{{ $sesion ? $sesion['Fase_Inicial'] : old('Fase_Inicial') }}</textarea>
+												</div>
+												<div class="col-md-6 form-group">
+													<label for="">Duración fase inicial</label>
+													<input type="number" min="0" class="form-control" name="Tiempo_Inicial" value="{{ $sesion ? $sesion['Tiempo_Inicial'] : old('Tiempo_Inicial') }}">
+												</div>
+											</div>
 										</div>
-										<div class="col-md-4 form-group next">
-											<label for="">Fase central</label>
-											<textarea class="form-control x2" name="Fase_Central">{{ $sesion ? $sesion['Fase_Central'] : old('Fase_Central') }}</textarea>
+										<div class="col-md-4 next">
+											<div class="row">
+												<div class="col-md-12 form-group">
+													<label for="">Fase central</label>
+													<textarea class="form-control x2" name="Fase_Central">{{ $sesion ? $sesion['Fase_Central'] : old('Fase_Central') }}</textarea>
+												</div>
+												<div class="col-md-6 form-group">
+													<label for="">Duración fase central</label>
+													<input type="number" min="0" class="form-control" name="Tiempo_Central" value="{{ $sesion ? $sesion['Tiempo_Central'] : old('Tiempo_Central') }}">
+												</div>
+											</div>
 										</div>
-										<div class="col-md-4 form-group">
-											<label for="">Fase final</label>
-											<textarea class="form-control x2" name="Fase_Final">{{ $sesion ? $sesion['Fase_Final'] : old('Fase_Final') }}</textarea>
+										<div class="col-md-4">
+											<div class="row">
+												<div class="col-md-12 form-group">
+													<label for="">Fase final</label>
+													<textarea class="form-control x2" name="Fase_Final">{{ $sesion ? $sesion['Fase_Final'] : old('Fase_Final') }}</textarea>
+												</div>
+												<div class="col-md-6 form-group">
+													<label for="">Duración fase final</label>
+													<input type="number" min="0" class="form-control" name="Tiempo_Final" value="{{ $sesion ? $sesion['Tiempo_Final'] : old('Tiempo_Final') }}">
+												</div>
+											</div>
 										</div>
+										
 										<div class="col-md-12 form-group">
 											<label for="">Observaciones</label>
 											<textarea class="form-control" name="Observaciones">{{ $sesion ? $sesion['Observaciones'] : old('Observaciones') }}</textarea>
