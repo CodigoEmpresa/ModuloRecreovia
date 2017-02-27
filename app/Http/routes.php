@@ -92,6 +92,7 @@ Route::group(['middleware' => ['web']], function()
 	route::get('/informes/jornadas/{id}/eliminar', 'Recreovia\ReporteController@eliminarInformeJornadas');
 	route::post('/informes/jornadas/generar', 'Recreovia\ReporteController@generarInformeJornadas');
 	route::post('/informes/jornadas/actualizar', 'Recreovia\ReporteController@actualizarInformeJornadas');
+	route::get('/informes/jornadas/revisar', 'Recreovia\ReporteController@obtenerInformes');
 });
 /*
 |--------------------------------------------------------------------------

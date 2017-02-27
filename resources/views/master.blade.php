@@ -60,12 +60,12 @@
 							<ul class="dropdown-menu">
 								@if($_SESSION['Usuario']['Permisos']['administrar_jornadas'])
 									<li class="{{ $seccion && $seccion == 'Jornadas' ? 'active' : '' }}">
-										<a href="{{ url('jornadas') }}">Gestión de jornadas</a>
+										<a href="{{ url('jornadas') }}">Jornadas</a>
 									</li>
 								@endif
 								@if($_SESSION['Usuario']['Permisos']['editar_puntos'])
 									<li class="{{ $seccion && $seccion == 'Puntos' ? 'active' : '' }}">
-										<a href="{{ url('puntos') }}">Puntos de recreovía</a>
+										<a href="{{ url('puntos') }}">Puntos</a>
 									</li>
 								@endif
 								@if($_SESSION['Usuario']['Permisos']['editar_profesores'])
@@ -84,12 +84,11 @@
 					@if(
 						(
 						$_SESSION['Usuario']['Permisos']['programar_sesiones'] ||
-						$_SESSION['Usuario']['Permisos']['revisar_sesiones_gestor'] ||
-						$_SESSION['Usuario']['Permisos']['gestionar_reportes_jornadas']
+						$_SESSION['Usuario']['Permisos']['revisar_sesiones_gestor']
 						) &&
 						in_array('Gestor', $_SESSION['Usuario']['Roles'])
 					)
-						<li class="dropdown {{ $seccion && in_array($seccion, ['Programación', 'Sesiones gestor', 'Informes jornadas', 'Generar informe de actividades por punto']) ? 'active' : '' }}">
+						<li class="dropdown {{ $seccion && in_array($seccion, ['Programación', 'Sesiones gestor']) ? 'active' : '' }}">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestores <span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li class="{{ $seccion && $seccion == 'Programación' ? 'active' : '' }}">
@@ -98,16 +97,12 @@
 								<li class="{{ $seccion && $seccion == 'Sesiones gestor' ? 'active' : '' }}">
 									<a href="{{ url('/gestores/sesiones') }}">Revisar sesiones</a>
 								</li>
-								<li class="{{ $seccion && in_array($seccion, ['Informes jornadas', 'Generar informe de actividades por punto']) ? 'active' : '' }}">
-									<a href="{{ url('/informes/jornadas') }}">Informes jornadas</a>
-								</li>
 							</ul>
 						</li>
 					@endif
 					@if(
 						(
-						$_SESSION['Usuario']['Permisos']['revisar_sesiones_profesor'] ||
-						$_SESSION['Usuario']['Permisos']['gestionar_reportes_jornadas']
+						$_SESSION['Usuario']['Permisos']['revisar_sesiones_profesor']
 						) &&
 						in_array('Profesor', $_SESSION['Usuario']['Roles'])
 					)
@@ -117,9 +112,31 @@
 								<li class="{{ $seccion && $seccion == 'Sesiones profesor' ? 'active' : '' }}">
 									<a href="{{ url('/profesores/sesiones') }}">Consultar sesiones</a>
 								</li>
-								<li class="{{ $seccion && in_array($seccion, ['Informes jornadas', 'Generar informe de actividades por punto']) ? 'active' : '' }}">
-									<a href="{{ url('/informes/jornadas/profesor') }}">Informes jornadas</a>
-								</li>
+							</ul>
+						</li>
+					@endif
+					@if(
+						$_SESSION['Usuario']['Permisos']['validar_reportes_jornadas'] || 
+						$_SESSION['Usuario']['Permisos']['gestionar_reportes_jornadas']
+					)					
+						<li class="dropdown {{ $seccion && in_array($seccion, ['Revisar informes', 'Informes jornadas', 'Generar informe de actividades por punto']) ? 'active' : '' }}">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#">Informes y consultas<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								@if($_SESSION['Usuario']['Permisos']['validar_reportes_jornadas'])
+									<li class="{{ $seccion && $seccion == 'Revisar informes' ? 'active' : '' }}">
+										<a href="{{ url('informes/jornadas/revisar') }}">Revisar informes de jornadas</a>
+									</li>
+								@endif
+								@if($_SESSION['Usuario']['Permisos']['gestionar_reportes_jornadas'] && in_array('Gestor', $_SESSION['Usuario']['Roles']))
+									<li class="{{ $seccion && in_array($seccion, ['Informes jornadas', 'Generar informe de actividades por punto']) ? 'active' : '' }}">
+										<a href="{{ url('/informes/jornadas') }}">Informes jornadas</a>
+									</li>
+								@endif
+								@if($_SESSION['Usuario']['Permisos']['gestionar_reportes_jornadas'] && in_array('Profesor', $_SESSION['Usuario']['Roles']))
+									<li class="{{ $seccion && in_array($seccion, ['Informes jornadas', 'Generar informe de actividades por punto']) ? 'active' : '' }}">
+										<a href="{{ url('/informes/jornadas/profesor') }}">Informes jornadas</a>
+									</li>
+								@endif
 							</ul>
 						</li>
 					@endif
@@ -129,12 +146,12 @@
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ $_SESSION['Usuario']['Persona']['Primer_Apellido'].' '.$_SESSION['Usuario']['Persona']['Primer_Nombre'] }}<span class="caret"></span></a>
 							<ul class="dropdown-menu">
-									<li>
-										<a href="{{ url('personas/'.$_SESSION['Usuario'][0].'/editar') }}">Editar</a>
-									</li>
-									<li>
-										<a href="{{ url('logout') }}">Cerrar sesión</a>
-									</li>
+								<li>
+									<a href="{{ url('personas/'.$_SESSION['Usuario'][0].'/editar') }}">Editar</a>
+								</li>
+								<li>
+									<a href="{{ url('logout') }}">Cerrar sesión</a>
+								</li>
 							</ul>
 						</li>
 					</ul>
@@ -167,7 +184,7 @@
 
 		<!-- Contenedor panel principal -->
 		<div class="container">
-				@yield('content')
+			@yield('content')
 		</div>
 		<div class="container">
 			<div class="row">

@@ -60,26 +60,39 @@
                             <div class="col-xs-12">
                                 <hr>
                             </div>
-                            @if ($informe)
-                                <div class="col-xs-12">
-                                    
+                            @if (!$informe || ($informe->cronograma->gestor['Id_Recreopersona'] == $_SESSION['Usuario']['Recreopersona']['Id_Recreopersona']))
+                                <div class="col-md-12">
+                                    <input type="hidden" name="_method" value="POST">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <input type="hidden" name="Id" value="{{ $informe ? $informe['Id'] : 0 }}">
+                                    @if ($informe['Estado'] != 'Aprobado')
+                                        <input type="submit" value="{{ $informe ? 'Regenerar reporte' : 'Generar reporte' }}" id="generar" class="btn btn-primary">
+                                        @if ($informe)
+                                            <a data-toggle="modal" data-target="#modal-eliminar" class="btn btn-danger">Eliminar</a>
+                                        @endif
+                                    @endif
+                                    <a href="{{ url('informes/jornadas') }}" class="btn btn-default">Volver</a>
+                                </div>
+                                <div class="col-md-12">
+                                    <br><br>
+                                </div>
+                            @elseif (in_array('Profesor', $_SESSION['Usuario']['Roles']))
+                                <div class="col-md-12">
+                                    <a href="{{ url('informes/jornadas/profesor') }}" class="btn btn-default">Volver</a>
+                                </div>
+                                <div class="col-md-12">
+                                    <br><br>
+                                </div>
+                            @elseif ($_SESSION['Usuario']['Permisos']['validar_reportes_jornadas'])
+                                <div class="col-md-12">
+                                    <a href="{{ url('informes/jornadas/revisar') }}" class="btn btn-default">Volver</a>
+                                </div>
+                                <div class="col-md-12">
+                                    <br><br>
                                 </div>
                             @endif
-                            <div class="col-md-12">
-                                <input type="hidden" name="_method" value="POST">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <input type="hidden" name="Id" value="{{ $informe ? $informe['Id'] : 0 }}">
-                                <input type="submit" value="{{ $informe ? 'Regenerar reporte' : 'Generar reporte' }}" id="generar" class="btn btn-primary">
-                                @if ($informe)
-                                    <a data-toggle="modal" data-target="#modal-eliminar" class="btn btn-danger">Eliminar</a>
-                                @endif
-                                <a href="{{ url('informes/jornadas') }}" class="btn btn-default">Volver</a>
-                            </div>
                         </fieldset>
                     </form>
-                </div>
-                <div class="col-md-12">
-                    <br><br>
                 </div>
             @endif 
             @if ($informe)
@@ -102,6 +115,22 @@
                                 <div class="row">
                                     <form action="{{ url('informes/jornadas/actualizar') }}" method="post">
                                         <fieldset>
+                                            <div class="col-md-12 form-group">
+                                                <label for="">Estado</label><br>
+                                                @if ($_SESSION['Usuario']['Permisos']['validar_reportes_jornadas'])
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="Estado" value="Pendiente" {{ $informe && $informe['Estado'] == 'Pendiente' ? 'checked' : '' }}> Pendiente
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="Estado" value="Aprobado" {{ $informe && $informe['Estado'] == 'Aprobado' ? 'checked' : '' }}> Aprobado
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="Estado" value="Rechazado" {{ $informe && $informe['Estado'] == 'Rechazado' ? 'checked' : '' }}> Rechazado
+                                                    </label>
+                                                @else
+                                                    <p class="form-control-static">{{ $informe['Estado'] }}</p>
+                                                @endif
+                                            </div>
                                             <div class="col-md-12 form-group">
                                                 <label for="">Observaciones</label>
                                                 <textarea name="Observaciones" class="form-control">{{ $informe['Observaciones'] }}</textarea>
@@ -384,6 +413,13 @@
                                             $total = 0;
                                         ?>
 
+                                        @foreach ($gruposPoblacionales as $grupo)
+                                            <?php 
+                                                if(!array_key_exists($grupo['Id'], $subtotal_grupo))
+                                                    $subtotal_grupo[$grupo['Id']] = ['M' => 0, 'F' => 0];
+                                            ?>
+                                        @endforeach
+
                                         @foreach ($sesiones as $sesion)
                                             <?php
                                                 $subtotal_genero_m = 0;
@@ -402,10 +438,6 @@
                                                 </td>
                                                 @foreach ($gruposPoblacionales as $grupo)
                                                     @if (count($sesion->gruposPoblacionales))
-                                                        <?php 
-                                                            if(!array_key_exists($grupo['Id'], $subtotal_grupo))
-                                                                $subtotal_grupo[$grupo['Id']] = ['M' => 0, 'F' => 0];
-                                                        ?>
                                                         @foreach ($sesion->gruposPoblacionales()->where('Id_Grupo', $grupo['Id'])->where('Grupo_Asistencia', 'Participantes')->orderBy('Genero')->get() as $participacion)
                                                             <?php 
                                                                 switch ($participacion->pivot['Genero']) 
@@ -494,6 +526,13 @@
                                             $total = 0;
                                         ?>
 
+                                        @foreach ($gruposPoblacionales as $grupo)
+                                            <?php 
+                                                if(!array_key_exists($grupo['Id'], $subtotal_grupo))
+                                                    $subtotal_grupo[$grupo['Id']] = ['M' => 0, 'F' => 0];
+                                            ?>
+                                        @endforeach
+
                                         @foreach ($sesiones as $sesion)
                                             <?php
                                                 $subtotal_genero_m = 0;
@@ -512,10 +551,6 @@
                                                 </td>
                                                 @foreach ($gruposPoblacionales as $grupo)
                                                     @if (count($sesion->gruposPoblacionales))
-                                                        <?php 
-                                                            if(!array_key_exists($grupo['Id'], $subtotal_grupo))
-                                                                $subtotal_grupo[$grupo['Id']] = ['M' => 0, 'F' => 0];
-                                                        ?>
                                                         @foreach ($sesion->gruposPoblacionales()->where('Id_Grupo', $grupo['Id'])->where('Grupo_Asistencia', 'Asistentes')->orderBy('Genero')->get() as $participacion)
                                                             <?php 
                                                                 switch ($participacion->pivot['Genero']) 
@@ -578,9 +613,11 @@
                     <div class="col-md-12">
                         <hr>
                     </div>
-                    <div class="col-md-12">
-                        <input type="button" class="btn btn-primary" id="actualizar_reporte" value="Actualizar reporte">
-                    </div>
+                    @if ($informe['Estado'] != 'Aprobado')
+                        <div class="col-md-12">
+                            <input type="button" class="btn btn-primary" id="actualizar_reporte" value="Actualizar reporte">
+                        </div>
+                    @endif
                 </div>
             @endif
         </div>
