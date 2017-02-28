@@ -15,15 +15,20 @@
 				</div>                                
 			</div>
 		@endif
+
+		<?php
+			$area_detalles = ($area == 'Asistencia' || old('area') == 'Asistencia') || ($area == 'Producto_No_Conforme' || old('area') == 'Producto_No_Conforme');
+		?>
 		<div class="col-md-12">
 			<ul class="nav nav-tabs">
-				<li role="presentation" class="{{ $area != 'Asistencia' ? 'active' : '' }}"><a href="#Detalles" data-toggle="tab" aria-expanded="false">Detalles</a></li>
+				<li role="presentation" class="{{ !$area_detalles ? 'active in' : '' }}"><a href="#Detalles" data-toggle="tab" aria-expanded="false">Detalles</a></li>
 				@if($sesion && in_array($sesion['Estado'], ['Aprobado', 'Finalizado']))
-					<li role="presentation" class="{{ $area == 'Asistencia' ? 'active' : '' }}"><a href="#Asistencia" data-toggle="tab" aria-expanded="false">Asistencia</a></li>
+					<li role="presentation" class="{{ ($area == 'Asistencia' || old('area') == 'Asistencia') ? 'active' : '' }}"><a href="#Asistencia" data-toggle="tab" aria-expanded="false">Asistencia</a></li>
+					<li role="presentation" class="{{ ($area == 'Producto_No_Conforme' || old('area') == 'Producto_No_Conforme') ? 'active' : '' }}"><a href="#Producto_No_Conforme" data-toggle="tab" aria-expanded="false">Producto no conforme</a></li>
 				@endif
 			</ul>
 			<div id="myTabContent" class="tab-content">
-	  			<div class="tab-pane fade {{ $area != 'Asistencia' ? 'active in' : '' }}" id="Detalles">
+	  			<div class="tab-pane fade {{ !$area_detalles ? 'active in' : '' }}" id="Detalles">
 					<div class="row">
 						<div class="col-xs-12"><br></div>
 						<div class="col-xs-12 col-md-12">
@@ -272,7 +277,7 @@
 					</div>		
 				</div>
 				@if($sesion && in_array($sesion['Estado'], ['Aprobado', 'Finalizado']))
-					<div class="tab-pane fade {{ $area == 'Asistencia' ? 'active in' : '' }}" id="Asistencia">
+					<div class="tab-pane fade {{ $area == 'Asistencia' || old('area') == 'Asistencia' ? 'active in' : '' }}" id="Asistencia">
 						<div class="row">
 							<div class="col-xs-12"><br></div>
 							<div class="col-xs-12">
@@ -367,6 +372,91 @@
 													<div class="row">
 														<div class="col-md-12"><hr></div>
 														<div class="col-xs-12"><input type="submit" class="btn btn-primary" value="Registrar asistencia"></div>
+													</div>
+												@endif
+											</div>
+										</fieldset>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane fade {{ $area == 'Producto_No_Conforme' || old('area') == 'Producto_No_Conforme' ? 'active in' : '' }}" id="Producto_No_Conforme">
+						<div class="row">
+							<div class="col-xs-12"><br></div>
+							<div class="col-xs-12">
+								<div class="row">
+									<form action="{{ url('/producto_no_conforme/procesar') }}" method="post">
+										<fieldset>
+											<div class="col-md-12 form-group {{ $errors->has('Requisito') ? 'has-error' : '' }}">
+												<label for="">* Requisito</label>
+												<select name="Requisito" id="Requisito" class="form-control" data-value="{{ old('Requisito') }}">
+													<option value="">Seleccionar</option>
+													<option value="1">1. Puntualidad</option>
+													<option value="2">2. Personal competente para el desarrollo de la actividad</option>
+													<option value="3">3. Contar con el Talento Humano mínimo requerido</option>
+													<option value="4">4. Escenario adecuado</option>
+													<option value="5">5. Contar con los parámetros del IDIGER</option>
+													<option value="6">6. Cumplir con los niveles de competencia de Ruido</option>
+													<option value="7">7. Cumplir con la Resolución 512 de 2003</option>
+													<option value="8">8. Elementos de producción (sonido)</option>
+													<option value="9">9. Planificación de la sesión</option>
+													<option value="10">10. Presentación Personal del Talento Humano</option>
+													<option value="11">11. Mantener actualizada la información sobre los Puntos de Recreovía en Planeación del IDRD</option>
+													<option value="12">12. Accesorios (bicicletas estáticas, step)</option>
+													<option value="13">13. Cumplir con el instructivo de selección y contratación</option>
+												</select>
+											</div>
+											<div class="col-md-6 form-group {{ $errors->has('Descripcion_De_La_No_Conformidad') ? 'has-error' : '' }}">
+												<label for="">* Descripción de la no conformidad</label>
+												<textarea class="form-control" name="Descripcion_De_La_No_Conformidad" id="Descripcion_De_La_No_Conformidad">{{ old('Descripcion_De_La_No_Conformidad') }}</textarea>
+											</div>
+											<div class="col-md-6 form-group {{ $errors->has('Descripcion_De_La_Accion_Tomada') ? 'has-error' : '' }}">
+												<label for="">* Descripción de la acción tomada</label>
+												<textarea class="form-control" name="Descripcion_De_La_Accion_Tomada" id="Descripcion_De_La_Accion_Tomada">{{ old('Descripcion_De_La_Accion_Tomada') }}</textarea>
+											</div>
+											<div class="col-md-6 form-group {{ $errors->has('Tratamiento') ? 'has-error' : '' }}">
+												<label for="">* Tratamiento</label>
+												<textarea class="form-control" name="Tratamiento" id="Tratamiento">{{ old('Tratamiento') }}</textarea>
+											</div>
+											<div class="col-md-12">
+												<table class="table table-min table-hover">
+													<thead>
+														<tr>
+															<th style="width:30px;">Req.</th>
+															<th style="width:30%;">Descripción de la no conformidad</th>
+															<th style="width:30%;">Descripción de la no acción tomada</th>
+															<th style="width:30%;">Tratamiento</th>
+															<th style="width:30px;"></th>
+														</tr>
+													</thead>
+													<tbody>
+														@foreach($sesion->ProductosNoConformes as $productoNoConforme)
+															<tr>
+																<td>{{ $productoNoConforme['Requisito'] }}</td>
+																<td>{{ $productoNoConforme['Descripcion_De_La_No_Conformidad'] }}</td>
+																<td>{{ $productoNoConforme['Descripcion_De_La_Accion_Tomada'] }}</td>
+																<td>{{ $productoNoConforme['Tratamiento'] }}</td>
+																<td>
+																	<a href="{{ url('/producto_no_conforme/'.$productoNoConforme['Id'].'/eliminar/'.$tipo) }}" class="pull-right btn btn-danger btn-xs" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
+									                                	<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+									                            	</a>
+																</td>
+															</tr>
+														@endforeach
+													</tbody>
+												</table>
+											</div>
+											<div class="col-md-12">
+					                            <input type="hidden" name="_method" value="POST">
+					                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+												<input type="hidden" name="Id" value="{{ $sesion ? $sesion['Id'] : 0 }}">
+												<input type="hidden" name="origen" value="{{ $tipo }}">
+												<input type="hidden" name="area" value="Producto_No_Conforme">
+												@if($sesion && $sesion['Estado'] != 'Finalizado')
+													<div class="row">
+														<div class="col-md-12"><hr></div>
+														<div class="col-xs-12"><input type="submit" class="btn btn-primary" value="Registrar producto no conforme"></div>
 													</div>
 												@endif
 											</div>

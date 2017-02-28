@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Recreovia;
 
 use App\Http\Controllers\Controller;
 use App\Modulos\Recreovia\Cronograma;
+use App\Modulos\Recreovia\ProductoNoConforme;
 use App\Modulos\Recreovia\GrupoPoblacional;
 use App\Modulos\Recreovia\Recreopersona;
 use App\Modulos\Recreovia\Sesion;
 use App\Http\Requests\GuardarSesionGestor;
+use App\Http\Requests\GuardarProductoNoConforme;
 use Illuminate\Http\Request;
 use Mail;
 
@@ -62,7 +64,7 @@ class SesionController extends Controller {
 
 	public function editarSesionProfesor(Request $request, $id_sesion)
 	{
-		$sesion = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'gruposPoblacionales', 'profesor')->find($id_sesion);
+		$sesion = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'gruposPoblacionales', 'ProductosNoConformes', 'profesor')->find($id_sesion);
 		$gruposPoblacionales = GrupoPoblacional::get();
 											
 		$formulario = [
@@ -84,7 +86,7 @@ class SesionController extends Controller {
 
 	public function editarSesionGestor(Request $request, $id_sesion)
 	{
-		$sesion = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'gruposPoblacionales', 'profesor')->find($id_sesion);
+		$sesion = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'gruposPoblacionales', 'ProductosNoConformes', 'profesor')->find($id_sesion);
 		$gruposPoblacionales = GrupoPoblacional::get();
 											
 		$formulario = [
@@ -269,8 +271,6 @@ class SesionController extends Controller {
 				'Cantidad' => $request->has('asistentes-f-'.$grupo['Id']) ? $request->input('asistentes-f-'.$grupo['Id']) : 0
 			]);
 		}
-
-		$sesion->Estado_Ejecucion = 'Realizado';
 		$sesion->save();
 
 		if($request->input('origen') == 'profesor')
@@ -278,6 +278,85 @@ class SesionController extends Controller {
 			return redirect('/profesores/sesiones/'.$sesion['Id'].'/editar')->with(['status' => 'success', 'area' => 'Asistencia']);
 		} else if($request->input('origen') == 'gestor') {
 			return redirect('/gestores/sesiones/'.$sesion['Id'].'/editar')->with(['status' => 'success', 'area' => 'Asistencia']);
+		}
+	}
+
+	public function productoNoConforme(GuardarProductoNoConforme $request)
+	{
+		$sesion = Sesion::find($request->input('Id'));
+		$Requisito_Detalle = '';
+		
+		switch ($request->input('Requisito')) 
+		{
+			case 1:
+				$Requisito_Detalle = 'Puntualidad';
+			break;
+			case 2:
+				$Requisito_Detalle = 'Personal competente para el desarrollo de la actividad';
+			break;
+			case 3:
+				$Requisito_Detalle = 'Contar con el Talento Humano mínimo requerido';
+			break;
+			case 4:
+				$Requisito_Detalle = 'Escenario adecuado';
+			break;
+			case 5:
+				$Requisito_Detalle = 'Contar con los parámetros del IDIGER';
+			break;
+			case 6:
+				$Requisito_Detalle = 'Cumplir con los niveles de competencia de Ruido';
+			break;
+			case 7:
+				$Requisito_Detalle = 'Cumplir con la Resolución 512 de 2003';
+			break;
+			case 8:
+				$Requisito_Detalle = 'Elementos de producción (sonido)';
+			break;
+			case 9:
+				$Requisito_Detalle = 'Planificación de la sesión';
+			break;
+			case 10:
+				$Requisito_Detalle = 'Presentación Personal del Talento Humano';
+			break;
+			case 11:
+				$Requisito_Detalle = 'Mantener actualizada la información sobre los Puntos de Recreovía en Planeación del IDRD';
+			break;
+			case 12:
+				$Requisito_Detalle = 'Accesorios (bicicletas estáticas, step)';
+			break;
+			case 13:
+				$Requisito_Detalle = 'Cumplir con el instructivo de selección y contratación';
+			break;
+		}
+
+		$sesion->productosNoConformes()->create([
+			'Requisito' => $request->input('Requisito'),
+			'Requisito_Detalle' => $Requisito_Detalle,
+			'Descripcion_De_La_No_Conformidad' => $request->input('Descripcion_De_La_No_Conformidad'),
+			'Descripcion_De_La_Accion_Tomada' => $request->input('Descripcion_De_La_Accion_Tomada'),
+			'Tratamiento' => $request->input('Tratamiento'),
+		]);
+
+		if($request->input('origen') == 'profesor')
+		{
+			return redirect('/profesores/sesiones/'.$sesion['Id'].'/editar')->with(['status' => 'success', 'area' => 'Producto_No_Conforme']);
+		} else if($request->input('origen') == 'gestor') {
+			return redirect('/gestores/sesiones/'.$sesion['Id'].'/editar')->with(['status' => 'success', 'area' => 'Producto_No_Conforme']);
+		}
+	}
+
+	public function eliminarProductoNoConforme(Request $request, $id, $tipo)
+	{
+		$productoNoConforme = ProductoNoConforme::with('sesion')->find($id);
+		$sesion = $productoNoConforme->sesion;
+
+		$productoNoConforme->delete();
+
+		if($tipo == 'profesor')
+		{
+			return redirect('/profesores/sesiones/'.$sesion['Id'].'/editar')->with(['status' => 'success', 'area' => 'Producto_No_Conforme']);
+		} else if($tipo == 'gestor') {
+			return redirect('/gestores/sesiones/'.$sesion['Id'].'/editar')->with(['status' => 'success', 'area' => 'Producto_No_Conforme']);
 		}
 	}
 
