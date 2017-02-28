@@ -11,6 +11,7 @@ class Sesion extends Model
 	protected $table = 'Sesiones';
     protected $primaryKey = 'Id';
     protected $connection = 'mysql';
+    protected $cascadeDeletes = ['gruposPoblacionales', 'productosNoConformes'];
 
     public function cronograma()
     {
@@ -26,6 +27,11 @@ class Sesion extends Model
     {
         return $this->belongsToMany('App\Modulos\Recreovia\GrupoPoblacional', 'Participaciones', 'Id_Sesion', 'Id_Grupo')
                     ->withPivot('Genero', 'Grupo_Asistencia', 'Cantidad');
+    }
+
+    public function productosNoConformes()
+    {
+        return $this->hasMany('App\Modulos\Recreovia\ProductoNoConforme', 'Id_Sesion');
     }
 
     public function toString()

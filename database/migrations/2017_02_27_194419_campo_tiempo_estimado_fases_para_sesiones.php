@@ -12,7 +12,7 @@ class CampoTiempoEstimadoFasesParaSesiones extends Migration
      */
     public function up()
     {
-         Schema::table('Sesiones', function(Blueprint $table)
+        Schema::table('Sesiones', function(Blueprint $table)
         {
             $table->smallInteger('Tiempo_Inicial')->after('Fase_Inicial')->unsigned()->nullable();
             $table->smallInteger('Tiempo_Central')->after('Fase_Central')->unsigned()->nullable();
