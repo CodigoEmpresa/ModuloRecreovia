@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Recreovia;
 use App\Http\Controllers\Controller;
 use App\Modulos\Recreovia\Cronograma;
 use App\Modulos\Recreovia\ProductoNoConforme;
+use App\Modulos\Recreovia\CalificacionDelServicio;
 use App\Modulos\Recreovia\GrupoPoblacional;
 use App\Modulos\Recreovia\Recreopersona;
 use App\Modulos\Recreovia\Sesion;
 use App\Http\Requests\GuardarSesionGestor;
 use App\Http\Requests\GuardarProductoNoConforme;
+use App\Http\Requests\GuardarCalificacionDelServicio;
 use Illuminate\Http\Request;
 use Mail;
 
@@ -342,6 +344,38 @@ class SesionController extends Controller {
 			return redirect('/profesores/sesiones/'.$sesion['Id'].'/editar')->with(['status' => 'success', 'area' => 'Producto_No_Conforme']);
 		} else if($request->input('origen') == 'gestor') {
 			return redirect('/gestores/sesiones/'.$sesion['Id'].'/editar')->with(['status' => 'success', 'area' => 'Producto_No_Conforme']);
+		}
+	}
+
+	public function calificacionDelServicio(GuardarCalificacionDelServicio $request)
+	{
+		$sesion = Sesion::with('calificacionDelServicio')->find($request->input('Id'));
+
+		if ($sesion->calificacionDelServicio)
+			$calificacion = $sesion->calificacionDelServicio;
+		else
+			$calificacion = new CalificacionDelServicio;
+
+		$calificacion['Id_Sesion'] = $request->input('Id');
+		$calificacion['Puntualidad_PAF'] = $request->input('Puntualidad_PAF');
+		$calificacion['Tiempo_De_La_Sesion'] = $request->input('Tiempo_De_La_Sesion');
+		$calificacion['Escenario_Y_Montaje'] = $request->input('Escenario_Y_Montaje');
+		$calificacion['Cumplimiento_Del_Objetivo'] = $request->input('Cumplimiento_Del_Objetivo');
+		$calificacion['Variedad_Y_Creatividad'] = $request->input('Variedad_Y_Creatividad');
+		$calificacion['Imagen_Institucional'] = $request->input('Imagen_Institucional');
+		$calificacion['Divulgacion'] = $request->input('Divulgacion');
+		$calificacion['Seguridad'] = $request->input('Seguridad');
+		$calificacion['Nombre'] = $request->input('Nombre');
+		$calificacion['Telefono'] = $request->input('Telefono');
+		$calificacion['Correo'] = $request->input('Correo');
+
+		$calificacion->save();
+
+		if($request->input('origen') == 'profesor')
+		{
+			return redirect('/profesores/sesiones/'.$sesion['Id'].'/editar')->with(['status' => 'success', 'area' => 'Calificacion_Del_Servicio']);
+		} else if($request->input('origen') == 'gestor') {
+			return redirect('/gestores/sesiones/'.$sesion['Id'].'/editar')->with(['status' => 'success', 'area' => 'Calificacion_Del_Servicio']);
 		}
 	}
 
