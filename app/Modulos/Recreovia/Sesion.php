@@ -34,6 +34,11 @@ class Sesion extends Model
         return $this->hasMany('App\Modulos\Recreovia\ProductoNoConforme', 'Id_Sesion');
     }
 
+    public function calificacionDelServicio()
+    {
+        return $this->hasOne('App\Modulos\Recreovia\CalificacionDelServicio', 'Id_Sesion');
+    }
+
     public function toString()
     {
         return $this->Objetivo_General.' programada para el dia '.$this->Fecha.' de '.$this->Inicio.' a '.$this->Fin;

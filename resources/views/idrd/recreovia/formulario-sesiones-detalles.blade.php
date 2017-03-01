@@ -17,7 +17,7 @@
 		@endif
 
 		<?php
-			$area_detalles = ($area == 'Asistencia' || old('area') == 'Asistencia') || ($area == 'Producto_No_Conforme' || old('area') == 'Producto_No_Conforme');
+			$area_detalles = ($area == 'Asistencia' || old('area') == 'Asistencia') || ($area == 'Producto_No_Conforme' || old('area') == 'Producto_No_Conforme') || ($area == 'Calificacion_Del_Servicio' || old('area') == 'Calificacion_Del_Servicio');
 		?>
 		<div class="col-md-12">
 			<ul class="nav nav-tabs">
@@ -25,6 +25,7 @@
 				@if($sesion && in_array($sesion['Estado'], ['Aprobado', 'Finalizado']))
 					<li role="presentation" class="{{ ($area == 'Asistencia' || old('area') == 'Asistencia') ? 'active' : '' }}"><a href="#Asistencia" data-toggle="tab" aria-expanded="false">Asistencia</a></li>
 					<li role="presentation" class="{{ ($area == 'Producto_No_Conforme' || old('area') == 'Producto_No_Conforme') ? 'active' : '' }}"><a href="#Producto_No_Conforme" data-toggle="tab" aria-expanded="false">Producto no conforme</a></li>
+					<li role="presentation" class="{{ ($area == 'Calificacion_Del_Servicio' || old('area') == 'Calificacion_Del_Servicio') ? 'active' : '' }}"><a href="#Calificacion_Del_Servicio" data-toggle="tab" aria-expanded="false">Calificación del servicio</a></li>
 				@endif
 			</ul>
 			<div id="myTabContent" class="tab-content">
@@ -277,6 +278,9 @@
 					</div>		
 				</div>
 				@if($sesion && in_array($sesion['Estado'], ['Aprobado', 'Finalizado']))
+					<?php
+						$calificacion = $sesion->calificacionDelServicio;
+					?>
 					<div class="tab-pane fade {{ $area == 'Asistencia' || old('area') == 'Asistencia' ? 'active in' : '' }}" id="Asistencia">
 						<div class="row">
 							<div class="col-xs-12"><br></div>
@@ -448,11 +452,210 @@
 												</table>
 											</div>
 											<div class="col-md-12">
+												<small>
+													 1. Puntualidad, 2. Personal competente para el desarrollo de la actividad, 3. Contar con el Talento Humano mínimo requerido, 4. Escenario adecuado, 5. Contar con los parámetros del IDIGER, 6. Cumplir con los niveles de competencia de Ruido, 7. Cumplir con la Resolución 512 de 2003, 8. Elementos de producción (sonido), 9. Planificación de la sesión, 10. Presentación Personal del Talento Humano, 11. Mantener actualizada la información sobre los Puntos de Recreovía en Planeación del IDRD, 12. Accesorios (bicicletas estáticas, step), 13. Cumplir con el instructivo de selección y contratación.
+												</small>
+											</div>
+											<div class="col-md-12">
 					                            <input type="hidden" name="_method" value="POST">
 					                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
 												<input type="hidden" name="Id" value="{{ $sesion ? $sesion['Id'] : 0 }}">
 												<input type="hidden" name="origen" value="{{ $tipo }}">
 												<input type="hidden" name="area" value="Producto_No_Conforme">
+												@if($sesion && $sesion['Estado'] != 'Finalizado')
+													<div class="row">
+														<div class="col-md-12"><hr></div>
+														<div class="col-xs-12"><input type="submit" class="btn btn-primary" value="Registrar producto no conforme"></div>
+													</div>
+												@endif
+											</div>
+										</fieldset>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane fade {{ $area == 'Calificacion_Del_Servicio' || old('area') == 'Calificacion_Del_Servicio' ? 'active in' : '' }}" id="Calificacion_Del_Servicio">
+						<div class="row">
+							<div class="col-xs-12"><br></div>
+							<div class="col-xs-12">
+								<div class="row">
+									<form action="{{ url('/calificacion_del_servicio/procesar') }}" method="post">
+										<fieldset>
+											<div class="col-md-3">
+												<div class="row">
+													<div class="col-md-12 form-group {{ $errors->has('Puntualidad_PAF') ? 'has-error' : '' }}">
+														<label for="">1. Puntualidad PAF</label> <br>
+														<label class="radio-inline">
+															<input type="radio" name="Puntualidad_PAF" id="Puntualidad_PAF1" value="1" {{ ($calificacion && $calificacion['Puntualidad_PAF'] == '1' || old('Puntualidad_PAF') == '1' ? 'checked' : '') }}> 1
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Puntualidad_PAF" id="Puntualidad_PAF2" value="2" {{ ($calificacion && $calificacion['Puntualidad_PAF'] == '2' || old('Puntualidad_PAF') == '2' ? 'checked' : '') }}> 2
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Puntualidad_PAF" id="Puntualidad_PAF3" value="3" {{ ($calificacion && $calificacion['Puntualidad_PAF'] == '3' || old('Puntualidad_PAF') == '3' ? 'checked' : '') }}> 3
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Puntualidad_PAF" id="Puntualidad_PAF4" value="4" {{ ($calificacion && $calificacion['Puntualidad_PAF'] == '4' || old('Puntualidad_PAF') == '4' ? 'checked' : '') }}> 4
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Puntualidad_PAF" id="Puntualidad_PAF5" value="5" {{ ($calificacion && $calificacion['Puntualidad_PAF'] == '5' || old('Puntualidad_PAF') == '5' ? 'checked' : '') }}> 5
+														</label>
+													</div>
+													<div class="col-md-12 form-group {{ $errors->has('Tiempo_De_La_Sesion') ? 'has-error' : '' }}">
+														<label for="">2. Tiempo de la Sesión</label> <br>
+														<label class="radio-inline">
+															<input type="radio" name="Tiempo_De_La_Sesion" id="Tiempo_De_La_Sesion1" value="1" {{ ($calificacion && $calificacion['Tiempo_De_La_Sesion'] == '1' || old('Tiempo_De_La_Sesion') ==  '1') ? 'checked' : '' }}> 1
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Tiempo_De_La_Sesion" id="Tiempo_De_La_Sesion2" value="2" {{ ($calificacion && $calificacion['Tiempo_De_La_Sesion'] == '2' || old('Tiempo_De_La_Sesion') ==  '2') ? 'checked' : '' }}> 2
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Tiempo_De_La_Sesion" id="Tiempo_De_La_Sesion3" value="3" {{ ($calificacion && $calificacion['Tiempo_De_La_Sesion'] == '3' || old('Tiempo_De_La_Sesion') ==  '3') ? 'checked' : '' }}> 3
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Tiempo_De_La_Sesion" id="Tiempo_De_La_Sesion4" value="4" {{ ($calificacion && $calificacion['Tiempo_De_La_Sesion'] == '4' || old('Tiempo_De_La_Sesion') ==  '4') ? 'checked' : '' }}> 4
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Tiempo_De_La_Sesion" id="Tiempo_De_La_Sesion5" value="5" {{ ($calificacion && $calificacion['Tiempo_De_La_Sesion'] == '5' || old('Tiempo_De_La_Sesion') ==  '5') ? 'checked' : '' }}> 5
+														</label>
+													</div>
+													<div class="col-md-12 form-group {{ $errors->has('Escenario_Y_Montaje') ? 'has-error' : '' }}">
+														<label for="">3. Escenario y Montaje</label> <br>
+														<label class="radio-inline">
+															<input type="radio" name="Escenario_Y_Montaje" id="Escenario_Y_Montaje1" value="1" {{ ($calificacion && $calificacion['Escenario_Y_Montaje'] == '1' || old('Escenario_Y_Montaje') ==  '1') ? 'checked' : '' }}> 1
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Escenario_Y_Montaje" id="Escenario_Y_Montaje2" value="2" {{ ($calificacion && $calificacion['Escenario_Y_Montaje'] == '2' || old('Escenario_Y_Montaje') ==  '2') ? 'checked' : '' }}> 2
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Escenario_Y_Montaje" id="Escenario_Y_Montaje3" value="3" {{ ($calificacion && $calificacion['Escenario_Y_Montaje'] == '3' || old('Escenario_Y_Montaje') ==  '3') ? 'checked' : '' }}> 3
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Escenario_Y_Montaje" id="Escenario_Y_Montaje4" value="4" {{ ($calificacion && $calificacion['Escenario_Y_Montaje'] == '4' || old('Escenario_Y_Montaje') ==  '4') ? 'checked' : '' }}> 4
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Escenario_Y_Montaje" id="Escenario_Y_Montaje5" value="5" {{ ($calificacion && $calificacion['Escenario_Y_Montaje'] == '5' || old('Escenario_Y_Montaje') ==  '5') ? 'checked' : '' }}> 5
+														</label>
+													</div>
+													<div class="col-md-12 form-group {{ $errors->has('Cumplimiento_Del_Objetivo') ? 'has-error' : '' }}">
+														<label for="">4. Cumplimiento del Objetivo</label> <br>
+														<label class="radio-inline">
+															<input type="radio" name="Cumplimiento_Del_Objetivo" id="Cumplimiento_Del_Objetivo1" value="1" {{ ($calificacion && $calificacion['Cumplimiento_Del_Objetivo'] == '1' || old('Cumplimiento_Del_Objetivo') ==  '1') ? 'checked' : '' }}> 1
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Cumplimiento_Del_Objetivo" id="Cumplimiento_Del_Objetivo2" value="2" {{ ($calificacion && $calificacion['Cumplimiento_Del_Objetivo'] == '2' || old('Cumplimiento_Del_Objetivo') ==  '2') ? 'checked' : '' }}> 2
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Cumplimiento_Del_Objetivo" id="Cumplimiento_Del_Objetivo3" value="3" {{ ($calificacion && $calificacion['Cumplimiento_Del_Objetivo'] == '3' || old('Cumplimiento_Del_Objetivo') ==  '3') ? 'checked' : '' }}> 3
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Cumplimiento_Del_Objetivo" id="Cumplimiento_Del_Objetivo4" value="4" {{ ($calificacion && $calificacion['Cumplimiento_Del_Objetivo'] == '4' || old('Cumplimiento_Del_Objetivo') ==  '4') ? 'checked' : '' }}> 4
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Cumplimiento_Del_Objetivo" id="Cumplimiento_Del_Objetivo5" value="5" {{ ($calificacion && $calificacion['Cumplimiento_Del_Objetivo'] == '5' || old('Cumplimiento_Del_Objetivo') ==  '5') ? 'checked' : '' }}> 5
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="row">
+													<div class="col-md-12 form-group {{ $errors->has('Variedad_Y_Creatividad') ? 'has-error' : '' }}">
+														<label for="">5. Variedad y Creatividad</label> <br>
+														<label class="radio-inline">
+															<input type="radio" name="Variedad_Y_Creatividad" id="Variedad_Y_Creatividad1" value="1" {{ ($calificacion && $calificacion['Variedad_Y_Creatividad'] == '1' || old('Variedad_Y_Creatividad') ==  '1') ? 'checked' : '' }}> 1
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Variedad_Y_Creatividad" id="Variedad_Y_Creatividad2" value="2" {{ ($calificacion && $calificacion['Variedad_Y_Creatividad'] == '2' || old('Variedad_Y_Creatividad') ==  '2') ? 'checked' : '' }}> 2
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Variedad_Y_Creatividad" id="Variedad_Y_Creatividad3" value="3" {{ ($calificacion && $calificacion['Variedad_Y_Creatividad'] == '3' || old('Variedad_Y_Creatividad') ==  '3') ? 'checked' : '' }}> 3
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Variedad_Y_Creatividad" id="Variedad_Y_Creatividad4" value="4" {{ ($calificacion && $calificacion['Variedad_Y_Creatividad'] == '4' || old('Variedad_Y_Creatividad') ==  '4') ? 'checked' : '' }}> 4
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Variedad_Y_Creatividad" id="Variedad_Y_Creatividad5" value="5" {{ ($calificacion && $calificacion['Variedad_Y_Creatividad'] == '5' || old('Variedad_Y_Creatividad') ==  '5') ? 'checked' : '' }}> 5
+														</label>
+													</div>
+													<div class="col-md-12 form-group {{ $errors->has('Imagen_Institucional') ? 'has-error' : '' }}">
+														<label for="">6. Imagen Institucional</label> <br>
+														<label class="radio-inline">
+															<input type="radio" name="Imagen_Institucional" id="Imagen_Institucional1" value="1" {{ ($calificacion && $calificacion['Imagen_Institucional'] == '1' || old('Imagen_Institucional') ==  '1') ? 'checked' : '' }}> 1
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Imagen_Institucional" id="Imagen_Institucional2" value="2" {{ ($calificacion && $calificacion['Imagen_Institucional'] == '2' || old('Imagen_Institucional') ==  '2') ? 'checked' : '' }}> 2
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Imagen_Institucional" id="Imagen_Institucional3" value="3" {{ ($calificacion && $calificacion['Imagen_Institucional'] == '3' || old('Imagen_Institucional') ==  '3') ? 'checked' : '' }}> 3
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Imagen_Institucional" id="Imagen_Institucional4" value="4" {{ ($calificacion && $calificacion['Imagen_Institucional'] == '4' || old('Imagen_Institucional') ==  '4') ? 'checked' : '' }}> 4
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Imagen_Institucional" id="Imagen_Institucional5" value="5" {{ ($calificacion && $calificacion['Imagen_Institucional'] == '5' || old('Imagen_Institucional') ==  '5') ? 'checked' : '' }}> 5
+														</label>
+													</div>
+													<div class="col-md-12 form-group {{ $errors->has('Divulgacion') ? 'has-error' : '' }}">
+														<label for="">7. Divulgación</label> <br>
+														<label class="radio-inline">
+															<input type="radio" name="Divulgacion" id="Divulgacion1" value="1" {{ ($calificacion && $calificacion['Divulgacion'] == '1' || old('Divulgacion') ==  '1') ? 'checked' : '' }}> 1
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Divulgacion" id="Divulgacion2" value="2" {{ ($calificacion && $calificacion['Divulgacion'] == '2' || old('Divulgacion') ==  '2') ? 'checked' : '' }}> 2
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Divulgacion" id="Divulgacion3" value="3" {{ ($calificacion && $calificacion['Divulgacion'] == '3' || old('Divulgacion') ==  '3') ? 'checked' : '' }}> 3
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Divulgacion" id="Divulgacion4" value="4" {{ ($calificacion && $calificacion['Divulgacion'] == '4' || old('Divulgacion') ==  '4') ? 'checked' : '' }}> 4
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Divulgacion" id="Divulgacion5" value="5" {{ ($calificacion && $calificacion['Divulgacion'] == '5' || old('Divulgacion') ==  '5') ? 'checked' : '' }}> 5
+														</label>
+													</div>
+													<div class="col-md-12 form-group {{ $errors->has('Seguridad') ? 'has-error' : '' }}">
+														<label for="">8. Seguridad</label> <br>
+														<label class="radio-inline">
+															<input type="radio" name="Seguridad" id="Seguridad1" value="1" {{ ($calificacion && $calificacion['Seguridad'] == '1' || old('Seguridad') ==  '1') ? 'checked' : '' }}> 1
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Seguridad" id="Seguridad2" value="2" {{ ($calificacion && $calificacion['Seguridad'] == '2' || old('Seguridad') ==  '2') ? 'checked' : '' }}> 2
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Seguridad" id="Seguridad3" value="3" {{ ($calificacion && $calificacion['Seguridad'] == '3' || old('Seguridad') ==  '3') ? 'checked' : '' }}> 3
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Seguridad" id="Seguridad4" value="4" {{ ($calificacion && $calificacion['Seguridad'] == '4' || old('Seguridad') ==  '4') ? 'checked' : '' }}> 4
+														</label>
+														<label class="radio-inline">
+															<input type="radio" name="Seguridad" id="Seguridad5" value="5" {{ ($calificacion && $calificacion['Seguridad'] == '5' || old('Seguridad') ==  '5') ? 'checked' : '' }}> 5
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="row">
+													<div class="col-md-12 form-group {{ $errors->has('Nombre') ? 'has-error' : '' }}">
+														<label for="">Nombre representante de la comunidad que califica el servicio </label>
+														<input type="text" name="Nombre" class="form-control" value="{{ ($calificacion ? $calificacion['Nombre'] : old('Nombre') ) }}">
+													</div>
+													<div class="col-md-6 form-group {{ $errors->has('Telefono') ? 'has-error' : '' }}">
+														<label for="">Teléfono </label>
+														<input type="text" name="Telefono" class="form-control" value="{{ ($calificacion ? $calificacion['Telefono'] : old('Telefono') ) }}">
+													</div>
+													<div class="col-md-6 form-group {{ $errors->has('Correo') ? 'has-error' : '' }}">
+														<label for="">Correo </label>
+														<input type="text" name="Correo" class="form-control" value="{{ ($calificacion ? $calificacion['Correo'] : old('Correo') ) }}">
+													</div>
+												</div>
+											</div>
+											<div class="col-md-12">
+					                            <input type="hidden" name="_method" value="POST">
+					                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+												<input type="hidden" name="Id" value="{{ $sesion ? $sesion['Id'] : 0 }}">
+												<input type="hidden" name="origen" value="{{ $tipo }}">
+												<input type="hidden" name="area" value="Calificacion_Del_Servicio">
 												@if($sesion && $sesion['Estado'] != 'Finalizado')
 													<div class="row">
 														<div class="col-md-12"><hr></div>

@@ -86,6 +86,7 @@ Route::group(['middleware' => ['web']], function()
 	route::post('/asistencia/procesar', 'Recreovia\SesionController@asistencia');
 	route::post('/producto_no_conforme/procesar', 'Recreovia\SesionController@productoNoConforme');
 	route::get('/producto_no_conforme/{id}/eliminar/{tipo}', 'Recreovia\SesionController@eliminarProductoNoConforme');
+	route::post('/calificacion_del_servicio/procesar', 'Recreovia\SesionController@calificacionDelServicio');
 
 	route::get('/informes/jornadas', 'Recreovia\ReporteController@jornadas');
 	route::get('/informes/jornadas/profesor', 'Recreovia\ReporteController@jornadas_profesor');
