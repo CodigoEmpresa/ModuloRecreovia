@@ -105,9 +105,6 @@ class JornadaController extends Controller {
 		$jornada->Inicio = $request['Inicio'];
 		$jornada->Fin = $request['Fin'];
 		$jornada->Tipo = $request['Tipo'];
-		$jornada->Contacto_Nombre = $request['Contacto_Nombre'];
-		$jornada->Contacto_Telefono = $request['Contacto_Telefono'];
-		$jornada->Contacto_Correo = $request['Contacto_Correo'];
 		$jornada->save();
 
 		if (array_key_exists('puntos', $request->all()))

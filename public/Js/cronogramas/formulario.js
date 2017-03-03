@@ -61,18 +61,14 @@ $(function()
 			return jornada.Id_Jornada == Id_Jornada;
 		})[0];
 
-
-		$('input[name="Desde"]').attr('data-fecha-inicio', '').attr('data-fecha-fin', '');
-		$('input[name="Hasta"]').attr('data-fecha-inicio', '').attr('data-fecha-fin', '');
-
-		if(jornada)
+		if(punto)
 		{
-			if (jornada.Contacto_Nombre || jornada.Contacto_Telefono || jornada.Contacto_Correo)
+			if (punto.Contacto_Nombre || punto.Contacto_Telefono || punto.Contacto_Correo)
 			{
                 var html = '';
-                html += jornada.Contacto_Nombre ? 'Nombre: '+jornada.Contacto_Nombre+'<br>' : '';
-                html += jornada.Contacto_Telefono ? 'Telefono: '+jornada.Contacto_Telefono+'<br>' : '';
-                html += jornada.Contacto_Correo ? 'Correo: '+jornada.Contacto_Correo+'<br>' : '';
+                html += punto.Contacto_Nombre ? 'Nombre: '+punto.Contacto_Nombre+'<br>' : '';
+                html += punto.Contacto_Telefono ? 'Telefono: '+punto.Contacto_Telefono+'<br>' : '';
+                html += punto.Contacto_Correo ? 'Correo: '+punto.Contacto_Correo+'<br>' : '';
 
                 $('#datos_contacto p').html(html);
                 $('#datos_contacto').fadeIn();
@@ -81,6 +77,14 @@ $(function()
                 $('#datos_contacto').fadeOut();
 			}
 
+		}
+
+
+		$('input[name="Desde"]').attr('data-fecha-inicio', '').attr('data-fecha-fin', '');
+		$('input[name="Hasta"]').attr('data-fecha-inicio', '').attr('data-fecha-fin', '');
+
+		if(jornada)
+		{
 			switch (jornada.Jornada)
 			{
 				case 'dia':

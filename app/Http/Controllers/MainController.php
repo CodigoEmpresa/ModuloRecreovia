@@ -81,7 +81,8 @@ class MainController extends Controller {
 				'revisar_sesiones_gestor'=> array_key_exists(6, $permissions_array) ? intval($permissions_array[6]) : 0,
 				'revisar_sesiones_profesor'=> array_key_exists(7, $permissions_array) ? intval($permissions_array[7]) : 0,
 				'gestionar_reportes_jornadas'=> array_key_exists(8, $permissions_array) ? intval($permissions_array[8]) : 0,
-				'validar_reportes_jornadas' => array_key_exists(9, $permissions_array) ? intval($permissions_array[9]) : 0
+				'validar_reportes_jornadas' => array_key_exists(9, $permissions_array) ? intval($permissions_array[9]) : 0,
+				'exportar_consolidado_general' => array_key_exists(10, $permissions_array) ? intval($permissions_array[9]) : 1,
 			];
 
 			$_SESSION['Usuario'] = $user_array;

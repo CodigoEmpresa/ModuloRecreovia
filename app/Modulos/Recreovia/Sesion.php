@@ -11,7 +11,7 @@ class Sesion extends Model
 	protected $table = 'Sesiones';
     protected $primaryKey = 'Id';
     protected $connection = 'mysql';
-    protected $cascadeDeletes = ['gruposPoblacionales', 'productosNoConformes'];
+    protected $cascadeDeletes = ['gruposPoblacionales', 'productosNoConformes', 'calificacionDelServicio'];
 
     public function cronograma()
     {

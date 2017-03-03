@@ -45,26 +45,28 @@
 							<div class="row">
 								<div class="col-md-12 form-group">
 									<label for="">Punto</label>
-									<p class="form-control-static">{{ $cronograma->punto->toString() }}</p>
-								</div>
-								<div class="col-md-12 form-group">
-									<label for="">Jornada</label>
 									<p class="form-control-static">
-										{{ $cronograma->jornada->toString() }}
+										{{ $cronograma->punto->toString() }}
 										<?php
 											$html = '';
 
-											if ($cronograma->jornada->Contacto_Nombre || $cronograma->jornada->Contacto_Telefono || $cronograma->jornada->Contacto_Correo)
+											if ($cronograma->punto->Contacto_Nombre || $cronograma->punto->Contacto_Telefono || $cronograma->punto->Contacto_Correo)
 											{
 								                $html = '<br><br><small class="text-muted">';
-								                $html .= $cronograma->jornada->Contacto_Nombre ? 'Contacto: '.$cronograma->jornada->Contacto_Nombre.'<br>' : '';
-								                $html .= $cronograma->jornada->Contacto_Telefono ? 'Telefono: '.$cronograma->jornada->Contacto_Telefono.'<br>' : '';
-								                $html .= $cronograma->jornada->Contacto_Correo ? 'Correo: '.$cronograma->jornada->Contacto_Correo.'<br>' : '';
+								                $html .= $cronograma->punto->Contacto_Nombre ? 'Contacto: '.$cronograma->punto->Contacto_Nombre.'<br>' : '';
+								                $html .= $cronograma->punto->Contacto_Telefono ? 'Telefono: '.$cronograma->punto->Contacto_Telefono.'<br>' : '';
+								                $html .= $cronograma->punto->Contacto_Correo ? 'Correo: '.$cronograma->punto->Contacto_Correo.'<br>' : '';
 								                $html .= '</small>';
 								            }
 
 								            echo $html;
 										?>
+									</p>
+								</div>
+								<div class="col-md-12 form-group">
+									<label for="">Jornada</label>
+									<p class="form-control-static">
+										{{ $cronograma->jornada->toString() }}
 									</p>
 								</div>
 							</div>
