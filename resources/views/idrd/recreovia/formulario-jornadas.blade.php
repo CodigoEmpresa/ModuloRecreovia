@@ -99,26 +99,6 @@
                             <hr>
                         </div>
                         <div class="col-xs-12">
-                            <label for="">Datos de contacto <small class="text-muted">(En caso de ser requerido)</small></label>
-                            <div class="row">
-                                <div class="col-xs-4 form-group">
-                                    <label for="">Nombre</label>
-                                    <input type="text" name="Contacto_Nombre" class="form-control" value="{{ $jornada ? $jornada['Contacto_Nombre'] : old('Contacto_Nombre') }}">
-                                </div>
-                                <div class="col-xs-4 form-group">
-                                    <label for="">Teléfono</label>
-                                    <input type="text" name="Contacto_Telefono" class="form-control" value="{{ $jornada ? $jornada['Contacto_Telefono'] : old('Contacto_Telefono') }}">
-                                </div>
-                                <div class="col-xs-4 form-group">
-                                    <label for="">Correo</label>
-                                    <input type="text" name="Contacto_Correo" class="form-control" value="{{ $jornada ? $jornada['Contacto_Correo'] : old('Contacto_Correo') }}">
-                                </div>                                
-                            </div>
-                        </div>
-                        <div class="col-xs-12">
-                            <hr>
-                        </div>
-                        <div class="col-xs-12">
                             <label for="">Puntos</label>
                             <div class="row">
                                 @foreach ($puntos->chunk(count($puntos) / 2) as $chunk)

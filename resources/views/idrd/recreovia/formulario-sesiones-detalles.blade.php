@@ -80,26 +80,27 @@
 													<div class="row">
 														<div class="col-md-12 form-group">
 															<label for="">Punto</label>
-															<p class="form-control-static">{{ $sesion->cronograma->punto->toString() }}</p>
-														</div>
-														<div class="col-md-12 form-group">
-															<label for="">Jornada</label>
-															<p class="form-control-static">{{ $sesion->cronograma->jornada->toString() }}
+															<p class="form-control-static">
+																{{ $sesion->cronograma->punto->toString() }}
 																<?php
 																	$html = '';
 
-																	if ($sesion->cronograma->jornada->Contacto_Nombre || $sesion->cronograma->jornada->Contacto_Telefono || $sesion->cronograma->jornada->Contacto_Correo)
+																	if ($sesion->cronograma->punto->Contacto_Nombre || $sesion->cronograma->punto->Contacto_Telefono || $sesion->cronograma->punto->Contacto_Correo)
 																	{
 														                $html = '<br><br><small class="text-muted">';
-														                $html .= $sesion->cronograma->jornada->Contacto_Nombre ? 'Contacto: '.$sesion->cronograma->jornada->Contacto_Nombre.'<br>' : '';
-														                $html .= $sesion->cronograma->jornada->Contacto_Telefono ? 'Telefono: '.$sesion->cronograma->jornada->Contacto_Telefono.'<br>' : '';
-														                $html .= $sesion->cronograma->jornada->Contacto_Correo ? 'Correo: '.$sesion->cronograma->jornada->Contacto_Correo.'<br>' : '';
+														                $html .= $sesion->cronograma->punto->Contacto_Nombre ? 'Contacto: '.$sesion->cronograma->punto->Contacto_Nombre.'<br>' : '';
+														                $html .= $sesion->cronograma->punto->Contacto_Telefono ? 'Telefono: '.$sesion->cronograma->punto->Contacto_Telefono.'<br>' : '';
+														                $html .= $sesion->cronograma->punto->Contacto_Correo ? 'Correo: '.$sesion->cronograma->punto->Contacto_Correo.'<br>' : '';
 														                $html .= '</small>';
 														            }
 
 														            echo $html;
 																?>
 															</p>
+														</div>
+														<div class="col-md-12 form-group">
+															<label for="">Jornada</label>
+															<p class="form-control-static">{{ $sesion->cronograma->jornada->toString() }}</p>
 														</div>
 													</div>
 												</div>

@@ -159,7 +159,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\FestivosServiceProvider::class,
         Idrd\Usuarios\UsuariosServiceProvider::class,
-        Idrd\Parques\ParquesServiceProvider::class
+        Idrd\Parques\ParquesServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class
 
     ],
 
@@ -205,7 +206,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Festivos' => App\Facades\Festivos::class
+        'Festivos' => App\Facades\Festivos::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class
     ],
 
 ];

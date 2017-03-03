@@ -112,6 +112,9 @@ class PuntosController extends Controller {
 		$punto->Id_Upz = $request->input('Id_Upz');
 		$punto->Latitud = $request->input('Latitud');
 		$punto->Longitud = $request->input('Longitud');
+		$punto->Contacto_Nombre = $request['Contacto_Nombre'];
+		$punto->Contacto_Telefono = $request['Contacto_Telefono'];
+		$punto->Contacto_Correo = $request['Contacto_Correo'];
 		$punto->save();
 
 		$jornadas = $request->input('Jornadas');
