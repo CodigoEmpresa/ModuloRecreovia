@@ -29,9 +29,9 @@ class Sesion extends Model
                     ->withPivot('Genero', 'Grupo_Asistencia', 'Cantidad');
     }
 
-    public function productosNoConformes()
+    public function productoNoConforme()
     {
-        return $this->hasMany('App\Modulos\Recreovia\ProductoNoConforme', 'Id_Sesion');
+        return $this->hasOne('App\Modulos\Recreovia\ProductoNoConforme', 'Id_Sesion');
     }
 
     public function calificacionDelServicio()

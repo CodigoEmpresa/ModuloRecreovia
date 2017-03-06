@@ -284,6 +284,7 @@
 				@if($sesion && in_array($sesion['Estado'], ['Aprobado', 'Finalizado']))
 					<?php
 						$calificacion = $sesion->calificacionDelServicio;
+						$productoNoConforme = $sesion->productoNoConforme;
 					?>
 					<div class="tab-pane fade {{ $area == 'Asistencia' || old('area') == 'Asistencia' ? 'active in' : '' }}" id="Asistencia">
 						<div class="row">
@@ -396,69 +397,177 @@
 								<div class="row">
 									<form action="{{ url('/producto_no_conforme/procesar') }}" method="post">
 										<fieldset>
-											<div class="col-md-12 form-group {{ $errors->has('Requisito') ? 'has-error' : '' }}">
-												<label for="">* Requisito</label>
-												<select name="Requisito" id="Requisito" class="form-control" data-value="{{ old('Requisito') }}">
-													<option value="">Seleccionar</option>
-													<option value="1">1. Puntualidad</option>
-													<option value="2">2. Personal competente para el desarrollo de la actividad</option>
-													<option value="3">3. Contar con el Talento Humano mínimo requerido</option>
-													<option value="4">4. Escenario adecuado</option>
-													<option value="5">5. Contar con los parámetros del IDIGER</option>
-													<option value="6">6. Cumplir con los niveles de competencia de Ruido</option>
-													<option value="7">7. Cumplir con la Resolución 512 de 2003</option>
-													<option value="8">8. Elementos de producción (sonido)</option>
-													<option value="9">9. Planificación de la sesión</option>
-													<option value="10">10. Presentación Personal del Talento Humano</option>
-													<option value="11">11. Mantener actualizada la información sobre los Puntos de Recreovía en Planeación del IDRD</option>
-													<option value="12">12. Accesorios (bicicletas estáticas, step)</option>
-													<option value="13">13. Cumplir con el instructivo de selección y contratación</option>
-												</select>
-											</div>
-											<div class="col-md-6 form-group {{ $errors->has('Descripcion_De_La_No_Conformidad') ? 'has-error' : '' }}">
-												<label for="">* Descripción de la no conformidad</label>
-												<textarea class="form-control" name="Descripcion_De_La_No_Conformidad" id="Descripcion_De_La_No_Conformidad">{{ old('Descripcion_De_La_No_Conformidad') }}</textarea>
-											</div>
-											<div class="col-md-6 form-group {{ $errors->has('Descripcion_De_La_Accion_Tomada') ? 'has-error' : '' }}">
-												<label for="">* Descripción de la acción tomada</label>
-												<textarea class="form-control" name="Descripcion_De_La_Accion_Tomada" id="Descripcion_De_La_Accion_Tomada">{{ old('Descripcion_De_La_Accion_Tomada') }}</textarea>
-											</div>
-											<div class="col-md-6 form-group {{ $errors->has('Tratamiento') ? 'has-error' : '' }}">
-												<label for="">* Tratamiento</label>
-												<textarea class="form-control" name="Tratamiento" id="Tratamiento">{{ old('Tratamiento') }}</textarea>
-											</div>
 											<div class="col-md-12">
-												<table class="table table-min table-hover">
+												<label for="">* Requisito</label>
+												<table class="table table-min table-bordered">
 													<thead>
 														<tr>
-															<th style="width:30px;">Req.</th>
-															<th style="width:30%;">Descripción de la no conformidad</th>
-															<th style="width:30%;">Descripción de la no acción tomada</th>
-															<th style="width:30%;">Tratamiento</th>
-															<th style="width:30px;"></th>
+															<th width="90%" rowspan="2">Requisito</th>
+															<th colspan="2" align="center">Se cumple con el requisito</th>
+														</tr>
+														<tr>
+															<th width="30px" align="center">Si</th>
+															<th width="30px" align="center">No</th>
 														</tr>
 													</thead>
 													<tbody>
-														@foreach($sesion->ProductosNoConformes as $productoNoConforme)
-															<tr>
-																<td>{{ $productoNoConforme['Requisito'] }}</td>
-																<td>{{ $productoNoConforme['Descripcion_De_La_No_Conformidad'] }}</td>
-																<td>{{ $productoNoConforme['Descripcion_De_La_Accion_Tomada'] }}</td>
-																<td>{{ $productoNoConforme['Tratamiento'] }}</td>
-																<td>
-																	<a href="{{ url('/producto_no_conforme/'.$productoNoConforme['Id'].'/eliminar/'.$tipo) }}" class="pull-right btn btn-danger btn-xs" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
-									                                	<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-									                            	</a>
-																</td>
-															</tr>
-														@endforeach
+														<tr>
+															<td>
+																1. Puntualidad
+															</td>
+															<td align="center">
+																<input type="radio" name="Requisito_1" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_1'] == '1' || old('Requisito_1') == '1') ? 'checked' : '' }}>
+															</td>
+															<td align="center">
+																<input type="radio" name="Requisito_1" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_1'] == '0' || old('Requisito_1') == '0') ? 'checked' : '' }}>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																2. Personal competente para el desarrollo de la actividad
+															</td>
+															<td align="center">
+																<input type="radio" name="Requisito_2" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_2'] == '1' || old('Requisito_2') == '1') ? 'checked' : '' }}>
+															</td>
+															<td align="center">
+																<input type="radio" name="Requisito_2" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_2'] == '0' || old('Requisito_2') == '0') ? 'checked' : '' }}>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																3. Contar con el Talento Humano mínimo requerido
+															</td>
+															<td align="center">
+																<input type="radio" name="Requisito_3" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_3'] == '1' || old('Requisito_3') == '1') ? 'checked' : '' }}>
+															</td>
+															<td align="center">
+																<input type="radio" name="Requisito_3" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_3'] == '0' || old('Requisito_3') == '0') ? 'checked' : '' }}>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																4. Escenario adecuado
+															</td>
+															<td align="center">
+																<input type="radio" name="Requisito_4" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_4'] == '1' || old('Requisito_4') == '1') ? 'checked' : '' }}>
+															</td>
+															<td align="center">
+																<input type="radio" name="Requisito_4" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_4'] == '0' || old('Requisito_4') == '0') ? 'checked' : '' }}>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																5. Contar con los parámetros del IDIGER
+															</td>
+															<td align="center">
+																<input type="radio" name="Requisito_5" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_5'] == '1' || old('Requisito_5') == '1') ? 'checked' : '' }}>
+															</td>
+															<td align="center">
+																<input type="radio" name="Requisito_5" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_5'] == '0' || old('Requisito_5') == '0') ? 'checked' : '' }}>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																6. Cumplir con los niveles de competencia de Ruido
+															</td>
+															<td align="center">
+																<input type="radio" name="Requisito_6" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_6'] == '1' || old('Requisito_6') == '1') ? 'checked' : '' }}>
+															</td>
+															<td align="center">
+																<input type="radio" name="Requisito_6" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_6'] == '0' || old('Requisito_6') == '0') ? 'checked' : '' }}>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																7. Cumplir con la Resolución 512 de 2003
+															</td>
+															<td align="center">
+																<input type="radio" name="Requisito_7" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_7'] == '1' || old('Requisito_7') == '1') ? 'checked' : '' }}>
+															</td>
+															<td align="center">
+																<input type="radio" name="Requisito_7" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_7'] == '0' || old('Requisito_7') == '0') ? 'checked' : '' }}>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																8. Elementos de producción (sonido)
+															</td>
+															<td align="center">
+																<input type="radio" name="Requisito_8" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_8'] == '1' || old('Requisito_8') == '1') ? 'checked' : '' }}>
+															</td>
+															<td align="center">
+																<input type="radio" name="Requisito_8" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_8'] == '0' || old('Requisito_8') == '0') ? 'checked' : '' }}>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																9. Planificación de la sesión
+															</td>
+															<td align="center">
+																<input type="radio" name="Requisito_9" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_9'] == '1' || old('Requisito_9') == '1') ? 'checked' : '' }}>
+															</td>
+															<td align="center">
+																<input type="radio" name="Requisito_9" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_9'] == '0' || old('Requisito_9') == '0') ? 'checked' : '' }}>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																10. Presentación Personal del Talento Humano
+															</td>
+															<td align="center">
+																<input type="radio" name="Requisito_10" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_10'] == '1' || old('Requisito_10') == '1') ? 'checked' : '' }}>
+															</td>
+															<td align="center">
+																<input type="radio" name="Requisito_10" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_10'] == '0' || old('Requisito_10') == '0') ? 'checked' : '' }}>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																11. Mantener actualizada la información sobre los Puntos de Recreovía en Planeación del IDRD
+															</td>
+															<td align="center">
+																<input type="radio" name="Requisito_11" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_11'] == '1' || old('Requisito_11') == '1') ? 'checked' : '' }}>
+															</td>
+															<td align="center">
+																<input type="radio" name="Requisito_11" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_11'] == '0' || old('Requisito_11') == '0') ? 'checked' : '' }}>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																12. Accesorios (bicicletas estáticas, step)
+															</td>
+															<td align="center">
+																<input type="radio" name="Requisito_12" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_12'] == '1' || old('Requisito_12') == '1') ? 'checked' : '' }}>
+															</td>
+															<td align="center">
+																<input type="radio" name="Requisito_12" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_12'] == '0' || old('Requisito_12') == '0') ? 'checked' : '' }}>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																13. Cumplir con el instructivo de selección y contratación
+															</td>
+															<td align="center">
+																<input type="radio" name="Requisito_13" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_13'] == '1' || old('Requisito_13') == '1') ? 'checked' : '' }}>
+															</td>
+															<td align="center">
+																<input type="radio" name="Requisito_13" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_13'] == '0' || old('Requisito_13') == '0') ? 'checked' : '' }}>
+															</td>
+														</tr>
 													</tbody>
 												</table>
 											</div>
-											<div class="col-md-12">
-												<small>
-													 1. Puntualidad, 2. Personal competente para el desarrollo de la actividad, 3. Contar con el Talento Humano mínimo requerido, 4. Escenario adecuado, 5. Contar con los parámetros del IDIGER, 6. Cumplir con los niveles de competencia de Ruido, 7. Cumplir con la Resolución 512 de 2003, 8. Elementos de producción (sonido), 9. Planificación de la sesión, 10. Presentación Personal del Talento Humano, 11. Mantener actualizada la información sobre los Puntos de Recreovía en Planeación del IDRD, 12. Accesorios (bicicletas estáticas, step), 13. Cumplir con el instructivo de selección y contratación.
-												</small>
+											<div class="col-md-6 form-group">
+												<label for="">Descripción de la no conformidad</label>
+												<textarea class="form-control" name="Descripcion_De_La_No_Conformidad" id="Descripcion_De_La_No_Conformidad">{{ old('Descripcion_De_La_No_Conformidad') }}</textarea>
+											</div>
+											<div class="col-md-6 form-group">
+												<label for="">Descripción de la acción tomada</label>
+												<textarea class="form-control" name="Descripcion_De_La_Accion_Tomada" id="Descripcion_De_La_Accion_Tomada">{{ old('Descripcion_De_La_Accion_Tomada') }}</textarea>
+											</div>
+											<div class="col-md-6 form-group">
+												<label for="">Tratamiento</label>
+												<textarea class="form-control" name="Tratamiento" id="Tratamiento">{{ old('Tratamiento') }}</textarea>
 											</div>
 											<div class="col-md-12">
 					                            <input type="hidden" name="_method" value="POST">
@@ -663,7 +772,7 @@
 												@if($sesion && $sesion['Estado'] != 'Finalizado')
 													<div class="row">
 														<div class="col-md-12"><hr></div>
-														<div class="col-xs-12"><input type="submit" class="btn btn-primary" value="Registrar producto no conforme"></div>
+														<div class="col-xs-12"><input type="submit" class="btn btn-primary" value="Registrar calificación del servicio"></div>
 													</div>
 												@endif
 											</div>
