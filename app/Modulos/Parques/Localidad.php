@@ -13,20 +13,20 @@ class Localidad extends MLocalidad
 
     public function recreopersonas()
     {
-        return $this->belongsToMany('App\Modulos\Recreovia\Recreopersona', 'LocalidadesPersonas', 'Id_Localidad', 'Id_Recreopersona')
+        return $this->belongsToMany('App\Modulos\Recreovia\Recreopersona', config('database.connections.mysql.database').'.LocalidadesPersonas', 'Id_Localidad', 'Id_Recreopersona')
                     ->withPivot('tipo');
     }
 
     public function profesores()
     {
-         return $this->belongsToMany('App\Modulos\Recreovia\Recreopersona', 'LocalidadesPersonas', 'Id_Localidad', 'Id_Recreopersona')
+         return $this->belongsToMany('App\Modulos\Recreovia\Recreopersona', config('database.connections.mysql.database').'.LocalidadesPersonas', 'Id_Localidad', 'Id_Recreopersona')
                     ->withPivot('tipo')
                     ->where('tipo', 'Profesor');
     }
 
     public function gestores()
     {
-         return $this->belongsToMany('App\Modulos\Recreovia\Recreopersona', 'LocalidadesPersonas', 'Id_Localidad', 'Id_Recreopersona')
+         return $this->belongsToMany('App\Modulos\Recreovia\Recreopersona', config('database.connections.mysql.database').'.LocalidadesPersonas', 'Id_Localidad', 'Id_Recreopersona')
                     ->withPivot('tipo')
                     ->where('tipo', 'Gestor');
     }

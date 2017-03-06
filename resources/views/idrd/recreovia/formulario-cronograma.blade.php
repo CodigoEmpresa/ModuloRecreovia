@@ -34,6 +34,12 @@
                     <fieldset>
                         <div class="col-md-6">
                             <div class="row">
+                                @if ($_SESSION['Usuario']['Permisos']['gestion_global_de_sesiones'] && $cronograma)
+                                    <div class="col-md-12 form-group">
+                                        <label for="">Gestor</label>
+                                        <p class="form-control-static">{{ $cronograma->gestor->persona->toString() }}</p>
+                                    </div>
+                                @endif
                                 <div class="col-md-12 form-group {{ $errors->has('Id_Punto') ? 'has-error' : '' }}">
                                     <label for="">Punto</label>
                                     <select name="Id_Punto" id="" class="form-control" data-value="{{ $cronograma ? $cronograma['Id_Punto'] : old('Id_Punto') }}">
@@ -100,7 +106,11 @@
                             @if ($cronograma)
                                 <a data-toggle="modal" data-target="#modal-eliminar" class="btn btn-danger">Eliminar</a>
                             @endif
-                            <a href="{{ url('programacion') }}" class="btn btn-default">Volver</a>
+                            @if ($_SESSION['Usuario']['Permisos']['gestion_global_de_sesiones'])
+                                <a href="{{ url('sesiones/administrar') }}" class="btn btn-default">Volver</a>
+                            @else
+                                <a href="{{ url('programacion') }}" class="btn btn-default">Volver</a>
+                            @endif
                         </div>
                     </fieldset>
                 </form>
@@ -120,7 +130,7 @@
                     <p>Realmente desea eliminar esta programación.</p>
                 </div>
                 <div class="modal-footer">
-                    <a href="{{ url('programacion/gestores/eliminar/'.$cronograma['Id']) }}" class="btn btn-danger">Eliminar</a>
+                    <a href="{{ url('programacion/'.$cronograma['Id'].'/eliminar') }}" class="btn btn-danger">Eliminar</a>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                 </div>
             </div>

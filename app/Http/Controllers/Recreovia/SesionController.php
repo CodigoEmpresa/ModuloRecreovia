@@ -7,6 +7,7 @@ use App\Modulos\Recreovia\Cronograma;
 use App\Modulos\Recreovia\ProductoNoConforme;
 use App\Modulos\Recreovia\CalificacionDelServicio;
 use App\Modulos\Recreovia\GrupoPoblacional;
+use App\Modulos\Parques\Localidad;
 use App\Modulos\Recreovia\Recreopersona;
 use App\Modulos\Recreovia\Sesion;
 use App\Http\Requests\GuardarSesionGestor;
@@ -25,12 +26,25 @@ class SesionController extends Controller {
 
 	public function crearSesionesGestor(Request $request, $id_cronograma)
 	{
+		$profesores = collect();
+		$localidades = Localidad::with('profesores', 'profesores.persona')->has('profesores')->get();
+		foreach ($localidades as $localidad)
+		{
+			foreach ($localidad->profesores as $profesor) 
+			{
+				$profesores->push($profesor);
+			}
+		}
+
+		$filtro_profesores = $profesores->unique('Id_Recreopersona');
+
 		$cronograma = Cronograma::with(['punto', 'punto.localidad.profesores.persona', 'jornada', 'sesiones', 'sesiones.profesor'])
 											->find($id_cronograma);
 											
 		$formulario = [
 			'titulo' => 'Crear o editar sesiones',
 			'cronograma' => $cronograma,
+			'profesores' => $filtro_profesores, //solo se usa para el permiso gestion_global_de_sesiones
 			'sesion' => null,
 			'status' => session('status')
 		];
@@ -45,6 +59,18 @@ class SesionController extends Controller {
 
 	public function editarSesionesGestor(Request $request, $id_cronograma, $id_sesion)
 	{
+		$profesores = collect();
+		$localidades = Localidad::with('profesores', 'profesores.persona')->has('profesores')->get();
+		foreach ($localidades as $localidad)
+		{
+			foreach ($localidad->profesores as $profesor) 
+			{
+				$profesores->push($profesor);
+			}
+		}
+
+		$filtro_profesores = $profesores->unique('Id_Recreopersona');
+
 		$cronograma = Cronograma::with(['punto', 'punto.localidad.profesores.persona', 'jornada', 'sesiones'])->find($id_cronograma);
 
 		$sesion = Sesion::find($id_sesion);
@@ -52,6 +78,7 @@ class SesionController extends Controller {
 		$formulario = [
 			'titulo' => 'Crear o editar sesiones',
 			'cronograma' => $cronograma,
+			'profesores' => $filtro_profesores, //solo se usa para el permiso gestion_global_de_sesiones
 			'sesion' => $sesion,
 			'status' => session('status')
 		];

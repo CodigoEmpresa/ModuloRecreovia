@@ -65,6 +65,10 @@ $(function(e)
 		responsive: true,
 		columnDefs: [
 			{
+				targets: 'no-sort', 
+				orderable: false
+			},
+			{
 				targets: 5,
         		searchable: false,
         		orderable: false
