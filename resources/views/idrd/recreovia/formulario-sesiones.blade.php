@@ -33,6 +33,12 @@
 			<div class="row">
 				<form action="{{ url('/gestores/sesiones/procesar') }}" method="post">
 					<fieldset>
+                        @if ($_SESSION['Usuario']['Permisos']['gestion_global_de_sesiones'] && $cronograma)
+                            <div class="col-md-12 form-group">
+                                <label for="">Gestor</label>
+                                <p class="form-control-static">{{ $cronograma->gestor->persona->toString() }}</p>
+                            </div>
+                        @endif
 						<div class="col-md-12">
 							<div class="row">
 								<div class="col-md-12 form-group">
@@ -92,9 +98,18 @@
 									<label for="">Profesor</label>
 									<select name="Id_Recreopersona" id="Id_Recreopersona" class="form-control" data-value="{{ $sesion ? $sesion['Id_Recreopersona'] : old('Id_Recreopersona') }}">
 										<option value="">Seleccionar</option>
-										@foreach($cronograma->punto->localidad->profesores as $profesor)
-											<option value="{{ $profesor->Id_Recreopersona }}">{{ $profesor->persona->toString() }}</option>
-										@endforeach
+										<optgroup label="Localidad">
+											@foreach($cronograma->punto->localidad->profesores as $profesor)
+												<option value="{{ $profesor->Id_Recreopersona }}">{{ $profesor->persona->toString() }}</option>
+											@endforeach
+										</optgroup>
+										@if ($_SESSION['Usuario']['Permisos']['gestion_global_de_sesiones'] && $cronograma)
+											<optgroup label="Todos">
+												@foreach($profesores as $profesor)
+													<option value="{{ $profesor->Id_Recreopersona }}">{{ $profesor->persona->toString() }}</option>
+												@endforeach
+											</optgroup>
+										@endif
 									</select>
 								</div>
 								<div class="col-md-6 form-group {{ $errors->has('Objetivo_General') ? 'has-error' : '' }}">
@@ -156,7 +171,8 @@
 								<th>H. Inicio</th>
 								<th>H. Fin</th>
 								<th>Estado</th>
-								<th data-priority="2"></th>
+								<th data-priority="2" class="no-sort" style="width: 30px;"></th>
+								<th data-priority="2" class="no-sort" style="width: 30px;"></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -201,15 +217,17 @@
 									<td>{{ $sesion->Fin }}</td>
 									<td>{{ $sesion->Estado }}</td>
 									<td data-priority="2"> 
+		                            	<a data-role="validar" href="{{ url('/gestores/sesiones/'.$sesion['Id'].'/editar') }}" class="pull-right separe-right btn btn-default btn-xs" data-toggle="tooltip" data-placement="bottom" title="Detalles">
+		                                	<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+		                            	</a>
+		                            </td>
+									<td data-priority="2">
 										@if($sesion->Estado != 'Finalizado')
 											<a data-role="editar" href="{{ url('/gestores/'.$cronograma['Id'].'/sesiones/'.$sesion['Id'].'/editar') }}" class="pull-right btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Editar">
-			                                	<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-			                            	</a>
-			                            	<a data-role="validar" target="_blank" href="{{ url('/gestores/sesiones/'.$sesion['Id'].'/editar') }}" class="pull-right separe-right btn btn-default btn-xs" data-toggle="tooltip" data-placement="bottom" title="Detalles">
-			                                	<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-			                            	</a>
+				                                	<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+				                            </a>
 			                            @endif
-		                            </td>
+									</td>
 								</tr>
 							@endforeach
 						</tbody>

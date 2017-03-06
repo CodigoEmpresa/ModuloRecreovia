@@ -68,6 +68,12 @@
 										</div>
 										<div class="row">
 											<div class="col-md-12">
+												@if ($_SESSION['Usuario']['Permisos']['gestion_global_de_sesiones'] && $sesion)
+						                            <div class="col-md-12 form-group">
+						                                <label for="">Gestor</label>
+						                                <p class="form-control-static">{{ $sesion->cronograma->gestor->persona->toString() }}</p>
+						                            </div>
+						                        @endif
 												<div class="col-md-12">
 													<div class="row">
 														<div class="col-md-12 form-group">
@@ -246,31 +252,28 @@
 											<input type="hidden" name="area" value="Detalles">
 							                <input type="hidden" id="latitud" value="{{ $sesion->cronograma->punto ? $sesion->cronograma->punto['Latitud'] : 4.666575 }}">
 							                <input type="hidden" id="longitud" value="{{ $sesion->cronograma->punto ? $sesion->cronograma->punto['Longitud'] : -74.125786 }}">
-											@if($sesion && $sesion['Estado'] != 'Finalizado')
-												<div class="row">
-													<div class="col-md-12"><hr></div>
-													<div class="col-md-12">
+											<div class="row">
+												<div class="col-md-12"><hr></div>
+												<div class="col-md-12">
+													@if($sesion && $sesion['Estado'] != 'Finalizado')
 														@if($tipo == "profesor")
 															<input type="submit" class="btn btn-primary" value="Guardar" {{ $sesion && $sesion['Estado'] == 'Aprobado' ? 'disabled' : '' }}>
-							                            	<a href="{{ url('/profesores/sesiones') }}" class="btn btn-default">Volver</a>
-							                            @else
-															<input type="submit" class="btn btn-primary" value="Guardar">
-							                            	<a href="{{ url('/gestores/sesiones') }}" class="btn btn-default">Volver</a>
+														@else
+							                            	<input type="submit" class="btn btn-primary" value="Guardar"> 
 							                            @endif
-						                            </div>
-						                        </div>
-						                    @else
-						                    	<div class="row">
-													<div class="col-md-12"><hr></div>
-													<div class="col-md-12">
-														@if($tipo == "profesor")
-															<a href="{{ url('/profesores/sesiones') }}" class="btn btn-default">Volver</a>
-							                            @else
-							                            	<a href="{{ url('/gestores/sesiones') }}" class="btn btn-default">Volver</a>
-							                            @endif
-						                            </div>
-						                        </div>
-					                        @endif
+							                        @endif
+
+													@if ($tipo == "profesor" && ($sesion['Id_Recreopersona'] == $_SESSION['Usuario']['Recreopersona']['Id_Recreopersona']))
+														<a href="{{ url('/profesores/sesiones') }}" class="btn btn-default">Volver a la lista</a>
+						                            @elseif ($tipo == "gestor" && ($sesion->cronograma['Id_Recreopersona'] == $_SESSION['Usuario']['Recreopersona']['Id_Recreopersona']))
+						                            	<a href="{{ url('/gestores/sesiones') }}" class="btn btn-default">Volver a la lista</a>
+						                            @endif
+
+													@if ($tipo == "gestor" || $_SESSION['Usuario']['Permisos']['gestion_global_de_sesiones'])
+					                            		<a href="{{ url('/gestores/'.$sesion->cronograma['Id'].'/sesiones') }}" class="btn btn-default">Volver al cronograma</a>
+					                            	@endif
+					                            </div>
+					                        </div>
 										</div>
 									</fieldset>
 								</form>

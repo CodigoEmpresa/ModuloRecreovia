@@ -53,9 +53,10 @@
 						$_SESSION['Usuario']['Permisos']['editar_profesores'] ||
 						$_SESSION['Usuario']['Permisos']['editar_puntos'] ||
 						$_SESSION['Usuario']['Permisos']['administrar_localidades'] ||
-						$_SESSION['Usuario']['Permisos']['administrar_jornadas']
+						$_SESSION['Usuario']['Permisos']['administrar_jornadas'] ||
+						$_SESSION['Usuario']['Permisos']['gestion_global_de_sesiones']
 					)
-						<li class="dropdown {{ $seccion && in_array($seccion, ['Profesores', 'Puntos', 'Administrar localidades']) ? 'active' : '' }}">
+						<li class="dropdown {{ $seccion && in_array($seccion, ['Profesores', 'Puntos', 'Administrar localidades', 'Gestion global de sesiones']) ? 'active' : '' }}">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#">Administración <span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								@if($_SESSION['Usuario']['Permisos']['administrar_jornadas'])
@@ -76,6 +77,11 @@
 								@if($_SESSION['Usuario']['Permisos']['administrar_localidades'])
 									<li class="{{ $seccion && $seccion == 'Administrar localidades' ? 'active' : '' }}">
 										<a href="{{ url('localidades/administrar') }}">Distribución de personal</a>
+									</li>
+								@endif
+								@if($_SESSION['Usuario']['Permisos']['gestion_global_de_sesiones'])
+									<li class="{{ $seccion && $seccion == 'Gestion global de sesiones' ? 'active' : '' }}">
+										<a href="{{ url('sesiones/administrar') }}">Gestion global de sesiones</a>
 									</li>
 								@endif
 							</ul>
@@ -117,7 +123,9 @@
 					@endif
 					@if(
 						$_SESSION['Usuario']['Permisos']['validar_reportes_jornadas'] || 
-						$_SESSION['Usuario']['Permisos']['gestionar_reportes_jornadas']
+						$_SESSION['Usuario']['Permisos']['exportar_consolidado_general'] ||
+						($_SESSION['Usuario']['Permisos']['gestionar_reportes_jornadas'] && in_array('Gestor', $_SESSION['Usuario']['Roles'])) ||
+						($_SESSION['Usuario']['Permisos']['gestionar_reportes_jornadas'] && in_array('Profesor', $_SESSION['Usuario']['Roles']))
 					)					
 						<li class="dropdown {{ $seccion && in_array($seccion, ['Revisar informes', 'Informes jornadas', 'Generar informe de actividades por punto']) ? 'active' : '' }}">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#">Informes y consultas<span class="caret"></span></a>

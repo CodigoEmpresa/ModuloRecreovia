@@ -73,6 +73,8 @@ Route::group(['middleware' => ['web']], function()
 	route::get('/programacion/{id_cronograma}/eliminar', 'Recreovia\ProgramacionController@eliminar');
 	route::post('/programacion/procesar', 'Recreovia\ProgramacionController@procesar');
 
+	route::get('/sesiones/administrar', 'Recreovia\ProgramacionController@todos');
+
 	route::get('/gestores/sesiones', 'Recreovia\SesionController@sesionesGestor');
 	route::get('/gestores/{id_cronograma}/sesiones', 'Recreovia\SesionController@crearSesionesGestor');
 	route::get('/gestores/{id_cronograma}/sesiones/{id_sesion}/editar', 'Recreovia\SesionController@editarSesionesGestor');

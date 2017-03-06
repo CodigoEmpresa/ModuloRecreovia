@@ -8,9 +8,14 @@
                 </div>                                
             </div>
         @endif
-        <div class="col-xs-12">
-            <a href="{{ url('/programacion/crear/') }}" class="btn btn-primary" id="crear">Crear</a>
-        </div>
+        @if(
+            !$_SESSION['Usuario']['Permisos']['gestion_global_de_sesiones'] || 
+            ($_SESSION['Usuario']['Permisos']['programar_sesiones'] && in_array('Gestor', $_SESSION['Usuario']['Roles']))
+        )
+            <div class="col-xs-12">
+                <a href="{{ url('/programacion/crear/') }}" class="btn btn-primary" id="crear">Crear</a>
+            </div>
+        @endif 
         <div class="col-xs-12"><br></div>
         <div class="col-xs-12">
             <table class="default display no-wrap responsive table table-min table-striped" width="100%">
@@ -19,20 +24,27 @@
                         <th>Cronograma</th>
                         <th>Jornada</th>
                         <th>Sesiones</th>
-                        <th data-priority="2"  class="no-sort" style="width: 35px;"> 
+                        <th data-priority="2"  class="no-sort" style="width: 30px;"> 
                         </th>
-                        <th data-priority="2"  class="no-sort" style="width: 35px;">
+                        <th data-priority="2"  class="no-sort" style="width: 30px;">
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($elementos as $cronograma)
                         <tr>
-                            <td>{{ $cronograma->punto->toString() }}<br>{{ $cronograma->toString() }}</td>
+                            <td>
+                                {{ $cronograma->punto->toString() }} <br>
+                                {{ $cronograma->toString() }}
+                                @if ($_SESSION['Usuario']['Permisos']['gestion_global_de_sesiones'])
+                                    <br>
+                                    {{ $cronograma->gestor->persona->toString() }}
+                                @endif
+                            </td>
                             <td>{{ $cronograma->jornada->toString() }}</td>
                             <td>{{ count($cronograma->sesiones) }}</td>
                             <td>
-                                <a data-role="sesiones" target="_blank" href="{{ url('/gestores/'.$cronograma['Id'].'/sesiones') }}" class="pull-right btn btn-default btn-xs separe-right" data-toggle="tooltip" data-placement="bottom" title="Sesiones"> 
+                                <a data-role="sesiones" href="{{ url('/gestores/'.$cronograma['Id'].'/sesiones') }}" class="pull-right btn btn-default btn-xs separe-right" data-toggle="tooltip" data-placement="bottom" title="Sesiones"> 
                                     <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 
                                 </a> 
                             </td>

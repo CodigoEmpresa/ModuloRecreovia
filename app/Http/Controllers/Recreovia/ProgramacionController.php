@@ -40,6 +40,27 @@ class ProgramacionController extends Controller {
 		return view('list', $datos);
 	}
 
+	public function todos()
+	{
+		$elementos = Cronograma::with('punto', 'jornada', 'gestor', 'gestor.persona', 'sesiones')
+							->whereNull('deleted_at')
+							->orderBy('created_at', 'DESC')
+							->get();
+
+		$lista = [
+			'titulo' => 'Programación',
+	        'elementos' => $elementos,
+	        'status' => session('status')
+		];
+
+		$datos = [
+			'seccion' => 'Gestion global de sesiones',
+			'lista'	=> view('idrd.recreovia.lista-cronogramas', $lista)
+		];
+		
+		return view('list', $datos);
+	}
+
 	public function crear() 
 	{
 		$recreopersona = Recreopersona::with(['localidades' => function($query)
@@ -78,7 +99,7 @@ class ProgramacionController extends Controller {
 										}, 'localidades.puntos.jornadas' => function($query) 
 										{
 											return $query->whereNull('Jornadas.deleted_at');
-										}])->find($this->usuario['Recreopersona']->Id_Recreopersona);
+										}])->find($cronograma->Id_Recreopersona);
 		
 		$puntos = $this->obtenerPuntosLocalidades($recreopersona->localidades);
 
@@ -117,13 +138,13 @@ class ProgramacionController extends Controller {
 		if ($request->input('Id') == 0)
 		{
 			$cronograma = new Cronograma;
+			$cronograma['Id_Recreopersona'] = $this->usuario['Recreopersona']->Id_Recreopersona;
 		} else {
 			$cronograma = Cronograma::find($request->input('Id'));
 		}
 
 		$cronograma['Id_Punto'] = $request->input('Id_Punto');
 		$cronograma['Id_Jornada'] = $request->input('Id_Jornada');
-		$cronograma['Id_Recreopersona'] = $this->usuario['Recreopersona']->Id_Recreopersona;
 		$cronograma['Desde'] = $request->input('Desde');
 		$cronograma['Hasta'] = $request->input('Hasta');
 		$cronograma['recreovia'] = $request->input('recreovia');
@@ -139,7 +160,7 @@ class ProgramacionController extends Controller {
 		$cronograma = Cronograma::find($id_cronograma);
 		$cronograma->delete();
 
-		return redirect('/programacion/gestores/')
+		return redirect('/programacion')
 					->with('status', 'success');
 	}
 
