@@ -93,7 +93,7 @@ class SesionController extends Controller {
 
 	public function editarSesionProfesor(Request $request, $id_sesion)
 	{
-		$sesion = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'gruposPoblacionales', 'ProductosNoConformes', 'profesor')->find($id_sesion);
+		$sesion = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'gruposPoblacionales', 'ProductoNoConforme', 'profesor')->find($id_sesion);
 		$gruposPoblacionales = GrupoPoblacional::get();
 											
 		$formulario = [
@@ -115,7 +115,7 @@ class SesionController extends Controller {
 
 	public function editarSesionGestor(Request $request, $id_sesion)
 	{
-		$sesion = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'gruposPoblacionales', 'ProductosNoConformes', 'profesor')->find($id_sesion);
+		$sesion = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'gruposPoblacionales', 'ProductoNoConforme', 'profesor')->find($id_sesion);
 		$gruposPoblacionales = GrupoPoblacional::get();
 											
 		$formulario = [
@@ -312,59 +312,33 @@ class SesionController extends Controller {
 
 	public function productoNoConforme(GuardarProductoNoConforme $request)
 	{
-		$sesion = Sesion::find($request->input('Id'));
+		$sesion = Sesion::with('productoNoConforme')->find($request->input('Id'));
 		$Requisito_Detalle = '';
 		
-		switch ($request->input('Requisito')) 
-		{
-			case 1:
-				$Requisito_Detalle = 'Puntualidad';
-			break;
-			case 2:
-				$Requisito_Detalle = 'Personal competente para el desarrollo de la actividad';
-			break;
-			case 3:
-				$Requisito_Detalle = 'Contar con el Talento Humano mínimo requerido';
-			break;
-			case 4:
-				$Requisito_Detalle = 'Escenario adecuado';
-			break;
-			case 5:
-				$Requisito_Detalle = 'Contar con los parámetros del IDIGER';
-			break;
-			case 6:
-				$Requisito_Detalle = 'Cumplir con los niveles de competencia de Ruido';
-			break;
-			case 7:
-				$Requisito_Detalle = 'Cumplir con la Resolución 512 de 2003';
-			break;
-			case 8:
-				$Requisito_Detalle = 'Elementos de producción (sonido)';
-			break;
-			case 9:
-				$Requisito_Detalle = 'Planificación de la sesión';
-			break;
-			case 10:
-				$Requisito_Detalle = 'Presentación Personal del Talento Humano';
-			break;
-			case 11:
-				$Requisito_Detalle = 'Mantener actualizada la información sobre los Puntos de Recreovía en Planeación del IDRD';
-			break;
-			case 12:
-				$Requisito_Detalle = 'Accesorios (bicicletas estáticas, step)';
-			break;
-			case 13:
-				$Requisito_Detalle = 'Cumplir con el instructivo de selección y contratación';
-			break;
-		}
+		if ($sesion->productoNoConforme)
+			$productoNoConforme = $sesion->productoNoConforme;
+		else
+			$productoNoConforme = new ProductoNoConforme;
 
-		$sesion->productosNoConformes()->create([
-			'Requisito' => $request->input('Requisito'),
-			'Requisito_Detalle' => $Requisito_Detalle,
-			'Descripcion_De_La_No_Conformidad' => $request->input('Descripcion_De_La_No_Conformidad'),
-			'Descripcion_De_La_Accion_Tomada' => $request->input('Descripcion_De_La_Accion_Tomada'),
-			'Tratamiento' => $request->input('Tratamiento'),
-		]);
+		$productoNoConforme['Id_Sesion'] = $request->input('Id');
+		$productoNoConforme['Requisito_1'] = $request->input('Requisito_1');
+		$productoNoConforme['Requisito_2'] = $request->input('Requisito_2');
+		$productoNoConforme['Requisito_3'] = $request->input('Requisito_3');
+		$productoNoConforme['Requisito_4'] = $request->input('Requisito_4');
+		$productoNoConforme['Requisito_5'] = $request->input('Requisito_5');
+		$productoNoConforme['Requisito_6'] = $request->input('Requisito_6');
+		$productoNoConforme['Requisito_7'] = $request->input('Requisito_7');
+		$productoNoConforme['Requisito_8'] = $request->input('Requisito_8');
+		$productoNoConforme['Requisito_9'] = $request->input('Requisito_9');
+		$productoNoConforme['Requisito_10'] = $request->input('Requisito_10');
+		$productoNoConforme['Requisito_11'] = $request->input('Requisito_11');
+		$productoNoConforme['Requisito_12'] = $request->input('Requisito_12');
+		$productoNoConforme['Requisito_13'] = $request->input('Requisito_13');
+		$productoNoConforme['Descripcion_De_La_No_Conformidad'] = $request->input('Descripcion_De_La_No_Conformidad');
+		$productoNoConforme['Descripcion_De_La_Accion_Tomada'] = $request->input('Descripcion_De_La_Accion_Tomada');
+		$productoNoConforme['Tratamiento'] = $request->input('Tratamiento');
+
+		$productoNoConforme->save();
 
 		if($request->input('origen') == 'profesor')
 		{
