@@ -42,36 +42,74 @@ class ConsolidadoGeneralController extends Controller {
 
 	public function generar(GenerarReporteConsolidadoJorndas $request)
 	{
-		/*
+		
 		$id_jornada = $request->input('Id_Jornada');
+		$fecha = $request->input('Id_Jornada');
 		$reportes = Reporte::with('cronograma', 'cronograma.jornada', 'cronograma.sesiones', 'cronograma.sesiones.gruposPoblacionales')
 								->whereHas('cronograma', function($query) use ($id_jornada)
 								{
 									$query->where('Id_Jornada', $id_jornada);
 								})
+								->where('Dia', $)
 								->get();
 		$jornada = Jornada::find($id_jornada);
 		$gruposPoblacionales = GrupoPoblacional::all();
-
-		return view('idrd.recreovia.reporte-consolidado-general', ['reportes' => $reportes, 'gruposPoblacionales' => $gruposPoblacionales]);*/
-
 		
-		\Excel::create('Consolidado general', function($excel) use ($request)
-		{
-			$id_jornada = $request->input('Id_Jornada');
-			$reportes = Reporte::with('cronograma', 'cronograma.jornada', 'cronograma.sesiones', 'cronograma.sesiones.gruposPoblacionales')
-									->whereHas('cronograma', function($query) use ($id_jornada)
-									{
-										$query->where('Id_Jornada', $id_jornada);
-									})
-									->get();
-			$jornada = Jornada::find($id_jornada);
-			$gruposPoblacionales = GrupoPoblacional::all();
+		$totales_sesiones = [
+			'Gimnasia de Mantenimiento (GM)' => [],
+			'Estimulación Muscular (EM)' => [],
+			'Movilidad Articular (MA)' => [],
+			'Rumba Tropical Folclorica (RTF)' => [],
+			'Actividad Rítmica para Niños (ARN) Rumba para Niños' => [],
+			'Gimnasia Aeróbica Musicalizada (GAM)' => [],
+			'Artes Marciales Musicalizadas (AMM)' => [],
+			'Gimnasia Psicofísica (GPF)' => [],
+			'Pilates (Pil)' => [],
+			'Taller de Danzas (TD)' => [],
+			'Gimnasio Saludable al Aire Libre (GSAL)' => []
+		];
 
+		foreach ($totales_sesiones as $key => &$total_sesion)
+		{	
+			foreach ($gruposPoblacionales as $grupo) 
+			{
+				$total_sesion[$grupo['Id']] = [
+					'Nombre' => $grupo['Grupo'],
+					'Participantes' => [
+						'M' => 0,
+						'F' => 0
+					],
+					'Asistentes' => [
+						'M' => 0,
+						'F' => 0
+					],
+				];
+			}
+		}
+
+		foreach ($reportes as $reporte)
+		{
+			foreach ($reporte->cronograma->sesiones as $sesion) 
+			{
+				foreach ($sesion->gruposPoblacionales as $grupo) 
+				{	
+					if ($sesion['Objetivo_General'] != '')
+						$totales_sesiones[$sesion['Objetivo_General']] [$grupo['Id']] [$grupo->pivot['Grupo_Asistencia']] [$grupo->pivot['Genero']] += $grupo->pivot['Cantidad'];
+				}
+			}
+		}
+
+		//return view('idrd.recreovia.reporte-consolidado-general', ['totales_sesiones' => $totales_sesiones, 'gruposPoblacionales' => $gruposPoblacionales]);
+
+		\Excel::create('Consolidado general', function($excel) use ($reportes, $totales_sesiones, $jornada, $gruposPoblacionales)
+		{
 			$excel->setTitle('Central jornada '.$jornada->toString());
 
-			$excel->sheet('CONSGRAL', function($sheet) use ($reportes, $gruposPoblacionales) {
-		        $sheet->loadView('idrd.recreovia.reporte-consolidado-general', ['reportes' => $reportes, 'gruposPoblacionales' => $gruposPoblacionales]);
+			$excel->sheet('REPORTE', function($sheet) use ($reportes, $totales_sesiones, $gruposPoblacionales) {
+		        $sheet->loadView('idrd.recreovia.reporte-consolidado-profesores', ['reportes' => $reportes, 'totales_sesiones' => $totales_sesiones, 'gruposPoblacionales' => $gruposPoblacionales]);
+		    });
+		    $excel->sheet('CONSGRAL', function($sheet) use ($totales_sesiones, $gruposPoblacionales) {
+		        $sheet->loadView('idrd.recreovia.reporte-consolidado-general', ['totales_sesiones' => $totales_sesiones, 'gruposPoblacionales' => $gruposPoblacionales]);
 		    });
 		})->download('xlsx');
 	}

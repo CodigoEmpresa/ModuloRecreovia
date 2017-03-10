@@ -415,7 +415,7 @@
 
                                         @foreach ($gruposPoblacionales as $grupo)
                                             <?php 
-                                                if(!array_key_exists($grupo['Id'], $subtotal_grupo))
+                                                if (!array_key_exists($grupo['Id'], $subtotal_grupo))
                                                     $subtotal_grupo[$grupo['Id']] = ['M' => 0, 'F' => 0];
                                             ?>
                                         @endforeach
