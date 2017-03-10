@@ -145,7 +145,7 @@
 												<option value="Estimulación Muscular (EM)">Estimulación Muscular (EM)</option>
 												<option value="Movilidad Articular (MA)">Movilidad Articular (MA)</option>
 												<option value="Rumba Tropical Folclorica (RTF)">Rumba Tropical Folclorica (RTF)</option>
-												<option value="Actividad Rítmica para Niños (ARN) Rumba para Niños.">Actividad Rítmica para Niños (ARN) Rumba para Niños.</option>
+												<option value="Actividad Rítmica para Niños (ARN) Rumba para Niños">Actividad Rítmica para Niños (ARN) Rumba para Niños</option>
 												<option value="Gimnasia Aeróbica Musicalizada (GAM)">Gimnasia Aeróbica Musicalizada (GAM)</option>
 												<option value="Artes Marciales Musicalizadas (AMM)">Artes Marciales Musicalizadas (AMM)</option>
 												<option value="Gimnasia Psicofísica (GPF)">Gimnasia Psicofísica (GPF)</option>
@@ -559,15 +559,15 @@
 											</div>
 											<div class="col-md-6 form-group">
 												<label for="">Descripción de la no conformidad</label>
-												<textarea class="form-control" name="Descripcion_De_La_No_Conformidad" id="Descripcion_De_La_No_Conformidad">{{ old('Descripcion_De_La_No_Conformidad') }}</textarea>
+												<textarea class="form-control" name="Descripcion_De_La_No_Conformidad" id="Descripcion_De_La_No_Conformidad">{{ $productoNoConforme ? $productoNoConforme['Descripcion_De_La_No_Conformidad'] : old('Descripcion_De_La_No_Conformidad') }}</textarea>
 											</div>
 											<div class="col-md-6 form-group">
 												<label for="">Descripción de la acción tomada</label>
-												<textarea class="form-control" name="Descripcion_De_La_Accion_Tomada" id="Descripcion_De_La_Accion_Tomada">{{ old('Descripcion_De_La_Accion_Tomada') }}</textarea>
+												<textarea class="form-control" name="Descripcion_De_La_Accion_Tomada" id="Descripcion_De_La_Accion_Tomada">{{ $productoNoConforme ? $productoNoConforme['Descripcion_De_La_Accion_Tomada'] : old('Descripcion_De_La_Accion_Tomada') }}</textarea>
 											</div>
 											<div class="col-md-6 form-group">
 												<label for="">Tratamiento</label>
-												<textarea class="form-control" name="Tratamiento" id="Tratamiento">{{ old('Tratamiento') }}</textarea>
+												<textarea class="form-control" name="Tratamiento" id="Tratamiento">{{ $productoNoConforme ? $productoNoConforme['Tratamiento'] : old('Tratamiento') }}</textarea>
 											</div>
 											<div class="col-md-12">
 					                            <input type="hidden" name="_method" value="POST">
