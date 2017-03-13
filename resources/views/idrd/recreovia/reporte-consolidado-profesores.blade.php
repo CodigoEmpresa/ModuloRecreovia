@@ -269,7 +269,6 @@
 				$total += $sesion->gruposPoblacionales->sum('pivot.Cantidad');
 			?>
 		@endforeach
-		<?php $i++; ?>
 		<tr>
 			<td align="center" style="text-align:center;">{{ $i++ }}</td>
 			<td align="center" style="text-align:center;">{{ $reporte->cronograma->punto->toString() }}</td>
