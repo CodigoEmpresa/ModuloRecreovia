@@ -757,7 +757,7 @@
 														<label for="">Teléfono </label>
 														<input type="text" name="Telefono" class="form-control" value="{{ ($calificacion ? $calificacion['Telefono'] : old('Telefono') ) }}">
 													</div>
-													<div class="col-md-6 form-group {{ $errors->has('Correo') ? 'has-error' : '' }}">
+													<div class="col-md-6 form-group">
 														<label for="">Correo </label>
 														<input type="text" name="Correo" class="form-control" value="{{ ($calificacion ? $calificacion['Correo'] : old('Correo') ) }}">
 													</div>
