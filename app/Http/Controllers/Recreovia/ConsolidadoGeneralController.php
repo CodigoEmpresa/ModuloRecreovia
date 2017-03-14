@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers\Recreovia;
 
@@ -44,13 +44,13 @@ class ConsolidadoGeneralController extends Controller {
 	{
 		
 		$id_jornada = $request->input('Id_Jornada');
-		$fecha = $request->input('Id_Jornada');
+		$fecha = $request->input('Fecha');
 		$reportes = Reporte::with('cronograma', 'cronograma.jornada', 'cronograma.sesiones', 'cronograma.sesiones.gruposPoblacionales')
 								->whereHas('cronograma', function($query) use ($id_jornada)
 								{
 									$query->where('Id_Jornada', $id_jornada);
 								})
-								->where('Dia', $)
+								->where('Dia', $fecha)
 								->get();
 		$jornada = Jornada::find($id_jornada);
 		$gruposPoblacionales = GrupoPoblacional::all();
@@ -99,18 +99,20 @@ class ConsolidadoGeneralController extends Controller {
 			}
 		}
 
+		//return view('idrd.recreovia.reporte-consolidado-profesores', ['fecha' => $fecha, 'jornada' => $jornada, 'reportes' => $reportes, 'totales_sesiones' => $totales_sesiones, 'gruposPoblacionales' => $gruposPoblacionales]);
 		//return view('idrd.recreovia.reporte-consolidado-general', ['totales_sesiones' => $totales_sesiones, 'gruposPoblacionales' => $gruposPoblacionales]);
 
-		\Excel::create('Consolidado general', function($excel) use ($reportes, $totales_sesiones, $jornada, $gruposPoblacionales)
+		\Excel::create('Consolidado general', function($excel) use ($fecha, $reportes, $totales_sesiones, $jornada, $gruposPoblacionales)
 		{
 			$excel->setTitle('Central jornada '.$jornada->toString());
 
-			$excel->sheet('REPORTE', function($sheet) use ($reportes, $totales_sesiones, $gruposPoblacionales) {
-		        $sheet->loadView('idrd.recreovia.reporte-consolidado-profesores', ['reportes' => $reportes, 'totales_sesiones' => $totales_sesiones, 'gruposPoblacionales' => $gruposPoblacionales]);
+			$excel->sheet('REPORTE', function($sheet) use ($fecha, $jornada, $reportes, $totales_sesiones, $gruposPoblacionales) {
+		        $sheet->loadView('idrd.recreovia.reporte-consolidado-profesores', ['fecha' => $fecha, 'jornada' => $jornada, 'reportes' => $reportes, 'totales_sesiones' => $totales_sesiones, 'gruposPoblacionales' => $gruposPoblacionales]);
 		    });
 		    $excel->sheet('CONSGRAL', function($sheet) use ($totales_sesiones, $gruposPoblacionales) {
 		        $sheet->loadView('idrd.recreovia.reporte-consolidado-general', ['totales_sesiones' => $totales_sesiones, 'gruposPoblacionales' => $gruposPoblacionales]);
 		    });
+    		$excel->getExcel()->setActiveSheetIndex(0);
 		})->download('xlsx');
 	}
 }

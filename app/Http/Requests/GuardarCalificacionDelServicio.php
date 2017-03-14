@@ -33,8 +33,7 @@ class GuardarCalificacionDelServicio extends Request
             'Divulgacion' => 'required',
             'Seguridad' => 'required',
             'Nombre' => 'required',
-            'Telefono' => 'required',
-            'Correo' => 'required|email'
+            'Telefono' => 'required'
         ];
     }
 }

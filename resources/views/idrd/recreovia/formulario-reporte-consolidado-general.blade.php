@@ -25,7 +25,7 @@
 			<form action="{{ url('informes/consolidado_general') }}" method="post">
 				<div class="col-md-9 form-group {{ $errors->has('Id_Jornada') ? 'has-error' : '' }}">
 					<label for="">Jornada</label>
-					<select name="Id_Jornada" id="" class="form-control" data-json="{{ $jornadas }}">
+					<select name="Id_Jornada" id="" class="form-control" data-json="{{ $jornadas }}" data-value="{{ old('Id_Jornada') }}">
 						<option value="">Seleccionar</option>
 						@foreach($jornadas as $jornada)
 							<option value="{{ $jornada['Id_Jornada'] }}">{{ $jornada->toString() }}</option>
@@ -34,7 +34,7 @@
 				</div>
 				<div class="col-md-3 form-group {{ $errors->has('Fecha') ? 'has-error' : '' }}">
 					<label for="">Fecha</label>
-					<input type="text" name="Fecha" class="form-control" data-role="datepicker" data-fecha-inicio="" data-fecha-fin="" data-dias="" data-fechas-importantes="{{ Festivos::create()->datesToString() }}">
+					<input type="text" name="Fecha" class="form-control" value="{{ old('Fecha') }}" data-role="datepicker" data-fecha-inicio="" data-fecha-fin="" data-dias="" data-fechas-importantes="{{ Festivos::create()->datesToString() }}">
 				</div>  
 				<div class="col-md-12">
                     <input type="hidden" name="_method" value="POST">
