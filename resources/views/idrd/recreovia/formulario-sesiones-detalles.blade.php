@@ -78,7 +78,7 @@
 													<div class="row">
 														<div class="col-md-12 form-group">
 															<label for="">Programación</label>
-															<p class="form-control-static">{{ $sesion->cronograma->toString() }}</p>
+															<p class="form-control-static">{{ $sesion->cronograma->getCode().' - '.$sesion->cronograma->toString() }}</p>
 														</div>
 													</div>
 												</div>
@@ -87,7 +87,7 @@
 														<div class="col-md-12 form-group">
 															<label for="">Punto</label>
 															<p class="form-control-static">
-																{{ $sesion->cronograma->punto->toString() }}
+																{{ $sesion->cronograma->punto->getCode().' - '.$sesion->cronograma->punto->toString() }}
 																<?php
 																	$html = '';
 

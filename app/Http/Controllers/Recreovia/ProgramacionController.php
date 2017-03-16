@@ -112,6 +112,7 @@ class ProgramacionController extends Controller {
 				foreach($punto->jornadas as &$jornada)
 				{
 					$jornada->Label = $jornada->toString();
+					$jornada->Code = $jornada->getCode();
 				}
 			}
 		}
