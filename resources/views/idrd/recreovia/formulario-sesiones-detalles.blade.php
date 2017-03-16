@@ -106,7 +106,7 @@
 														</div>
 														<div class="col-md-12 form-group">
 															<label for="">Jornada</label>
-															<p class="form-control-static">{{ $sesion->cronograma->jornada->toString() }}</p>
+															<p class="form-control-static">{{ $sesion->getCode().' - '.$sesion->cronograma->jornada->toString() }}</p>
 														</div>
 													</div>
 												</div>
@@ -115,23 +115,23 @@
 												</div>
 											</div>
 										</div>
-										<div class="col-md-3 form-group">
+										<div class="col-md-2 form-group">
 											<label for="">Fecha</label>
 											<p class="form-control-static">{{ $sesion['Fecha'] }}</p>
 										</div>
-										<div class="col-md-3 form-group">
+										<div class="col-md-2 form-group">
 											<label for="">Inicio</label>
 											<p class="form-control-static">{{ $sesion['Inicio'] }}</p>
 										</div>
-										<div class="col-md-3 form-group">
+										<div class="col-md-2 form-group">
 											<label for="">Fin</label>
 											<p class="form-control-static">{{ $sesion['Fin'] }}</p>
 										</div>
-										<div class="col-md-3 form-group">
+										<div class="col-md-6 form-group">
 											<label for="">Profesor</label>
 											<p class="form-control-static">
 												@if($sesion->profesor) 
-	                            					{{ $sesion->profesor->persona->toString() }} 
+	                            					{{ $sesion->profesor->getCode().' - '.$sesion->profesor->persona->toString() }} 
 	                            				@else 
 	                            					Sin profesor asignado
 	                            				@endif

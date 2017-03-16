@@ -4,7 +4,7 @@ $(function()
 		responsive: true,
 		columnDefs: [
 			{
-				targets: 6,
+				targets: 7,
         		searchable: false,
         		orderable: false
         	}

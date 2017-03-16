@@ -21,6 +21,7 @@
             <table class="default display no-wrap responsive table table-min table-striped" width="100%">
                 <thead>
                     <tr>
+                        <th>Cod.</th>
                         <th>Cronograma</th>
                         <th>Jornada</th>
                         <th>Sesiones</th>
@@ -33,6 +34,9 @@
                 <tbody>
                     @foreach($elementos as $cronograma)
                         <tr>
+                            <td align="center" width=60>
+                                {{ $cronograma->getCode() }}
+                            </td>
                             <td>
                                 {{ $cronograma->punto->toString() }} <br>
                                 {{ $cronograma->toString() }}

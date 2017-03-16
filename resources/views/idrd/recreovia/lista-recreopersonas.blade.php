@@ -21,6 +21,9 @@
                 <thead>
                     <tr>
                         <th>
+                            Cod.
+                        </th>
+                        <th>
                             Persona
                         </th>
                         <th>
@@ -40,6 +43,9 @@
                 <tbody>
                     @foreach($elementos as $persona)
                         <tr>
+                            <td style="text-align: center;" width=60>
+                                {{ $persona->recreopersona->getCode() }}
+                            </td>
                             <td>
                                 {{ $persona->toString() }}
                             </td>

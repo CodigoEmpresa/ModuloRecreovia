@@ -50,4 +50,9 @@ class Cronograma extends Model
     {
         return 'Cronograma de sesiones desde '.$this->Desde.' hasta '.$this->Hasta;
     }
+
+    public function getCode()
+    {
+        return 'C'.str_pad($this->Id, 4, '0', STR_PAD_LEFT);
+    }
 }

@@ -45,7 +45,7 @@
                                     <select name="Id_Punto" id="" class="form-control" data-value="{{ $cronograma ? $cronograma['Id_Punto'] : old('Id_Punto') }}">
                                         <option value="">Seleccionar</option>
                                         @foreach($recreopersona->puntos as $punto)
-                                            <option value="{{ $punto['Id_Punto'] }}">{{ $punto->toString() }}</option>
+                                            <option value="{{ $punto['Id_Punto'] }}">{{ $punto->getCode().' -  '.$punto->toString() }}</option>
                                         @endforeach
                                     </select>
                                 </div>

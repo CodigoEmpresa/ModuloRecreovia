@@ -48,5 +48,10 @@ class Punto extends Model
         return $this->Escenario;
     }
 
+    public function getCode()
+    {
+        return 'P'.str_pad($this->Id_Punto, 4, '0', STR_PAD_LEFT);
+    }
+
     use SoftDeletes, CascadeSoftDeletes;
 }

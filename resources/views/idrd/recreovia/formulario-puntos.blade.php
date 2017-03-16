@@ -114,7 +114,7 @@
                             <div class="input-group">
                                 <select name="select-jornadas" id="select-jornadas" class="form-control">
                                     @foreach($jornadas as $jornada)
-                                        <option value="{{ $jornada['Id_Jornada'] }}">{{ $jornada->toString() }}</option>
+                                        <option value="{{ $jornada['Id_Jornada'] }}">{{ $jornada->getCode().' - '.$jornada->toString() }}</option>
                                     @endforeach
                                 </select>
                                 <span class="input-group-btn">

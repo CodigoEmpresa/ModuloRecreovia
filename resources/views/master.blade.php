@@ -9,7 +9,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="csrf-token" content="{{ csrf_token() }}" />
 
-		@section('style')
+		@section ('style')
 				<link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 				<link rel="stylesheet" href="{{ asset('public/components/jquery-ui/themes/base/jquery-ui.css') }}" media="screen">    
 				<link rel="stylesheet" href="{{ asset('public/Css/bootstrap.css') }}" media="screen">    
@@ -21,7 +21,7 @@
 				<link rel="stylesheet" href="{{ asset('public/Css/main.css') }}" media="screen">    
 		@show
 
-		@section('script')
+		@section ('script')
 				<script src="{{ asset('public/components/jquery/jquery.js') }}"></script>
 				<script src="{{ asset('public/components/jquery-ui/jquery-ui.js') }}"></script>
 				<script src="{{ asset('public/components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
@@ -49,14 +49,14 @@
 				</div>
 				<div class="navbar-collapse collapse" id="navbar-main">
 					<ul class="nav navbar-nav">
-					@if(
+					@if (
 						$_SESSION['Usuario']['Permisos']['editar_profesores'] ||
 						$_SESSION['Usuario']['Permisos']['editar_puntos'] ||
 						$_SESSION['Usuario']['Permisos']['administrar_localidades'] ||
 						$_SESSION['Usuario']['Permisos']['administrar_jornadas'] ||
 						$_SESSION['Usuario']['Permisos']['gestion_global_de_sesiones']
 					)
-						<li class="dropdown {{ $seccion && in_array($seccion, ['Profesores', 'Puntos', 'Administrar localidades', 'Gestion global de sesiones']) ? 'active' : '' }}">
+						<li class="dropdown {{ $seccion && in_array($seccion, ['Profesores', 'Jornadas', 'Puntos', 'Administrar localidades', 'Gestion global de sesiones']) ? 'active' : '' }}">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#">Administración <span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								@if($_SESSION['Usuario']['Permisos']['administrar_jornadas'])

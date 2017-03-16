@@ -24,6 +24,7 @@
                 <table id="sesiones" class="display nowrap table table-striped table-min">
                     <thead>
                         <tr>
+                            <th>Cod.</th>
                             <th>Sesión</th>
                             <th>Punto / Jornada</th>
                             <th>Fecha</th>
@@ -60,6 +61,9 @@
                                 }
                             ?>
                             <tr class="{{ $class }}">
+                                <td align="center" width=60>
+                                    {{ $sesion->getCode() }}
+                                </td>
                                 <td>{{ $sesion->Objetivo_General }}<br><small class="text-mutted">{{ $sesion->profesor->persona->toFriendlyString() }}</small></td>
                                 <td>{{ $sesion->cronograma->punto->toString() }}<br><small class="text-mutted">{{ $sesion->cronograma->jornada->toString() }}</small></td>
                                 <td>{{ $sesion->Fecha }}</td>

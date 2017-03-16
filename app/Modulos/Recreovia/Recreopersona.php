@@ -45,5 +45,10 @@ class Recreopersona extends Model
                     ->withPivot('Hora_Llegada', 'Hora_Salida', 'Sesiones_Realizadas', 'Planificacion', 'Sistema_De_Datos', 'Novedades');
     }
 
+    public function getCode()
+    { 
+        return 'U'.str_pad($this->Id_Recreopersona, 4, '0', STR_PAD_LEFT);
+    }
+
     use SoftDeletes, CascadeSoftDeletes;
 }

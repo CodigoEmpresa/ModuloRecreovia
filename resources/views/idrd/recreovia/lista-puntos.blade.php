@@ -20,6 +20,9 @@
              <table class="default display responsive no-wrap table table-min table-striped" width="100%">
                 <thead>
                     <tr>
+                        <th>
+                            Cod.
+                        </th>
                         <th style="width: 250px;">
                             Punto
                         </th>
@@ -40,6 +43,9 @@
                 <tbody>
                     @foreach($elementos as $punto)
                         <tr>
+                            <td align="center" width=60>
+                                {{ $punto->getCode() }}
+                            </td>
                             <td>{{ strtoupper($punto['Escenario']) }}</td>
                             <td>{{ strtoupper($punto['Direccion']) }}</td>
                             <td>{{ $punto->localidad['Id_Localidad'].' - '.$punto->localidad['Localidad'] }}</td>

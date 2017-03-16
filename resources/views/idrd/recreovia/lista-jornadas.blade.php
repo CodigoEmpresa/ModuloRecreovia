@@ -21,6 +21,9 @@
                 <thead>
                     <tr>
                         <th>
+                            Cod.
+                        </th>
+                        <th>
                             Jornada
                         </th>
                         <th data-priority="2" class="no-sort" style="width: 35px;">
@@ -31,6 +34,9 @@
                 <tbody>
                     @foreach($elementos as $jornada)
                         <tr>
+                            <td align="center" width=60>
+                               {{ $jornada->getCode() }} 
+                            </td>
                             <td>
                                 JORNADA {{ strtoupper($jornada->toString()) }} <br>
                                 <small>Disponible en {{ count($jornada->puntos) }} puntos</small>

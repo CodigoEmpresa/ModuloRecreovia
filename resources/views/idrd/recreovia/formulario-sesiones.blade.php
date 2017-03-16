@@ -82,31 +82,31 @@
 						</div>
 						<div class="col-md-12">
 							<div class="row">
-								<div class="col-md-3 form-group {{ $errors->has('Fecha') ? 'has-error' : '' }}">
+								<div class="col-md-2 form-group {{ $errors->has('Fecha') ? 'has-error' : '' }}">
 									<label for="">Fecha</label>
 									<input type="text" class="form-control" value="{{ $sesion ? $sesion['Fecha'] : old('Fecha') }}" data-role="datepicker" name="Fecha" data-fecha-inicio="{{ $cronograma->Desde }}" data-fecha-fin="{{ $cronograma->Hasta }}" data-fechas-importantes="{{ Festivos::create()->datesToString() }}" data-dias="{{ $cronograma->jornada->Dias }}">
 								</div>
-								<div class="col-md-3 form-group {{ $errors->has('Inicio') ? 'has-error' : '' }}">
+								<div class="col-md-2 form-group {{ $errors->has('Inicio') ? 'has-error' : '' }}">
 									<label for="">Inicio</label>
 									<input type="text" class="form-control" value="{{ $sesion ? $sesion['Inicio'] : old('Inicio') }}" data-role="clockpicker" data-rel="hora_inicio" name="Inicio" data-hora-inicio="{{ $cronograma->jornada->Inicio }}">
 								</div>
-								<div class="col-md-3 form-group {{ $errors->has('Fin') ? 'has-error' : '' }}">
+								<div class="col-md-2 form-group {{ $errors->has('Fin') ? 'has-error' : '' }}">
 									<label for="">Fin</label>
 									<input type="text" class="form-control" value="{{ $sesion ? $sesion['Fin'] : old('Fin') }}" data-role="clockpicker" data-rel="hora_fin" name="Fin" data-hora-fin="{{ $cronograma->jornada->Fin }}">
 								</div>
-								<div class="col-md-3 form-group {{ $errors->has('Id_Recreopersona') ? 'has-error' : '' }}">
+								<div class="col-md-6 form-group {{ $errors->has('Id_Recreopersona') ? 'has-error' : '' }}">
 									<label for="">Profesor</label>
 									<select name="Id_Recreopersona" id="Id_Recreopersona" class="form-control" data-value="{{ $sesion ? $sesion['Id_Recreopersona'] : old('Id_Recreopersona') }}">
 										<option value="">Seleccionar</option>
 										<optgroup label="Localidad">
 											@foreach($cronograma->punto->localidad->profesores as $profesor)
-												<option value="{{ $profesor->Id_Recreopersona }}">{{ $profesor->persona->toString() }}</option>
+												<option value="{{ $profesor->Id_Recreopersona }}">{{ $profesor->getCode().' - '.$profesor->persona->toString() }}</option>
 											@endforeach
 										</optgroup>
 										@if ($_SESSION['Usuario']['Permisos']['gestion_global_de_sesiones'] && $cronograma)
 											<optgroup label="Todos">
 												@foreach($profesores as $profesor)
-													<option value="{{ $profesor->Id_Recreopersona }}">{{ $profesor->persona->toString() }}</option>
+													<option value="{{ $profesor->Id_Recreopersona }}">{{ $profesor->getCode().' - '.$profesor->persona->toString() }}</option>
 												@endforeach
 											</optgroup>
 										@endif
@@ -166,6 +166,7 @@
 					<table id="sesiones" class="display nowrap table table-striped table-min">
 						<thead>
 							<tr>
+								<th>Cod.</th>
 								<th>Sesión</th>
 								<th>Fecha</th>
 								<th>H. Inicio</th>
@@ -201,6 +202,9 @@
 		                        	}
 		                        ?>
 								<tr class="{{ $class }}">
+									<td align="center" width=60>
+										{{ $sesion->getCode() }}
+									</td>
                                 	<td>
                                 		{{ $sesion->Objetivo_General }}
                                 		<br>

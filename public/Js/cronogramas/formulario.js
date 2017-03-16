@@ -35,7 +35,7 @@ $(function()
 
 			$.each(punto.jornadas, function(i, jornada)
 			{
-				$('select[name="Id_Jornada"]').append('<option value="'+jornada.Id_Jornada+'">'+jornada.Label+'</option>');
+				$('select[name="Id_Jornada"]').append('<option value="'+jornada.Id_Jornada+'">'+jornada.Code+' - '+jornada.Label+'</option>');
 			});
 			
 			map.setCenter({lat: latitud, lng: longitud});

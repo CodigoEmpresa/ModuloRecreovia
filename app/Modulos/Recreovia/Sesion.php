@@ -49,5 +49,10 @@ class Sesion extends Model
         return $this->Objetivo_General.' realizada el dia '.$this->Fecha.' de '.$this->Inicio.' a '.$this->Fin;
     }
 
+    public function getCode()
+    {
+        return 'S'.str_pad($this->Id, 4, '0', STR_PAD_LEFT);
+    }
+
     use SoftDeletes;
 }

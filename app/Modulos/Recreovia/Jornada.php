@@ -76,4 +76,9 @@ class Jornada extends Model
 
         return $label;
     }
+
+    public function getCode()
+    {
+        return 'J'.str_pad($this->Id_Jornada, 2, '0', STR_PAD_LEFT);
+    }
 }
