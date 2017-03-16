@@ -177,9 +177,9 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach($cronograma->sesiones as $sesion)
+							@foreach($cronograma->sesiones as $i_sesion)
 								<?php
-		                        	switch ($sesion->Estado)
+		                        	switch ($i_sesion->Estado)
 		                        	{
 		                        		case 'Pendiente':
 		                        			$class = 'default';
@@ -203,31 +203,31 @@
 		                        ?>
 								<tr class="{{ $class }}">
 									<td align="center" width=60>
-										{{ $sesion->getCode() }}
+										{{ $i_sesion->getCode() }}
 									</td>
                                 	<td>
-                                		{{ $sesion->Objetivo_General }}
+                                		{{ $i_sesion->Objetivo_General }}
                                 		<br>
                             			<small class="text-mutted">
-                            				@if($sesion->profesor) 
-                            					{{ $sesion->profesor->persona->toFriendlyString() }} 
+                            				@if($i_sesion->profesor) 
+                            					{{ $i_sesion->profesor->persona->toFriendlyString() }} 
                             				@else 
                             					Sin profesor asignado
                             				@endif
                             			</small>
                                 	</td>
-									<td>{{ $sesion->Fecha }}</td>
-									<td>{{ $sesion->Inicio }}</td>
-									<td>{{ $sesion->Fin }}</td>
-									<td>{{ $sesion->Estado }}</td>
+									<td>{{ $i_sesion->Fecha }}</td>
+									<td>{{ $i_sesion->Inicio }}</td>
+									<td>{{ $i_sesion->Fin }}</td>
+									<td>{{ $i_sesion->Estado }}</td>
 									<td data-priority="2"> 
-		                            	<a data-role="validar" href="{{ url('/gestores/sesiones/'.$sesion['Id'].'/editar') }}" class="pull-right separe-right btn btn-default btn-xs" data-toggle="tooltip" data-placement="bottom" title="Detalles">
+		                            	<a data-role="validar" href="{{ url('/gestores/sesiones/'.$i_sesion['Id'].'/editar') }}" class="pull-right separe-right btn btn-default btn-xs" data-toggle="tooltip" data-placement="bottom" title="Detalles">
 		                                	<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
 		                            	</a>
 		                            </td>
 									<td data-priority="2">
-										@if($sesion->Estado != 'Finalizado')
-											<a data-role="editar" href="{{ url('/gestores/'.$cronograma['Id'].'/sesiones/'.$sesion['Id'].'/editar') }}" class="pull-right btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Editar">
+										@if($i_sesion->Estado != 'Finalizado')
+											<a data-role="editar" href="{{ url('/gestores/'.$cronograma['Id'].'/sesiones/'.$i_sesion['Id'].'/editar') }}" class="pull-right btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Editar">
 				                                	<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 				                            </a>
 			                            @endif

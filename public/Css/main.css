@@ -29,9 +29,14 @@
   	animation: glyphicon-spin-r 1s infinite linear;
 }
 
-.table-min{
+.table-min {
 	font-size: 12px;
 }
+
+.table-min tr td {
+	word-wrap: break-word;
+	white-space: normal !important;
+} 
 
 .clear-both { clear: both; }
 

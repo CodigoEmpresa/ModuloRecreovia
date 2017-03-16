@@ -1,4 +1,4 @@
-@section('script')
+  @section('script')
     @parent
 
     <!--<script src="{{ asset('public/Js/profesores/buscador.js') }}"></script>-->
@@ -48,7 +48,7 @@
                                         ->filter(function($item) use ($reporte){ 
                                             return $item->Fecha == $reporte->Dia; 
                                         })->filter(function($item) { 
-                                            return $item->Estado == 'Aprobado'; 
+                                            return $item->Estado == 'Finalizado'; 
                                         })->all()) 
                                 }}
                             </td>
