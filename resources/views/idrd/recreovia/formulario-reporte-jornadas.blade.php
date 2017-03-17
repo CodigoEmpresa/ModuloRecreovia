@@ -43,7 +43,7 @@
                                 <select name="Id_Punto" id="Id_Punto" class="form-control" data-value="{{ $informe ? $informe['Id_Punto'] : old('Id_Punto') }}">
                                     <option value="">Seleccionar</option>
                                     @foreach($puntos as $punto)
-                                        <option value="{{ $punto['Id_Punto'] }}">{{ $punto->toString() }}</option>
+                                        <option value="{{ $punto['Id_Punto'] }}">{{ $punto->getCode().' - '.$punto->toString() }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -56,6 +56,10 @@
                             <div class="col-md-4 form-group {{ $errors->has('Dia') ? 'has-error' : '' }}">
                                 <label for="">Día</label>
                                 <input type="text" name="Dia" class="form-control" data-role="datepicker" data-fecha-inicio="" data-fecha-fin="" data-dias="" data-fechas-importantes="{{ Festivos::create()->datesToString() }}" value="{{ $informe ? $informe['Dia'] : old('Dia') }}">
+                            </div>
+                            <div class="col-md-8 form-group {{ $errors->has('Dias') ? 'has-error' : '' }}">
+                                <label for="">Días seleccionados</label> <br>
+                                <input type="text" class="form-control" name="Dias" value="{{ $informe ? $informe['Dias'] : old('Dias') }}" value="">
                             </div>
                             <div class="col-xs-12">
                                 <hr>

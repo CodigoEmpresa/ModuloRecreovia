@@ -14,6 +14,7 @@
 				<link rel="stylesheet" href="{{ asset('public/components/jquery-ui/themes/base/jquery-ui.css') }}" media="screen">    
 				<link rel="stylesheet" href="{{ asset('public/Css/bootstrap.css') }}" media="screen">    
 				<link rel="stylesheet" href="{{ asset('public/components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css') }}" media="screen">
+				<link rel="stylesheet" href="{{ asset('public/components/selectize/dist/css/selectize.bootstrap3.css') }}" media="screen">
 				<link rel="stylesheet" href="{{ asset('public/components/datatables.net-bs/css/dataTables.bootstrap.css') }}" media="screen">
 				<link rel="stylesheet" href="{{ asset('public/components/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}" media="screen">
 				<link rel="stylesheet" href="{{ asset('public/components/highcharts/css/highcharts.css') }}" media="screen">
@@ -30,6 +31,7 @@
 				<script src="{{ asset('public/components/datatables.net-bs/js/dataTables.bootstrap.js') }}"></script>
 				<script src="{{ asset('public/components/datatables.net-responsive/js/dataTables.responsive.js') }}"></script>
 				<script src="{{ asset('public/components/highcharts/js/highcharts.js') }}"></script>
+				<script src="{{ asset('public/components/selectize/dist/js/standalone/selectize.js') }}"></script>
 				<script src="{{ asset('public/components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
 				<script src="{{ asset('public/Js/main.js') }}"></script>
 		@show
@@ -128,7 +130,7 @@
 						($_SESSION['Usuario']['Permisos']['gestionar_reportes_jornadas'] && in_array('Profesor', $_SESSION['Usuario']['Roles']))
 					)					
 						<li class="dropdown {{ $seccion && in_array($seccion, ['Revisar informes', 'Informes jornadas', 'Generar informe de actividades por punto']) ? 'active' : '' }}">
-							<a class="dropdown-toggle" data-toggle="dropdown" href="#">Informes y consultas<span class="caret"></span></a>
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#">Informes y consultas <span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								@if ($_SESSION['Usuario']['Permisos']['validar_reportes_jornadas'])
 									<li class="{{ $seccion && $seccion == 'Revisar informes' ? 'active' : '' }}">

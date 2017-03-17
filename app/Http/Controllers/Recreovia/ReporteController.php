@@ -156,14 +156,14 @@ class ReporteController extends Controller {
 
 		$reporte->Id_Punto = $request->input('Id_Punto');
 		$reporte->Id_Cronograma = $request->input('Id_Cronograma');
-		$reporte->Dia = $request->input('Dia');
+		$reporte->Dias = $request->input('Dias');
 		$reporte->Condiciones_Climaticas = null;
 		$reporte->Estado = 'Pendiente';
 		$reporte->save();
 
 		$sesiones = Sesion::with('gruposPoblacionales')
 							->where('Id_Cronograma', $request->input('Id_Cronograma'))
-							->where('Fecha', $request->input('Dia'))
+							->whereIn('Fecha', explode(',', $request->input('Dias')))
 							->where('Estado', 'Finalizado')
 							->get();
 
@@ -270,24 +270,29 @@ class ReporteController extends Controller {
 	private function cronogramasPersona($recreopersona)
 	{
 		$recreopersona = Recreopersona::with('cronogramas', 'cronogramas.jornada', 'cronogramas.punto.cronogramas.jornada')->find($recreopersona);
-		$recreopersona->puntos = collect();
+		$puntos = collect();
 
 		foreach ($recreopersona->cronogramas as $cronograma) 
 		{
-			$key = $cronograma->punto['Id_Punto'];
-			$exists = $recreopersona->puntos->search(function($item, $key)
+			$Id_Punto = $cronograma->punto['Id_Punto'];
+			$exists = $puntos->search(function($item, $key) use ($Id_Punto)
 			{
-				$item['Id_Punto'] == $key;
+				return $item['Id_Punto'] == $Id_Punto;
 			});
 
 			if (!$exists)
 			{
-				$recreopersona->puntos->push($cronograma->punto);
+				$puntos->push($cronograma->punto);
 
 				foreach ($cronograma->punto->cronogramas as &$cronograma)
+				{
 					$cronograma->jornada->Label = $cronograma->jornada->toString();
+					$cronograma->jornada->Code = $cronograma->jornada->getCode();
+				}
 			}
 		}
+
+		$recreopersona->puntos = $puntos;
 
 		return $recreopersona;
 	}

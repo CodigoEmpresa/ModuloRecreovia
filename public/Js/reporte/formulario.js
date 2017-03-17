@@ -27,6 +27,21 @@ $(function()
         paging: false
     });
 
+    $('input[name="Dias"]').selectize({
+        delimiter: ',',
+        persist: true,
+        create:  true
+    });
+
+    var selectize_dias = $('input[name="Dias"]')[0].selectize;
+
+    $('input[name="Dia"]').on('change', function(e)
+    {
+        selectize_dias.addOption({text:$(this).val(), value:$(this).val()});
+        selectize_dias.addItem($(this).val());
+        $(this).val('');
+    });
+
     $('select[name="Id_Punto"]').on('change', function(e)
     {
     	var Id_Punto = $(this).val();
@@ -40,7 +55,7 @@ $(function()
     		$('select[name="Id_Cronograma"]').html('<option value="">Seleccionar</option>');
     		$.each(punto.cronogramas, function(i, cronograma)
     		{
-    			$('select[name="Id_Cronograma"]').append('<option data-desde="'+cronograma.Desde+'" data-dias="'+cronograma.jornada.Dias+'" data-hasta="'+cronograma.Hasta+'" value="'+cronograma.Id+'">'+('Del '+cronograma.Desde+' al '+cronograma.Hasta+' / '+cronograma.jornada.Label)+'</option>');
+    			$('select[name="Id_Cronograma"]').append('<option data-desde="'+cronograma.Desde+'" data-dias="'+cronograma.jornada.Dias+'" data-hasta="'+cronograma.Hasta+'" value="'+cronograma.Id+'">'+('Del '+cronograma.Desde+' al '+cronograma.Hasta+' / '+cronograma.jornada.Code+' - '+cronograma.jornada.Label)+'</option>');
     		});
     	}
 
@@ -59,11 +74,12 @@ $(function()
     	var fecha_inicio = moment(option.data('desde'));
     	var fecha_fin = moment(option.data('hasta'));
     	$('input[name="Dia"]').attr('data-fecha-inicio', fecha_inicio.format('YYYY-MM-DD')).attr('data-fecha-fin', fecha_fin.format('YYYY-MM-DD')).attr('data-dias', dias);
+        $('input[name="Dia"]').val('');
     });
 
     if ($('select[name="Id_Punto"]').data('value') != '')
     {
-       $('select[name="Id_Punto"]').val($('select[name="Id_Punto"]').data('value')).trigger('change');
+       $('select[name="Id_Punto"]').val($('select[name="Id_Punto"]').data('value')).trigger('change');  
     }
 
     $('#actualizar_reporte').on('click', function(e)

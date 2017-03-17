@@ -178,6 +178,15 @@ div.oculto {
 	color: #fff !important;
 }
 
+.selectize-control.multi .selectize-input.has-items 
+{
+	padding: 7px 12px 4px;
+}
+
+.selectize-input {
+	height: 38px;
+}
+
 @media (min-width: 1200px) {
 	.container {
 		width: 1280px;

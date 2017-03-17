@@ -26,7 +26,7 @@ class GenerarInforme extends Request
         return [
             'Id_Punto' => 'required',
             'Id_Cronograma' => 'required',
-            'Dia' => 'required'
+            'Dias' => 'required'
         ];
     }
 
@@ -35,7 +35,8 @@ class GenerarInforme extends Request
     {
         return [
             'Id_Punto.required' => 'El campo punto es requerido',
-            'Id_Cronograma.required' => 'El campo cronograma es requerido'
+            'Id_Cronograma.required' => 'El campo cronograma es requerido',
+            'Dias.required' => 'Debe seleccionar al menos un dia para generar el informe'
         ];
     }
 }
