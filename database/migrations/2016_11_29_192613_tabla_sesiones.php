@@ -24,9 +24,9 @@ class TablaSesiones extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('Id_Recreopersona')->references('Id_Recreopersona')->on('Recreopersonas')->onDelete('cascade');
-            $table->foreign('Id_Jornada')->references('Id_Jornada')->on('Jornadas')->onDelete('cascade');
-            $table->foreign('Id_Punto')->references('Id_Punto')->on('Puntos')->onDelete('cascade');
+            $table->foreign('Id_Recreopersona')->references('Id_Recreopersona')->on('Recreopersonas');
+            $table->foreign('Id_Jornada')->references('Id_Jornada')->on('Jornadas');
+            $table->foreign('Id_Punto')->references('Id_Punto')->on('Puntos');
         });
 
         Schema::create('Sesiones', function(Blueprint $table)
@@ -50,8 +50,8 @@ class TablaSesiones extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('Id_Cronograma')->references('Id')->on('Cronogramas')->onDelete('cascade');
-            $table->foreign('Id_Recreopersona')->references('Id_Recreopersona')->on('Recreopersonas')->onDelete('cascade');
+            $table->foreign('Id_Cronograma')->references('Id')->on('Cronogramas');
+            $table->foreign('Id_Recreopersona')->references('Id_Recreopersona')->on('Recreopersonas');
         });
     }
 
@@ -67,7 +67,7 @@ class TablaSesiones extends Migration
             $table->dropForeign(['Id_Recreopersona']);
             $table->dropForeign(['Id_Cronograma']);
         });
-        
+
         Schema::table('Cronogramas', function(Blueprint $table)
         {
             $table->dropForeign(['Id_Punto']);

@@ -12,11 +12,11 @@ class CambioTablaProductoNoConforme extends Migration
      */
     public function up()
     {
-        Schema::table('ProductosNoConformes', function(Blueprint $table) 
+        Schema::table('ProductosNoConformes', function(Blueprint $table)
         {
             $table->dropForeign(['Id_Sesion']);
         });
-        
+
         Schema::drop('ProductosNoConformes');
 
         Schema::create('ProductoNoConforme', function(Blueprint $table)
@@ -42,7 +42,7 @@ class CambioTablaProductoNoConforme extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('Id_Sesion')->references('Id')->on('Sesiones')->onDelete('cascade');
+            $table->foreign('Id_Sesion')->references('Id')->on('Sesiones');
         });
     }
 
@@ -65,14 +65,14 @@ class CambioTablaProductoNoConforme extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('Id_Sesion')->references('Id')->on('Sesiones')->onDelete('cascade');
+            $table->foreign('Id_Sesion')->references('Id')->on('Sesiones');
         });
 
-        Schema::table('ProductoNoConforme', function(Blueprint $table) 
+        Schema::table('ProductoNoConforme', function(Blueprint $table)
         {
             $table->dropForeign(['Id_Sesion']);
         });
-        
+
         Schema::drop('ProductoNoConforme');
     }
 }

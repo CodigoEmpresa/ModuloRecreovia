@@ -22,12 +22,12 @@ class TablaReportesActividades extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('Id_Punto')->references('Id_Punto')->on('Puntos')->onDelete('cascade');
-            $table->foreign('Id_Cronograma')->references('Id')->on('Cronogramas')->onDelete('cascade');
+            $table->foreign('Id_Punto')->references('Id_Punto')->on('Puntos');
+            $table->foreign('Id_Cronograma')->references('Id')->on('Cronogramas');
         });
 
         Schema::create('ReportesProfesores', function(Blueprint $table)
-        {   
+        {
             $table->increments('Id');
             $table->integer('Id_Reporte')->unsigned();
             $table->integer('Id_Profesor')->unsigned();
@@ -40,8 +40,8 @@ class TablaReportesActividades extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('Id_Reporte')->references('Id')->on('Reportes')->onDelete('cascade');
-            $table->foreign('Id_Profesor')->references('Id_Recreopersona')->on('Recreopersonas')->onDelete('cascade');
+            $table->foreign('Id_Reporte')->references('Id')->on('Reportes');
+            $table->foreign('Id_Profesor')->references('Id_Recreopersona')->on('Recreopersonas');
         });
 
         Schema::create('ReporteNovedad', function(Blueprint $table)
@@ -55,7 +55,7 @@ class TablaReportesActividades extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('Id_Reporte')->references('Id')->on('Reportes')->onDelete('cascade');
+            $table->foreign('Id_Reporte')->references('Id')->on('Reportes');
         });
 
         Schema::create('ReportesServicios', function(Blueprint $table)
@@ -73,7 +73,7 @@ class TablaReportesActividades extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('Id_Reporte')->references('Id')->on('Reportes')->onDelete('cascade');
+            $table->foreign('Id_Reporte')->references('Id')->on('Reportes');
         });
 
         Schema::create('GruposPoblacionales', function(Blueprint $table)
@@ -96,8 +96,8 @@ class TablaReportesActividades extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('Id_Sesion')->references('Id')->on('Sesiones')->onDelete('cascade');
-            $table->foreign('Id_Grupo')->references('Id')->on('GruposPoblacionales')->onDelete('cascade');
+            $table->foreign('Id_Sesion')->references('Id')->on('Sesiones');
+            $table->foreign('Id_Grupo')->references('Id')->on('GruposPoblacionales');
         });
     }
 
@@ -108,34 +108,34 @@ class TablaReportesActividades extends Migration
      */
     public function down()
     {
-        Schema::table('Participaciones', function(Blueprint $table) 
+        Schema::table('Participaciones', function(Blueprint $table)
         {
             $table->dropForeign(['Id_Grupo']);
             $table->dropForeign(['Id_Sesion']);
         });
 
-        Schema::table('ReportesServicios', function(Blueprint $table) 
+        Schema::table('ReportesServicios', function(Blueprint $table)
         {
             $table->dropForeign(['Id_Reporte']);
         });
 
-        Schema::table('ReporteNovedad', function(Blueprint $table) 
+        Schema::table('ReporteNovedad', function(Blueprint $table)
         {
             $table->dropForeign(['Id_Reporte']);
         });
 
-        Schema::table('ReportesProfesores', function(Blueprint $table) 
+        Schema::table('ReportesProfesores', function(Blueprint $table)
         {
             $table->dropForeign(['Id_Profesor']);
             $table->dropForeign(['Id_Reporte']);
         });
 
-        Schema::table('Reportes', function(Blueprint $table) 
+        Schema::table('Reportes', function(Blueprint $table)
         {
             $table->dropForeign(['Id_Cronograma']);
             $table->dropForeign(['Id_Punto']);
         });
-        
+
         Schema::drop('Participaciones');
         Schema::drop('GruposPoblacionales');
         Schema::drop('ReportesServicios');

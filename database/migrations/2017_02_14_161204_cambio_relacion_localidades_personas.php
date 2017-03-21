@@ -21,14 +21,14 @@ class CambioRelacionLocalidadesPersonas extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('Id_Recreopersona')->references('Id_Recreopersona')->on('Recreopersonas')->onDelete('cascade');
+            $table->foreign('Id_Recreopersona')->references('Id_Recreopersona')->on('Recreopersonas');
         });
 
         $puntos_asignados = DB::select('SELECT DISTINCT PuntosPersonas.*, Puntos.Id_Localidad FROM PuntosPersonas, Puntos WHERE PuntosPersonas.`Id_Punto` = Puntos.`Id_Punto` GROUP BY Id_Recreopersona, Id_Localidad');
-        
+
         if ($puntos_asignados)
         {
-            foreach ($puntos_asignados as $punto) 
+            foreach ($puntos_asignados as $punto)
             {
                 DB::table('LocalidadesPersonas')->insert([
                     'Id_Recreopersona' => $punto->Id_Recreopersona,
@@ -63,10 +63,10 @@ class CambioRelacionLocalidadesPersonas extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('Id_Punto')->references('Id_Punto')->on('Puntos')->onDelete('cascade');
-            $table->foreign('Id_Recreopersona')->references('Id_Recreopersona')->on('Recreopersonas')->onDelete('cascade');
+            $table->foreign('Id_Punto')->references('Id_Punto')->on('Puntos');
+            $table->foreign('Id_Recreopersona')->references('Id_Recreopersona')->on('Recreopersonas');
         });
-        
+
         Schema::table('LocalidadesPersonas', function(Blueprint $table)
         {
             $table->dropForeign(['Id_Recreopersona']);

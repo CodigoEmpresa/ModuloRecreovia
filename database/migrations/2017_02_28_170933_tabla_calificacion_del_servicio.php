@@ -30,7 +30,7 @@ class TablaCalificacionDelServicio extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('Id_Sesion')->references('Id')->on('Sesiones')->onDelete('cascade');
+            $table->foreign('Id_Sesion')->references('Id')->on('Sesiones');
         });
     }
 
@@ -41,11 +41,11 @@ class TablaCalificacionDelServicio extends Migration
      */
     public function down()
     {
-        Schema::table('CalificacionesDelServicio', function(Blueprint $table) 
+        Schema::table('CalificacionesDelServicio', function(Blueprint $table)
         {
             $table->dropForeign(['Id_Sesion']);
         });
-        
+
         Schema::drop('CalificacionesDelServicio');
     }
 }

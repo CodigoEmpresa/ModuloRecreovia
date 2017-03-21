@@ -48,8 +48,8 @@ class TablaPuntos extends Migration
             $table->integer('Id_Jornada')->unsigned();
             $table->integer('Id_Punto')->unsigned();
 
-            $table->foreign('Id_Jornada')->references('Id_Jornada')->on('Jornadas')->onDelete('cascade');
-            $table->foreign('Id_Punto')->references('Id_Punto')->on('Puntos')->onDelete('cascade');
+            $table->foreign('Id_Jornada')->references('Id_Jornada')->on('Jornadas');
+            $table->foreign('Id_Punto')->references('Id_Punto')->on('Puntos');
         });
     }
 

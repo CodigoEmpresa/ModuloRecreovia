@@ -21,8 +21,8 @@ class TablaLocalidadesPersonas extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('Id_Punto')->references('Id_Punto')->on('Puntos')->onDelete('cascade');
-            $table->foreign('Id_Recreopersona')->references('Id_Recreopersona')->on('Recreopersonas')->onDelete('cascade');
+            $table->foreign('Id_Punto')->references('Id_Punto')->on('Puntos');
+            $table->foreign('Id_Recreopersona')->references('Id_Recreopersona')->on('Recreopersonas');
         });
     }
 
