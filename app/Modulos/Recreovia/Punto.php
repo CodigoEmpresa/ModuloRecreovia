@@ -4,14 +4,12 @@ namespace App\Modulos\Recreovia;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Iatstuti\Database\Support\CascadeSoftDeletes;
 
 class Punto extends Model
 {
-	protected $table = 'Puntos';
+		protected $table = 'Puntos';
     protected $primaryKey = 'Id_Punto';
     protected $connection = 'mysql';
-    protected $cascadeDeletes = ['jornadas'];
 
     public function __construct()
     {
@@ -53,5 +51,5 @@ class Punto extends Model
         return 'P'.str_pad($this->Id_Punto, 4, '0', STR_PAD_LEFT);
     }
 
-    use SoftDeletes, CascadeSoftDeletes;
+    use SoftDeletes;
 }

@@ -9,8 +9,8 @@ use Iatstuti\Database\Support\CascadeSoftDeletes;
 class Jornada extends Model
 {
     use SoftDeletes, CascadeSoftDeletes;
-    
-	protected $table = 'Jornadas';
+
+	  protected $table = 'Jornadas';
     protected $primaryKey = 'Id_Jornada';
     protected $connection = 'mysql';
     protected $cascadeDeletes = ['cronogramas'];
@@ -48,19 +48,19 @@ class Jornada extends Model
             $periodo = 'del '.$this->Fecha_Evento_Inicio.' al '.$this->Fecha_Evento_Fin;
         else
             $periodo = 'el dia '.$this->Fecha_Evento_Inicio;
-        
+
         if($this->Dias)
             $periodo_dias = (count(explode(',', $this->Dias)) > 1 ? 'los dias ' : 'el dia ').strrev(preg_replace(strrev("/,/"), strrev(' y '), strrev($this->Dias), 1));
 
         switch($this->Jornada)
         {
-            case 'dia': 
+            case 'dia':
                 $label = 'Jornada diurna '.$periodo_dias.' de '.$this->Inicio.' a '.$this->Fin;
             break;
-            case 'noche': 
+            case 'noche':
                 $label = 'Jornada nocturna '.$periodo_dias.' de '.$this->Inicio.' a '.$this->Fin;
             break;
-            case 'fds': 
+            case 'fds':
                 $label = 'Jornada de fin de semana '.$periodo_dias.' de '.$this->Inicio.' a '.$this->Fin;
             break;
             case 'clases_grupales':
@@ -69,7 +69,7 @@ class Jornada extends Model
             case 'clases_grupales_institucionales':
                 $label = 'Clase grupal institucional '.$periodo.' '.$periodo_dias.' de '.$this->Inicio.' a '.$this->Fin;
             break;
-            case 'mega_eventos': 
+            case 'mega_eventos':
                 $label = 'Mega evento de actividad física '.$periodo.' '.$periodo_dias.' de '.$this->Inicio.' a '.$this->Fin;
             break;
         }

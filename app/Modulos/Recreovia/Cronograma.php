@@ -10,7 +10,7 @@ class Cronograma extends Model
 {
     use SoftDeletes, CascadeSoftDeletes;
 
-	protected $table = 'Cronogramas';
+	  protected $table = 'Cronogramas';
     protected $primaryKey = 'Id';
     protected $connection = 'mysql';
     protected $cascadeDeletes = ['sesiones'];
