@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers\Recreovia;
 
@@ -93,7 +93,7 @@ class PuntosController extends Controller {
 		{
 			return $query->whereNull('deleted_at');
 		}])->find($id);
-		
+
 		return response()->json($punto);
 	}
 
@@ -101,7 +101,7 @@ class PuntosController extends Controller {
 	{
 		if ($request['Id_Punto'] == 0)
 			$punto = $this->crearPunto($request);
-		else 
+		else
 			$punto = $this->editarPunto($request);
 
 		$punto->Direccion = $request->input('Direccion');
@@ -123,7 +123,7 @@ class PuntosController extends Controller {
 		if (trim($jornadas) != '')
 			$punto->jornadas()->sync(explode(',', $jornadas));
 		else
-			$punto->jornadas()->delete();
+			$punto->jornadas()->detach();
 
        	return redirect('/puntos/'.$punto->Id_Punto.'/editar')->with(['status' => 'success']);
 	}
@@ -133,7 +133,7 @@ class PuntosController extends Controller {
 		$punto = Punto::where('Id_Punto', $id)
 						->first();
 		$punto->delete();
-		return redirect('/puntos')->with(['status' => 'success']); 
+		return redirect('/puntos')->with(['status' => 'success']);
 	}
 
 	private function crearPunto($request)
