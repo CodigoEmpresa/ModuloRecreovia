@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers\Recreovia;
 
@@ -9,7 +9,7 @@ use App\Modulos\Recreovia\Punto;
 use Illuminate\Http\Request;
 
 class JornadaController extends Controller {
-	
+
 	protected $usuario;
 
 	public function __construct()
@@ -48,7 +48,7 @@ class JornadaController extends Controller {
 			'titulo' => 'Crear ó editar jornadas',
 			'jornada' => null,
 			'puntos' => $puntos,
-	        'status' => session('status')
+			'status' => session('status')
 		];
 
 		$datos = [
@@ -87,7 +87,7 @@ class JornadaController extends Controller {
 
 		$jornada->delete();
 
-		return redirect('/jornadas')->with(['status' => 'success']); 
+		return redirect('/jornadas')->with(['status' => 'success']);
 	}
 
 
@@ -95,7 +95,7 @@ class JornadaController extends Controller {
 	{
 		if ($request['Id_Jornada'] == 0)
 			$jornada = $this->crearJornada($request);
-		else 
+		else
 			$jornada = $this->editarJornada($request);
 
 		$jornada->Jornada = $request['Jornada'];
