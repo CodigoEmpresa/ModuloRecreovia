@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers\Recreovia;
 
@@ -15,7 +15,7 @@ use App\Modulos\Recreovia\Servicio;
 use App\Http\Requests\GenerarInforme;
 
 class ReporteController extends Controller {
-	
+
 	protected $usuario;
 
 	public function __construct()
@@ -124,11 +124,7 @@ class ReporteController extends Controller {
 		$recreopersona = $this->cronogramasPersona($informe->cronograma->gestor['Id_Recreopersona']);
 		$gruposPoblacionales = GrupoPoblacional::all();
 
-		$sesiones = Sesion::with('gruposPoblacionales', 'profesor', 'profesor.persona')
-							->where('Id_Cronograma', $informe['Id_Cronograma'])
-							->where('Fecha', $informe['Dia'])
-							->where('Estado', 'Finalizado')
-							->get();
+		$sesiones = $this->obtenerSesionesInforme($informe);
 
 		$formulario = [
 			'titulo' => 'Editar informe',
@@ -161,17 +157,13 @@ class ReporteController extends Controller {
 		$reporte->Estado = 'Pendiente';
 		$reporte->save();
 
-		$sesiones = Sesion::with('gruposPoblacionales')
-							->where('Id_Cronograma', $request->input('Id_Cronograma'))
-							->whereIn('Fecha', explode(',', $request->input('Dias')))
-							->where('Estado', 'Finalizado')
-							->get();
+		$sesiones = $this->obtenerSesionesInforme($request->all());
 
 		if ($sesiones)
 		{
 			$profesores = [];
 			//sincronizar profesores
-			foreach ($sesiones as $sesion) 
+			foreach ($sesiones as $sesion)
 			{
 				if($sesion['Id_Recreopersona'])
 				{
@@ -212,7 +204,7 @@ class ReporteController extends Controller {
 			break;
 			case 'informacion_profesores_de_actividad_fisica':
 				$profesores = [];
-				foreach ($reporte->profesores as $profesor) 
+				foreach ($reporte->profesores as $profesor)
 				{
 					$profesores[$profesor['Id_Recreopersona']] = [
 						'Hora_Llegada' => $request->input('Hora_Llegada_'.$profesor['Id_Recreopersona']) ? $request->input('Hora_Llegada_'.$profesor['Id_Recreopersona']) : null,
@@ -239,11 +231,11 @@ class ReporteController extends Controller {
 				$novedad->Cod_514_542 = $request->input('Cod_514_542');
 				$novedad->Novedades = $request->input('Novedades');
 				$novedad->save();
-				
+
 				//servicios
 				$reporte->servicios()->delete();
 				$servicios = $request->input('Total_Servicios');
-				
+
 				for ($i = 0; $i < $servicios; $i++)
 				{
 					$servicio = new Servicio;
@@ -258,7 +250,7 @@ class ReporteController extends Controller {
 					$servicio->Observaciones_Generales = $request->input('Observaciones_Generales_'.$i);
 
 					$servicio->save();
-				}	
+				}
 			break;
 		}
 
@@ -267,12 +259,23 @@ class ReporteController extends Controller {
 		return response()->json([true]);
 	}
 
+	private function obtenerSesionesInforme($informe)
+	{
+		$sesiones = Sesion::with('gruposPoblacionales', 'profesor', 'profesor.persona')
+							->where('Id_Cronograma', $informe['Id_Cronograma'])
+							->whereIn('Fecha', explode(',', $informe['Dias']))
+							->where('Estado', 'Finalizado')
+							->get();
+
+		return $sesiones;
+	}
+
 	private function cronogramasPersona($recreopersona)
 	{
 		$recreopersona = Recreopersona::with('cronogramas', 'cronogramas.jornada', 'cronogramas.punto.cronogramas.jornada')->find($recreopersona);
 		$puntos = collect();
 
-		foreach ($recreopersona->cronogramas as $cronograma) 
+		foreach ($recreopersona->cronogramas as $cronograma)
 		{
 			$Id_Punto = $cronograma->punto['Id_Punto'];
 			$exists = $puntos->search(function($item, $key) use ($Id_Punto)

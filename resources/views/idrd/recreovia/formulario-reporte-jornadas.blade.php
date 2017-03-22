@@ -98,7 +98,7 @@
                         </fieldset>
                     </form>
                 </div>
-            @endif 
+            @endif
             @if ($informe)
                 <div class="row" id="formularios_complementarios">
                     <div class="col-md-12">
@@ -318,8 +318,8 @@
                                                                 <a href="#" class="btn btn-default btn-xs" data-role="eliminar" data-toggle="tooltip" data-placement="bottom" title="Eliminar"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                                             </td>
                                                         </tr>
-                                                        <?php 
-                                                            $i = 0; 
+                                                        <?php
+                                                            $i = 0;
                                                         ?>
                                                         @foreach($informe->servicios as $servicio)
                                                             <?php $i++; ?>
@@ -391,7 +391,7 @@
                                         <tr>
                                             <th valign="center" align="center" width="30px" rowspan="2">#</th>
                                             <th style="width:100px;" valign="center" rowspan="2">Sesión</th>
-                                            <th valign="center" rowspan="2">Hora</th>
+                                            <th style="width:100px;" valign="center" rowspan="2">Fecha</th>
                                             <th style="width:100px;" valign="center" rowspan="2">PAF</th>
                                             @foreach($gruposPoblacionales as $grupo)
                                                 <th style="width:104px;" colspan="2">{{ $grupo['Edad_Inicio'].($grupo['Edad_Fin'] > 0 ? ' a '.$grupo['Edad_Fin'].' años' : ' - mas') }}<br>{{ $grupo['Grupo'] }}</th>
@@ -409,8 +409,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php 
-                                            $i = 0; 
+                                        <?php
+                                            $i = 0;
                                             $subtotal_grupo = [];
                                             $subtotal_grupo_m = 0;
                                             $subtotal_grupo_f = 0;
@@ -418,7 +418,7 @@
                                         ?>
 
                                         @foreach ($gruposPoblacionales as $grupo)
-                                            <?php 
+                                            <?php
                                                 if (!array_key_exists($grupo['Id'], $subtotal_grupo))
                                                     $subtotal_grupo[$grupo['Id']] = ['M' => 0, 'F' => 0];
                                             ?>
@@ -432,19 +432,19 @@
                                             <tr>
                                                 <td>{{ ++$i }}</td>
                                                 <td>{{ $sesion['Objetivo_General'] }}</td>
-                                                <td>{{ $sesion['Inicio'] }}</td>
+                                                <td align="center">{!! $sesion['Fecha'].'<br>'.$sesion['Inicio'] !!}</td>
                                                 <td>
-                                                    @if($sesion->profesor) 
-                                                        {{ $sesion->profesor->persona->toFriendlyString() }} 
-                                                    @else 
+                                                    @if($sesion->profesor)
+                                                        {{ $sesion->profesor->persona->toFriendlyString() }}
+                                                    @else
                                                         Sin profesor asignado
                                                     @endif
                                                 </td>
                                                 @foreach ($gruposPoblacionales as $grupo)
                                                     @if (count($sesion->gruposPoblacionales))
                                                         @foreach ($sesion->gruposPoblacionales()->where('Id_Grupo', $grupo['Id'])->where('Grupo_Asistencia', 'Participantes')->orderBy('Genero')->get() as $participacion)
-                                                            <?php 
-                                                                switch ($participacion->pivot['Genero']) 
+                                                            <?php
+                                                                switch ($participacion->pivot['Genero'])
                                                                 {
                                                                     case 'M':
                                                                         $subtotal_genero_m += $participacion->pivot['Cantidad'];
@@ -453,7 +453,7 @@
                                                                         $subtotal_genero_f += $participacion->pivot['Cantidad'];
                                                                     break;
                                                                 }
-                                                                
+
                                                                 $subtotal_grupo[$grupo['Id']][$participacion->pivot['Genero']] += $participacion->pivot['Cantidad'];
                                                             ?>
                                                             <td style="text-align:right;">{{ $participacion->pivot['Cantidad'] }}</td>
@@ -473,7 +473,7 @@
                                         <tr class="active">
                                             <td colspan="4"><strong>SUBTOTAL</strong></td>
                                             @foreach ($gruposPoblacionales as $grupo)
-                                                <?php 
+                                                <?php
                                                     $subtotal_grupo_m += $subtotal_grupo[$grupo['Id']]['M'];
                                                     $subtotal_grupo_f += $subtotal_grupo[$grupo['Id']]['F'];
                                                     $total += $subtotal_grupo[$grupo['Id']]['M'] + $subtotal_grupo[$grupo['Id']]['F'];
@@ -504,7 +504,7 @@
                                         <tr>
                                             <th valign="center" align="center" width="30px" rowspan="2">#</th>
                                             <th style="width:100px;" valign="center" rowspan="2">Sesión</th>
-                                            <th valign="center" rowspan="2">Hora</th>
+                                            <th style="width:100px;" valign="center" rowspan="2">Fecha</th>
                                             <th style="width:100px;" valign="center" rowspan="2">PAF</th>
                                             @foreach($gruposPoblacionales as $grupo)
                                                 <th style="width:104px;" colspan="2">{{ $grupo['Edad_Inicio'].($grupo['Edad_Fin'] > 0 ? ' a '.$grupo['Edad_Fin'].' años' : ' - mas') }}<br>{{ $grupo['Grupo'] }}</th>
@@ -522,8 +522,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php 
-                                            $i = 0; 
+                                        <?php
+                                            $i = 0;
                                             $subtotal_grupo = [];
                                             $subtotal_grupo_m = 0;
                                             $subtotal_grupo_f = 0;
@@ -531,7 +531,7 @@
                                         ?>
 
                                         @foreach ($gruposPoblacionales as $grupo)
-                                            <?php 
+                                            <?php
                                                 if(!array_key_exists($grupo['Id'], $subtotal_grupo))
                                                     $subtotal_grupo[$grupo['Id']] = ['M' => 0, 'F' => 0];
                                             ?>
@@ -545,19 +545,19 @@
                                             <tr>
                                                 <td>{{ ++$i }}</td>
                                                 <td>{{ $sesion['Objetivo_General'] }}</td>
-                                                <td>{{ $sesion['Inicio'] }}</td>
+                                                <td align="center">{!! $sesion['Fecha'].'<br>'.$sesion['Inicio'] !!}</td>
                                                 <td>
-                                                    @if($sesion->profesor) 
-                                                        {{ $sesion->profesor->persona->toFriendlyString() }} 
-                                                    @else 
+                                                    @if($sesion->profesor)
+                                                        {{ $sesion->profesor->persona->toFriendlyString() }}
+                                                    @else
                                                         Sin profesor asignado
                                                     @endif
                                                 </td>
                                                 @foreach ($gruposPoblacionales as $grupo)
                                                     @if (count($sesion->gruposPoblacionales))
                                                         @foreach ($sesion->gruposPoblacionales()->where('Id_Grupo', $grupo['Id'])->where('Grupo_Asistencia', 'Asistentes')->orderBy('Genero')->get() as $participacion)
-                                                            <?php 
-                                                                switch ($participacion->pivot['Genero']) 
+                                                            <?php
+                                                                switch ($participacion->pivot['Genero'])
                                                                 {
                                                                     case 'M':
                                                                         $subtotal_genero_m += $participacion->pivot['Cantidad'];
@@ -566,7 +566,7 @@
                                                                         $subtotal_genero_f += $participacion->pivot['Cantidad'];
                                                                     break;
                                                                 }
-                                                                
+
                                                                 $subtotal_grupo[$grupo['Id']][$participacion->pivot['Genero']] += $participacion->pivot['Cantidad'];
                                                             ?>
                                                             <td style="text-align:right;">{{ $participacion->pivot['Cantidad'] }}</td>
@@ -586,7 +586,7 @@
                                         <tr class="active">
                                             <td colspan="4"><strong>SUBTOTAL</strong></td>
                                             @foreach ($gruposPoblacionales as $grupo)
-                                                <?php 
+                                                <?php
                                                     $subtotal_grupo_m += $subtotal_grupo[$grupo['Id']]['M'];
                                                     $subtotal_grupo_f += $subtotal_grupo[$grupo['Id']]['F'];
                                                     $total += $subtotal_grupo[$grupo['Id']]['M'] + $subtotal_grupo[$grupo['Id']]['F'];

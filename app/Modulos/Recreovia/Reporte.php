@@ -45,7 +45,7 @@ class Reporte extends Model
 
     public function toString()
     {
-        return $this->Punto->toString().' para el dia '.$this->Dia;
+        return $this->cronograma->jornada->toString().' <br> Día(s) '.$this->Dias;
     }
 
     use SoftDeletes, CascadeSoftDeletes;

@@ -16,6 +16,8 @@ class CambioTablaReportes extends Migration
         {
             $table->string('Dias', 500)->after('Dia')->nullable();
         });
+
+        $affected = DB::update('UPDATE Reportes SET dias = dia');
     }
 
     /**

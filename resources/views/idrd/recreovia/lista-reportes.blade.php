@@ -3,7 +3,7 @@
 
     <!--<script src="{{ asset('public/Js/profesores/buscador.js') }}"></script>-->
 @stop
-    
+
 <div class="content">
     <div id="main" class="row" data-url="{{ url('profesores') }}">
         @if ($status == 'success')
@@ -11,7 +11,7 @@
                 <div class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     Datos actualizados satisfactoriamente.
-                </div>                                
+                </div>
             </div>
         @endif
         @if(in_array('Gestor', $_SESSION['Usuario']['Roles']))
@@ -28,8 +28,8 @@
             <table class="default display no-wrap responsive table table-min table-striped" width="100%">
                 <thead>
                     <tr>
-                        <th>Reporte</th>
-                        <th>Punto</th>
+                        <th style="width: 200px;">Punto</th>
+                        <th>Jornada</th>
                         <th style="width: 100px;">Profesores</th>
                         <th style="width: 100px;">Sesiones</th>
                         <th style="width: 100px;">U. Actualización</th>
@@ -41,15 +41,15 @@
                     @foreach($elementos as $reporte)
                         <tr>
                             <td>{{ $reporte->punto->toString() }}</td>
-                            <td>{{ $reporte->toString() }}</td>
+                            <td>{!! $reporte->toString() !!}</td>
                             <td>{{ count($reporte->profesores) }}</td>
-                            <td>{{ 
+                            <td>{{
                                     count($reporte->cronograma->sesiones
-                                        ->filter(function($item) use ($reporte){ 
-                                            return $item->Fecha == $reporte->Dia; 
-                                        })->filter(function($item) { 
-                                            return $item->Estado == 'Finalizado'; 
-                                        })->all()) 
+                                        ->filter(function($item) use ($reporte){
+                                            return in_array($item->Fecha, explode(',', $reporte->Dias));
+                                        })->filter(function($item) {
+                                            return $item->Estado == 'Finalizado';
+                                        })->all())
                                 }}
                             </td>
                             <td>{{ $reporte->updated_at }}</td>

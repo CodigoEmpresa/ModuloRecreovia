@@ -11,15 +11,15 @@
 
 		@section ('style')
 				<link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
-				<link rel="stylesheet" href="{{ asset('public/components/jquery-ui/themes/base/jquery-ui.css') }}" media="screen">    
-				<link rel="stylesheet" href="{{ asset('public/Css/bootstrap.css') }}" media="screen">    
+				<link rel="stylesheet" href="{{ asset('public/components/jquery-ui/themes/base/jquery-ui.css') }}" media="screen">
+				<link rel="stylesheet" href="{{ asset('public/Css/bootstrap.css') }}" media="screen">
 				<link rel="stylesheet" href="{{ asset('public/components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css') }}" media="screen">
 				<link rel="stylesheet" href="{{ asset('public/components/selectize/dist/css/selectize.bootstrap3.css') }}" media="screen">
 				<link rel="stylesheet" href="{{ asset('public/components/datatables.net-bs/css/dataTables.bootstrap.css') }}" media="screen">
 				<link rel="stylesheet" href="{{ asset('public/components/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}" media="screen">
 				<link rel="stylesheet" href="{{ asset('public/components/highcharts/css/highcharts.css') }}" media="screen">
 				<link rel="stylesheet" href="{{ asset('public/components/loaders.css/loaders.min.css') }}" media="screen">
-				<link rel="stylesheet" href="{{ asset('public/Css/main.css') }}" media="screen">    
+				<link rel="stylesheet" href="{{ asset('public/Css/main.css') }}" media="screen">
 		@show
 
 		@section ('script')
@@ -124,11 +124,11 @@
 						</li>
 					@endif
 					@if(
-						$_SESSION['Usuario']['Permisos']['validar_reportes_jornadas'] || 
+						$_SESSION['Usuario']['Permisos']['validar_reportes_jornadas'] ||
 						$_SESSION['Usuario']['Permisos']['exportar_consolidado_general'] ||
 						($_SESSION['Usuario']['Permisos']['gestionar_reportes_jornadas'] && in_array('Gestor', $_SESSION['Usuario']['Roles'])) ||
 						($_SESSION['Usuario']['Permisos']['gestionar_reportes_jornadas'] && in_array('Profesor', $_SESSION['Usuario']['Roles']))
-					)					
+					)
 						<li class="dropdown {{ $seccion && in_array($seccion, ['Revisar informes', 'Informes jornadas', 'Generar informe de actividades por punto']) ? 'active' : '' }}">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#">Informes y consultas <span class="caret"></span></a>
 							<ul class="dropdown-menu">
@@ -162,9 +162,6 @@
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ $_SESSION['Usuario']['Persona']['Primer_Apellido'].' '.$_SESSION['Usuario']['Persona']['Primer_Nombre'] }}<span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li>
-									<a href="{{ url('personas/'.$_SESSION['Usuario'][0].'/editar') }}">Editar</a>
-								</li>
-								<li>
 									<a href="{{ url('logout') }}">Cerrar sesión</a>
 								</li>
 							</ul>
@@ -174,7 +171,7 @@
 			</div>
 		</div>
 		<!-- FIN Menu Módulo -->
-			
+
 		<!-- Contenedor información módulo -->
 		</br></br>
 		<div class="container">
@@ -185,15 +182,15 @@
 						<p class="lead"><h4>Módulo para la gestión y control de actividades del programa recreovía</h4></p>
 					</div>
 					<div class="col-lg-4 col-md-5 col-sm-6">
-						 <div align="right"> 
+						 <div align="right">
 								<img src="{{ asset('public/Img/IDRD.JPG') }}" width="50%" heigth="40%"/>
-						 </div>                    
+						 </div>
 					</div>
 					<div class="col-sm-12">
 						<p class="text-primary">{{ $seccion ? $seccion : '' }}</p>
 					</div>
 				</div>
-			</div>        
+			</div>
 		</div>
 		<!-- FIN Contenedor información módulo -->
 
@@ -207,7 +204,7 @@
 					<br><br><br>
 				</div>
 			</div>
-		</div> 
+		</div>
 		<div class="ajaxloader">
 			<div class="ball-scale-multiple"><div></div><div></div><div></div></div>
 			<span>PROCESANDO</span>
@@ -215,8 +212,3 @@
 		<!-- FIN Contenedor panel principal -->
 	</body>
 </html>
-
-
-
-
-
