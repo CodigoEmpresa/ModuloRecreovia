@@ -3,7 +3,7 @@
 
     <!--<script src="{{ asset('public/Js/profesores/buscador.js') }}"></script>-->
 @stop
-    
+
 <div class="content">
     <div id="main" class="row" data-url="{{ url('profesores') }}">
         @if ($status == 'success')
@@ -11,7 +11,7 @@
                 <div class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     Datos actualizados satisfactoriamente.
-                </div>                                
+                </div>
             </div>
         @endif
         @if(in_array('Gestor', $_SESSION['Usuario']['Roles']))
@@ -28,8 +28,7 @@
             <table class="default display no-wrap responsive table table-min table-striped" width="100%">
                 <thead>
                     <tr>
-                        <th>Punto</th>
-                        <th style="width: 100px;">Fecha</th>
+                        <th style="width: 200px;">Punto</th>
                         <th>Jornada</th>
                         <th style="width: 100px;">Estado</th>
                         <th style="width: 100px;">U. Actualización</th>
@@ -41,8 +40,7 @@
                     @foreach($elementos as $reporte)
                         <tr>
                             <td>{{ $reporte->punto->toString() }}</td>
-                            <td>{{ $reporte->Dia }}</td>
-                            <td>{{ $reporte->cronograma->jornada->toString() }}</td>
+                            <td>{!! $reporte->toString() !!}</td>
                             <td>{{ empty($reporte->Estado) ? 'Pendiente' : $reporte->Estado }}</td>
                             <td>{{ $reporte->updated_at }}</td>
                             <td>

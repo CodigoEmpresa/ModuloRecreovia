@@ -1,7 +1,7 @@
 $(function()
 {
     var PUNTOS = $('select[name="Id_Cronograma"]').length ? $.parseJSON(JSON.stringify($('select[name="Id_Cronograma"]').data('json'))) : {};
-    
+
     var URL = $('#main').data('url');
 
     var reindexarServicios = function()
@@ -12,7 +12,7 @@ $(function()
             {
                 $(formElement).attr('name', $(formElement).data('name')+'_'+i);
             });
-            
+
             $(tr).find('td[data-role="item"]').text(i+1);
         });
 
@@ -50,7 +50,7 @@ $(function()
     		return o.Id_Punto == Id_Punto;
     	})[0];
 
-    	if(punto.cronogramas.length) 
+    	if(punto.cronogramas.length)
     	{
     		$('select[name="Id_Cronograma"]').html('<option value="">Seleccionar</option>');
     		$.each(punto.cronogramas, function(i, cronograma)
@@ -79,7 +79,7 @@ $(function()
 
     if ($('select[name="Id_Punto"]').data('value') != '')
     {
-       $('select[name="Id_Punto"]').val($('select[name="Id_Punto"]').data('value')).trigger('change');  
+       $('select[name="Id_Punto"]').val($('select[name="Id_Punto"]').data('value')).trigger('change');
     }
 
     $('#actualizar_reporte').on('click', function(e)
@@ -88,7 +88,7 @@ $(function()
         {
             var data = $(this).serialize();
             $.post(
-                URL+'/actualizar', 
+                URL+'/actualizar',
                 data,
                 function(data){},
                 'json'

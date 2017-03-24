@@ -150,9 +150,14 @@ class ReporteController extends Controller {
 		else
 			$reporte = Reporte::find($request->input('Id'));
 
+		$dias = explode(',', $request->input('Dias'));
+		usort($dias, function($a, $b) {
+  		return strcmp($a, $b);
+		});
+
 		$reporte->Id_Punto = $request->input('Id_Punto');
 		$reporte->Id_Cronograma = $request->input('Id_Cronograma');
-		$reporte->Dias = $request->input('Dias');
+		$reporte->Dias = implode(',', $dias);
 		$reporte->Condiciones_Climaticas = null;
 		$reporte->Estado = 'Pendiente';
 		$reporte->save();

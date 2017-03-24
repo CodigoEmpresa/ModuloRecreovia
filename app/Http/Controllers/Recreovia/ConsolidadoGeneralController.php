@@ -11,7 +11,7 @@ use App\Modulos\Recreovia\GrupoPoblacional;
 use App\Http\Requests\GenerarReporteConsolidadoJorndas;
 
 class ConsolidadoGeneralController extends Controller {
-	
+
 	protected $usuario;
 
 	public function __construct()
@@ -42,19 +42,24 @@ class ConsolidadoGeneralController extends Controller {
 
 	public function generar(GenerarReporteConsolidadoJorndas $request)
 	{
-		
+
 		$id_jornada = $request->input('Id_Jornada');
 		$fecha = $request->input('Fecha');
+		$dias = explode(',', $request->input('Dias'));
+		usort($dias, function($a, $b) {
+  		return strcmp($a, $b);
+		});
+		
 		$reportes = Reporte::with('cronograma', 'cronograma.jornada', 'cronograma.sesiones', 'cronograma.sesiones.gruposPoblacionales')
 								->whereHas('cronograma', function($query) use ($id_jornada)
 								{
 									$query->where('Id_Jornada', $id_jornada);
 								})
-								->where('Dia', $fecha)
+								->where('Dias', $fecha)
 								->get();
 		$jornada = Jornada::find($id_jornada);
 		$gruposPoblacionales = GrupoPoblacional::all();
-		
+
 		$totales_sesiones = [
 			'Gimnasia de Mantenimiento (GM)' => [],
 			'Estimulación Muscular (EM)' => [],
@@ -70,8 +75,8 @@ class ConsolidadoGeneralController extends Controller {
 		];
 
 		foreach ($totales_sesiones as $key => &$total_sesion)
-		{	
-			foreach ($gruposPoblacionales as $grupo) 
+		{
+			foreach ($gruposPoblacionales as $grupo)
 			{
 				$total_sesion[$grupo['Id']] = [
 					'Nombre' => $grupo['Grupo'],
@@ -89,10 +94,10 @@ class ConsolidadoGeneralController extends Controller {
 
 		foreach ($reportes as $reporte)
 		{
-			foreach ($reporte->cronograma->sesiones as $sesion) 
+			foreach ($reporte->cronograma->sesiones as $sesion)
 			{
-				foreach ($sesion->gruposPoblacionales as $grupo) 
-				{	
+				foreach ($sesion->gruposPoblacionales as $grupo)
+				{
 					if ($sesion['Objetivo_General'] != '')
 						$totales_sesiones[$sesion['Objetivo_General']] [$grupo['Id']] [$grupo->pivot['Grupo_Asistencia']] [$grupo->pivot['Genero']] += $grupo->pivot['Cantidad'];
 				}

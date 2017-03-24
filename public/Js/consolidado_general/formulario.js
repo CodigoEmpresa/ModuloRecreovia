@@ -2,6 +2,21 @@ $(function(e)
 {
 	var JORNADAS = $.parseJSON(JSON.stringify($('select[name="Id_Jornada"]').data('json')));
 
+	$('input[name="Dias"]').selectize({
+			delimiter: ',',
+			persist: true,
+			create:  true
+	});
+
+	var selectize_dias = $('input[name="Dias"]')[0].selectize;
+
+	$('input[name="Dia"]').on('change', function(e)
+	{
+			selectize_dias.addOption({text:$(this).val(), value:$(this).val()});
+			selectize_dias.addItem($(this).val());
+			$(this).val('');
+	});
+
 	$('select[name="Id_Jornada"]').on('change', function(i, e)
 	{
 		var value = $(this).val();

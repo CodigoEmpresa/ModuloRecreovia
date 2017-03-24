@@ -59,7 +59,7 @@
                             </div>
                             <div class="col-md-8 form-group {{ $errors->has('Dias') ? 'has-error' : '' }}">
                                 <label for="">Días seleccionados</label> <br>
-                                <input type="text" class="form-control" name="Dias" value="{{ $informe ? $informe['Dias'] : old('Dias') }}" value="">
+                                <input type="text" class="form-control" name="Dias" value="{{ $informe ? $informe['Dias'] : old('Dias') }}">
                             </div>
                             <div class="col-xs-12">
                                 <hr>
