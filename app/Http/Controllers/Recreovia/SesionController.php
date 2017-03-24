@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers\Recreovia;
 
@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 use Mail;
 
 class SesionController extends Controller {
-	
+
 	public function __construct()
 	{
 		if (isset($_SESSION['Usuario']))
@@ -30,7 +30,7 @@ class SesionController extends Controller {
 		$localidades = Localidad::with('profesores', 'profesores.persona')->has('profesores')->get();
 		foreach ($localidades as $localidad)
 		{
-			foreach ($localidad->profesores as $profesor) 
+			foreach ($localidad->profesores as $profesor)
 			{
 				$profesores->push($profesor);
 			}
@@ -40,7 +40,7 @@ class SesionController extends Controller {
 
 		$cronograma = Cronograma::with(['punto', 'punto.localidad.profesores.persona', 'jornada', 'sesiones', 'sesiones.profesor'])
 											->find($id_cronograma);
-											
+
 		$formulario = [
 			'titulo' => 'Crear o editar sesiones',
 			'cronograma' => $cronograma,
@@ -63,7 +63,7 @@ class SesionController extends Controller {
 		$localidades = Localidad::with('profesores', 'profesores.persona')->has('profesores')->get();
 		foreach ($localidades as $localidad)
 		{
-			foreach ($localidad->profesores as $profesor) 
+			foreach ($localidad->profesores as $profesor)
 			{
 				$profesores->push($profesor);
 			}
@@ -74,7 +74,7 @@ class SesionController extends Controller {
 		$cronograma = Cronograma::with(['punto', 'punto.localidad.profesores.persona', 'jornada', 'sesiones'])->find($id_cronograma);
 
 		$sesion = Sesion::find($id_sesion);
-											
+
 		$formulario = [
 			'titulo' => 'Crear o editar sesiones',
 			'cronograma' => $cronograma,
@@ -95,7 +95,7 @@ class SesionController extends Controller {
 	{
 		$sesion = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'gruposPoblacionales', 'ProductoNoConforme', 'profesor')->find($id_sesion);
 		$gruposPoblacionales = GrupoPoblacional::get();
-											
+
 		$formulario = [
 			'titulo' => 'Sesion',
 			'sesion' => $sesion,
@@ -117,7 +117,7 @@ class SesionController extends Controller {
 	{
 		$sesion = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'gruposPoblacionales', 'ProductoNoConforme', 'profesor')->find($id_sesion);
 		$gruposPoblacionales = GrupoPoblacional::get();
-											
+
 		$formulario = [
 			'titulo' => 'Sesion',
 			'sesion' => $sesion,
@@ -181,13 +181,13 @@ class SesionController extends Controller {
 	}
 
 	public function procesar(Request $request)
-	{	
+	{
 		$notificar = false;
 		$sesion = Sesion::find($request->input('Id'));
 
 		if ($sesion->Estado != $request->input('Estado'))
 			$notificar = true;
-		
+
 		$sesion->Objetivos_Especificos = $request->input('Objetivos_Especificos');
 		$sesion->Objetivos_Especificos_1 = $request->input('Objetivos_Especificos_1');
 		$sesion->Objetivos_Especificos_2 = $request->input('Objetivos_Especificos_2');
@@ -202,10 +202,10 @@ class SesionController extends Controller {
 		$sesion->Tiempo_Final = $request->input('Tiempo_Final');
 		$sesion->Observaciones = $request->input('Observaciones');
 		$sesion->Estado = $request->has('Estado') ? $request->input('Estado') : $sesion->Estado;
-		
+
 		if ($request->input('origen') == 'profesor')
 		{
-			switch ($sesion->Estado) 
+			switch ($sesion->Estado)
 			{
 				case 'Aprobado':
 				case 'Finalizado':
@@ -223,7 +223,7 @@ class SesionController extends Controller {
 
 		if ($request->input('origen') == 'gestor')
 		{
-			switch ($sesion->Estado) 
+			switch ($sesion->Estado)
 			{
 				case 'Diligenciado':
 				case 'Finalizado':
@@ -252,7 +252,7 @@ class SesionController extends Controller {
 		{
 			if ($notificar)
 				$this->notificar($sesion, 'gestor');
-			
+
 			return redirect('/profesores/sesiones/'.$sesion['Id'].'/editar')->with(['status' => 'success', 'area' => 'Detalles']);
 
 		} else if($request->input('origen') == 'gestor') {
@@ -270,7 +270,7 @@ class SesionController extends Controller {
 		$sesion = Sesion::find($request->input('Id'));
 		$sesion->gruposPoblacionales()->detach();
 
-		foreach ($gruposPoblacionales as $grupo) 
+		foreach ($gruposPoblacionales as $grupo)
 		{
 			//participantes masculinos
 			$sesion->gruposPoblacionales()->save($grupo, [
@@ -314,7 +314,7 @@ class SesionController extends Controller {
 	{
 		$sesion = Sesion::with('productoNoConforme')->find($request->input('Id'));
 		$Requisito_Detalle = '';
-		
+
 		if ($sesion->productoNoConforme)
 			$productoNoConforme = $sesion->productoNoConforme;
 		else
@@ -402,7 +402,7 @@ class SesionController extends Controller {
 							->whereNull('deleted_at')
 							->where('Id_Recreopersona', $this->usuario['Recreopersona']->Id_Recreopersona)
 							->orderBy('Id', 'DESC')
-							->take(200)
+							->take(1000)
 							->get();
 
 		$lista = [
@@ -429,7 +429,7 @@ class SesionController extends Controller {
 							})
 							->whereNull('deleted_at')
 							->orderBy('Id', 'DESC')
-							->take(200)
+							->take(1000)
 							->get();
 
 		$lista = [
@@ -490,7 +490,7 @@ class SesionController extends Controller {
 				});
 			}
 		} catch (Exception $e) {
-			
+
 		}
 	}
 }
