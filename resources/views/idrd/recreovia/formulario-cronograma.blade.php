@@ -11,7 +11,7 @@
                 <div class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     Datos actualizados satisfactoriamente.
-                </div>                                
+                </div>
             </div>
         @endif
         @if (!empty($errors->all()))
@@ -79,6 +79,9 @@
                                     </label>
                                     <label class="radio-inline">
                                         <input type="radio" name="recreovia" id="recreovia5" value="CGI" {{ ($cronograma && $cronograma['recreovia'] == 'CGI') || old('recreovia') == 'CGI' ? 'checked' : '' }}> CGI
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="recreovia" id="recreovia6" value="MEAF" {{ ($cronograma && $cronograma['recreovia'] == 'MEAF') || old('recreovia') == 'MEAF' ? 'checked' : '' }}> MEAF
                                     </label>
                                 </div>
                                 <div id="datos_contacto" class="col-md-12 form-group oculto">

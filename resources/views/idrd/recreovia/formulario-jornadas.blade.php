@@ -10,7 +10,7 @@
                 <div class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     Datos actualizados satisfactoriamente.
-                </div>                                
+                </div>
             </div>
         @endif
         @if (!empty($errors->all()))
@@ -76,7 +76,7 @@
                                     <input type="checkbox" id="dia1" name="Dias[]" value="lunes" {{ ($jornada && $jornada->validarDia('lunes')) || (is_array(old('Dias')) && in_array('lunes', old('Dias'))) ? 'checked' : '' }}> Lunes
                                 </label>
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" id="dia2" name="Dias[]" value="martes" {{ ($jornada && $jornada->validarDia('martes')) || (is_array(old('Dias')) && in_array('martes', old('Dias'))) ? 'checked' : '' }}> Martes 
+                                    <input type="checkbox" id="dia2" name="Dias[]" value="martes" {{ ($jornada && $jornada->validarDia('martes')) || (is_array(old('Dias')) && in_array('martes', old('Dias'))) ? 'checked' : '' }}> Martes
                                 </label>
                                 <label class="checkbox-inline">
                                     <input type="checkbox" id="dia3" name="Dias[]" value="miercoles" {{ ($jornada && $jornada->validarDia('miercoles')) || (is_array(old('Dias')) && in_array('miercoles', old('Dias'))) ? 'checked' : '' }}> Miercoles

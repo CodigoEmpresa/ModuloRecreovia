@@ -4,7 +4,7 @@ $(function()
 	var latitud = 4.666575;
     var longitud = -74.125786;
     var zoom = $('select[name="Id_Punto"]').data('value') == '' ? 11 : 13;
-	
+
 	var map = new google.maps.Map($("#map").get(0), {
       center: {lat: latitud, lng: longitud},
       zoom: zoom
@@ -37,7 +37,7 @@ $(function()
 			{
 				$('select[name="Id_Jornada"]').append('<option value="'+jornada.Id_Jornada+'">'+jornada.Code+' - '+jornada.Label+'</option>');
 			});
-			
+
 			map.setCenter({lat: latitud, lng: longitud});
 			marker.setPosition({lat: latitud, lng: longitud});
 			map.setZoom(13);
@@ -85,6 +85,7 @@ $(function()
 
 		if(jornada)
 		{
+			console.log(jornada.Jornada);
 			switch (jornada.Jornada)
 			{
 				case 'dia':
@@ -103,6 +104,7 @@ $(function()
 					$('input[name="recreovia"][value="CGI"]').trigger('click');
 				break;
 				case 'mega_eventos':
+					$('input[name="recreovia"][value="MEAF"]').trigger('click');
 				break;
 			}
 
