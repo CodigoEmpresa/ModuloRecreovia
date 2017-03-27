@@ -617,7 +617,7 @@
                     <div class="col-md-12">
                         <hr>
                     </div>
-                    @if ($informe['Estado'] != 'Aprobado')
+                    @if ($informe['Estado'] != 'Aprobado' || $_SESSION['Usuario']['Permisos']['validar_reportes_jornadas'])
                         <div class="col-md-12">
                             <input type="button" class="btn btn-primary" id="actualizar_reporte" value="Actualizar reporte">
                         </div>

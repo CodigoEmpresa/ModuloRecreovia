@@ -47,16 +47,24 @@ class ConsolidadoGeneralController extends Controller {
 		$fecha = $request->input('Fecha');
 		$dias = explode(',', $request->input('Dias'));
 		usort($dias, function($a, $b) {
-  		return strcmp($a, $b);
+  			return strcmp($a, $b);
 		});
-		
-		$reportes = Reporte::with('cronograma', 'cronograma.jornada', 'cronograma.sesiones', 'cronograma.sesiones.gruposPoblacionales')
+
+		$query_builder = Reporte::with('cronograma', 'cronograma.jornada', 'cronograma.sesiones', 'cronograma.sesiones.gruposPoblacionales')
 								->whereHas('cronograma', function($query) use ($id_jornada)
 								{
 									$query->where('Id_Jornada', $id_jornada);
 								})
-								->where('Dias', $fecha)
-								->get();
+								->where('Estado', 'Aprobado');
+
+		$query_builder->where(function($query) use ($dias)
+		{
+			foreach ($dias as $dia) {
+				$query->orWhere('Dias', 'LIKE', '%'.$dia.'%');
+			}
+		});
+
+		$reportes = $query_builder->get();
 		$jornada = Jornada::find($id_jornada);
 		$gruposPoblacionales = GrupoPoblacional::all();
 

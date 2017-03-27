@@ -1,11 +1,11 @@
-@extends('master')                              
+@extends('master')
 
 @section('script')
-	@parent	
+	@parent
 	<script src="{{ asset('public/Js/dashboard.js') }}"></script>
 @stop
 
-@section('content')    
+@section('content')
     <div class="content">
     	<?php
     		$perfil = '';
@@ -38,7 +38,7 @@
 	    				</p>
 	    			</div>
     			@endif
-				
+
 				@if(count($programadas))
 					<div class="col-md-12">
 						<br>
@@ -66,7 +66,7 @@
 		    						$sesion_mayor_afluencia = null;
 		    						$total_mayor_afluencia = 0;
 
-		    						foreach ($programadas as $sesion) 
+		    						foreach ($programadas as $sesion)
 		    						{
 		    							if ($sesion->gruposPoblacionales)
 		    							{
@@ -77,13 +77,13 @@
 		    									$sesion_mayor_afluencia = $sesion;
 		    								}
 
-			    							foreach ($sesion->gruposPoblacionales as $grupo) 
+			    							foreach ($sesion->gruposPoblacionales as $grupo)
 			    							{
 			    								$total_participaciones += $grupo->pivot['Grupo_Asistencia'] == 'Participantes' ? $grupo->pivot['Cantidad'] : 0;
-			    								
+
 			    								if (!array_key_exists($grupo['Grupo'], $grupos_impacto))
 			    									$grupos_impacto[$grupo['Grupo']] = ['Participantes' => ['M' => 0, 'F' => 0], 'Asistentes' => ['M' => 0, 'F' => 0], 'Edad' => $grupo['Edad_Inicio'].($grupo['Edad_Fin'] < 0 ? ' - mas' : ' a '.$grupo['Edad_Fin']).' años'];
-			    								
+
 			    								$grupos_impacto[$grupo['Grupo']][$grupo->pivot['Grupo_Asistencia']][$grupo->pivot['Genero']] += $grupo->pivot['Cantidad'];
 			    							}
 		    							}
@@ -97,10 +97,10 @@
 							<?php
 								$grupo_mayor_impacto = 'N/P<br><small>0</small>';
 								$total = 0;
-								foreach ($grupos_impacto as $key => $grupo) 
+								foreach ($grupos_impacto as $key => $grupo)
 								{
 									$sub_total = $grupo['Participantes']['M'] + $grupo['Participantes']['F'] + $grupo['Asistentes']['M'] + $grupo['Asistentes']['F'];
-									
+
 									if($sub_total > $total)
 									{
 										$total = $sub_total;
@@ -130,8 +130,8 @@
 						@if ($sesion_mayor_afluencia)
 			    			<div class="col-md-12">
 								<p class="lead">La sesión con mayor afluencia fue:</p>
-								{{ $sesion_mayor_afluencia->toSuccessString() }} <br>
-								Realizada por: {{ $sesion->profesor ? $sesion->profesor->persona->toFriendlyString() : 'Sin profesor asignado' }} <br>
+								{{ $sesion_mayor_afluencia->getCode().' - '.$sesion_mayor_afluencia->toSuccessString() }} <br>
+								Realizada por: {{ $sesion_mayor_afluencia->profesor ? $sesion_mayor_afluencia->profesor->persona->toFriendlyString() : 'Sin profesor asignado' }} <br>
 								<small>
 									{{ $total_mayor_afluencia }} personas.
 								</small>
@@ -181,7 +181,7 @@
 		    						$total_mayor_afluencia = 0;
 		    						$sesion_mayor_afluencia = null;
 
-		    						foreach ($asignadas as $sesion) 
+		    						foreach ($asignadas as $sesion)
 		    						{
 		    							if ($sesion->gruposPoblacionales)
 		    							{
@@ -192,13 +192,13 @@
 		    									$sesion_mayor_afluencia = $sesion;
 		    								}
 
-			    							foreach ($sesion->gruposPoblacionales as $grupo) 
+			    							foreach ($sesion->gruposPoblacionales as $grupo)
 			    							{
 			    								$total_participaciones += $grupo->pivot['Grupo_Asistencia'] == 'Participantes' ? $grupo->pivot['Cantidad'] : 0;
-			    								
+
 			    								if (!array_key_exists($grupo['Grupo'], $grupos_impacto))
 			    									$grupos_impacto[$grupo['Grupo']] = ['Participantes' => ['M' => 0, 'F' => 0], 'Asistentes' => ['M' => 0, 'F' => 0], 'Edad' => $grupo['Edad_Inicio'].($grupo['Edad_Fin'] < 0 ? ' - mas' : ' a '.$grupo['Edad_Fin']).' años'];
-			    								
+
 			    								$grupos_impacto[$grupo['Grupo']][$grupo->pivot['Grupo_Asistencia']][$grupo->pivot['Genero']] += $grupo->pivot['Cantidad'];
 			    							}
 		    							}
@@ -213,7 +213,7 @@
 								$grupo_mayor_impacto = 'N\P';
 								$total = 0;
 
-								foreach ($grupos_impacto as $key => $grupo) 
+								foreach ($grupos_impacto as $key => $grupo)
 								{
 									$sub_total = $grupo['Participantes']['M'] + $grupo['Participantes']['F'] + $grupo['Asistentes']['M'] + $grupo['Asistentes']['F'];
 

@@ -31,35 +31,36 @@ $(function(e)
 
 			if (jornada)
 			{
+				console.log(jornada);
 				if (jornada.Fecha_Evento_Inicio)
 			    {
 					var fecha_inicio = moment(jornada.Fecha_Evento_Inicio);//.subtract(1, 'days');
-					$('input[name="Fecha"]').attr('data-fecha-inicio', fecha_inicio.format('YYYY-MM-DD'));
+					$('input[name="Dia"]').attr('data-fecha-inicio', fecha_inicio.format('YYYY-MM-DD'));
 			    } else {
-			    	$('input[name="Fecha"]').attr('data-fecha-inicio', '');
+			    	$('input[name="Dia"]').attr('data-fecha-inicio', '');
 			    }
 
 				if (jornada.Fecha_Evento_Fin)
 				{
 					var fecha_fin = moment(jornada.Fecha_Evento_Fin);//.add(1, 'days');
-					$('input[name="Fecha"]').attr('data-fecha-fin', fecha_fin.format('YYYY-MM-DD'));
+					$('input[name="Dia"]').attr('data-fecha-fin', fecha_fin.format('YYYY-MM-DD'));
 				} else {
-					$('input[name="Fecha"]').attr('data-fecha-fin', '');
+					$('input[name="Dia"]').attr('data-fecha-fin', '');
 				}
 
 				if (jornada.Dias)
 				{
-					$('input[name="Fecha"]').attr('data-dias', jornada.Dias);
+					$('input[name="Dia"]').attr('data-dias', jornada.Dias);
 				} else {
-					$('input[name="Fecha"]').attr('data-dias', '');
+					$('input[name="Dia"]').attr('data-dias', '');
 				}
 			}
 		} else {
-			$('input[name="Fecha"]').attr('data-fecha-inicio', '');
-			$('input[name="Fecha"]').attr('data-fecha-fin', '');
-			$('input[name="Fecha"]').attr('data-dias', '');
+			$('input[name="Dia"]').attr('data-fecha-inicio', '');
+			$('input[name="Dia"]').attr('data-fecha-fin', '');
+			$('input[name="Dia"]').attr('data-dias', '');
 		}
 
-		$('input[name="Fecha"]').val('');
+		$('input[name="Dia"]').val('');
 	});
 });

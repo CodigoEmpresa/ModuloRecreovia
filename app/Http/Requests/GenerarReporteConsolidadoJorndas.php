@@ -25,14 +25,15 @@ class GenerarReporteConsolidadoJorndas extends Request
     {
         return [
             'Id_Jornada' => 'required',
-            'Fecha' => 'required',            
+            'Dias' => 'required'
         ];
     }
 
     public function messages()
     {
         return [
-            'Id_Jornada.required' => 'El campo jornada es requerido'
+            'Id_Jornada.required' => 'El campo jornada es requerido',
+            'Dias.required' => 'Debe seleccionar al menos un día para generar el reporte'
         ];
     }
 }

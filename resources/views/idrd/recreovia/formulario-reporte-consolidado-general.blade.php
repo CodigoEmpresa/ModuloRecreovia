@@ -24,7 +24,7 @@
       <div class="row">
   			<form action="{{ url('informes/consolidado_general') }}" method="post">
   				<div class="col-md-12 form-group {{ $errors->has('Id_Jornada') ? 'has-error' : '' }}">
-  					<label for="">Jornada</label>
+  					<label for="">* Jornada</label>
   					<select name="Id_Jornada" id="" class="form-control" data-json="{{ $jornadas }}" data-value="{{ old('Id_Jornada') }}">
   						<option value="">Seleccionar</option>
   						@foreach($jornadas as $jornada)
@@ -32,12 +32,12 @@
   						@endforeach
   					</select>
   				</div>
-  				<div class="col-md-4 form-group {{ $errors->has('Fecha') ? 'has-error' : '' }}">
+  				<div class="col-md-4 form-group {{ $errors->has('Dia') ? 'has-error' : '' }}">
   					<label for="">Día</label>
   					<input type="text" name="Dia" class="form-control" value="{{ old('Fecha') }}" data-role="datepicker" data-fecha-inicio="" data-fecha-fin="" data-dias="" data-fechas-importantes="{{ Festivos::create()->datesToString() }}">
   				</div>
-  				<div class="col-md-8 form-group {{ $errors->has('Fecha') ? 'has-error' : '' }}">
-  					<label for="">Días seleccionados</label>
+  				<div class="col-md-8 form-group {{ $errors->has('Dias') ? 'has-error' : '' }}">
+  					<label for="">* Días seleccionados</label>
   					<input type="text" class="form-control" name="Dias" value="">
   				</div>
   				<div class="col-md-12">
