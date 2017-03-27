@@ -402,7 +402,6 @@ class SesionController extends Controller {
 							->whereNull('deleted_at')
 							->where('Id_Recreopersona', $this->usuario['Recreopersona']->Id_Recreopersona)
 							->orderBy('Id', 'DESC')
-							->take(1000)
 							->get();
 
 		$lista = [
@@ -429,7 +428,6 @@ class SesionController extends Controller {
 							})
 							->whereNull('deleted_at')
 							->orderBy('Id', 'DESC')
-							->take(1000)
 							->get();
 
 		$lista = [
