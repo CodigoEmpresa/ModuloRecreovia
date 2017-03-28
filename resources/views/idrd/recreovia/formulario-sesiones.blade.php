@@ -168,10 +168,11 @@
 							<tr>
 								<th>Cod.</th>
 								<th>Sesión</th>
-								<th>Fecha</th>
-								<th>H. Inicio</th>
-								<th>H. Fin</th>
-								<th>Estado</th>
+                                <th style="width:50px;" width="50px">Pendientes</th>
+								<th style="width:50px;" width="50px">Fecha</th>
+								<th style="width:50px;" width="50px">H. Inicio</th>
+								<th style="width:50px;" width="50px">H. Fin</th>
+								<th style="width:50px;" width="50px">Estado</th>
 								<th data-priority="2" class="no-sort" style="width: 30px;"></th>
 								<th data-priority="2" class="no-sort" style="width: 30px;"></th>
 							</tr>
@@ -218,6 +219,7 @@
                             				@endif
                             			</small>
                                 	</td>
+                                    <td align="center">{!! $i_sesion->getPending() !!}</td>
 									<td>{{ $i_sesion->Fecha }}</td>
 									<td>{{ $i_sesion->Inicio }}</td>
 									<td>{{ $i_sesion->Fin }}</td>

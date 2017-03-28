@@ -27,11 +27,12 @@
                             <th>Cod.</th>
                             <th>Sesión</th>
                             <th>Punto / Jornada</th>
-                            <th stlye="width:50px;">Fecha</th>
-                            <th stlye="width:50px;">H. Inicio</th>
-                            <th stlye="width:50px;">H. Fin</th>
-                            <th>Estado</th>
-                            <th data-priority="2"></th>
+                            <th style="width:50px;" width="50px">Pendientes</th>
+                            <th style="width:50px;" width="50px">Fecha</th>
+                            <th style="width:50px;" width="50px">H. Inicio</th>
+                            <th style="width:50px;" width="50px">H. Fin</th>
+                            <th style="width:50px;" width="50px">Estado</th>
+                            <th style="width: 30px;" data-priority="2"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -67,6 +68,7 @@
                                 </td>
                                 <td>{{ $sesion->Objetivo_General }}<br><small class="text-mutted">{{ $sesion->profesor->persona->toFriendlyString() }}</small></td>
                                 <td>{{ $sesion->cronograma->punto->toString() }}<br><small class="text-mutted">{{ $sesion->cronograma->jornada->toString() }}</small></td>
+                                <td align="center">{!! $sesion->getPending() !!}</td>
                                 <td>{{ $sesion->Fecha }}</td>
                                 <td>{{ $sesion->Inicio }}</td>
                                 <td>{{ $sesion->Fin }}</td>

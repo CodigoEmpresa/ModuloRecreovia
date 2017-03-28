@@ -69,7 +69,7 @@ $(function(e)
 				orderable: false
 			},
 			{
-				targets: 6,
+				targets: 7,
         		searchable: false,
         		orderable: false
         	}

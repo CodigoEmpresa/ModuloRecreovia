@@ -27,12 +27,12 @@
                             <th>Cod.</th>
                             <th>Sesión</th>
                             <th>Punto / Jornada</th>
-                            <th style="width:50px;">Pendientes</th>
-                            <th style="width:50px;">Fecha</th>
-                            <th style="width:50px;">H. Inicio</th>
-                            <th style="width:50px;">H. Fin</th>
-                            <th>Estado</th>
-                            <th data-priority="2"></th>
+                            <th style="width:50px;" width="50px">Pendientes</th>
+                            <th style="width:50px;" width="50px">Fecha</th>
+                            <th style="width:50px;" width="50px">H. Inicio</th>
+                            <th style="width:50px;" width="50px">H. Fin</th>
+                            <th style="width:50px;" width="50px">Estado</th>
+                            <th style="width: 30px;" data-priority="2"></th>
                         </tr>
                     </thead>
                     <tbody>
