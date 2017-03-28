@@ -54,5 +54,14 @@ class Sesion extends Model
         return 'S'.str_pad($this->Id, 4, '0', STR_PAD_LEFT);
     }
 
+	public function getPending()
+	{
+		$gruposPoblacionales = '<span class="pointer" title="Asistencia">'.(($this->gruposPoblacionales()->count() > 0) ? 'A' : '-').'</span>';
+		$productoNoConforme = '<span class="pointer" title="Producto no conforme">'.((!!$this->productoNoConforme) ? 'P' : '-').'</span>';
+		$calificacionDelServicio = '<span class="pointer" title="Calificación del servicio">'.((!!$this->calificacionDelServicio) ? 'C' : '-').'</span>';
+
+		return $gruposPoblacionales.' '.$productoNoConforme.' '.$calificacionDelServicio;
+	}
+
     use SoftDeletes;
 }

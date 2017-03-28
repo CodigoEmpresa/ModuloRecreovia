@@ -27,6 +27,7 @@
                             <th>Cod.</th>
                             <th>Sesión</th>
                             <th>Punto / Jornada</th>
+                            <th style="width:50px;">Pendientes</th>
                             <th style="width:50px;">Fecha</th>
                             <th style="width:50px;">H. Inicio</th>
                             <th style="width:50px;">H. Fin</th>
@@ -77,6 +78,7 @@
                                     </small>
                                 </td>
                                 <td>{{ $sesion->cronograma->punto->toString() }}<br><small class="text-mutted">{{ $sesion->cronograma->jornada->toString() }}</small></td>
+                                <td align="center">{!! $sesion->getPending() !!}</td>
                                 <td>{{ $sesion->Fecha }}</td>
                                 <td>{{ $sesion->Inicio }}</td>
                                 <td>{{ $sesion->Fin }}</td>
