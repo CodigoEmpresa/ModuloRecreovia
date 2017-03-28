@@ -85,7 +85,6 @@ $(function()
 
 		if(jornada)
 		{
-			console.log(jornada.Jornada);
 			switch (jornada.Jornada)
 			{
 				case 'dia':

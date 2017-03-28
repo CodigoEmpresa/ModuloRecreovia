@@ -65,7 +65,7 @@ $(function(e)
 		responsive: true,
 		columnDefs: [
 			{
-				targets: 'no-sort', 
+				targets: 'no-sort',
 				orderable: false
 			},
 			{
@@ -74,6 +74,17 @@ $(function(e)
         		orderable: false
         	}
       	]
+	});
+
+	$('input[name^="Requisito_"]').on('click', function(e)
+	{
+		var checkbox = $(this);
+		var name = $(this).prop('name');
+		$('input[name="'+name+'"]').each(function(i, e)
+		{
+			if (!checkbox.is($(e)))
+				$(e).prop('checked', false);
+		});
 	});
 
 	/*$('select[name="Objetivo_General"]').on('click', function(e)
@@ -90,7 +101,8 @@ $(function(e)
 		cargarObjetivoGeneral();
 	});
 
-	$('input[data-number]').on('focus', function(e) {
+	$('input[data-number]').on('focus', function(e)
+	{
 		$(this).select();
 	});
 

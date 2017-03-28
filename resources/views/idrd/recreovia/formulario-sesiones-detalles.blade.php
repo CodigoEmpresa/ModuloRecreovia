@@ -12,7 +12,7 @@
 				<div class="alert alert-success alert-dismissible" role="alert">
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					Datos actualizados satisfactoriamente.
-				</div>                                
+				</div>
 			</div>
 		@endif
 
@@ -130,9 +130,9 @@
 										<div class="col-md-6 form-group">
 											<label for="">Profesor</label>
 											<p class="form-control-static">
-												@if($sesion->profesor) 
-	                            					{{ $sesion->profesor->getCode().' - '.$sesion->profesor->persona->toString() }} 
-	                            				@else 
+												@if($sesion->profesor)
+	                            					{{ $sesion->profesor->getCode().' - '.$sesion->profesor->persona->toString() }}
+	                            				@else
 	                            					Sin profesor asignado
 	                            				@endif
 											</p>
@@ -222,7 +222,7 @@
 												</div>
 											</div>
 										</div>
-										
+
 										<div class="col-md-12 form-group">
 											<label for="">Observaciones</label>
 											<textarea class="form-control" name="Observaciones">{{ $sesion ? $sesion['Observaciones'] : old('Observaciones') }}</textarea>
@@ -259,7 +259,7 @@
 														@if($tipo == "profesor")
 															<input type="submit" class="btn btn-primary" value="Guardar" {{ $sesion && $sesion['Estado'] == 'Aprobado' ? 'disabled' : '' }}>
 														@else
-							                            	<input type="submit" class="btn btn-primary" value="Guardar"> 
+							                            	<input type="submit" class="btn btn-primary" value="Guardar">
 							                            @endif
 							                        @endif
 
@@ -279,7 +279,7 @@
 								</form>
 							</div>
 						</div>
-					</div>		
+					</div>
 				</div>
 				@if($sesion && in_array($sesion['Estado'], ['Aprobado', 'Finalizado']))
 					<?php
@@ -416,10 +416,10 @@
 																1. Puntualidad
 															</td>
 															<td align="center">
-																<input type="radio" name="Requisito_1" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_1'] == '1' || old('Requisito_1') == '1') ? 'checked' : '' }}>
+																<input type="checkbox" name="Requisito_1" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_1'] == '1' || old('Requisito_1') == '1') ? 'checked' : '' }}>
 															</td>
 															<td align="center">
-																<input type="radio" name="Requisito_1" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_1'] == '0' || old('Requisito_1') == '0') ? 'checked' : '' }}>
+																<input type="checkbox" name="Requisito_1" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_1'] == '0' || old('Requisito_1') == '0') ? 'checked' : '' }}>
 															</td>
 														</tr>
 														<tr>
@@ -427,10 +427,10 @@
 																2. Personal competente para el desarrollo de la actividad
 															</td>
 															<td align="center">
-																<input type="radio" name="Requisito_2" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_2'] == '1' || old('Requisito_2') == '1') ? 'checked' : '' }}>
+																<input type="checkbox" name="Requisito_2" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_2'] == '1' || old('Requisito_2') == '1') ? 'checked' : '' }}>
 															</td>
 															<td align="center">
-																<input type="radio" name="Requisito_2" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_2'] == '0' || old('Requisito_2') == '0') ? 'checked' : '' }}>
+																<input type="checkbox" name="Requisito_2" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_2'] == '0' || old('Requisito_2') == '0') ? 'checked' : '' }}>
 															</td>
 														</tr>
 														<tr>
@@ -438,10 +438,10 @@
 																3. Contar con el Talento Humano mínimo requerido
 															</td>
 															<td align="center">
-																<input type="radio" name="Requisito_3" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_3'] == '1' || old('Requisito_3') == '1') ? 'checked' : '' }}>
+																<input type="checkbox" name="Requisito_3" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_3'] == '1' || old('Requisito_3') == '1') ? 'checked' : '' }}>
 															</td>
 															<td align="center">
-																<input type="radio" name="Requisito_3" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_3'] == '0' || old('Requisito_3') == '0') ? 'checked' : '' }}>
+																<input type="checkbox" name="Requisito_3" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_3'] == '0' || old('Requisito_3') == '0') ? 'checked' : '' }}>
 															</td>
 														</tr>
 														<tr>
@@ -449,10 +449,10 @@
 																4. Escenario adecuado
 															</td>
 															<td align="center">
-																<input type="radio" name="Requisito_4" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_4'] == '1' || old('Requisito_4') == '1') ? 'checked' : '' }}>
+																<input type="checkbox" name="Requisito_4" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_4'] == '1' || old('Requisito_4') == '1') ? 'checked' : '' }}>
 															</td>
 															<td align="center">
-																<input type="radio" name="Requisito_4" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_4'] == '0' || old('Requisito_4') == '0') ? 'checked' : '' }}>
+																<input type="checkbox" name="Requisito_4" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_4'] == '0' || old('Requisito_4') == '0') ? 'checked' : '' }}>
 															</td>
 														</tr>
 														<tr>
@@ -460,10 +460,10 @@
 																5. Contar con los parámetros del IDIGER
 															</td>
 															<td align="center">
-																<input type="radio" name="Requisito_5" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_5'] == '1' || old('Requisito_5') == '1') ? 'checked' : '' }}>
+																<input type="checkbox" name="Requisito_5" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_5'] == '1' || old('Requisito_5') == '1') ? 'checked' : '' }}>
 															</td>
 															<td align="center">
-																<input type="radio" name="Requisito_5" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_5'] == '0' || old('Requisito_5') == '0') ? 'checked' : '' }}>
+																<input type="checkbox" name="Requisito_5" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_5'] == '0' || old('Requisito_5') == '0') ? 'checked' : '' }}>
 															</td>
 														</tr>
 														<tr>
@@ -471,10 +471,10 @@
 																6. Cumplir con los niveles de competencia de Ruido
 															</td>
 															<td align="center">
-																<input type="radio" name="Requisito_6" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_6'] == '1' || old('Requisito_6') == '1') ? 'checked' : '' }}>
+																<input type="checkbox" name="Requisito_6" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_6'] == '1' || old('Requisito_6') == '1') ? 'checked' : '' }}>
 															</td>
 															<td align="center">
-																<input type="radio" name="Requisito_6" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_6'] == '0' || old('Requisito_6') == '0') ? 'checked' : '' }}>
+																<input type="checkbox" name="Requisito_6" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_6'] == '0' || old('Requisito_6') == '0') ? 'checked' : '' }}>
 															</td>
 														</tr>
 														<tr>
@@ -482,10 +482,10 @@
 																7. Cumplir con la Resolución 512 de 2003
 															</td>
 															<td align="center">
-																<input type="radio" name="Requisito_7" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_7'] == '1' || old('Requisito_7') == '1') ? 'checked' : '' }}>
+																<input type="checkbox" name="Requisito_7" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_7'] == '1' || old('Requisito_7') == '1') ? 'checked' : '' }}>
 															</td>
 															<td align="center">
-																<input type="radio" name="Requisito_7" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_7'] == '0' || old('Requisito_7') == '0') ? 'checked' : '' }}>
+																<input type="checkbox" name="Requisito_7" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_7'] == '0' || old('Requisito_7') == '0') ? 'checked' : '' }}>
 															</td>
 														</tr>
 														<tr>
@@ -493,10 +493,10 @@
 																8. Elementos de producción (sonido)
 															</td>
 															<td align="center">
-																<input type="radio" name="Requisito_8" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_8'] == '1' || old('Requisito_8') == '1') ? 'checked' : '' }}>
+																<input type="checkbox" name="Requisito_8" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_8'] == '1' || old('Requisito_8') == '1') ? 'checked' : '' }}>
 															</td>
 															<td align="center">
-																<input type="radio" name="Requisito_8" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_8'] == '0' || old('Requisito_8') == '0') ? 'checked' : '' }}>
+																<input type="checkbox" name="Requisito_8" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_8'] == '0' || old('Requisito_8') == '0') ? 'checked' : '' }}>
 															</td>
 														</tr>
 														<tr>
@@ -504,10 +504,10 @@
 																9. Planificación de la sesión
 															</td>
 															<td align="center">
-																<input type="radio" name="Requisito_9" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_9'] == '1' || old('Requisito_9') == '1') ? 'checked' : '' }}>
+																<input type="checkbox" name="Requisito_9" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_9'] == '1' || old('Requisito_9') == '1') ? 'checked' : '' }}>
 															</td>
 															<td align="center">
-																<input type="radio" name="Requisito_9" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_9'] == '0' || old('Requisito_9') == '0') ? 'checked' : '' }}>
+																<input type="checkbox" name="Requisito_9" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_9'] == '0' || old('Requisito_9') == '0') ? 'checked' : '' }}>
 															</td>
 														</tr>
 														<tr>
@@ -515,10 +515,10 @@
 																10. Presentación Personal del Talento Humano
 															</td>
 															<td align="center">
-																<input type="radio" name="Requisito_10" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_10'] == '1' || old('Requisito_10') == '1') ? 'checked' : '' }}>
+																<input type="checkbox" name="Requisito_10" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_10'] == '1' || old('Requisito_10') == '1') ? 'checked' : '' }}>
 															</td>
 															<td align="center">
-																<input type="radio" name="Requisito_10" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_10'] == '0' || old('Requisito_10') == '0') ? 'checked' : '' }}>
+																<input type="checkbox" name="Requisito_10" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_10'] == '0' || old('Requisito_10') == '0') ? 'checked' : '' }}>
 															</td>
 														</tr>
 														<tr>
@@ -526,10 +526,10 @@
 																11. Mantener actualizada la información sobre los Puntos de Recreovía en Planeación del IDRD
 															</td>
 															<td align="center">
-																<input type="radio" name="Requisito_11" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_11'] == '1' || old('Requisito_11') == '1') ? 'checked' : '' }}>
+																<input type="checkbox" name="Requisito_11" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_11'] == '1' || old('Requisito_11') == '1') ? 'checked' : '' }}>
 															</td>
 															<td align="center">
-																<input type="radio" name="Requisito_11" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_11'] == '0' || old('Requisito_11') == '0') ? 'checked' : '' }}>
+																<input type="checkbox" name="Requisito_11" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_11'] == '0' || old('Requisito_11') == '0') ? 'checked' : '' }}>
 															</td>
 														</tr>
 														<tr>
@@ -537,10 +537,10 @@
 																12. Accesorios (bicicletas estáticas, step)
 															</td>
 															<td align="center">
-																<input type="radio" name="Requisito_12" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_12'] == '1' || old('Requisito_12') == '1') ? 'checked' : '' }}>
+																<input type="checkbox" name="Requisito_12" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_12'] == '1' || old('Requisito_12') == '1') ? 'checked' : '' }}>
 															</td>
 															<td align="center">
-																<input type="radio" name="Requisito_12" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_12'] == '0' || old('Requisito_12') == '0') ? 'checked' : '' }}>
+																<input type="checkbox" name="Requisito_12" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_12'] == '0' || old('Requisito_12') == '0') ? 'checked' : '' }}>
 															</td>
 														</tr>
 														<tr>
@@ -548,10 +548,10 @@
 																13. Cumplir con el instructivo de selección y contratación
 															</td>
 															<td align="center">
-																<input type="radio" name="Requisito_13" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_13'] == '1' || old('Requisito_13') == '1') ? 'checked' : '' }}>
+																<input type="checkbox" name="Requisito_13" value="1" {{ ($productoNoConforme && $productoNoConforme['Requisito_13'] == '1' || old('Requisito_13') == '1') ? 'checked' : '' }}>
 															</td>
 															<td align="center">
-																<input type="radio" name="Requisito_13" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_13'] == '0' || old('Requisito_13') == '0') ? 'checked' : '' }}>
+																<input type="checkbox" name="Requisito_13" value="0" {{ ($productoNoConforme && $productoNoConforme['Requisito_13'] == '0' || old('Requisito_13') == '0') ? 'checked' : '' }}>
 															</td>
 														</tr>
 													</tbody>
