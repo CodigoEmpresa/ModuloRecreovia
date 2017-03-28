@@ -41,25 +41,26 @@
 											<?php
 				                                switch ($sesion->Estado)
 				                                {
-				                                    case 'Pendiente':
-				                                        $class = 'default';
-				                                    break;
-				                                    case 'Diligenciado':
-				                                        $class = 'warning';
-				                                    break;
-				                                    case 'Aprobado':
-				                                        $class = 'success';
-				                                    break;
-				                                    case 'Finalizado':
-				                                        $class = 'info';
-				                                    break;
-				                                    case 'Rechazado':
-				                                    case 'Corregir':
-				                                        $class = 'danger';
-				                                    break;
-				                                    default:
-				                                        $class= 'default';
-				                                    break;
+                                                    case 'Pendiente':
+            		                        			$class = 'default';
+            		                        		break;
+            		                        		case 'Diligenciado':
+            		                        		case 'Corregir':
+            		                        			$class = 'warning';
+            		                        		break;
+            		                        		case 'Aprobado':
+            		                        			$class = 'success';
+            		                        		break;
+            		                        		case 'Finalizado':
+            		                        			$class = 'info';
+            		                        		break;
+            		                        		case 'Rechazado':
+            		                        		case 'Cancelado':
+            		                        			$class = 'danger';
+            		                        		break;
+            	                                    default:
+            	                                        $class= 'default';
+            	                                    break;
 				                                }
 				                            ?>
 											<p class="form-control-static text-{{ $class }}">
@@ -231,13 +232,16 @@
 											<div class="col-md-12 form-group">
 												<label for="">Estado</label><br>
 					                            <label class="radio-inline">
-					                                <input type="radio" name="Estado" id="estado3" value="Aprobado" {{ ($sesion && $sesion['Estado'] == 'Aprobado') || old('Estado') == 'Aprobado' ? 'checked' : '' }}> Aprobado
+					                                <input type="radio" name="Estado" id="estado1" value="Aprobado" {{ ($sesion && $sesion['Estado'] == 'Aprobado') || old('Estado') == 'Aprobado' ? 'checked' : '' }}> Aprobado
 					                            </label>
 					                            <label class="radio-inline">
-					                                <input type="radio" name="Estado" id="estado5" value="Finalizado" {{ ($sesion && $sesion['Estado'] == 'Finalizado') || old('Estado') == 'Finalizado' ? 'checked' : '' }}> Finalizado
+					                                <input type="radio" name="Estado" id="estado2" value="Finalizado" {{ ($sesion && $sesion['Estado'] == 'Finalizado') || old('Estado') == 'Finalizado' ? 'checked' : '' }}> Finalizado
+					                            </label>
+                                                <label class="radio-inline">
+					                                <input type="radio" name="Estado" id="estado5" value="Cancelado" {{ ($sesion && $sesion['Estado'] == 'Cancelado') || old('Estado') == 'Cancelado' ? 'checked' : '' }}> Cancelado
 					                            </label>
 					                            <label class="radio-inline">
-					                                <input type="radio" name="Estado" id="estado4" value="Rechazado" {{ ($sesion && $sesion['Estado'] == 'Rechazado') || old('Estado') == 'Rechazado' ? 'checked' : '' }}> Rechazado
+					                                <input type="radio" name="Estado" id="estado3" value="Rechazado" {{ ($sesion && $sesion['Estado'] == 'Rechazado') || old('Estado') == 'Rechazado' ? 'checked' : '' }}> Rechazado
 					                            </label>
 					                            <label class="radio-inline">
 					                                <input type="radio" name="Estado" id="estado4" value="Corregir" {{ ($sesion && $sesion['Estado'] == 'Corregir') || old('Estado') == 'Corregir' ? 'checked' : '' }}> Corregir

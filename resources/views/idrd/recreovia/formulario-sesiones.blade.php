@@ -4,7 +4,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmhb8BVo311Mnvr35sv8VngIvXiiTnKQ4" defer></script>
     <script src="{{ asset('public/Js/sesiones/formulario.js') }}"></script>
 @stop
-    
+
 <div class="content">
 	<div id="main" class="row" data-url="{{ url('programacion') }}">
 		@if ($status == 'success')
@@ -12,7 +12,7 @@
 				<div class="alert alert-success alert-dismissible" role="alert">
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					Datos actualizados satisfactoriamente.
-				</div>                                
+				</div>
 			</div>
 		@endif
 		@if (!empty($errors->all()))
@@ -160,7 +160,7 @@
 			</div>
 			<div class="row">
 				<div class="col-md-12"><br></div>
-			</div> 
+			</div>
 			<div class="row">
 				<div class="col-md-12">
 					<table id="sesiones" class="display nowrap table table-striped table-min">
@@ -185,6 +185,7 @@
 		                        			$class = 'default';
 		                        		break;
 		                        		case 'Diligenciado':
+		                        		case 'Corregir':
 		                        			$class = 'warning';
 		                        		break;
 		                        		case 'Aprobado':
@@ -194,6 +195,7 @@
 		                        			$class = 'info';
 		                        		break;
 		                        		case 'Rechazado':
+		                        		case 'Cancelado':
 		                        			$class = 'danger';
 		                        		break;
 	                                    default:
@@ -209,9 +211,9 @@
                                 		{{ $i_sesion->Objetivo_General }}
                                 		<br>
                             			<small class="text-mutted">
-                            				@if($i_sesion->profesor) 
-                            					{{ $i_sesion->profesor->persona->toFriendlyString() }} 
-                            				@else 
+                            				@if($i_sesion->profesor)
+                            					{{ $i_sesion->profesor->persona->toFriendlyString() }}
+                            				@else
                             					Sin profesor asignado
                             				@endif
                             			</small>
@@ -220,7 +222,7 @@
 									<td>{{ $i_sesion->Inicio }}</td>
 									<td>{{ $i_sesion->Fin }}</td>
 									<td>{{ $i_sesion->Estado }}</td>
-									<td data-priority="2"> 
+									<td data-priority="2">
 		                            	<a data-role="validar" href="{{ url('/gestores/sesiones/'.$i_sesion['Id'].'/editar') }}" class="pull-right separe-right btn btn-default btn-xs" data-toggle="tooltip" data-placement="bottom" title="Detalles">
 		                                	<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
 		                            	</a>

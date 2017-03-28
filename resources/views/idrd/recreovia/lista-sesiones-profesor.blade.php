@@ -43,6 +43,7 @@
                                         $class = 'default';
                                     break;
                                     case 'Diligenciado':
+                                    case 'Corregir':
                                         $class = 'warning';
                                     break;
                                     case 'Aprobado':
@@ -52,7 +53,7 @@
                                         $class = 'info';
                                     break;
                                     case 'Rechazado':
-                                    case 'Corregir':
+                                    case 'Cancelado':
                                         $class = 'danger';
                                     break;
                                     default:
