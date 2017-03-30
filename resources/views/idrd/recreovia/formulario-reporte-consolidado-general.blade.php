@@ -25,8 +25,7 @@
   			<form action="{{ url('informes/consolidado_general') }}" method="post">
   				<div class="col-md-12 form-group {{ $errors->has('Id_Jornada') ? 'has-error' : '' }}">
   					<label for="">* Jornada</label>
-  					<select name="Id_Jornada" id="" class="form-control" data-json="{{ $jornadas }}" data-value="{{ old('Id_Jornada') }}">
-  						<option value="">Seleccionar</option>
+  					<select name="Id_Jornada" id="" class="form-control" data-json="{{ $jornadas }}" data-value="{{ old('Id_Jornada') }}" title="Seleccionar">
   						@foreach($jornadas as $jornada)
   							<option value="{{ $jornada['Id_Jornada'] }}">{{ $jornada->toString() }}</option>
   						@endforeach

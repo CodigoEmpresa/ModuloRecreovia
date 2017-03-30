@@ -96,7 +96,7 @@ $(function(e)
 		}
 	});*/
 
-	$('select[name="Objetivo_General"]').on('change', function(e)
+	$('select[name="Objetivo_General"]').on('changed.bs.select', function(e)
 	{
 		cargarObjetivoGeneral();
 	});

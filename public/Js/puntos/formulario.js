@@ -13,9 +13,9 @@ $(function()
         $('input[name="Longitud"]').val(e.latLng.lng());
     }
 
-    function toggleBounce() 
+    function toggleBounce()
     {
-        if (marker.getAnimation() !== null) 
+        if (marker.getAnimation() !== null)
         {
             marker.setAnimation(null);
         } else {
@@ -51,7 +51,7 @@ $(function()
         $('select[name="select-jornadas"]').focus();
     };
 
-    $('select[name="Id_Localidad"]').on('change', function(e)
+    $('select[name="Id_Localidad"]').on('changed.bs.select', function(e)
     {
         var localidad = $(this).val();
         var upz_localidad = $.grep(UPZ, function(o, i){
@@ -60,11 +60,13 @@ $(function()
 
         if (upz_localidad.length > 0)
         {
-            $('select[name="Id_Upz"]').html('<option value="">Seleccionar</option>');
+            $('select[name="Id_Upz"]').html('');
             $.each(upz_localidad, function(i, e)
             {
-                $('select[name="Id_Upz"]').append('<option value="'+e.Id_Upz+'">'+e.Upz+'</option>');
+                $('select[name="Id_Upz"]').append('<option value="'+e.Id_Upz+'">'+e.cod_upz+' - '+e.Upz+'</option>');
             });
+
+            $('select[name="Id_Upz"]').selectpicker('refresh');
         }
     });
 
@@ -76,16 +78,16 @@ $(function()
 
         registrar_jornadas();
     });
-    
+
     $("#table-jornadas").delegate('a', 'click', function(e)
     {
         var $tr = $(this).closest('tr');
         $('select[name="select-jornadas"]').append('<option value="'+$tr.data('id')+'">'+$tr.find('td').eq(1).text()+'</option>');
-        
+
         var temp = $('input[name="Jornadas"]').val();
         temp = temp.endsWith(',') ? temp.slice(0, -1) : temp;
         var jornadas_punto = temp.split(',');
-        
+
         temp = '';
         $.each(jornadas_punto, function(i, e)
         {
@@ -135,7 +137,7 @@ $(function()
         animation: google.maps.Animation.DROP,
         position: {lat: latitud, lng: longitud}
     });
-    
+
     marker.addListener('click', toggleBounce);
 
     marker.addListener('dragend', actualizarPosicion);

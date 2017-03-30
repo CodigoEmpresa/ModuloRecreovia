@@ -40,8 +40,7 @@
                         <fieldset>
                             <div class="col-md-4 form-group {{ $errors->has('Id_Punto') ? 'has-error' : '' }}">
                                 <label for="">Punto</label>
-                                <select name="Id_Punto" id="Id_Punto" class="form-control" data-value="{{ $informe ? $informe['Id_Punto'] : old('Id_Punto') }}">
-                                    <option value="">Seleccionar</option>
+                                <select name="Id_Punto" id="Id_Punto" class="form-control" data-value="{{ $informe ? $informe['Id_Punto'] : old('Id_Punto') }}" title="Seleccionar">
                                     @foreach($puntos as $punto)
                                         <option value="{{ $punto['Id_Punto'] }}">{{ $punto->getCode().' - '.$punto->toString() }}</option>
                                     @endforeach
@@ -49,8 +48,7 @@
                             </div>
                             <div class="col-md-8 form-group {{ $errors->has('Id_Cronograma') ? 'has-error' : '' }}">
                                 <label for="">Periodo y jornada</label>
-                                <select name="Id_Cronograma" id="Id_Cronograma" class="form-control" data-json="{{ json_encode($puntos) }}" data-value="{{ $informe ? $informe['Id_Cronograma'] : old('Id_Cronograma') }}">
-                                    <option value="">Seleccionar</option>
+                                <select name="Id_Cronograma" id="Id_Cronograma" class="form-control" data-json="{{ json_encode($puntos) }}" data-value="{{ $informe ? $informe['Id_Cronograma'] : old('Id_Cronograma') }}" title="Seleccionar">
                                 </select>
                             </div>
                             <div class="col-md-4 form-group {{ $errors->has('Dia') ? 'has-error' : '' }}">
@@ -288,7 +286,7 @@
                                                         <tr id="plantilla_servicio" style="display:none;">
                                                             <td data-role="item">0</td>
                                                             <td class="select">
-                                                                <select name="tipo" data-name="tipo">
+                                                                <select name="tipo" data-name="tipo" data-ignore-selectpicker>
                                                                     <option value="Sonido">Sonido</option>
                                                                     <option value="Tarima">Tarima</option>
                                                                 </select>
@@ -326,7 +324,7 @@
                                                             <tr id="plantilla_servicio">
                                                                 <td data-role="item">{{ $i }}</td>
                                                                 <td class="select">
-                                                                    <select name="tipo_{{ $i-1 }}" data-name="tipo" data-value="{{ $servicio->tipo }}">
+                                                                    <select name="tipo_{{ $i-1 }}" data-name="tipo" data-value="{{ $servicio->tipo }}" data-ignore-selectpicker>
                                                                         <option value="Sonido">Sonido</option>
                                                                         <option value="Tarima">Tarima</option>
                                                                     </select>

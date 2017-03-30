@@ -7,10 +7,10 @@ $(function()
     {
         $.get(
             URL+'/service/buscar/'+key,
-            {}, 
+            {},
             function(data)
             {
-                if(data.length == 1) 
+                if(data.length == 1)
                 {
                     window.location.href = URL_PROFESORES+'/'+data[0]['Id_Persona']+'/editar';
                 }
@@ -27,7 +27,7 @@ $(function()
             dataType: 'json',
             success: function(data)
             {
-                var html = '<option value="">Seleccionar</option>';
+                var html = '';
                 if(data.length > 0)
                 {
                     $.each(data, function(i, e)
@@ -35,12 +35,15 @@ $(function()
                         html += '<option value="'+e['Nombre_Ciudad']+'">'+e['Nombre_Ciudad']+'</option>';
                     });
                 }
-                $('select[name="Nombre_Ciudad"]').html(html).val($('select[name="Nombre_Ciudad"]').data('value'));
+                $('select[name="Nombre_Ciudad"]').html(html);
+                $('select[name="Nombre_Ciudad"]').selectpicker('refresh');
+                $('select[name="Nombre_Ciudad"]').val($('select[name="Nombre_Ciudad"]').data('value'));
+
             }
         });
     };
 
-    $('select[name="Id_Pais"]').on('change', function(e)
+    $('select[name="Id_Pais"]').on('changed.bs.select', function(e)
     {
         if($(this).val() != '')
             popular_ciudades($(this).val());

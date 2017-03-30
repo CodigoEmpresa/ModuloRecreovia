@@ -39,6 +39,11 @@ class Recreopersona extends Model
         return $this->hasMany('App\Modulos\Recreovia\Sesion', 'Id_Recreopersona');
     }
 
+	public function sesionesDeAcompanante()
+	{
+		return $this->belognsToMany('App\Modulos\Recreovia\Sesion', 'Sesiones_Acompanantes', 'Id_Recreopersona', 'Id_Sesion');
+	}
+
     public function reportes()
     {
         return $this->belongsToMany('App\Modulos\Recreovia\Reporte', 'ReportesProfesores', 'Id_Profesor', 'Id_Reporte')
@@ -46,7 +51,7 @@ class Recreopersona extends Model
     }
 
     public function getCode()
-    { 
+    {
         return 'U'.str_pad($this->Id_Recreopersona, 4, '0', STR_PAD_LEFT);
     }
 

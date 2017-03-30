@@ -42,8 +42,7 @@
                                 @endif
                                 <div class="col-md-12 form-group {{ $errors->has('Id_Punto') ? 'has-error' : '' }}">
                                     <label for="">Punto</label>
-                                    <select name="Id_Punto" id="" class="form-control" data-value="{{ $cronograma ? $cronograma['Id_Punto'] : old('Id_Punto') }}">
-                                        <option value="">Seleccionar</option>
+                                    <select name="Id_Punto" id="" class="form-control" data-value="{{ $cronograma ? $cronograma['Id_Punto'] : old('Id_Punto') }}" title="Seleccionar">
                                         @foreach($recreopersona->puntos as $punto)
                                             <option value="{{ $punto['Id_Punto'] }}">{{ $punto->getCode().' -  '.$punto->toString() }}</option>
                                         @endforeach
@@ -51,8 +50,7 @@
                                 </div>
                                 <div class="col-md-12 form-group {{ $errors->has('Id_Jornada') ? 'has-error' : '' }}">
                                     <label for="">Jornada</label>
-                                    <select name="Id_Jornada" id="" class="form-control" data-json="{{ $recreopersona->puntos }}" data-value="{{ $cronograma ? $cronograma['Id_Jornada'] : old('Id_Jornada') }}">
-                                        <option value="">Seleccionar</option>
+                                    <select name="Id_Jornada" id="" class="form-control" data-json="{{ $recreopersona->puntos }}" data-value="{{ $cronograma ? $cronograma['Id_Jornada'] : old('Id_Jornada') }}" title="Seleccionar">
                                     </select>
                                 </div>
                                 <div class="col-md-6 form-group {{ $errors->has('Desde') ? 'has-error' : '' }}">

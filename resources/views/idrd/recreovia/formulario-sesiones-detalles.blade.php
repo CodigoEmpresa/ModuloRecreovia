@@ -140,8 +140,7 @@
 										</div>
 										<div class="col-md-6 form-group">
 											<label for="">Sesión</label>
-											<select name="Objetivo_General" id="Objetivo_General" class="form-control" data-value="{{ $sesion ? $sesion['Objetivo_General'] : old('Objetivo_General') }}" {{ $tipo == 'profesor' ? 'disabled' : '' }}>
-												<option value="">Seleccionar</option>
+											<select name="Objetivo_General" id="Objetivo_General" class="form-control" data-value="{{ $sesion ? $sesion['Objetivo_General'] : old('Objetivo_General') }}" {{ $tipo == 'profesor' ? 'disabled' : '' }} title="Seleccionar">
 												<option value="Gimnasia de Mantenimiento (GM)">Gimnasia de Mantenimiento (GM)</option>
 												<option value="Estimulación Muscular (EM)">Estimulación Muscular (EM)</option>
 												<option value="Movilidad Articular (MA)">Movilidad Articular (MA)</option>

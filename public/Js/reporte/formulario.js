@@ -42,7 +42,7 @@ $(function()
         $(this).val('');
     });
 
-    $('select[name="Id_Punto"]').on('change', function(e)
+    $('select[name="Id_Punto"]').on('changed.bs.select', function(e)
     {
     	var Id_Punto = $(this).val();
     	var punto = $.grep(PUNTOS, function(o, i)
@@ -52,11 +52,13 @@ $(function()
 
     	if(punto.cronogramas.length)
     	{
-    		$('select[name="Id_Cronograma"]').html('<option value="">Seleccionar</option>');
+    		$('select[name="Id_Cronograma"]').html('');
     		$.each(punto.cronogramas, function(i, cronograma)
     		{
     			$('select[name="Id_Cronograma"]').append('<option data-desde="'+cronograma.Desde+'" data-dias="'+cronograma.jornada.Dias+'" data-hasta="'+cronograma.Hasta+'" value="'+cronograma.Id+'">'+('Del '+cronograma.Desde+' al '+cronograma.Hasta+' / '+cronograma.jornada.Code+' - '+cronograma.jornada.Label)+'</option>');
     		});
+
+            $('select[name="Id_Cronograma"]').selectpicker('refresh');
     	}
 
         if ($('select[name="Id_Cronograma"]').data('value') != '')

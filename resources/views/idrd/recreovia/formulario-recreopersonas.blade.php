@@ -3,7 +3,7 @@
 
     <script src="{{ asset('public/Js/profesores/formulario.js') }}"></script>
 @stop
-    
+
 <div class="content">
     <div id="main" class="row" data-url="{{ url('personas') }}" data-url-profesores="{{ url('profesores') }}">
         @if ($status == 'success')
@@ -41,8 +41,7 @@
                         <div class="col-xs-12 col-md-6">
                             <div class="form-group {{ $errors->has('Id_TipoDocumento') ? 'has-error' : '' }}">
                                 <label class="control-label" for="Id_TipoDocumento">* Tipo documento </label>
-                                <select name="Id_TipoDocumento" id="" class="form-control" data-value="{{ $persona ? $persona['Id_TipoDocumento'] : old('Id_TipoDocumento') }}">
-                                    <option value="">Seleccionar</option>
+                                <select name="Id_TipoDocumento" id="" class="form-control" data-value="{{ $persona ? $persona['Id_TipoDocumento'] : old('Id_TipoDocumento') }}" title="Seleccionar">
                                     @foreach($documentos as $documento)
                                         <option value="{{ $documento['Id_TipoDocumento'] }}">{{ $documento['Descripcion_TipoDocumento'] }}</option>
                                     @endforeach
@@ -98,8 +97,7 @@
                         <div class="col-xs-12 col-md-6">
                             <div class="form-group {{ $errors->has('Id_Etnia') ? 'has-error' : '' }}">
                                 <label class="control-label" for="Id_Etnia">* Etnia </label>
-                                <select name="Id_Etnia" id="" class="form-control" data-value="{{ $persona ? $persona['Id_Etnia'] : old('Id_Etnia') }}">
-                                    <option value="">Seleccionar</option>
+                                <select name="Id_Etnia" id="" class="form-control" data-value="{{ $persona ? $persona['Id_Etnia'] : old('Id_Etnia') }}" title="Seleccionar">
                                     @foreach($etnias as $etnia)
                                         <option value="{{ $etnia['Id_Etnia'] }}">{{ $etnia['Nombre_Etnia'] }}</option>
                                     @endforeach
@@ -110,19 +108,17 @@
                         <div class="col-xs-12 col-md-6">
                             <div class="form-group {{ $errors->has('Id_Pais') ? 'has-error' : '' }}">
                                 <label class="control-label" for="Id_Pais">* País </label>
-                                <select name="Id_Pais" id="" class="form-control" data-value="{{ $persona ? $persona['Id_Pais'] : old('Id_Pais') }}">
-                                    <option value="">Seleccionar</option>
-                                        @foreach($paises as $pais)
-                                            <option value="{{ $pais['Id_Pais'] }}">{{ $pais['Nombre_Pais'] }}</option>
-                                        @endforeach
+                                <select name="Id_Pais" id="" class="form-control" data-value="{{ $persona ? $persona['Id_Pais'] : old('Id_Pais') }}" title="Seleccionar">
+                                    @foreach($paises as $pais)
+                                        <option value="{{ $pais['Id_Pais'] }}">{{ $pais['Nombre_Pais'] }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="col-xs-12 col-md-6">
                             <div class="form-group">
                                 <label class="control-label" for="Nombre_Ciudad">Ciudad </label>
-                                <select name="Nombre_Ciudad" id="" class="form-control" data-value="{{ $persona ? $persona['Nombre_Ciudad'] : old('Nombre_Ciudad') }}">
-                                    <option value="">Seleccionar</option>
+                                <select name="Nombre_Ciudad" id="" class="form-control" data-value="{{ $persona ? $persona['Nombre_Ciudad'] : old('Nombre_Ciudad') }}" title="Seleccionar">
                                 </select>
                             </div>
                         </div>
@@ -146,7 +142,7 @@
                             <input type="hidden" name="_method" value="POST">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <input type="hidden" name="Id_Persona" value="{{ $persona ? $persona['Id_Persona'] : old('Id_Persona') }}">
-                            <button id="guardar" type="submit" class="btn btn-primary">Guardar</button> 
+                            <button id="guardar" type="submit" class="btn btn-primary">Guardar</button>
                             @if ($persona && $persona->recreopersona)
                                 <a data-toggle="modal" data-target="#modal-eliminar" class="btn btn-danger">Eliminar</a>
                             @endif

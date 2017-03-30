@@ -34,8 +34,7 @@
                         <div class="col-md-4">
                             <div class="form-group {{ $errors->has('Jornada') ? 'has-error' : '' }}">
                                 <label for="control-label">Jornada</label>
-                                <select name="Jornada" id="Jornada" class="form-control" data-value="{{ $jornada ? $jornada['Jornada'] : old('Jornada') }}">
-                                    <option value="">Seleccionar</option>
+                                <select name="Jornada" id="Jornada" class="form-control" data-value="{{ $jornada ? $jornada['Jornada'] : old('Jornada') }}" title="Seleccionar">
                                     <option data-tipo="Periodico" value="dia">Dia</option>
                                     <option data-tipo="Periodico" value="noche">Noche</option>
                                     <option data-tipo="Periodico" value="fds">FDS</option>

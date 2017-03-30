@@ -23,6 +23,11 @@ class Sesion extends Model
     	return $this->belongsTo('App\Modulos\Recreovia\Recreopersona', 'Id_Recreopersona');
     }
 
+	public function acompanantes()
+	{
+		return $this->belongsToMany('App\Modulos\Recreovia\Recreopersona', 'Sesiones_Acompanantes', 'Id_Sesion', 'Id_Recreopersona');
+	}
+
     public function gruposPoblacionales()
     {
         return $this->belongsToMany('App\Modulos\Recreovia\GrupoPoblacional', 'Participaciones', 'Id_Sesion', 'Id_Grupo')

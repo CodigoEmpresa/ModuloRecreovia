@@ -12,7 +12,7 @@
                 <div class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     Datos actualizados satisfactoriamente.
-                </div>                                
+                </div>
             </div>
         @endif
         @if (!empty($errors->all()))
@@ -61,8 +61,7 @@
                         <div class="col-xs-12 col-md-6">
                             <div class="form-group {{ $errors->has('Id_Localidad') ? 'has-error' : '' }}">
                                 <label class="control-label" for="Id_Localidad">Localidad </label>
-                                <select name="Id_Localidad" id="" class="form-control" data-value="{{ $punto ? $punto['Id_Localidad'] : old('Id_Localidad') }}">
-                                    <option value="">Seleccionar</option>
+                                <select name="Id_Localidad" id="" class="form-control" data-value="{{ $punto ? $punto['Id_Localidad'] : old('Id_Localidad') }}" title="Seleccionar">
                                     @foreach($localidades as $localidad)
                                         <option value="{{ $localidad['Id_Localidad'] }}">{{ $localidad['Id_Localidad'].' - '.$localidad['Localidad'] }}</option>
                                     @endforeach
@@ -72,8 +71,7 @@
                         <div class="col-xs-12 col-md-6">
                             <div class="form-group {{ $errors->has('Id_Upz') ? 'has-error' : '' }}">
                                 <label class="control-label" for="Id_Upz">Upz</label>
-                                <select name="Id_Upz" id="" class="form-control" data-json="{{ $upz }}" data-value="{{ $punto ? $punto['Id_Upz'] : old('Id_Upz') }}">
-                                    <option value="">Seleccionar</option>
+                                <select name="Id_Upz" id="" class="form-control" data-json="{{ $upz }}" data-value="{{ $punto ? $punto['Id_Upz'] : old('Id_Upz') }}" title="Seleccionar">
                                     @foreach($upz as $u)
                                         <option data-localidad="{{ $u['IdLocalidad'] }}" value="{{ $u['Id_Upz'] }}">{{ $u['cod_upz'].' - '.$u['Upz'] }}</option>
                                     @endforeach
@@ -112,7 +110,7 @@
 	                    <label for="">Jornadas </label>
                         @if($jornadas)
                             <div class="input-group">
-                                <select name="select-jornadas" id="select-jornadas" class="form-control">
+                                <select name="select-jornadas" id="select-jornadas" class="form-control" placeholder="Seleccionar">
                                     @foreach($jornadas as $jornada)
                                         <option value="{{ $jornada['Id_Jornada'] }}">{{ $jornada->getCode().' - '.$jornada->toString() }}</option>
                                     @endforeach
@@ -137,7 +135,7 @@
 	                            </tr>
 	                        </thead>
 	                        <tbody>
-	                            
+
 	                        </tbody>
 	                    </table>
 	                </div>
@@ -147,15 +145,15 @@
 	                <div class="col-xs-12">
                         <input type="hidden" name="_method" value="POST">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <input type="hidden" name="Latitud" value="{{ $punto ? $punto['Latitud'] : old('Latitud') }}"> 
-                        <input type="hidden" name="Longitud" value="{{ $punto ? $punto['Longitud'] : old('Longitud') }}"> 
+                        <input type="hidden" name="Latitud" value="{{ $punto ? $punto['Latitud'] : old('Latitud') }}">
+                        <input type="hidden" name="Longitud" value="{{ $punto ? $punto['Longitud'] : old('Longitud') }}">
                         <input type="hidden" name="Id_Punto" value="{{ $punto ? $punto['Id_Punto'] : 0 }}">
-                        <input type="hidden" name="Jornadas" value="{{ $punto && count($punto->jornadas) > 0 ? implode(',', $punto->jornadas()->lists('Jornadas.Id_Jornada')->all()).',' : old('Jornadas') }}"> 
-                        <button id="guardar" type="submit" class="btn btn-primary">Guardar</button> 
+                        <input type="hidden" name="Jornadas" value="{{ $punto && count($punto->jornadas) > 0 ? implode(',', $punto->jornadas()->lists('Jornadas.Id_Jornada')->all()).',' : old('Jornadas') }}">
+                        <button id="guardar" type="submit" class="btn btn-primary">Guardar</button>
                         @if ($punto)
                             <a data-toggle="modal" data-target="#modal-eliminar" class="btn btn-danger">Eliminar</a>
                         @endif
-                        <a href="{{ url('puntos') }}" class="btn btn-default">Volver</a> 
+                        <a href="{{ url('puntos') }}" class="btn btn-default">Volver</a>
 	                </div>
                 </div>
 	        </div>

@@ -23,6 +23,7 @@
     "loaders.css": "^0.1.2",
     "highcharts": "^5.0.6",
     "selectize": "^0.12.4",
-    "font-awesome": "Font-Awesome#^4.7.0"
+    "font-awesome": "Font-Awesome#^4.7.0",
+    "bootstrap-select": "^1.12.2"
   }
 }

@@ -96,8 +96,7 @@
 								</div>
 								<div class="col-md-6 form-group {{ $errors->has('Id_Recreopersona') ? 'has-error' : '' }}">
 									<label for="">Profesor</label>
-									<select name="Id_Recreopersona" id="Id_Recreopersona" class="form-control" data-value="{{ $sesion ? $sesion['Id_Recreopersona'] : old('Id_Recreopersona') }}">
-										<option value="">Seleccionar</option>
+									<select name="Id_Recreopersona" id="Id_Recreopersona" class="form-control" data-value="{{ $sesion ? $sesion['Id_Recreopersona'] : old('Id_Recreopersona') }}" title="Seleccionar">
 										<optgroup label="Localidad">
 											@foreach($cronograma->punto->localidad->profesores as $profesor)
 												<option value="{{ $profesor->Id_Recreopersona }}">{{ $profesor->getCode().' - '.$profesor->persona->toString() }}</option>
@@ -114,8 +113,7 @@
 								</div>
 								<div class="col-md-6 form-group {{ $errors->has('Objetivo_General') ? 'has-error' : '' }}">
 									<label for="">Sesión</label>
-									<select name="Objetivo_General" id="Objetivo_General" class="form-control" data-value="{{ $sesion ? $sesion['Objetivo_General'] : old('Objetivo_General') }}">
-										<option value="">Seleccionar</option>
+									<select name="Objetivo_General" id="Objetivo_General" class="form-control" data-value="{{ $sesion ? $sesion['Objetivo_General'] : old('Objetivo_General') }}" title="Seleccionar">
 										<option value="Gimnasia de Mantenimiento (GM)">Gimnasia de Mantenimiento (GM)</option>
 										<option value="Estimulación Muscular (EM)">Estimulación Muscular (EM)</option>
 										<option value="Movilidad Articular (MA)">Movilidad Articular (MA)</option>

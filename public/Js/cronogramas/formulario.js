@@ -26,7 +26,7 @@ $(function()
 			return punto.Id_Punto == Id_Punto;
 		})[0];
 
-		$('select[name="Id_Jornada"]').html('<option value="">Seleccionar</option>');
+		$('select[name="Id_Jornada"]').html('');
 
 		if(punto)
 		{
@@ -38,6 +38,7 @@ $(function()
 				$('select[name="Id_Jornada"]').append('<option value="'+jornada.Id_Jornada+'">'+jornada.Code+' - '+jornada.Label+'</option>');
 			});
 
+			$('select[name="Id_Jornada"]').selectpicker('refresh');
 			map.setCenter({lat: latitud, lng: longitud});
 			marker.setPosition({lat: latitud, lng: longitud});
 			map.setZoom(13);

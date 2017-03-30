@@ -35,7 +35,7 @@ $(function()
   		}
       	return date;
     }
-	
+
 	$.datepicker.regional['es'] = {
  		closeText: 'Cerrar',
 		prevText: '<Ant',
@@ -71,12 +71,12 @@ $(function()
 
 		  		if (_this.attr('data-fecha-inicio'))
 		  			_this.datepicker('option', 'minDate', _this.attr('data-fecha-inicio'));
-				
+
 		  		if (_this.attr('data-fecha-fin'))
 		  			_this.datepicker('option', 'maxDate', _this.attr('data-fecha-fin'));
 		  	},
 		  	beforeShowDay: function(date)
-		  	{	
+		  	{
 		  		var dias = _this.attr('data-dias');
 		  		var fechas_importantes = _this.attr('data-fechas-importantes');
 		  		var day = date.getDay();
@@ -124,7 +124,7 @@ $(function()
 			  				resultado = [false, festivo ? 'festivo' : '', festivo ? 'Festivo' : ''];
 			  			}
 			  		} else {
-			  			resultado = [true, festivo ? 'festivo' : '', festivo ? 'Festivo' : ''];	
+			  			resultado = [true, festivo ? 'festivo' : '', festivo ? 'Festivo' : ''];
 			  		}
 
 			  		return resultado;
@@ -139,7 +139,7 @@ $(function()
 		  				return validar_dias(dias, true, day);
 		  			else
 		  				return validar_dias(dias, false, day);
-		  			
+
 		  		} else {
 		  			return validar_dias(dias, false, day);
 		  		}
@@ -158,7 +158,7 @@ $(function()
 	{
 		$('input[data-rel="fecha_inicio"]').datepicker('option', 'maxDate', $('input[data-rel="fecha_fin"]').datepicker('getDate'));
 	});
-   
+
     //utilidades para datetimepicker
     $('input[data-role="clockpicker"]').each(function(i, e)
     {
@@ -193,12 +193,12 @@ $(function()
     if ($('input[data-hora-fin]').length)
     	$('input[data-hora-fin]').data('DateTimePicker').minDate($('input[data-hora-inicio]').data('hora-inicio')).maxDate($('input[data-hora-fin]').data('hora-fin'));
 
-    $('input[data-rel="hora_inicio"]').on('dp.change', function (e) 
+    $('input[data-rel="hora_inicio"]').on('dp.change', function (e)
     {
         $('input[data-rel="hora_fin"]').data('DateTimePicker').minDate(e.date);
     });
 
-    $('input[data-rel="hora_fin"]').on('dp.change', function (e) 
+    $('input[data-rel="hora_fin"]').on('dp.change', function (e)
     {
         $('input[data-rel="hora_inicio"]').data('DateTimePicker').maxDate(e.date);
     });
@@ -216,11 +216,13 @@ $(function()
 	  	$(this).trigger('change');
 	});
 
+	$('select:not([multiple],[data-ignore-selectpicker])').selectpicker();
+
 	$('table.default').DataTable({
 		responsive: true,
 		columnDefs: [
 			{
-				targets: 'no-sort', 
+				targets: 'no-sort',
 				orderable: false
 			}
 		]
