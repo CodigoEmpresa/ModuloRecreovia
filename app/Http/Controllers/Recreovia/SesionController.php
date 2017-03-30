@@ -37,6 +37,7 @@ class SesionController extends Controller {
 		}
 
 		$filtro_profesores = $profesores->unique('Id_Recreopersona');
+		$filtro_profesores = $filtro_profesores->sortBy('persona.Primer_Apellido');
 
 		$cronograma = Cronograma::with(['punto', 'punto.localidad.profesores.persona', 'jornada', 'sesiones', 'sesiones.profesor'])
 											->find($id_cronograma);
@@ -70,6 +71,7 @@ class SesionController extends Controller {
 		}
 
 		$filtro_profesores = $profesores->unique('Id_Recreopersona');
+		$filtro_profesores = $filtro_profesores->sortBy('persona.Primer_Apellido');
 
 		$cronograma = Cronograma::with(['punto', 'punto.localidad.profesores.persona', 'jornada', 'sesiones'])->find($id_cronograma);
 
@@ -167,7 +169,7 @@ class SesionController extends Controller {
 		$sesion->Id_Cronograma = $request->input('Id_Cronograma');
 		$sesion->Id_Recreopersona = $request->input('Id_Recreopersona') == '' ? null : $request->input('Id_Recreopersona');
 		$sesion->Objetivo_General = $request->input('Objetivo_General');
-		$sesion->Recursos = $request->input('Recursos');
+		$sesion->Observaciones = $request->input('Observaciones');
 		$sesion->Fecha = $request->input('Fecha');
 		$sesion->Inicio = $request->input('Inicio');
 		$sesion->Fin = $request->input('Fin');

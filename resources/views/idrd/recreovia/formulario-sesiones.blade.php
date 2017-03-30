@@ -149,8 +149,8 @@
 									<p id="detalle_objetivo_general" class="form-control-static"></p>
 								</div>
 								<div class="col-md-12 form-group">
-									<label for="">Materiales</label>
-									<textarea class="form-control" class="form-control" name="Recursos">{{ $sesion ? $sesion['Recursos'] : old('Recursos') }}</textarea>
+									<label for="">Observaciones</label>
+									<textarea class="form-control" class="form-control" name="Observaciones">{{ $sesion ? $sesion['Observaciones'] : old('Observaciones') }}</textarea>
 								</div>
 							</div>
 						</div>

@@ -29,6 +29,8 @@
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<strong><i class="fa fa-info-circle" aria-hidden="true"></i> Notas de la versión</strong> <br><br>
                     <ul>
+						<li>Nuevo campo en las sesiones para agregar profesores auxiliares.</li>
+						<li class="separator">---</li>
                     	<li>Se ajusto el formulario de producto no conforme para habilitar la opción de anular la selección de cualquier item.</li>
                     	<li>Se agrego un nuevo estado <strong>(Cancelado)</strong> para las sesiones.</li>
 						<li>En las listas de sesiones se agrego una columna que indica cuales formularios se han diligenciado para la sesión. <strong>A</strong> (Asistencia) <strong>P</strong> (Producto no conforme) <strong>C</strong> (Calificación del servicio)</li>
