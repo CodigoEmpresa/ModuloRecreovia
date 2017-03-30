@@ -154,6 +154,18 @@
 												<option value="Gimnasio Saludable al Aire Libre (GSAL)">Gimnasio Saludable al Aire Libre (GSAL)</option>
 											</select>
 										</div>
+                                        <div class="col-md-6 form-group">
+                                            <label for="">Acompañantes</label>
+                                            <p class="form-control-static">
+                                                @if ($sesion && $sesion->acompanantes)
+                                                    @foreach ($sesion->acompanantes as $acompanante)
+                                                        {{ $acompanante->getCode().' - '.$acompanante->persona->toString() }}<br>
+                                                    @endforeach
+                                                @else
+                                                    Sin acompañantes.
+                                                @endif
+                                            </p>
+                                        </div>
 										<div class="col-md-12 form-group">
 											<label for="detalle_objetivo_general">Objetivo general</label>
 											<p id="detalle_objetivo_general" class="form-control-static"></p>

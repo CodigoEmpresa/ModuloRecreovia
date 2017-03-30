@@ -96,7 +96,7 @@
 								</div>
 								<div class="col-md-6 form-group {{ $errors->has('Id_Recreopersona') ? 'has-error' : '' }}">
 									<label for="">Profesor</label>
-									<select name="Id_Recreopersona" id="Id_Recreopersona" class="form-control" data-value="{{ $sesion ? $sesion['Id_Recreopersona'] : old('Id_Recreopersona') }}" title="Seleccionar">
+									<select name="Id_Recreopersona" id="Id_Recreopersona" class="form-control" data-live-search="true" data-value="{{ $sesion ? $sesion['Id_Recreopersona'] : old('Id_Recreopersona') }}" title="Seleccionar">
 										<optgroup label="Localidad">
 											@foreach($cronograma->punto->localidad->profesores as $profesor)
 												<option value="{{ $profesor->Id_Recreopersona }}">{{ $profesor->getCode().' - '.$profesor->persona->toString() }}</option>
@@ -127,6 +127,23 @@
 										<option value="Gimnasio Saludable al Aire Libre (GSAL)">Gimnasio Saludable al Aire Libre (GSAL)</option>
 									</select>
 								</div>
+                                <div class="col-md-6 form-group">
+                                    <label for="">Acompañantes</label>
+                                    <select class="form-control" id="Acompanantes" name="Acompanantes[]" title="Seleccionar" data-value="{{ $sesion ? implode(',', $sesion->acompanantes->pluck('Id_Recreopersona')->toArray()) : implode(',', is_array(old('Acompanantes')) ? old('Acompanantes') : []) }}" multiple="multiple" data-live-search="true">
+                                        <optgroup label="Localidad">
+											@foreach($cronograma->punto->localidad->profesores as $profesor)
+												<option value="{{ $profesor->Id_Recreopersona }}">{{ $profesor->getCode().' - '.$profesor->persona->toString() }}</option>
+											@endforeach
+										</optgroup>
+										@if ($_SESSION['Usuario']['Permisos']['gestion_global_de_sesiones'] && $cronograma)
+											<optgroup label="Todos">
+												@foreach($profesores as $profesor)
+													<option value="{{ $profesor->Id_Recreopersona }}">{{ $profesor->getCode().' - '.$profesor->persona->toString() }}</option>
+												@endforeach
+											</optgroup>
+										@endif
+                                    </select>
+                                </div>
 								<div class="col-md-12 form-group">
 									<label for="detalle_objetivo_general">Objetivo general</label>
 									<p id="detalle_objetivo_general" class="form-control-static"></p>

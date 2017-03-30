@@ -61,6 +61,13 @@ $(function(e)
 		$('#detalle_objetivo_general').text(definicion);
 	}
 
+	var refrescar_acompanantes = function()
+	{
+		var acompanantes = $('select[name="Acompanantes[]"]').attr('data-value');
+		$('select[name="Acompanantes[]"]').selectpicker('val', acompanantes.split(','));
+		$('select[name="Acompanantes[]"]').selectpicker('refresh');
+	}
+
 	$('#sesiones').DataTable({
 		responsive: true,
 		columnDefs: [
@@ -96,6 +103,8 @@ $(function(e)
 		}
 	});*/
 
+	$('select[name="Acompanantes[]"]').selectpicker();
+
 	$('select[name="Objetivo_General"]').on('changed.bs.select', function(e)
 	{
 		cargarObjetivoGeneral();
@@ -108,4 +117,7 @@ $(function(e)
 
 	if ($('select[name="Objetivo_General"]').attr('data-value') != '')
 		cargarObjetivoGeneral();
+
+	if ($('select[name="Acompanantes[]"]').attr('data-value') != '')
+		refrescar_acompanantes();
 });

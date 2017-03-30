@@ -93,7 +93,7 @@ class SesionController extends Controller {
 
 	public function editarSesionProfesor(Request $request, $id_sesion)
 	{
-		$sesion = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'gruposPoblacionales', 'ProductoNoConforme', 'profesor')->find($id_sesion);
+		$sesion = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'gruposPoblacionales', 'ProductoNoConforme', 'profesor', 'acompanantes')->find($id_sesion);
 		$gruposPoblacionales = GrupoPoblacional::get();
 
 		$formulario = [
@@ -115,7 +115,7 @@ class SesionController extends Controller {
 
 	public function editarSesionGestor(Request $request, $id_sesion)
 	{
-		$sesion = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'gruposPoblacionales', 'ProductoNoConforme', 'profesor')->find($id_sesion);
+		$sesion = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'gruposPoblacionales', 'ProductoNoConforme', 'profesor', 'acompanantes')->find($id_sesion);
 		$gruposPoblacionales = GrupoPoblacional::get();
 
 		$formulario = [
@@ -173,6 +173,9 @@ class SesionController extends Controller {
 		$sesion->Fin = $request->input('Fin');
 		$sesion->Estado = !$nuevo ? $sesion->Estado : 'Pendiente';
 		$sesion->save();
+
+		if(array_key_exists('Acompanantes', $request->input()))
+			$sesion->acompanantes()->sync($request->input('Acompanantes'));
 
 		if ($notificar && $sesion->profesor)
 			$this->notificar($sesion, 'profesor');
