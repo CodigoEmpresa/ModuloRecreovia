@@ -189,6 +189,10 @@ div.oculto {
 	height: 38px;
 }
 
+.form-group.no-label {
+    padding-top: 25px;
+}
+
 .pointer {
     cursor: pointer;
     font-weight: 500;
@@ -196,6 +200,10 @@ div.oculto {
 
 .pointer:hover {
     color: #54b4eb;
+}
+
+.disponible {
+    background-color: #f00 !important;
 }
 
 @media (min-width: 1200px) {

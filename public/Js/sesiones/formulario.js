@@ -1,5 +1,6 @@
 $(function(e)
 {
+	var URL = $('#main').data('url');
 	var latitud = parseFloat($('input[id="latitud"]').val());
 	var longitud = parseFloat($('input[id="longitud"]').val());
 	var zoom = 13;
@@ -94,20 +95,83 @@ $(function(e)
 		});
 	});
 
-	/*$('select[name="Objetivo_General"]').on('click', function(e)
-	{
-		var readonly = $(this).attr('readonly');
-		if (typeof readonly !== typeof undefined && readonly !== false)
-		{
-			$(this).blur();
-		}
-	});*/
-
 	$('select[name="Acompanantes[]"]').selectpicker();
 
 	$('select[name="Objetivo_General"]').on('changed.bs.select', function(e)
 	{
 		cargarObjetivoGeneral();
+	});
+
+	$('#verificar-disponibilidad').on('click', function(e)
+	{
+		var fecha = $('input[name="Fecha"]').val();
+		var inicio = $('input[name="Inicio"]').val();
+		var fin = $('input[name="Fin"]').val();
+
+		if (fecha != '' && inicio != '' && fin != '')
+		{
+			var profesores = [];
+			$('select[name="Id_Recreopersona"] option').each(function(i, e)
+			{
+				$(e).removeAttr('disabled');
+				if($.inArray($(e).attr('value'), profesores) < 0 && $(e).attr('value') != '')
+					profesores.push($(e).attr('value'));
+			});
+
+			$('select[name="Acompanantes[]"] option').each(function(i, e)
+			{
+				$(e).removeAttr('disabled');
+				if($.inArray($(e).attr('value'), profesores) < 0 && $(e).attr('value') != '')
+					profesores.push($(e).attr('value'));
+			});
+
+			$.post(
+				URL+'/disponibilidad',
+				{
+					fecha: fecha,
+					inicio: inicio,
+					fin: fin,
+					profesores: profesores
+				},
+				function(data)
+				{
+					if(data)
+					{
+						var profesores_disponibles = [];
+						$.each(data, function(i, e)
+						{
+							profesores_disponibles.push(e);
+						});
+
+						$('select[name="Id_Recreopersona"] option').each(function(i, e)
+						{
+							if($.inArray($(e).attr('value'), profesores_disponibles) < 0)
+								$(e).attr('disabled', 'disabled');
+						});
+
+						$('select[name="Acompanantes[]"] option').each(function(i, e)
+						{
+							if($.inArray($(e).attr('value'), profesores_disponibles) < 0)
+								$(e).attr('disabled', 'disabled');
+						});
+					}
+				},
+				'json'
+			).done(function(){
+				$('select[name="Id_Recreopersona"]').selectpicker('render');
+				$('select[name="Acompanantes[]"]').selectpicker('render');
+
+				console.log('render');
+			});
+		}
+
+		$('input[name="Fecha"]').closest('.form-group').removeClass('has-error');
+		$('input[name="Inicio"]').closest('.form-group').removeClass('has-error');
+		$('input[name="Fin"]').closest('.form-group').removeClass('has-error');
+
+		if (fecha == '') $('input[name="Fecha"]').closest('.form-group').addClass('has-error');
+		if (inicio == '') $('input[name="Inicio"]').closest('.form-group').addClass('has-error');
+		if (fin == '') $('input[name="Fin"]').closest('.form-group').addClass('has-error');
 	});
 
 	$('input[data-number]').on('focus', function(e)

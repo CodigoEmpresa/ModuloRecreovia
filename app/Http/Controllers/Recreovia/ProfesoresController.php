@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers\Recreovia;
 
@@ -14,7 +14,7 @@ use Idrd\Usuarios\Repo\PersonaInterface;
 use Illuminate\Http\Request;
 
 class ProfesoresController extends Controller {
-	
+
 	protected $repositorio_personas;
 
 	public function __construct(PersonaInterface $repositorio_personas)
@@ -91,7 +91,7 @@ class ProfesoresController extends Controller {
 	public function buscar(Request $request, $key, $strict=null)
 	{
 		$resultados = $this->repositorio_personas->buscar($key);
-		
+
 		if(!$strict)
 		{
 			$profesores = Persona::with('recreopersona', 'recreopersona.cronogramas', 'recreopersona.sesiones', 'recreopersona.localidades', 'tipoDocumento')
@@ -126,7 +126,7 @@ class ProfesoresController extends Controller {
 
 		$recreopersona->delete();
 
-		return redirect('/profesores')->with(['status' => 'success']); 
+		return redirect('/profesores')->with(['status' => 'success']);
 	}
 
 	public function procesar(GuardarProfesor $request)

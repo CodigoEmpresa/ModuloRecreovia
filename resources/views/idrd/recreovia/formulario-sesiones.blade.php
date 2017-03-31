@@ -94,7 +94,7 @@
 									<label for="">Fin</label>
 									<input type="text" class="form-control" value="{{ $sesion ? $sesion['Fin'] : old('Fin') }}" data-role="clockpicker" data-rel="hora_fin" name="Fin" data-hora-fin="{{ $cronograma->jornada->Fin }}">
 								</div>
-								<div class="col-md-6 form-group {{ $errors->has('Id_Recreopersona') ? 'has-error' : '' }}">
+								<div class="col-md-5 form-group {{ $errors->has('Id_Recreopersona') ? 'has-error' : '' }}">
 									<label for="">Profesor</label>
 									<select name="Id_Recreopersona" id="Id_Recreopersona" class="form-control" data-live-search="true" data-value="{{ $sesion ? $sesion['Id_Recreopersona'] : old('Id_Recreopersona') }}" title="Seleccionar">
 										<optgroup label="Localidad">
@@ -111,6 +111,10 @@
 										@endif
 									</select>
 								</div>
+                                <div class="col-md-1 form-group no-label">
+                                    <label for=""></label>
+                                    <button type="button" id="verificar-disponibilidad" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Verificar disponibilidad" name="button"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></button>
+                                </div>
 								<div class="col-md-6 form-group {{ $errors->has('Objetivo_General') ? 'has-error' : '' }}">
 									<label for="">Sesión</label>
 									<select name="Objetivo_General" id="Objetivo_General" class="form-control" data-value="{{ $sesion ? $sesion['Objetivo_General'] : old('Objetivo_General') }}" title="Seleccionar">
@@ -127,7 +131,7 @@
 										<option value="Gimnasio Saludable al Aire Libre (GSAL)">Gimnasio Saludable al Aire Libre (GSAL)</option>
 									</select>
 								</div>
-                                <div class="col-md-6 form-group">
+                                <div class="col-md-5 form-group">
                                     <label for="">Acompañantes</label>
                                     <select class="form-control" id="Acompanantes" name="Acompanantes[]" title="Seleccionar" data-value="{{ $sesion ? implode(',', $sesion->acompanantes->pluck('Id_Recreopersona')->toArray()) : implode(',', is_array(old('Acompanantes')) ? old('Acompanantes') : []) }}" multiple="multiple" data-live-search="true">
                                         <optgroup label="Localidad">

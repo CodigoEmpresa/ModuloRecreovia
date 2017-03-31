@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers\Recreovia;
 
@@ -11,7 +11,7 @@ use App\Http\Requests\GuardarCronograma;
 use Illuminate\Http\Request;
 
 class ProgramacionController extends Controller {
-	
+
 	public function __construct()
 	{
 		if (isset($_SESSION['Usuario']))
@@ -36,7 +36,7 @@ class ProgramacionController extends Controller {
 			'seccion' => 'Programación',
 			'lista'	=> view('idrd.recreovia.lista-cronogramas', $lista)
 		];
-		
+
 		return view('list', $datos);
 	}
 
@@ -57,20 +57,20 @@ class ProgramacionController extends Controller {
 			'seccion' => 'Gestion global de sesiones',
 			'lista'	=> view('idrd.recreovia.lista-cronogramas', $lista)
 		];
-		
+
 		return view('list', $datos);
 	}
 
-	public function crear() 
+	public function crear()
 	{
 		$recreopersona = Recreopersona::with(['localidades' => function($query)
 										{
 											return $query->where('tipo', 'Gestor');
-										}, 'localidades.puntos.jornadas' => function($query) 
+										}, 'localidades.puntos.jornadas' => function($query)
 										{
 											return $query->whereNull('Jornadas.deleted_at');
 										}])->find($this->usuario['Recreopersona']->Id_Recreopersona);
-		
+
 		$puntos = $this->obtenerPuntosLocalidades($recreopersona->localidades);
 		$recreopersona->puntos = $puntos;
 
@@ -92,15 +92,15 @@ class ProgramacionController extends Controller {
 	public function editar(Request $request, $id_cronograma)
 	{
 		$cronograma = Cronograma::find($id_cronograma);
-		
+
 		$recreopersona = Recreopersona::with(['localidades' => function($query)
 										{
 											return $query->where('tipo', 'Gestor');
-										}, 'localidades.puntos.jornadas' => function($query) 
+										}, 'localidades.puntos.jornadas' => function($query)
 										{
 											return $query->whereNull('Jornadas.deleted_at');
 										}])->find($cronograma->Id_Recreopersona);
-		
+
 		$puntos = $this->obtenerPuntosLocalidades($recreopersona->localidades);
 
 		if (!$puntos->search(function($item, $key) use ($cronograma) { return $item['Id_Punto'] == $cronograma['Id_Punto']; }))
@@ -165,11 +165,49 @@ class ProgramacionController extends Controller {
 					->with('status', 'success');
 	}
 
+
+	public function disponibilidad(Request $request)
+	{
+		$profesores = $request->input('profesores');
+		$fecha = $request->input('fecha');
+		$inicio = $request->input('inicio');
+		$fin = $request->input('fin');
+
+		$sesiones = Sesion::where('Fecha', $fecha)
+								->where(function($query) use ($profesores) {
+									$query->whereIn('Id_Recreopersona', $profesores)
+										->orWhereHas('acompanantes', function($query) use ($profesores)
+										{
+											$query->whereIn('Sesiones_Acompanantes.Id_Recreopersona', $profesores);
+										});
+								})->where(function($query) use ($inicio, $fin)
+								{
+									$query->whereBetween('Inicio', [$inicio, $fin])
+											->orWhereBetween('Fin', [$inicio, $fin]);
+								})
+								->get();
+
+		$profesores_ocupados = $sesiones->pluck('Id_Recreopersona')->toArray();
+		foreach ($sesiones as $sesion)
+		{
+			$acompanantes = $sesion->acompanantes->pluck('Id_Recreopersona')->toArray();
+
+			$acompanantes_de_la_lista = array_intersect($profesores, $acompanantes);
+			$profesores_ocupados = array_merge($profesores_ocupados, $acompanantes_de_la_lista);
+		}
+
+		array_map('intval', $profesores_ocupados);
+
+		$profesores_disponibles = array_diff($profesores, $profesores_ocupados);
+
+		return response()->json($profesores_disponibles);
+	}
+
 	private function obtenerPuntosLocalidades($localidades)
 	{
 		$puntos = collect();
 
-		foreach ($localidades as $localidad) 
+		foreach ($localidades as $localidad)
 		{
 			foreach($localidad->puntos as $punto)
 			{
@@ -180,7 +218,7 @@ class ProgramacionController extends Controller {
 				}
 
 				$puntos->push($punto);
-			}	
+			}
 		}
 
 		return $puntos;

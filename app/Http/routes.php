@@ -21,11 +21,11 @@ Route::get('/personas/service/buscar/{key}', '\Idrd\Usuarios\Controllers\Persona
 Route::get('/personas/service/ciudad/{id_pais}', '\Idrd\Usuarios\Controllers\LocalizacionController@buscarCiudades');
 Route::post('/personas/service/procesar/', '\Idrd\Usuarios\Controllers\PersonaController@procesar');
 
-Route::get('/actividad_usuario/{identificacion?}', function ($identificacion = null) { 
+Route::get('/actividad_usuario/{identificacion?}', function ($identificacion = null) {
 	return view('idrd.usuarios.persona_actividades', [
 		'seccion' => 'Actividades',
 		'identificacion' => $identificacion
-	]); 
+	]);
 });
 Route::get('/usuario_tipo', function () { return view('persona_tipoPersona'); });
 Route::get('/asignarActividad', '\Idrd\Usuarios\Controllers\AsignarActividadController@asignarActividades');
@@ -41,7 +41,7 @@ Route::any('/logout', 'MainController@logout');
 Route::any('/', 'MainController@index');
 
 //rutas con filtro de autenticación
-Route::group(['middleware' => ['web']], function() 
+Route::group(['middleware' => ['web']], function()
 {
 	Route::get('/welcome', 'MainController@welcome');
 
@@ -58,7 +58,7 @@ Route::group(['middleware' => ['web']], function()
 	Route::get('/puntos/{id}/editar', 'Recreovia\PuntosController@editar');
 	Route::get('/puntos/{id}/eliminar', 'Recreovia\PuntosController@eliminar');
 	Route::post('/puntos/procesar/', 'Recreovia\PuntosController@procesar');
-	
+
 	Route::get('/profesores', 'Recreovia\ProfesoresController@index');
 	Route::get('/profesores/service/buscar/{key}/{strict?}', 'Recreovia\ProfesoresController@buscar');
 	Route::get('/profesores/service/obtener/{id}', 'Recreovia\ProfesoresController@obtener');
@@ -77,8 +77,9 @@ Route::group(['middleware' => ['web']], function()
 	route::get('/programacion/{id_cronograma}/editar', 'Recreovia\ProgramacionController@editar');
 	route::get('/programacion/{id_cronograma}/eliminar', 'Recreovia\ProgramacionController@eliminar');
 	route::post('/programacion/procesar', 'Recreovia\ProgramacionController@procesar');
+	route::post('/programacion/disponibilidad', 'Recreovia\ProgramacionController@disponibilidad');
 
-	route::get('/sesiones/administrar', 'Recreovia\ProgramacionController@todos');
+	route::get('/sesiones/administrar', 'Recreovia\ProgramacionController@disponibilidad');
 
 	route::get('/gestores/sesiones', 'Recreovia\SesionController@sesionesGestor');
 	route::get('/gestores/{id_cronograma}/sesiones', 'Recreovia\SesionController@crearSesionesGestor');
@@ -103,7 +104,7 @@ Route::group(['middleware' => ['web']], function()
 	route::post('/informes/jornadas/generar', 'Recreovia\ReporteController@generarInformeJornadas');
 	route::post('/informes/jornadas/actualizar', 'Recreovia\ReporteController@actualizarInformeJornadas');
 	route::get('/informes/jornadas/revisar', 'Recreovia\ReporteController@obtenerInformes');
-	
+
 	route::get('/informes/consolidado_general', 'Recreovia\ConsolidadoGeneralController@index');
 	route::post('/informes/consolidado_general', 'Recreovia\ConsolidadoGeneralController@generar');
 
