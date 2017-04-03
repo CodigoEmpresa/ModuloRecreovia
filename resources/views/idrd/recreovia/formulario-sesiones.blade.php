@@ -171,6 +171,7 @@
 							<input type="submit" class="btn btn-primary" value="Guardar">
                             @if ($sesion)
                                 <a data-toggle="modal" data-target="#modal-eliminar" class="btn btn-danger">Eliminar</a>
+                                <a href="{{ url('gestores/'.$cronograma['Id'].'/sesiones/') }}" class="btn btn-default">Cancelar</a>
                             @endif
                             <a href="{{ url('programacion/'.$cronograma['Id'].'/editar/') }}" class="btn btn-default">Volver</a>
 						</div>
