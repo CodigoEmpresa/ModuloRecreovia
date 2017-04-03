@@ -107,6 +107,8 @@ $(function(e)
 		var fecha = $('input[name="Fecha"]').val();
 		var inicio = $('input[name="Inicio"]').val();
 		var fin = $('input[name="Fin"]').val();
+		var profesor_asignado = $('select[name="Id_Recreopersona"]').data('value');
+		var acompanantes_asignados = $('select[name="Acompanantes[]"]').data('value')+'';
 
 		if (fecha != '' && inicio != '' && fin != '')
 		{
@@ -138,6 +140,9 @@ $(function(e)
 					if(data)
 					{
 						var profesores_disponibles = [];
+						var acompanantes_asignados_array = acompanantes_asignados.split(',');
+						console.log(acompanantes_asignados_array);
+
 						$.each(data, function(i, e)
 						{
 							profesores_disponibles.push(e);
@@ -145,14 +150,20 @@ $(function(e)
 
 						$('select[name="Id_Recreopersona"] option').each(function(i, e)
 						{
-							if($.inArray($(e).attr('value'), profesores_disponibles) < 0)
-								$(e).attr('disabled', 'disabled');
+							if ($.inArray($(e).attr('value'), profesores_disponibles) < 0)
+							{
+								if ($(e).attr('value') != profesor_asignado && $.inArray($(e).attr('value'), acompanantes_asignados_array) < 0)
+									$(e).attr('disabled', 'disabled');
+							}
 						});
 
 						$('select[name="Acompanantes[]"] option').each(function(i, e)
 						{
-							if($.inArray($(e).attr('value'), profesores_disponibles) < 0)
-								$(e).attr('disabled', 'disabled');
+							if ($.inArray($(e).attr('value'), profesores_disponibles) < 0)
+							{
+								if ($(e).attr('value') != profesor_asignado && $.inArray($(e).attr('value'), acompanantes_asignados_array) < 0)
+									$(e).attr('disabled', 'disabled');
+							}
 						});
 					}
 				},
