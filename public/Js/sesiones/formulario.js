@@ -36,7 +36,7 @@ $(function(e)
 			case 'Rumba Tropical Folclorica (RTF)':
 				definicion = 'Estimular el sistema cardiovascular mediante una intensidad moderada y un poco fuerte, utilizando diferentes ritmos afro latinos, folclor nacional e internacional, urbanos, y todo género musical que se pueda adaptar a la sesión.';
 			break;
-			case 'Actividad Rítmica para Niños (ARN) Rumba para Niños.':
+			case 'Actividad Rítmica para Niños (ARN) Rumba para Niños':
 				definicion = 'Propender el desarrollo de la motricidad y capacidades coordinativas mediante la práctica de la Actividad Física, generando en el niño la socialización y acercamiento con sus padres a través de técnicas lúdicas que permita fomentar buenos hábitos de vida saludable.';
 			break;
 			case 'Gimnasia Aeróbica Musicalizada (GAM)':
