@@ -56,7 +56,7 @@ class Sesion extends Model
 
     public function getCode()
     {
-        return 'S'.str_pad($this->Id, 4, '0', STR_PAD_LEFT);
+        return 'S'.str_pad($this->Id, 5, '0', STR_PAD_LEFT);
     }
 
 	public function getPending()
