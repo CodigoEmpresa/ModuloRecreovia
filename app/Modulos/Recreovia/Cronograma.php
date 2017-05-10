@@ -53,6 +53,6 @@ class Cronograma extends Model
 
     public function getCode()
     {
-        return 'C'.str_pad($this->Id, 4, '0', STR_PAD_LEFT);
+        return 'C'.str_pad($this->Id, 5, '0', STR_PAD_LEFT);
     }
 }

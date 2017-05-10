@@ -41,7 +41,7 @@
                     </div>
                     <div class="col-md-2 form-group">
                         <label for="">Hasta</label>
-                        <input name="hasta" type="text" placeholder="Desde" class="form-control" data-role="datepicker" data-rel="fecha_fin" data-fecha-inicio="" data-fecha-fin="" data-fechas-importantes="{{ Festivos::create()->datesToString() }}" value="{{ old('hasta') }}">
+                        <input name="hasta" type="text" placeholder="Hasta" class="form-control" data-role="datepicker" data-rel="fecha_fin" data-fecha-inicio="" data-fecha-fin="" data-fechas-importantes="{{ Festivos::create()->datesToString() }}" value="{{ old('hasta') }}">
                     </div>
                     <div class="col-md-2 form-group">
                         <label for="">&nbsp;</label><br>
