@@ -29,12 +29,7 @@
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<strong><i class="fa fa-info-circle" aria-hidden="true"></i> Notas de la versión</strong> <br><br>
                     <ul>
-						<li>En el formulario de programación de sesiones se creo una opción que permite consultar los profesores disponibles para la fecha y hora determinadas.</li>
-						<li>Nuevo campo en las sesiones para agregar profesores auxiliares.</li>
-						<li class="separator">---</li>
-                    	<li>Se ajusto el formulario de producto no conforme para habilitar la opción de anular la selección de cualquier item.</li>
-                    	<li>Se agrego un nuevo estado <strong>(Cancelado)</strong> para las sesiones.</li>
-						<li>En las listas de sesiones se agrego una columna que indica cuales formularios se han diligenciado para la sesión. <strong>A</strong> (Asistencia) <strong>P</strong> (Producto no conforme) <strong>C</strong> (Calificación del servicio)</li>
+						<li>Dashboard en mantenimiento por problemas de rendimiento.</li>
                     </ul>
 	            </div>
 	        </div>
@@ -46,10 +41,10 @@
     	</div>
     	<div class="row">
     		@if (in_array('Gestor', $_SESSION['Usuario']['Roles']))
-    			@if (count($programadas->where('Estado', 'Diligenciado')->all()))
+    			@if ($sesiones->where('Estado', 'Diligenciado')->count())
 	    			<div class="col-md-12">
 						<p class="lead">
-							Hay ({{ count($programadas->where('Estado', 'Diligenciado')->all()) }}) sesiones pendientes por revisar, para consultarlas has click <a href="{{ url('/gestores/sesiones') }}" class="alert-link">aquí.</a>
+							Hay ({{ $sesiones->where('Estado', 'Diligenciado')->count() }}) sesiones pendientes por revisar, para consultarlas has click <a href="{{ url('/gestores/sesiones') }}" class="alert-link">aquí.</a>
 						</p>
 	    			</div>
 		    	@else
@@ -59,112 +54,11 @@
 	    				</p>
 	    			</div>
     			@endif
-
-				@if(count($programadas))
-					<div class="col-md-12">
-						<br>
-					</div>
-					<div class="col-md-12">
-	    				<p class="lead">
-	    					Este {{ date('Y') }}:
-	    				</p>
-	    			</div>
-	    			<div class="col-md-12">
-						<br>
-					</div>
-					<div class="col-md-12">
-						<div class="col-md-4 col-sm-6 resaltar">
-		    				<div class="center">
-			    				<h4>{{ count($programadas->where('Estado', 'Aprobado')->all()) }}</h4>
-			    				<small> SESIONES <br> PROGRAMADAS </small>
-		    				</div>
-		    			</div>
-		    			<div class="col-md-4 col-sm-6 resaltar">
-		    				<div class="center">
-		    					<?php
-		    						$total_participaciones = 0;
-		    						$grupos_impacto = [];
-		    						$sesion_mayor_afluencia = null;
-		    						$total_mayor_afluencia = 0;
-
-		    						foreach ($programadas as $sesion)
-		    						{
-		    							if ($sesion->gruposPoblacionales)
-		    							{
-		    								//obtener la sesion con mas afluencia
-		    								if($sesion->gruposPoblacionales->sum('pivot.Cantidad') > $total_mayor_afluencia)
-		    								{
-		    									$total_mayor_afluencia = $sesion->gruposPoblacionales->sum('pivot.Cantidad');
-		    									$sesion_mayor_afluencia = $sesion;
-		    								}
-
-			    							foreach ($sesion->gruposPoblacionales as $grupo)
-			    							{
-			    								$total_participaciones += $grupo->pivot['Grupo_Asistencia'] == 'Participantes' ? $grupo->pivot['Cantidad'] : 0;
-
-			    								if (!array_key_exists($grupo['Grupo'], $grupos_impacto))
-			    									$grupos_impacto[$grupo['Grupo']] = ['Participantes' => ['M' => 0, 'F' => 0], 'Asistentes' => ['M' => 0, 'F' => 0], 'Edad' => $grupo['Edad_Inicio'].($grupo['Edad_Fin'] < 0 ? ' - mas' : ' a '.$grupo['Edad_Fin']).' años'];
-
-			    								$grupos_impacto[$grupo['Grupo']][$grupo->pivot['Grupo_Asistencia']][$grupo->pivot['Genero']] += $grupo->pivot['Cantidad'];
-			    							}
-		    							}
-		    						}
-		    					?>
-			    				<h4>{{ $total_participaciones }}</h4>
-			    				<small> PARTICIPANTES <br> REGISTRADOS </small>
-		    				</div>
-		    			</div>
-		    			<div class="col-md-4 col-sm-12 resaltar">
-							<?php
-								$grupo_mayor_impacto = 'N/P<br><small>0</small>';
-								$total = 0;
-								foreach ($grupos_impacto as $key => $grupo)
-								{
-									$sub_total = $grupo['Participantes']['M'] + $grupo['Participantes']['F'] + $grupo['Asistentes']['M'] + $grupo['Asistentes']['F'];
-
-									if($sub_total > $total)
-									{
-										$total = $sub_total;
-										$grupo_mayor_impacto = $key.'<br><small>'.$grupo['Edad'].'</small>';
-									}
-								}
-							?>
-		    				<div class="center">
-			    				<h4>{!! $grupo_mayor_impacto !!}</h4>
-			    				<small>GRUPO MAS IMPACTADO </small>
-		    				</div>
-		    			</div>
-						<div class="col-md-12">
-							<br><br>
-						</div>
-						<div class="col-md-6">
-							<input type="hidden" name="grupos_impacto_participantes" data-json="{!! htmlspecialchars(json_encode($grupos_impacto)) !!}">
-							<div id="grupos_impacto_participantes" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-						</div>
-						<div class="col-md-6">
-							<input type="hidden" name="grupos_impacto_asistentes" data-json="{!! htmlspecialchars(json_encode($grupos_impacto)) !!}">
-							<div id="grupos_impacto_asistentes" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-						</div>
-						<div class="col-md-12">
-							<br><br>
-						</div>
-						@if ($sesion_mayor_afluencia)
-			    			<div class="col-md-12">
-								<p class="lead">La sesión con mayor afluencia fue:</p>
-								{{ $sesion_mayor_afluencia->getCode().' - '.$sesion_mayor_afluencia->toSuccessString() }} <br>
-								Realizada por: {{ $sesion_mayor_afluencia->profesor ? $sesion_mayor_afluencia->profesor->persona->toFriendlyString() : 'Sin profesor asignado' }} <br>
-								<small>
-									{{ $total_mayor_afluencia }} personas.
-								</small>
-							</div>
-						@endif
-					</div>
-				@endif
     		@elseif (in_array('Profesor', $_SESSION['Usuario']['Roles']))
-				@if (count($asignadas->whereIn('Estado', ['Pendiente', 'Rechazado', 'Corregir'])->all()))
+				@if ($asignadas->whereIn('Estado', ['Pendiente', 'Rechazado', 'Corregir'])->count())
 	    			<div class="col-md-12">
 						<p class="lead">
-							Hay ({{ count($asignadas->whereIn('Estado', ['Pendiente', 'Rechazado', 'Corregir'])->all()) }}) sesiones pendientes por revisar, para consultarlas has click <a href="{{ url('/profesores/sesiones') }}" class="alert-link">aquí.</a>
+							Hay ({{ $asignadas->whereIn('Estado', ['Pendiente', 'Rechazado', 'Corregir'])->count() }}) sesiones pendientes por revisar, para consultarlas has click <a href="{{ url('/profesores/sesiones') }}" class="alert-link">aquí.</a>
 						</p>
 	    			</div>
 		    	@else
@@ -174,107 +68,6 @@
 	    				</p>
 	    			</div>
     			@endif
-
-				@if(count($asignadas))
-					<div class="col-md-12">
-						<br>
-					</div>
-					<div class="col-md-12">
-	    				<p class="lead">
-	    					Este {{ date('Y') }}:
-	    				</p>
-	    			</div>
-	    			<div class="col-md-12">
-						<br>
-					</div>
-					<div class="col-md-12">
-						<div class="col-md-4 col-sm-6 resaltar">
-		    				<div class="center">
-			    				<h4>{{ count($asignadas->where('Estado', 'Aprobado')->all()) }}</h4>
-			    				<small> SESIONES <br> REALIZADAS </small>
-		    				</div>
-		    			</div>
-		    			<div class="col-md-4 col-sm-6 resaltar">
-		    				<div class="center">
-		    					<?php
-		    						$total_participaciones = 0;
-		    						$grupos_impacto = [];
-		    						$total_mayor_afluencia = 0;
-		    						$sesion_mayor_afluencia = null;
-
-		    						foreach ($asignadas as $sesion)
-		    						{
-		    							if ($sesion->gruposPoblacionales)
-		    							{
-		    								//obtener la sesion con mas afluencia
-		    								if($sesion->gruposPoblacionales->sum('pivot.Cantidad') > $total_mayor_afluencia)
-		    								{
-		    									$total_mayor_afluencia = $sesion->gruposPoblacionales->sum('pivot.Cantidad');
-		    									$sesion_mayor_afluencia = $sesion;
-		    								}
-
-			    							foreach ($sesion->gruposPoblacionales as $grupo)
-			    							{
-			    								$total_participaciones += $grupo->pivot['Grupo_Asistencia'] == 'Participantes' ? $grupo->pivot['Cantidad'] : 0;
-
-			    								if (!array_key_exists($grupo['Grupo'], $grupos_impacto))
-			    									$grupos_impacto[$grupo['Grupo']] = ['Participantes' => ['M' => 0, 'F' => 0], 'Asistentes' => ['M' => 0, 'F' => 0], 'Edad' => $grupo['Edad_Inicio'].($grupo['Edad_Fin'] < 0 ? ' - mas' : ' a '.$grupo['Edad_Fin']).' años'];
-
-			    								$grupos_impacto[$grupo['Grupo']][$grupo->pivot['Grupo_Asistencia']][$grupo->pivot['Genero']] += $grupo->pivot['Cantidad'];
-			    							}
-		    							}
-		    						}
-		    					?>
-			    				<h4>{{ $total_participaciones }}</h4>
-			    				<small> PARTICIPANTES <br> REGISTRADOS </small>
-		    				</div>
-		    			</div>
-		    			<div class="col-md-4 col-sm-6 resaltar">
-							<?php
-								$grupo_mayor_impacto = 'N\P';
-								$total = 0;
-
-								foreach ($grupos_impacto as $key => $grupo)
-								{
-									$sub_total = $grupo['Participantes']['M'] + $grupo['Participantes']['F'] + $grupo['Asistentes']['M'] + $grupo['Asistentes']['F'];
-
-									if($sub_total > $total)
-									{
-										$total = $sub_total;
-										$grupo_mayor_impacto = $key.'<br><small>'.$grupo['Edad'].'</small>';
-									}
-								}
-							?>
-		    				<div class="center">
-			    				<h4>{!! $grupo_mayor_impacto !!}</h4>
-			    				<small>GRUPO MAS IMPACTADO </small>
-		    				</div>
-		    			</div>
-					</div>
-					<div class="col-md-12">
-						<br><br>
-					</div>
-					<div class="col-md-6">
-						<input type="hidden" name="grupos_impacto_participantes" data-json="{!! htmlspecialchars(json_encode($grupos_impacto)) !!}">
-						<div id="grupos_impacto_participantes" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-					</div>
-					<div class="col-md-6">
-						<input type="hidden" name="grupos_impacto_asistentes" data-json="{!! htmlspecialchars(json_encode($grupos_impacto)) !!}">
-						<div id="grupos_impacto_asistentes" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-					</div>
-					<div class="col-md-12">
-						<br><br>
-					</div>
-					@if($sesion_mayor_afluencia)
-						<div class="col-md-12">
-							<p class="lead">La sesión con mayor afluencia fue:</p>
-							{{ $sesion_mayor_afluencia->toSuccessString() }} <br>
-							<small>
-								{{ $total_mayor_afluencia }} personas.
-							</small>
-						</div>
-					@endif
-				@endif
     		@endif
     	</div>
     	<div class="row">

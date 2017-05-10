@@ -425,15 +425,39 @@ class SesionController extends Controller {
 
 	public function sesionesGestor(Request $request)
 	{
-		$perPage = config('app.page_size');
-		$elementos = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'profesor.persona')
-							->whereHas('cronograma', function($query)
-							{
-								$query->where('Id_Recreopersona', $this->usuario['Recreopersona']->Id_Recreopersona);
-							})
-							->whereNull('deleted_at')
+
+		$request->flash();
+
+		if ($request->isMethod('get'))
+		{
+			$models = null;
+			$elementos = $models;
+		} else {
+			$models = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'profesor.persona')
+						->whereHas('cronograma', function($query)
+						{
+							$query->where('Id_Recreopersona', $this->usuario['Recreopersona']->Id_Recreopersona);
+						});
+
+			if($request->input('estado') && $request->input('estado') != 'Todos')
+			{
+				$models->where('Estado', $request->input('estado'));
+			}
+
+			if($request->input('desde'))
+			{
+				$models->where('Fecha', '>=', $request->input('desde'));
+			}
+
+			if($request->input('hasta'))
+			{
+				$models->where('Fecha', '<=', $request->input('hasta'));
+			}
+
+			$elementos = $models->whereNull('deleted_at')
 							->orderBy('Id', 'DESC')
 							->get();
+		}
 
 		$lista = [
 			'titulo' => 'Sesiones gestor',

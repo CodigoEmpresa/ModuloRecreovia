@@ -16,8 +16,43 @@
         @endif
         <div class="col-xs-12"><br></div>
         <div class="col-xs-12">
-            Total de sesiones registradas: {{ count($elementos) }}
+            Total de sesiones encontradas: {{ count($elementos) }}
         </div>
+        <div class="col-md-12"><br></div>
+        <form action="{{ url('/gestores/sesiones') }}" method="post">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-2 form-group">
+                        <label for="">Estado</label>
+                        <select name="estado" id="estado" title="Estado" class="form-control" data-value="{{ old('estado') }}">
+                            <option value="Todos">Todos</option>
+                            <option value="Pendiente">Pendiente</option>
+                            <option value="Diligenciado">Diligenciado</option>
+                            <option value="Corregir">Corregir</option>
+                            <option value="Aprobado">Aprobado</option>
+                            <option value="Finalizado">Finalizado</option>
+                            <option value="Rechazado">Rechazado</option>
+                            <option value="Cancelado">Cancelado</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <label for="">Desde</label>
+                        <input name="desde" type="text" placeholder="Desde" class="form-control" data-role="datepicker" data-rel="fecha_inicio" data-fecha-inicio="" data-fecha-fin="" data-fechas-importantes="{{ Festivos::create()->datesToString() }}" value="{{ old('desde') }}">
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <label for="">Hasta</label>
+                        <input name="hasta" type="text" placeholder="Desde" class="form-control" data-role="datepicker" data-rel="fecha_fin" data-fecha-inicio="" data-fecha-fin="" data-fechas-importantes="{{ Festivos::create()->datesToString() }}" value="{{ old('hasta') }}">
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <label for="">&nbsp;</label><br>
+                        <input type="hidden" name="_method" value="POST">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <button type="submit" class="btn btn-success"><i class="fa fa-filter"></i></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="col-xs-12"><hr></div>
         <div class="col-xs-12"><br></div>
         <div class="col-xs-12">
             @if (count($elementos) > 0)
@@ -92,8 +127,6 @@
                         @endforeach
                     </tbody>
                 </table>
-            @else
-                No se ha registrado ninguna sesión hasta el momento.
             @endif
         </div>
     </div>

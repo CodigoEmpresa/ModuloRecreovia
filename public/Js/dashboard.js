@@ -1,5 +1,6 @@
 $(function()
 {
+	/*
 	var grupos_impacto_participantes = $.parseJSON(JSON.stringify($('input[name="grupos_impacto_participantes"]').data('json')));
 	var grupos_impacto_asistentes = $.parseJSON(JSON.stringify($('input[name="grupos_impacto_asistentes"]').data('json')));
 
@@ -112,5 +113,5 @@ $(function()
 	        }]
 	    });
     })();
-
+	*/
 });

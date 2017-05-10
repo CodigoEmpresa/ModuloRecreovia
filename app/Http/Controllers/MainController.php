@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers;
 
@@ -27,32 +27,28 @@ class MainController extends Controller {
 	{
 		$programadas = null;
 		$asignadas = null;
+		$query = Sesion::with('cronograma');
 
 		if (in_array('Gestor', $_SESSION['Usuario']['Roles']))
 		{
-			$programadas = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'profesor.persona', 'gruposPoblacionales')
-				->whereHas('cronograma', function($query)
+			$query->whereHas('cronograma', function($query)
 				{
 					$query->where('Id_Recreopersona', $this->Usuario['Recreopersona']->Id_Recreopersona);
-				})
-				->whereNull('deleted_at')
-				->whereYear('created_at', '=', date('Y'))
-				->orderBy('Id', 'DESC')
-				->get();
+				});
 		}
 
-		if (in_array('Profesor', $_SESSION['Usuario']['Roles'])) {
-			$asignadas = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'profesor.persona', 'gruposPoblacionales')
-				->whereNull('deleted_at')
-				->where('Id_Recreopersona', $this->Usuario['Recreopersona']->Id_Recreopersona)
-				->whereYear('created_at', '=', date('Y'))
-				->orderBy('Id', 'DESC')
-				->get();
+		if (in_array('Profesor', $_SESSION['Usuario']['Roles']))
+		{
+			$query->where('Id_Recreopersona', $this->Usuario['Recreopersona']->Id_Recreopersona);
 		}
+
+		$sesiones = $query->whereNull('deleted_at')
+			->whereYear('Fecha', '=', date('Y'))
+			->orderBy('Id', 'DESC')
+			->get();
 
 		$data = [
-			'programadas' => $programadas,
-			'asignadas' => $asignadas,
+			'sesiones' => $sesiones,
 			'recreopersona' => $this->Usuario['Recreopersona']
 		];
 
@@ -67,7 +63,7 @@ class MainController extends Controller {
 		$fake_permissions = null;
 
 		if ($request->has('vector_modulo') || $fake_permissions)
-		{	
+		{
 			$vector = $request->has('vector_modulo') ? urldecode($request->input('vector_modulo')) : $fake_permissions;
 			$user_array = is_array($vector) ? $vector : unserialize($vector);
 			$permissions_array = $user_array;
