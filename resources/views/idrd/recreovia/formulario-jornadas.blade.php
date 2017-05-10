@@ -103,8 +103,8 @@
                                     <table id="puntos" class="table default table-min">
                                         <thead>
                                             <tr>
-                                                <th style="width:500px;">Punto</th>
-                                                <th style="width:180px;">Dirección</th>
+                                                <th style="width:300px;">Punto</th>
+                                                <th style="width:300px;">Dirección</th>
                                                 <th>Contacto</th>
                                                 <th>Teléfono</th>
                                                 <th data-priority="2">Seleccionado</th>
@@ -118,10 +118,10 @@
                                                     {{ strtoupper($punto->toString()) }}
                                                 </td>
                                                 <td>
-                                                    {{ $punto->Direccion }}
+                                                    {{ strtoupper($punto->Direccion) }}
                                                 </td>
                                                 <td>
-                                                    {{ $punto->Contacto_Nombre }}
+                                                    {{ strtoupper($punto->Contacto_Nombre) }}
                                                 </td>
                                                 <td>
                                                     {{ $punto->Contacto_Telefono }}
