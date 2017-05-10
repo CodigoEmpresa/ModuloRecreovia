@@ -55,10 +55,10 @@
 	    			</div>
     			@endif
     		@elseif (in_array('Profesor', $_SESSION['Usuario']['Roles']))
-				@if ($asignadas->whereIn('Estado', ['Pendiente', 'Rechazado', 'Corregir'])->count())
+				@if ($sesiones->whereIn('Estado', ['Pendiente', 'Rechazado', 'Corregir'])->count())
 	    			<div class="col-md-12">
 						<p class="lead">
-							Hay ({{ $asignadas->whereIn('Estado', ['Pendiente', 'Rechazado', 'Corregir'])->count() }}) sesiones pendientes por revisar, para consultarlas has click <a href="{{ url('/profesores/sesiones') }}" class="alert-link">aquí.</a>
+							Hay ({{ $sesiones->whereIn('Estado', ['Pendiente', 'Rechazado', 'Corregir'])->count() }}) sesiones pendientes por revisar, para consultarlas has click <a href="{{ url('/profesores/sesiones') }}" class="alert-link">aquí.</a>
 						</p>
 	    			</div>
 		    	@else

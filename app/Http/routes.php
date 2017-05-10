@@ -59,14 +59,6 @@ Route::group(['middleware' => ['web']], function()
 	Route::get('/puntos/{id}/eliminar', 'Recreovia\PuntosController@eliminar');
 	Route::post('/puntos/procesar/', 'Recreovia\PuntosController@procesar');
 
-	Route::get('/profesores', 'Recreovia\ProfesoresController@index');
-	Route::get('/profesores/service/buscar/{key}/{strict?}', 'Recreovia\ProfesoresController@buscar');
-	Route::get('/profesores/service/obtener/{id}', 'Recreovia\ProfesoresController@obtener');
-	Route::get('/profesores/crear', 'Recreovia\ProfesoresController@crear');
-	Route::get('/profesores/{id}/editar', 'Recreovia\ProfesoresController@editar');
-	Route::get('/profesores/{id}/eliminar', 'Recreovia\ProfesoresController@eliminar');
-	Route::post('/profesores/procesar', 'Recreovia\ProfesoresController@procesar');
-
 	Route::get('/localidades/administrar', 'Recreovia\LocalidadController@index');
 	Route::get('/localidades/{id_localidad}/administrar/{id_punto?}', 'Recreovia\LocalidadController@editar');
 	Route::get('/localidades/{id_localidad}/personal/{id_persona}/remover', 'Recreovia\LocalidadController@removerPersonal');
@@ -88,8 +80,17 @@ Route::group(['middleware' => ['web']], function()
 	route::post('/gestores/sesiones/procesar', 'Recreovia\SesionController@procesarGestor');
 	route::get('/gestores/sesiones/{id_sesion}/editar', 'Recreovia\SesionController@editarSesionGestor');
 
-	route::get('/profesores/sesiones', 'Recreovia\SesionController@sesionesProfesor');
+
+	Route::get('/profesores', 'Recreovia\ProfesoresController@index');
+	Route::get('/profesores/service/buscar/{key}/{strict?}', 'Recreovia\ProfesoresController@buscar');
+	Route::get('/profesores/service/obtener/{id}', 'Recreovia\ProfesoresController@obtener');
+	Route::get('/profesores/crear', 'Recreovia\ProfesoresController@crear');
+	Route::get('/profesores/{id}/editar', 'Recreovia\ProfesoresController@editar');
+	Route::get('/profesores/{id}/eliminar', 'Recreovia\ProfesoresController@eliminar');
+	Route::post('/profesores/procesar', 'Recreovia\ProfesoresController@procesar');
+	route::any('/profesores/sesiones', 'Recreovia\SesionController@sesionesProfesor');
 	route::get('/profesores/sesiones/{id_sesion}/editar', 'Recreovia\SesionController@editarSesionProfesor');
+
 	route::post('/sesiones/procesar', 'Recreovia\SesionController@procesar');
 	route::post('/asistencia/procesar', 'Recreovia\SesionController@asistencia');
 	route::post('/producto_no_conforme/procesar', 'Recreovia\SesionController@productoNoConforme');
