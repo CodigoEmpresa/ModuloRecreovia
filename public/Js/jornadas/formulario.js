@@ -22,4 +22,21 @@ $(function()
 
     if($('select[name="Jornada"]').data('value') != '')
         $('select[name="Jornada"]').trigger('change');
+
+    $('#puntos').delegate('input[type="checkbox"]', 'click', function(e)
+    {
+        var puntos = ($('input[name="puntos"]').val()).split(',');
+
+        if($(this).is(':checked'))
+        {
+            puntos.push($(this).val());
+        } else {
+            if (puntos.indexOf($(this).val()) !== -1)
+                puntos.splice(puntos.indexOf($(this).val()), 1);
+        }
+
+        puntos = puntos.filter(Boolean);
+
+        $('input[name="puntos"]').val(puntos.join());
+    });
 });

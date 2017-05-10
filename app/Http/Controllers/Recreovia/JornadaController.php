@@ -108,7 +108,7 @@ class JornadaController extends Controller {
 		$jornada->save();
 
 		if (array_key_exists('puntos', $request->all()))
-			$jornada->puntos()->sync($request['puntos']);
+			$jornada->puntos()->sync(explode(',', $request['puntos']));
 
        	return redirect('/jornadas/'.$jornada->Id_Jornada.'/editar')->with(['status' => 'success']);
 	}

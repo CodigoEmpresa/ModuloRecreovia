@@ -98,19 +98,45 @@
                             <hr>
                         </div>
                         <div class="col-xs-12">
-                            <label for="">Puntos</label>
                             <div class="row">
-                                @foreach ($puntos->chunk(count($puntos) / 2) as $chunk)
-                                    <div class="col-md-6">
-                                        @foreach ($chunk as $punto)
-                                            <div class="checkbox">
-                                                <label>
-                                                     <input type="checkbox" name="puntos[]" value="{{ $punto['Id_Punto'] }}" {{ ($jornada && in_array($punto['Id_Punto'], $jornada->puntos->pluck('Id_Punto')->toArray())) || (in_array($punto['Id_Punto'], is_array(old('puntos')) ? old('puntos') : [])) ? 'checked' : '' }}> {{ strtoupper($punto->toString()) }}
-                                                </label>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                @endforeach
+                                <div class="col-md-12">
+                                    <table id="puntos" class="table default table-min">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:500px;">Punto</th>
+                                                <th style="width:180px;">Dirección</th>
+                                                <th>Contacto</th>
+                                                <th>Teléfono</th>
+                                                <th data-priority="2">Seleccionado</th>
+                                                <th style="width:30px;" align="center" class="no-sort" data-priority="2"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($puntos as $punto)
+                                            <tr>
+                                                <td>
+                                                    {{ strtoupper($punto->toString()) }}
+                                                </td>
+                                                <td>
+                                                    {{ $punto->Direccion }}
+                                                </td>
+                                                <td>
+                                                    {{ $punto->Contacto_Nombre }}
+                                                </td>
+                                                <td>
+                                                    {{ $punto->Contacto_Telefono }}
+                                                </td>
+                                                <td>
+                                                   {{ ($jornada && in_array($punto['Id_Punto'], $jornada->puntos->pluck('Id_Punto')->toArray())) || in_array($punto['Id_Punto'], explode(',', old('puntos'))) ? 'Si' : 'No' }}
+                                                </td>
+                                                <td>
+                                                    <input type="checkbox" value="{{ $punto['Id_Punto'] }}" {{ ($jornada && in_array($punto['Id_Punto'], $jornada->puntos->pluck('Id_Punto')->toArray())) || in_array($punto['Id_Punto'], explode(',', old('puntos'))) ? 'checked' : '' }}>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                         <div class="col-xs-12">
@@ -120,6 +146,7 @@
                             <input type="hidden" name="_method" value="POST">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <input type="hidden" name="Id_Jornada" value="{{ $jornada ? $jornada['Id_Jornada'] : 0 }}">
+                            <input type="hidden" name="puntos" value="{{ $jornada ? implode(',', $jornada->puntos->pluck('Id_Punto')->toArray()) : '' }}">
                             <input type="hidden" name="Tipo" value="{{ $jornada ? $jornada['Tipo'] : '' }}">
                             <input type="submit" value="Guardar" id="guardar-jornada" class="btn btn-primary">
                             @if ($jornada)
