@@ -52,7 +52,7 @@ class Recreopersona extends Model
 
     public function getCode()
     {
-        return 'U'.str_pad($this->Id_Recreopersona, 4, '0', STR_PAD_LEFT);
+        return 'U'.str_pad($this->Id_Recreopersona, 5, '0', STR_PAD_LEFT);
     }
 
     use SoftDeletes, CascadeSoftDeletes;

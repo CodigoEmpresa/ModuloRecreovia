@@ -24,18 +24,30 @@ class ReporteController extends Controller {
 			$this->usuario = $_SESSION['Usuario'];
 	}
 
-	public function jornadas()
+	public function jornadas(Request $request)
 	{
 		$recreopersona = $this->cronogramasPersona($this->usuario['Recreopersona']->Id_Recreopersona);
-		$elementos = Reporte::with(['profesores', 'cronograma', 'cronograma.sesiones'])
+		$request->flash();
+
+		if ($request->isMethod('get'))
+		{
+			$qb = null;
+			$elementos = $qb;
+		} else {
+			$qb = Reporte::with(['profesores', 'cronograma', 'cronograma.sesiones']);
+			$qb = $this->aplicarFiltro($qb, $request);
+
+			$elementos = $qb->whereNull('deleted_at')
 							->whereNull('deleted_at')
 							->whereIn('Id_Cronograma', $recreopersona->cronogramas->pluck('Id')->toArray())
 							->orderBy('Id', 'DESC')
 							->get();
+		}
 
 		$lista = [
 			'titulo' => 'Informes jornadas',
 	        'elementos' => $elementos,
+	        'puntos' => $recreopersona->puntos,
 	        'status' => session('status')
 		];
 
@@ -47,18 +59,40 @@ class ReporteController extends Controller {
 		return view('list', $datos);
 	}
 
-	public function jornadas_profesor()
+	public function jornadas_profesor(Request $request)
 	{
-		$recreopersona = Recreopersona::with(['reportes' => function($query)
-									{
-										return $query->whereNull('Reportes.deleted_at')
-													 ->orderBy('Id', 'DESC');
-									}, 'reportes.profesores', 'reportes.cronograma', 'reportes.cronograma.sesiones'])
+		$request->flash();
+		$recreopersona = Recreopersona::with(['reportes', 'reportes.profesores', 'reportes.cronograma', 'reportes.punto', 'reportes.cronograma.sesiones'])
 									->find($this->usuario['Recreopersona']->Id_Recreopersona);
+
+		$puntos = [];
+
+		foreach($recreopersona->reportes as $reporte)
+		{
+			if(!array_key_exists($reporte->punto['Id_Punto'], $puntos))
+			 $puntos[$reporte->punto['Id_Punto']] = $reporte->punto;
+		}
+
+		if ($request->isMethod('get'))
+		{
+			$qb = null;
+			$elementos = $qb;
+		} else {
+			$qb = Recreopersona::with(['reportes' => function($query) use ($request)
+								{
+									$query = $this->aplicarFiltro($query, $request);
+									$query->whereNull('Reportes.deleted_at')
+												->orderBy('Id', 'DESC');
+								}, 'reportes.profesores', 'reportes.cronograma', 'reportes.punto', 'reportes.cronograma.sesiones'])
+								->find($this->usuario['Recreopersona']->Id_Recreopersona);
+
+			$elementos = $qb->reportes;
+		}
 
 		$lista = [
 			'titulo' => 'Informes jornadas',
-	        'elementos' => $recreopersona->reportes,
+	        'elementos' => $elementos,
+			'puntos' => $puntos,
 	        'status' => session('status')
 		];
 
@@ -70,21 +104,28 @@ class ReporteController extends Controller {
 		return view('list', $datos);
 	}
 
-	public function obtenerInformes()
+	public function obtenerInformes(Request $request)
 	{
-		$elementos = Reporte::with(['profesores', 'cronograma', 'cronograma.jornada', 'cronograma.sesiones'])
-							->where(function($query)
-							{
-								return $query->where('Estado', '<>', 'Finalizado')
-											->orWhereNull('Estado');
-							})
-							->whereNull('deleted_at')
-							->orderBy('Id', 'DESC')
-							->get();
+		$recreopersona = $this->cronogramasPersona($this->usuario['Recreopersona']->Id_Recreopersona);
+		$request->flash();
+
+		if ($request->isMethod('get'))
+		{
+			$qb = null;
+			$elementos = $qb;
+		} else {
+			$qb = Reporte::with(['profesores', 'cronograma', 'cronograma.jornada', 'cronograma.sesiones']);
+			$qb = $this->aplicarFiltro($qb, $request);
+
+			$elementos = $qb->whereNull('deleted_at')
+			->orderBy('Id', 'DESC')
+			->get();
+		}
 
 		$lista = [
 			'titulo' => 'Aprobar informes de jornadas',
 	        'elementos' => $elementos,
+			'puntos' => Punto::all(),
 	        'status' => session('status')
 		];
 
@@ -303,5 +344,34 @@ class ReporteController extends Controller {
 		$recreopersona->puntos = $puntos;
 
 		return $recreopersona;
+	}
+
+	private function aplicarFiltro($qb, $request)
+	{
+		if ($request->input('estado') && $request->input('estado') != 'Todos')
+		{
+			$qb->where(function($query) use ($request)
+			{
+				if ($request->input('estado') == 'Pendiente')
+				{
+					return $query->where('Estado', $request->input('estado'))
+								->orWhereNull('Estado');
+				} else {
+					return $query->where('Estado', $request->input('estado'));
+				}
+			});
+		}
+
+		if ($request->input('punto') && $request->input('punto') != 'Todos')
+		{
+			$qb->where('Id_Punto', $request->input('punto'));
+		}
+
+		if($request->input('fecha'))
+		{
+			$qb->whereRaw('FIND_IN_SET("'.$request->input('fecha').'", Dias) > 0');
+		}
+
+		return $qb;
 	}
 }

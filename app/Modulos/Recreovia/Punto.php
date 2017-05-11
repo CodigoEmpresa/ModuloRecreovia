@@ -43,7 +43,7 @@ class Punto extends Model
 
     public function toString()
     {
-        return $this->Escenario;
+        return strtoupper($this->Escenario);
     }
 
     public function getCode()

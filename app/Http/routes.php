@@ -97,14 +97,14 @@ Route::group(['middleware' => ['web']], function()
 	route::get('/producto_no_conforme/{id}/eliminar/{tipo}', 'Recreovia\SesionController@eliminarProductoNoConforme');
 	route::post('/calificacion_del_servicio/procesar', 'Recreovia\SesionController@calificacionDelServicio');
 
-	route::get('/informes/jornadas', 'Recreovia\ReporteController@jornadas');
-	route::get('/informes/jornadas/profesor', 'Recreovia\ReporteController@jornadas_profesor');
+	route::any('/informes/jornadas', 'Recreovia\ReporteController@jornadas');
+	route::any('/informes/jornadas/profesor', 'Recreovia\ReporteController@jornadas_profesor');
 	route::get('/informes/jornadas/crear', 'Recreovia\ReporteController@crearInformeJornadas');
 	route::get('/informes/jornadas/{id}/editar', 'Recreovia\ReporteController@editarInformeJornadas');
 	route::get('/informes/jornadas/{id}/eliminar', 'Recreovia\ReporteController@eliminarInformeJornadas');
 	route::post('/informes/jornadas/generar', 'Recreovia\ReporteController@generarInformeJornadas');
 	route::post('/informes/jornadas/actualizar', 'Recreovia\ReporteController@actualizarInformeJornadas');
-	route::get('/informes/jornadas/revisar', 'Recreovia\ReporteController@obtenerInformes');
+	route::any('/informes/jornadas/revisar', 'Recreovia\ReporteController@obtenerInformes');
 
 	route::get('/informes/consolidado_general', 'Recreovia\ConsolidadoGeneralController@index');
 	route::post('/informes/consolidado_general', 'Recreovia\ConsolidadoGeneralController@generar');

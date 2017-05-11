@@ -406,28 +406,15 @@ class SesionController extends Controller {
 
 		if ($request->isMethod('get'))
 		{
-			$models = null;
-			$elementos = $models;
+			$qb = null;
+			$elementos = $qb;
 		} else {
-			$models = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'profesor.persona')
+			$qb = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'profesor.persona')
 								->where('Id_Recreopersona', $this->usuario['Recreopersona']->Id_Recreopersona);
-			
-			if($request->input('estado') && $request->input('estado') != 'Todos')
-			{
-				$models->where('Estado', $request->input('estado'));
-			}
+			$qb->aplicarFiltro($qb, $request);
 
-			if($request->input('desde'))
-			{
-				$models->where('Fecha', '>=', $request->input('desde'));
-			}
 
-			if($request->input('hasta'))
-			{
-				$models->where('Fecha', '<=', $request->input('hasta'));
-			}
-
-			$elementos = $models->whereNull('deleted_at')
+			$elementos = $qb->whereNull('deleted_at')
 							->orderBy('Id', 'DESC')
 							->get();
 		}
@@ -453,31 +440,17 @@ class SesionController extends Controller {
 
 		if ($request->isMethod('get'))
 		{
-			$models = null;
-			$elementos = $models;
+			$qb = null;
+			$elementos = $qb;
 		} else {
-			$models = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'profesor.persona')
+			$qb = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'profesor.persona')
 						->whereHas('cronograma', function($query)
 						{
 							$query->where('Id_Recreopersona', $this->usuario['Recreopersona']->Id_Recreopersona);
 						});
+			$qb = $this->aplicarFiltro($qb, $request);
 
-			if($request->input('estado') && $request->input('estado') != 'Todos')
-			{
-				$models->where('Estado', $request->input('estado'));
-			}
-
-			if($request->input('desde'))
-			{
-				$models->where('Fecha', '>=', $request->input('desde'));
-			}
-
-			if($request->input('hasta'))
-			{
-				$models->where('Fecha', '<=', $request->input('hasta'));
-			}
-
-			$elementos = $models->whereNull('deleted_at')
+			$elementos = $qb->whereNull('deleted_at')
 							->orderBy('Id', 'DESC')
 							->get();
 		}
@@ -542,5 +515,25 @@ class SesionController extends Controller {
 		} catch (Exception $e) {
 
 		}
+	}
+
+	private function aplicarFiltro($qb, $request)
+	{
+		if($request->input('estado') && $request->input('estado') != 'Todos')
+		{
+			$qb->where('Estado', $request->input('estado'));
+		}
+
+		if($request->input('desde'))
+		{
+			$qb->where('Fecha', '>=', $request->input('desde'));
+		}
+
+		if($request->input('hasta'))
+		{
+			$qb->where('Fecha', '<=', $request->input('hasta'));
+		}
+
+		return $qb;
 	}
 }

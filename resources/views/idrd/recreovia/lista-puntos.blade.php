@@ -5,7 +5,7 @@
                 <div class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     Datos actualizados satisfactoriamente.
-                </div>                                
+                </div>
             </div>
         @endif
         <div class="col-xs-12">
@@ -36,7 +36,7 @@
                             UPZ
                         </th>
                         <th data-priority="2" class="no-sort" style="width: 35px;">
-                            
+
                         </th>
                     </tr>
                 </thead>
