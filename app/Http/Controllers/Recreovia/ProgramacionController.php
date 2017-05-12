@@ -7,6 +7,7 @@ use App\Modulos\Recreovia\Cronograma;
 use App\Modulos\Recreovia\Recreopersona;
 use App\Modulos\Recreovia\Sesion;
 use App\Modulos\Recreovia\Punto;
+use App\Modulos\Recreovia\Jornada;
 use App\Http\Requests\GuardarCronograma;
 use Illuminate\Http\Request;
 
@@ -18,18 +19,43 @@ class ProgramacionController extends Controller {
 			$this->usuario = $_SESSION['Usuario'];
 	}
 
-	public function index()
+	public function index(Request $request)
 	{
-		$elementos = Cronograma::with('punto', 'jornada', 'sesiones')
-							->whereNull('deleted_at')
+		$request->flash();
+
+		$cronogramas = Cronograma::with('punto')
+								->where('Id_Recreopersona', $this->usuario['Recreopersona']->Id_Recreopersona)
+								->get();
+
+		if ($request->isMethod('get'))
+		{
+			$qb = null;
+			$elementos = $qb;
+		} else {
+			$qb = Cronograma::with('punto', 'jornada', 'sesiones');
+			$qb = $this->aplicarFiltro($qb, $request);
+
+			$elementos = $qb->whereNull('deleted_at')
 							->where('Id_Recreopersona', $this->usuario['Recreopersona']->Id_Recreopersona)
 							->orderBy('created_at', 'DESC')
 							->get();
+		}
+
+		$puntos = [];
+
+		foreach($cronogramas as $cronograma)
+		{
+			if (!array_key_exists($cronograma->punto['Id_Punto'], $puntos))
+				$puntos[$cronograma->punto['Id_Punto']] = $cronograma->punto;
+		}
 
 		$lista = [
 			'titulo' => 'Programación',
 	        'elementos' => $elementos,
-	        'status' => session('status')
+			'puntos' => $puntos,
+			'jornadas' => Jornada::all(),
+			'crear' => true,
+	        'status' => session('status'),
 		];
 
 		$datos = [
@@ -40,16 +66,29 @@ class ProgramacionController extends Controller {
 		return view('list', $datos);
 	}
 
-	public function todos()
+	public function todos(Request $request)
 	{
-		$elementos = Cronograma::with('punto', 'jornada', 'gestor', 'gestor.persona', 'sesiones')
-							->whereNull('deleted_at')
+		$request->flash();
+
+		if ($request->isMethod('get'))
+		{
+			$qb = null;
+			$elementos = $qb;
+		} else {
+			$qb = Cronograma::with('punto', 'jornada', 'gestor', 'gestor.persona', 'sesiones');
+			$qb = $this->aplicarFiltro($qb, $request);
+
+			$elementos = $qb->whereNull('deleted_at')
 							->orderBy('created_at', 'DESC')
 							->get();
+		}
 
 		$lista = [
 			'titulo' => 'Programación',
 	        'elementos' => $elementos,
+			'puntos' => Punto::all(),
+			'jornadas' => Jornada::all(),
+			'crear' => false,
 	        'status' => session('status')
 		];
 
@@ -94,12 +133,12 @@ class ProgramacionController extends Controller {
 		$cronograma = Cronograma::find($id_cronograma);
 
 		$recreopersona = Recreopersona::with(['localidades' => function($query)
-										{
-											return $query->where('tipo', 'Gestor');
-										}, 'localidades.puntos.jornadas' => function($query)
-										{
-											return $query->whereNull('Jornadas.deleted_at');
-										}])->find($cronograma->Id_Recreopersona);
+							{
+								return $query->where('tipo', 'Gestor');
+							}, 'localidades.puntos.jornadas' => function($query)
+							{
+								return $query->whereNull('Jornadas.deleted_at');
+							}])->find($cronograma->Id_Recreopersona);
 
 		$puntos = $this->obtenerPuntosLocalidades($recreopersona->localidades);
 
@@ -224,4 +263,18 @@ class ProgramacionController extends Controller {
 		return $puntos;
 	}
 
+	private function aplicarFiltro($qb, $request)
+	{
+		if($request->input('punto') && $request->input('punto') != 'Todos')
+		{
+			$qb->where('Id_Punto', $request->input('punto'));
+		}
+
+		if($request->input('jornada') && $request->input('jornada') != 'Todos')
+		{
+			$qb->where('Id_Jornada', $request->input('jornada'));
+		}
+
+		return $qb;
+	}
 }
