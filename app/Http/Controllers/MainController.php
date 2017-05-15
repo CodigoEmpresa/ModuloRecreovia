@@ -79,7 +79,8 @@ class MainController extends Controller {
 				'gestionar_reportes_jornadas'=> array_key_exists(8, $permissions_array) ? intval($permissions_array[8]) : 0,
 				'validar_reportes_jornadas' => array_key_exists(9, $permissions_array) ? intval($permissions_array[9]) : 0,
 				'exportar_consolidado_general' => array_key_exists(10, $permissions_array) ? intval($permissions_array[10]) : 0,
-				'gestion_global_de_sesiones' => array_key_exists(11, $permissions_array) ? intval($permissions_array[11]) : 0
+				'gestion_global_de_sesiones' => array_key_exists(11, $permissions_array) ? intval($permissions_array[11]) : 0,
+				'buscador_de_sesiones' => array_key_exists(12, $permissions_array) ? intval($permissions_array[12]) : 0
 			];
 
 			$_SESSION['Usuario'] = $user_array;

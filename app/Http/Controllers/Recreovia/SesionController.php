@@ -435,7 +435,6 @@ class SesionController extends Controller {
 
 	public function sesionesGestor(Request $request)
 	{
-
 		$request->flash();
 
 		if ($request->isMethod('get'))
@@ -464,6 +463,39 @@ class SesionController extends Controller {
 		$datos = [
 			'seccion' => 'Sesiones gestor',
 			'lista'	=> view('idrd.recreovia.lista-sesiones-gestor', $lista)
+		];
+
+		return view('list', $datos);
+	}
+
+	public function buscar(Request $request)
+	{
+		$request->flash();
+		$codigos = collect(array_filter(explode(',', $request->input('codigos'))));
+		$codigos_preparados = $codigos->map(function($item, $key){
+			return sprintf("'%s'", strtoupper(trim($item)));
+		});
+
+		if(!$codigos_preparados->isEmpty())
+		{
+			$elementos = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'profesor.persona')
+								->whereRaw('concat("S", LPAD(Id, 5, "0")) IN ('.$codigos_preparados->implode(',').')')
+								->whereNull('deleted_at')
+								->orderBy('Id', 'DESC')
+								->get();
+		} else {
+			$elementos = null;
+		}
+
+		$lista = [
+			'titulo' => 'Buscador de sesiones',
+			'elementos' => $elementos,
+			'status' => session('status')
+		];
+
+		$datos = [
+			'seccion' => 'Buscador de sesiones',
+			'lista'	=> view('idrd.recreovia.buscador-sesiones', $lista)
 		];
 
 		return view('list', $datos);
@@ -515,6 +547,16 @@ class SesionController extends Controller {
 		} catch (Exception $e) {
 
 		}
+	}
+
+	public function actualizarEstado(Request $request)
+	{
+		$sesion = Sesion::find($request->input('id'));
+
+		$sesion->Estado = $request->input('estado');
+		$sesion->save();
+
+		return response()->json(true);
 	}
 
 	private function aplicarFiltro($qb, $request)

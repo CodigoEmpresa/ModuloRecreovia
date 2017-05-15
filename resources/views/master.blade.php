@@ -59,7 +59,8 @@
 						$_SESSION['Usuario']['Permisos']['editar_puntos'] ||
 						$_SESSION['Usuario']['Permisos']['administrar_localidades'] ||
 						$_SESSION['Usuario']['Permisos']['administrar_jornadas'] ||
-						$_SESSION['Usuario']['Permisos']['gestion_global_de_sesiones']
+						$_SESSION['Usuario']['Permisos']['gestion_global_de_sesiones'] ||
+						$_SESSION['Usuario']['Permisos']['buscador_de_sesiones']
 					)
 						<li class="dropdown {{ $seccion && in_array($seccion, ['Profesores', 'Jornadas', 'Puntos', 'Administrar localidades', 'Gestion global de sesiones']) ? 'active' : '' }}">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#">Administración <span class="caret"></span></a>
@@ -87,6 +88,11 @@
 								@if($_SESSION['Usuario']['Permisos']['gestion_global_de_sesiones'])
 									<li class="{{ $seccion && $seccion == 'Gestion global de sesiones' ? 'active' : '' }}">
 										<a href="{{ url('sesiones/administrar') }}">Gestion global de sesiones</a>
+									</li>
+								@endif
+								@if($_SESSION['Usuario']['Permisos']['buscador_de_sesiones'])
+									<li class="{{ $seccion && $seccion == 'Buscador de sesiones' ? 'active' : '' }}">
+										<a href="{{ url('sesiones/buscar') }}">Buscador de sesiones</a>
 									</li>
 								@endif
 							</ul>
