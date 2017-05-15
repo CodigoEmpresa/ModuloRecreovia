@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Punto extends Model
 {
-		protected $table = 'Puntos';
+	protected $table = 'Puntos';
     protected $primaryKey = 'Id_Punto';
     protected $connection = 'mysql';
 

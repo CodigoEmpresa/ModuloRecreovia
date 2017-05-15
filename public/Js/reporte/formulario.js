@@ -50,11 +50,12 @@ $(function()
     		return o.Id_Punto == Id_Punto;
     	})[0];
 
-    	if(punto.cronogramas.length)
+    	if(punto.cronogramas)
     	{
     		$('select[name="Id_Cronograma"]').html('');
     		$.each(punto.cronogramas, function(i, cronograma)
     		{
+                console.log(cronograma);
     			$('select[name="Id_Cronograma"]').append('<option data-desde="'+cronograma.Desde+'" data-dias="'+cronograma.jornada.Dias+'" data-hasta="'+cronograma.Hasta+'" value="'+cronograma.Id+'">'+('Del '+cronograma.Desde+' al '+cronograma.Hasta+' / '+cronograma.jornada.Code+' - '+cronograma.jornada.Label)+'</option>');
     		});
 

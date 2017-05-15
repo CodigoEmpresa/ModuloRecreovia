@@ -48,7 +48,7 @@
                             </div>
                             <div class="col-md-8 form-group {{ $errors->has('Id_Cronograma') ? 'has-error' : '' }}">
                                 <label for="">Periodo y jornada</label>
-                                <select name="Id_Cronograma" id="Id_Cronograma" class="form-control" data-json="{{ json_encode($puntos) }}" data-value="{{ $informe ? $informe['Id_Cronograma'] : old('Id_Cronograma') }}" title="Seleccionar">
+                                <select name="Id_Cronograma" id="Id_Cronograma" class="form-control" data-json="{{ json_encode($puntos->toArray()) }}" data-value="{{ $informe ? $informe['Id_Cronograma'] : old('Id_Cronograma') }}" title="Seleccionar">
                                 </select>
                             </div>
                             <div class="col-md-4 form-group {{ $errors->has('Dia') ? 'has-error' : '' }}">

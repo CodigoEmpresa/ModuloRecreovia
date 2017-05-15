@@ -318,12 +318,17 @@ class ReporteController extends Controller {
 
 	private function cronogramasPersona($recreopersona)
 	{
-		$recreopersona = Recreopersona::with('cronogramas', 'cronogramas.jornada', 'cronogramas.punto.cronogramas.jornada')->find($recreopersona);
+		$recreopersona = Recreopersona::with(['cronogramas' => function($query){
+												$query->whereNull('Cronogramas.deleted_at');
+											}, 'cronogramas.jornada', 'cronogramas.punto'])->find($recreopersona);
 		$puntos = collect();
 
-		foreach ($recreopersona->cronogramas as $cronograma)
+		foreach ($recreopersona->cronogramas as &$cronograma)
 		{
 			$Id_Punto = $cronograma->punto['Id_Punto'];
+			$cronograma->jornada->Label = $cronograma->jornada->toString();
+			$cronograma->jornada->Code = $cronograma->jornada->getCode();
+
 			$exists = $puntos->search(function($item, $key) use ($Id_Punto)
 			{
 				return $item['Id_Punto'] == $Id_Punto;
@@ -332,13 +337,12 @@ class ReporteController extends Controller {
 			if (!$exists)
 			{
 				$puntos->push($cronograma->punto);
-
-				foreach ($cronograma->punto->cronogramas as &$cronograma)
-				{
-					$cronograma->jornada->Label = $cronograma->jornada->toString();
-					$cronograma->jornada->Code = $cronograma->jornada->getCode();
-				}
 			}
+		}
+
+		foreach($puntos as &$punto)
+		{
+			$punto->cronogramas = $recreopersona->cronogramas->where('Id_Punto', $punto['Id_Punto'])->toArray();
 		}
 
 		$recreopersona->puntos = $puntos;
