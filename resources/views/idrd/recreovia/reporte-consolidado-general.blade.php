@@ -230,12 +230,12 @@
 					$subtotal_participantes['M'] += $grupo['Participantes']['M'];
 					$subtotal_participantes['F'] += $grupo['Participantes']['F'];
 				?>
-				<td align="center">{{ round(($grupo['Participantes']['M'] * 100) / $total_participantes) }}%</td>
-				<td align="center">{{ round(($grupo['Participantes']['F'] * 100) / $total_participantes) }}%</td>
+				<td align="center">{{ round(($grupo['Participantes']['M'] * 100) / ($total_participantes ? $total_participantes : 1) ) }}%</td>
+				<td align="center">{{ round(($grupo['Participantes']['F'] * 100) / ($total_participantes ? $total_participantes : 1) ) }}%</td>
 			@endforeach
-			<td align="center">{{ round(($total_participantes_h * 100) / $total_participantes) }}%</td>
-			<td align="center">{{ round(($total_participantes_m * 100) / $total_participantes) }}%</td>
-			<td align="center">{{ round((($total_participantes_h + $total_participantes_m) * 100) / $total_participantes) }}%</td>
+			<td align="center">{{ round(($total_participantes_h * 100) / ($total_participantes ? $total_participantes : 1)) }}%</td>
+			<td align="center">{{ round(($total_participantes_m * 100) / ($total_participantes ? $total_participantes : 1)) }}%</td>
+			<td align="center">{{ round((($total_participantes_h + $total_participantes_m) * 100) / ($total_participantes ? $total_participantes : 1)) }}%</td>
 
 			<td colspan="2"></td>
 
@@ -253,12 +253,12 @@
 					$subtotal_asistentes['M'] += $grupo['Asistentes']['M'];
 					$subtotal_asistentes['F'] += $grupo['Asistentes']['F'];
 				?>
-				<td align="center">{{ round(($grupo['Asistentes']['M'] * 100) / $total_asistentes) }}%</td>
-				<td align="center">{{ round(($grupo['Asistentes']['F'] * 100) / $total_asistentes) }}%</td>
+				<td align="center">{{ round(($grupo['Asistentes']['M'] * 100) / ($total_asistentes ? $total_asistentes : 1)) }}%</td>
+				<td align="center">{{ round(($grupo['Asistentes']['F'] * 100) / ($total_asistentes ? $total_asistentes : 1)) }}%</td>
 			@endforeach
-			<td align="center">{{ round(($total_asistentes_h * 100) / $total_asistentes) }}%</td>
-			<td align="center">{{ round(($total_asistentes_m * 100) / $total_asistentes) }}%</td>
-			<td align="center">{{ round((($total_asistentes_h + $total_asistentes_m) * 100) / $total_asistentes) }}%</td>
+			<td align="center">{{ round(($total_asistentes_h * 100) / ($total_asistentes ? $total_asistentes : 1)) }}%</td>
+			<td align="center">{{ round(($total_asistentes_m * 100) / ($total_asistentes ? $total_asistentes : 1)) }}%</td>
+			<td align="center">{{ round((($total_asistentes_h + $total_asistentes_m) * 100) / ($total_asistentes ? $total_asistentes : 1)) }}%</td>
 			<?php $j++ ?>
 		</tr>
    	@endforeach
@@ -266,41 +266,41 @@
 		<td></td>
 		<td>Subtotal</td>
 		@foreach($subtotal_grupo_participantes as $subtotal)
-			<td align="center">{{ round(($subtotal['M'] * 100) / $total_participantes) }}%</td>
-			<td align="center">{{ round(($subtotal['F'] * 100) / $total_participantes) }}%</td>
+			<td align="center">{{ round(($subtotal['M'] * 100) / ($total_participantes ? $total_participantes : 1)) }}%</td>
+			<td align="center">{{ round(($subtotal['F'] * 100) / ($total_participantes ? $total_participantes : 1)) }}%</td>
 		@endforeach
-		<td align="center">{{ round(($subtotal_participantes['M'] * 100) / $total_participantes) }}%</td>
-		<td align="center">{{ round(($subtotal_participantes['F'] * 100) / $total_participantes) }}%</td>
-		<td align="center">{{ round(($total_participantes * 100) / $total_participantes) }}%</td>
+		<td align="center">{{ round(($subtotal_participantes['M'] * 100) / ($total_participantes ? $total_participantes : 1)) }}%</td>
+		<td align="center">{{ round(($subtotal_participantes['F'] * 100) / ($total_participantes ? $total_participantes : 1)) }}%</td>
+		<td align="center">{{ round(($total_participantes * 100) / ($total_participantes ? $total_participantes : 1)) }}%</td>
 		
 		<td colspan="2"></td>
 
 		<td>Subtotal</td>
 		@foreach($subtotal_grupo_asistentes as $subtotal)
-			<td align="center">{{ round(($subtotal['M'] * 100) / $total_asistentes) }}%</td>
-			<td align="center">{{ round(($subtotal['F'] * 100) / $total_asistentes) }}%</td>
+			<td align="center">{{ round(($subtotal['M'] * 100) / ($total_asistentes ? $total_asistentes : 1)) }}%</td>
+			<td align="center">{{ round(($subtotal['F'] * 100) / ($total_asistentes ? $total_asistentes : 1)) }}%</td>
 		@endforeach
-		<td align="center">{{ round(($subtotal_asistentes['M'] * 100) / $total_asistentes) }}%</td>
-		<td align="center">{{ round(($subtotal_asistentes['F'] * 100) / $total_asistentes) }}%</td>
-		<td align="center">{{ round(($total_asistentes * 100) / $total_asistentes) }}%</td>
+		<td align="center">{{ round(($subtotal_asistentes['M'] * 100) / ($total_asistentes ? $total_asistentes : 1)) }}%</td>
+		<td align="center">{{ round(($subtotal_asistentes['F'] * 100) / ($total_asistentes ? $total_asistentes : 1)) }}%</td>
+		<td align="center">{{ round(($total_asistentes * 100) / ($total_asistentes ? $total_asistentes : 1)) }}%</td>
 	</tr>
 	<tr>
 		<td></td>
 		<td>Total</td>
 		@foreach($subtotal_grupo_participantes as $subtotal)
-			<td align="center" colspan="2" style="text-align: center;">{{ round((($subtotal['M'] + $subtotal['F']) * 100) / $total_participantes) }}%</td>
+			<td align="center" colspan="2" style="text-align: center;">{{ round((($subtotal['M'] + $subtotal['F']) * 100) / ($total_participantes ? $total_participantes : 1)) }}%</td>
 		@endforeach
-		<td align="center" colspan="2" style="text-align: center;">{{ round(($total_participantes * 100) / $total_participantes) }}%</td>
-		<td align="center"><b>{{ round(($total_participantes * 100) / $total_participantes) }}%</b></td>
+		<td align="center" colspan="2" style="text-align: center;">{{ round(($total_participantes * 100) / ($total_participantes ? $total_participantes : 1)) }}%</td>
+		<td align="center"><b>{{ round(($total_participantes * 100) / ($total_participantes ? $total_participantes : 1)) }}%</b></td>
 		
 		<td colspan="2"></td>
 
 		<td>Total</td>
 		@foreach($subtotal_grupo_asistentes as $subtotal)
-			<td align="center" colspan="2" style="text-align: center;">{{ round((($subtotal['M'] + $subtotal['F']) * 100) / $total_asistentes) }}%</td>
+			<td align="center" colspan="2" style="text-align: center;">{{ round((($subtotal['M'] + $subtotal['F']) * 100) / ($total_asistentes ? $total_asistentes : 1)) }}%</td>
 		@endforeach
-		<td align="center" colspan="2" style="text-align: center;">{{ round(($total_asistentes * 100) / $total_asistentes) }}%</td>
-		<td align="center"><b>{{ round(($total_asistentes * 100) / $total_asistentes) }}%</b></td>
+		<td align="center" colspan="2" style="text-align: center;">{{ round(($total_asistentes * 100) / ($total_asistentes ? $total_asistentes : 1)) }}%</td>
+		<td align="center"><b>{{ round(($total_asistentes * 100) / ($total_asistentes ? $total_asistentes : 1)) }}%</b></td>
 	</tr>
 	<tr>
 		<td colspan="35"></td>
@@ -336,13 +336,13 @@
 	<tr>
 		<td colspan="1"></td>
 		<td>Participantes</td>
-		<td align="center">{{ round((($total_participantes * 100) / ($total_hombres + $total_mujeres))) }}%</td>
+		<td align="center">{{ round((($total_participantes * 100) / ($total_hombres + $total_mujeres ? $total_hombres + $total_mujeres : 1))) }}%</td>
 		<td colspan="32"></td>
 	</tr>
 	<tr>
 		<td colspan="1"></td>
 		<td>Asistentes</td>
-		<td align="center">{{ round((($total_asistentes * 100) / ($total_hombres + $total_mujeres))) }}%</td>
+		<td align="center">{{ round((($total_asistentes * 100) / ($total_hombres + $total_mujeres ? $total_hombres + $total_mujeres : 1))) }}%</td>
 		<td colspan="32"></td>
 	</tr>
 </table>

@@ -289,7 +289,7 @@
 		<td colspan="6" align="center" style="text-align:center;"><b>TOTAL PUNTOS DE RECREOVÍA</b></td>
 		<td align="center" style="text-align:center;"><b>{{ $total }}</b></td>
 		<td align="center" style="text-align:center;"><b>PROMEDIO</b></td>
-		<td align="center" style="text-align:center;">{{ round( $total / $reportes->count() ) }}</td>
+		<td align="center" style="text-align:center;">{{ round( $total / ($reportes->count() ? $reportes->count() : 1) ) }}</td>
 		<td></td>
 		<td></td>
 	</tr>
