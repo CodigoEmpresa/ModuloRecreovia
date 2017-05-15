@@ -21,7 +21,7 @@
                         <select name="punto" id="punto" title="Punto" class="form-control" data-value="{{ old('punto') }}" data-live-search="true">
                             <option value="Todos">Todos</option>
                             @foreach($puntos as $punto)
-                                <option value="{{ $punto['Id_Punto'] }}">{{ $punto->toString() }}</option>
+                                <option value="{{ $punto['Id_Punto'] }}">{{ $punto->getCode() }} - {{ $punto->toString() }}</option>
                             @endforeach
                         </select>
                     </div>
