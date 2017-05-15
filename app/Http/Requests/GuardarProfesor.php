@@ -33,8 +33,7 @@ class GuardarProfesor extends Request
             'Id_Etnia' => 'required|min:1',
             'Id_Pais' => 'required|min:1',
             'Id_Genero' => 'required|in:1,2',
-            'correo' => 'required|email',
-            'contrato' => 'required'
+            'correo' => 'required|email'
         ];
     }
 }

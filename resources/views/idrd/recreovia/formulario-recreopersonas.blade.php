@@ -129,10 +129,22 @@
                                 <input type="text" name="correo" class="form-control" value="{{ $persona ? $persona->recreopersona['correo'] : old('correo') }}">
                             </div>
                         </div>
+                        <div class="col-xs-12 col-md-6">
+                            <div class="form-group {{ $errors->has('numero_contrato') ? 'has-error' : '' }}">
+                                <label class="control-label" for="numero_contrato">Nº de contrato</label>
+                                <input type="text" name="numero_contrato" class="form-control" value="{{ $persona ? $persona->recreopersona['numero_contrato'] : old('numero_contrato') }}" />
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <div class="form-group {{ $errors->has('expediente_virtual') ? 'has-error' : '' }}">
+                                <label class="control-label" for="expediente_virtual">Expediente virtual</label>
+                                <input type="text" name="expediente_virtual" class="form-control" value="{{ $persona ? $persona->recreopersona['expediente_virtual'] : old('expediente_virtual') }}" />
+                            </div>
+                        </div>
                         <div class="col-xs-12">
                             <div class="form-group {{ $errors->has('contrato') ? 'has-error' : '' }}">
-                                <label class="control-label" for="contrato">* Contrato</label>
-                                <input type="text" name="contrato" class="form-control" value="{{ $persona ? $persona->recreopersona['contrato'] : old('contrato') }}">
+                                <label class="control-label" for="contrato">Objeto del contrato</label>
+                                <textarea name="contrato" class="form-control">{{ $persona ? $persona->recreopersona['contrato'] : old('contrato') }}</textarea>
                             </div>
                         </div>
                         <div class="col-xs-12">

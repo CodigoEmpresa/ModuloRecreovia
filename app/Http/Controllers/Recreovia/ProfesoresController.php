@@ -150,11 +150,15 @@ class ProfesoresController extends Controller {
 
 			$recreopersona->correo = $request->input('correo');
 			$recreopersona->contrato = $request->input('contrato');
+			$recreopersona->numero_contrato = $request->input('numero_contrato');
+			$recreopersona->expediente_virtual = $request->input('expediente_virtual');
 			$recreopersona->save();
 		} else {
 			$recreopersona = new Recreopersona;
 			$recreopersona->correo = $request->input('correo');
 			$recreopersona->contrato = $request->input('contrato');
+			$recreopersona->numero_contrato = $request->input('numero_contrato');
+			$recreopersona->expediente_virtual = $request->input('expediente_virtual');
 
 			$profesor->recreopersona()->save($recreopersona);
 		}
