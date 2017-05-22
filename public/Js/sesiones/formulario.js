@@ -84,7 +84,7 @@ $(function(e)
       	]
 	});
 
-	$('input[name^="Requisito_"]').on('click', function(e)
+	$('input[name^="Requisito_"], input[name="Puntualidad_PAF"], input[name="Tiempo_De_La_Sesion"], input[name="Escenario_Y_Montaje"], input[name="Cumplimiento_Del_Objetivo"], input[name="Variedad_Y_Creatividad"], input[name="Imagen_Institucional"], input[name="Divulgacion"], input[name="Seguridad"]').on('click', function(e)
 	{
 		var checkbox = $(this);
 		var name = $(this).prop('name');

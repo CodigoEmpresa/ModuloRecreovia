@@ -614,74 +614,74 @@
 												<div class="row">
 													<div class="col-md-12 form-group {{ $errors->has('Puntualidad_PAF') ? 'has-error' : '' }}">
 														<label for="">1. Puntualidad PAF</label> <br>
-														<label class="radio-inline">
-															<input type="radio" name="Puntualidad_PAF" id="Puntualidad_PAF1" value="1" {{ ($calificacion && $calificacion['Puntualidad_PAF'] == '1' || old('Puntualidad_PAF') == '1' ? 'checked' : '') }}> 1
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Puntualidad_PAF" id="Puntualidad_PAF1" value="1" {{ ($calificacion && $calificacion['Puntualidad_PAF'] == '1' || old('Puntualidad_PAF') == '1' ? 'checked' : '') }}> 1
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Puntualidad_PAF" id="Puntualidad_PAF2" value="2" {{ ($calificacion && $calificacion['Puntualidad_PAF'] == '2' || old('Puntualidad_PAF') == '2' ? 'checked' : '') }}> 2
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Puntualidad_PAF" id="Puntualidad_PAF2" value="2" {{ ($calificacion && $calificacion['Puntualidad_PAF'] == '2' || old('Puntualidad_PAF') == '2' ? 'checked' : '') }}> 2
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Puntualidad_PAF" id="Puntualidad_PAF3" value="3" {{ ($calificacion && $calificacion['Puntualidad_PAF'] == '3' || old('Puntualidad_PAF') == '3' ? 'checked' : '') }}> 3
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Puntualidad_PAF" id="Puntualidad_PAF3" value="3" {{ ($calificacion && $calificacion['Puntualidad_PAF'] == '3' || old('Puntualidad_PAF') == '3' ? 'checked' : '') }}> 3
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Puntualidad_PAF" id="Puntualidad_PAF4" value="4" {{ ($calificacion && $calificacion['Puntualidad_PAF'] == '4' || old('Puntualidad_PAF') == '4' ? 'checked' : '') }}> 4
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Puntualidad_PAF" id="Puntualidad_PAF4" value="4" {{ ($calificacion && $calificacion['Puntualidad_PAF'] == '4' || old('Puntualidad_PAF') == '4' ? 'checked' : '') }}> 4
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Puntualidad_PAF" id="Puntualidad_PAF5" value="5" {{ ($calificacion && $calificacion['Puntualidad_PAF'] == '5' || old('Puntualidad_PAF') == '5' ? 'checked' : '') }}> 5
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Puntualidad_PAF" id="Puntualidad_PAF5" value="5" {{ ($calificacion && $calificacion['Puntualidad_PAF'] == '5' || old('Puntualidad_PAF') == '5' ? 'checked' : '') }}> 5
 														</label>
 													</div>
 													<div class="col-md-12 form-group {{ $errors->has('Tiempo_De_La_Sesion') ? 'has-error' : '' }}">
 														<label for="">2. Tiempo de la Sesión</label> <br>
-														<label class="radio-inline">
-															<input type="radio" name="Tiempo_De_La_Sesion" id="Tiempo_De_La_Sesion1" value="1" {{ ($calificacion && $calificacion['Tiempo_De_La_Sesion'] == '1' || old('Tiempo_De_La_Sesion') ==  '1') ? 'checked' : '' }}> 1
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Tiempo_De_La_Sesion" id="Tiempo_De_La_Sesion1" value="1" {{ ($calificacion && $calificacion['Tiempo_De_La_Sesion'] == '1' || old('Tiempo_De_La_Sesion') ==  '1') ? 'checked' : '' }}> 1
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Tiempo_De_La_Sesion" id="Tiempo_De_La_Sesion2" value="2" {{ ($calificacion && $calificacion['Tiempo_De_La_Sesion'] == '2' || old('Tiempo_De_La_Sesion') ==  '2') ? 'checked' : '' }}> 2
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Tiempo_De_La_Sesion" id="Tiempo_De_La_Sesion2" value="2" {{ ($calificacion && $calificacion['Tiempo_De_La_Sesion'] == '2' || old('Tiempo_De_La_Sesion') ==  '2') ? 'checked' : '' }}> 2
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Tiempo_De_La_Sesion" id="Tiempo_De_La_Sesion3" value="3" {{ ($calificacion && $calificacion['Tiempo_De_La_Sesion'] == '3' || old('Tiempo_De_La_Sesion') ==  '3') ? 'checked' : '' }}> 3
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Tiempo_De_La_Sesion" id="Tiempo_De_La_Sesion3" value="3" {{ ($calificacion && $calificacion['Tiempo_De_La_Sesion'] == '3' || old('Tiempo_De_La_Sesion') ==  '3') ? 'checked' : '' }}> 3
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Tiempo_De_La_Sesion" id="Tiempo_De_La_Sesion4" value="4" {{ ($calificacion && $calificacion['Tiempo_De_La_Sesion'] == '4' || old('Tiempo_De_La_Sesion') ==  '4') ? 'checked' : '' }}> 4
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Tiempo_De_La_Sesion" id="Tiempo_De_La_Sesion4" value="4" {{ ($calificacion && $calificacion['Tiempo_De_La_Sesion'] == '4' || old('Tiempo_De_La_Sesion') ==  '4') ? 'checked' : '' }}> 4
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Tiempo_De_La_Sesion" id="Tiempo_De_La_Sesion5" value="5" {{ ($calificacion && $calificacion['Tiempo_De_La_Sesion'] == '5' || old('Tiempo_De_La_Sesion') ==  '5') ? 'checked' : '' }}> 5
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Tiempo_De_La_Sesion" id="Tiempo_De_La_Sesion5" value="5" {{ ($calificacion && $calificacion['Tiempo_De_La_Sesion'] == '5' || old('Tiempo_De_La_Sesion') ==  '5') ? 'checked' : '' }}> 5
 														</label>
 													</div>
 													<div class="col-md-12 form-group {{ $errors->has('Escenario_Y_Montaje') ? 'has-error' : '' }}">
 														<label for="">3. Escenario y Montaje</label> <br>
-														<label class="radio-inline">
-															<input type="radio" name="Escenario_Y_Montaje" id="Escenario_Y_Montaje1" value="1" {{ ($calificacion && $calificacion['Escenario_Y_Montaje'] == '1' || old('Escenario_Y_Montaje') ==  '1') ? 'checked' : '' }}> 1
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Escenario_Y_Montaje" id="Escenario_Y_Montaje1" value="1" {{ ($calificacion && $calificacion['Escenario_Y_Montaje'] == '1' || old('Escenario_Y_Montaje') ==  '1') ? 'checked' : '' }}> 1
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Escenario_Y_Montaje" id="Escenario_Y_Montaje2" value="2" {{ ($calificacion && $calificacion['Escenario_Y_Montaje'] == '2' || old('Escenario_Y_Montaje') ==  '2') ? 'checked' : '' }}> 2
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Escenario_Y_Montaje" id="Escenario_Y_Montaje2" value="2" {{ ($calificacion && $calificacion['Escenario_Y_Montaje'] == '2' || old('Escenario_Y_Montaje') ==  '2') ? 'checked' : '' }}> 2
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Escenario_Y_Montaje" id="Escenario_Y_Montaje3" value="3" {{ ($calificacion && $calificacion['Escenario_Y_Montaje'] == '3' || old('Escenario_Y_Montaje') ==  '3') ? 'checked' : '' }}> 3
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Escenario_Y_Montaje" id="Escenario_Y_Montaje3" value="3" {{ ($calificacion && $calificacion['Escenario_Y_Montaje'] == '3' || old('Escenario_Y_Montaje') ==  '3') ? 'checked' : '' }}> 3
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Escenario_Y_Montaje" id="Escenario_Y_Montaje4" value="4" {{ ($calificacion && $calificacion['Escenario_Y_Montaje'] == '4' || old('Escenario_Y_Montaje') ==  '4') ? 'checked' : '' }}> 4
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Escenario_Y_Montaje" id="Escenario_Y_Montaje4" value="4" {{ ($calificacion && $calificacion['Escenario_Y_Montaje'] == '4' || old('Escenario_Y_Montaje') ==  '4') ? 'checked' : '' }}> 4
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Escenario_Y_Montaje" id="Escenario_Y_Montaje5" value="5" {{ ($calificacion && $calificacion['Escenario_Y_Montaje'] == '5' || old('Escenario_Y_Montaje') ==  '5') ? 'checked' : '' }}> 5
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Escenario_Y_Montaje" id="Escenario_Y_Montaje5" value="5" {{ ($calificacion && $calificacion['Escenario_Y_Montaje'] == '5' || old('Escenario_Y_Montaje') ==  '5') ? 'checked' : '' }}> 5
 														</label>
 													</div>
 													<div class="col-md-12 form-group {{ $errors->has('Cumplimiento_Del_Objetivo') ? 'has-error' : '' }}">
 														<label for="">4. Cumplimiento del Objetivo</label> <br>
-														<label class="radio-inline">
-															<input type="radio" name="Cumplimiento_Del_Objetivo" id="Cumplimiento_Del_Objetivo1" value="1" {{ ($calificacion && $calificacion['Cumplimiento_Del_Objetivo'] == '1' || old('Cumplimiento_Del_Objetivo') ==  '1') ? 'checked' : '' }}> 1
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Cumplimiento_Del_Objetivo" id="Cumplimiento_Del_Objetivo1" value="1" {{ ($calificacion && $calificacion['Cumplimiento_Del_Objetivo'] == '1' || old('Cumplimiento_Del_Objetivo') ==  '1') ? 'checked' : '' }}> 1
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Cumplimiento_Del_Objetivo" id="Cumplimiento_Del_Objetivo2" value="2" {{ ($calificacion && $calificacion['Cumplimiento_Del_Objetivo'] == '2' || old('Cumplimiento_Del_Objetivo') ==  '2') ? 'checked' : '' }}> 2
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Cumplimiento_Del_Objetivo" id="Cumplimiento_Del_Objetivo2" value="2" {{ ($calificacion && $calificacion['Cumplimiento_Del_Objetivo'] == '2' || old('Cumplimiento_Del_Objetivo') ==  '2') ? 'checked' : '' }}> 2
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Cumplimiento_Del_Objetivo" id="Cumplimiento_Del_Objetivo3" value="3" {{ ($calificacion && $calificacion['Cumplimiento_Del_Objetivo'] == '3' || old('Cumplimiento_Del_Objetivo') ==  '3') ? 'checked' : '' }}> 3
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Cumplimiento_Del_Objetivo" id="Cumplimiento_Del_Objetivo3" value="3" {{ ($calificacion && $calificacion['Cumplimiento_Del_Objetivo'] == '3' || old('Cumplimiento_Del_Objetivo') ==  '3') ? 'checked' : '' }}> 3
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Cumplimiento_Del_Objetivo" id="Cumplimiento_Del_Objetivo4" value="4" {{ ($calificacion && $calificacion['Cumplimiento_Del_Objetivo'] == '4' || old('Cumplimiento_Del_Objetivo') ==  '4') ? 'checked' : '' }}> 4
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Cumplimiento_Del_Objetivo" id="Cumplimiento_Del_Objetivo4" value="4" {{ ($calificacion && $calificacion['Cumplimiento_Del_Objetivo'] == '4' || old('Cumplimiento_Del_Objetivo') ==  '4') ? 'checked' : '' }}> 4
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Cumplimiento_Del_Objetivo" id="Cumplimiento_Del_Objetivo5" value="5" {{ ($calificacion && $calificacion['Cumplimiento_Del_Objetivo'] == '5' || old('Cumplimiento_Del_Objetivo') ==  '5') ? 'checked' : '' }}> 5
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Cumplimiento_Del_Objetivo" id="Cumplimiento_Del_Objetivo5" value="5" {{ ($calificacion && $calificacion['Cumplimiento_Del_Objetivo'] == '5' || old('Cumplimiento_Del_Objetivo') ==  '5') ? 'checked' : '' }}> 5
 														</label>
 													</div>
 												</div>
@@ -690,74 +690,74 @@
 												<div class="row">
 													<div class="col-md-12 form-group {{ $errors->has('Variedad_Y_Creatividad') ? 'has-error' : '' }}">
 														<label for="">5. Variedad y Creatividad</label> <br>
-														<label class="radio-inline">
-															<input type="radio" name="Variedad_Y_Creatividad" id="Variedad_Y_Creatividad1" value="1" {{ ($calificacion && $calificacion['Variedad_Y_Creatividad'] == '1' || old('Variedad_Y_Creatividad') ==  '1') ? 'checked' : '' }}> 1
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Variedad_Y_Creatividad" id="Variedad_Y_Creatividad1" value="1" {{ ($calificacion && $calificacion['Variedad_Y_Creatividad'] == '1' || old('Variedad_Y_Creatividad') ==  '1') ? 'checked' : '' }}> 1
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Variedad_Y_Creatividad" id="Variedad_Y_Creatividad2" value="2" {{ ($calificacion && $calificacion['Variedad_Y_Creatividad'] == '2' || old('Variedad_Y_Creatividad') ==  '2') ? 'checked' : '' }}> 2
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Variedad_Y_Creatividad" id="Variedad_Y_Creatividad2" value="2" {{ ($calificacion && $calificacion['Variedad_Y_Creatividad'] == '2' || old('Variedad_Y_Creatividad') ==  '2') ? 'checked' : '' }}> 2
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Variedad_Y_Creatividad" id="Variedad_Y_Creatividad3" value="3" {{ ($calificacion && $calificacion['Variedad_Y_Creatividad'] == '3' || old('Variedad_Y_Creatividad') ==  '3') ? 'checked' : '' }}> 3
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Variedad_Y_Creatividad" id="Variedad_Y_Creatividad3" value="3" {{ ($calificacion && $calificacion['Variedad_Y_Creatividad'] == '3' || old('Variedad_Y_Creatividad') ==  '3') ? 'checked' : '' }}> 3
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Variedad_Y_Creatividad" id="Variedad_Y_Creatividad4" value="4" {{ ($calificacion && $calificacion['Variedad_Y_Creatividad'] == '4' || old('Variedad_Y_Creatividad') ==  '4') ? 'checked' : '' }}> 4
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Variedad_Y_Creatividad" id="Variedad_Y_Creatividad4" value="4" {{ ($calificacion && $calificacion['Variedad_Y_Creatividad'] == '4' || old('Variedad_Y_Creatividad') ==  '4') ? 'checked' : '' }}> 4
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Variedad_Y_Creatividad" id="Variedad_Y_Creatividad5" value="5" {{ ($calificacion && $calificacion['Variedad_Y_Creatividad'] == '5' || old('Variedad_Y_Creatividad') ==  '5') ? 'checked' : '' }}> 5
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Variedad_Y_Creatividad" id="Variedad_Y_Creatividad5" value="5" {{ ($calificacion && $calificacion['Variedad_Y_Creatividad'] == '5' || old('Variedad_Y_Creatividad') ==  '5') ? 'checked' : '' }}> 5
 														</label>
 													</div>
 													<div class="col-md-12 form-group {{ $errors->has('Imagen_Institucional') ? 'has-error' : '' }}">
 														<label for="">6. Imagen Institucional</label> <br>
-														<label class="radio-inline">
-															<input type="radio" name="Imagen_Institucional" id="Imagen_Institucional1" value="1" {{ ($calificacion && $calificacion['Imagen_Institucional'] == '1' || old('Imagen_Institucional') ==  '1') ? 'checked' : '' }}> 1
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Imagen_Institucional" id="Imagen_Institucional1" value="1" {{ ($calificacion && $calificacion['Imagen_Institucional'] == '1' || old('Imagen_Institucional') ==  '1') ? 'checked' : '' }}> 1
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Imagen_Institucional" id="Imagen_Institucional2" value="2" {{ ($calificacion && $calificacion['Imagen_Institucional'] == '2' || old('Imagen_Institucional') ==  '2') ? 'checked' : '' }}> 2
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Imagen_Institucional" id="Imagen_Institucional2" value="2" {{ ($calificacion && $calificacion['Imagen_Institucional'] == '2' || old('Imagen_Institucional') ==  '2') ? 'checked' : '' }}> 2
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Imagen_Institucional" id="Imagen_Institucional3" value="3" {{ ($calificacion && $calificacion['Imagen_Institucional'] == '3' || old('Imagen_Institucional') ==  '3') ? 'checked' : '' }}> 3
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Imagen_Institucional" id="Imagen_Institucional3" value="3" {{ ($calificacion && $calificacion['Imagen_Institucional'] == '3' || old('Imagen_Institucional') ==  '3') ? 'checked' : '' }}> 3
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Imagen_Institucional" id="Imagen_Institucional4" value="4" {{ ($calificacion && $calificacion['Imagen_Institucional'] == '4' || old('Imagen_Institucional') ==  '4') ? 'checked' : '' }}> 4
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Imagen_Institucional" id="Imagen_Institucional4" value="4" {{ ($calificacion && $calificacion['Imagen_Institucional'] == '4' || old('Imagen_Institucional') ==  '4') ? 'checked' : '' }}> 4
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Imagen_Institucional" id="Imagen_Institucional5" value="5" {{ ($calificacion && $calificacion['Imagen_Institucional'] == '5' || old('Imagen_Institucional') ==  '5') ? 'checked' : '' }}> 5
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Imagen_Institucional" id="Imagen_Institucional5" value="5" {{ ($calificacion && $calificacion['Imagen_Institucional'] == '5' || old('Imagen_Institucional') ==  '5') ? 'checked' : '' }}> 5
 														</label>
 													</div>
 													<div class="col-md-12 form-group {{ $errors->has('Divulgacion') ? 'has-error' : '' }}">
 														<label for="">7. Divulgación</label> <br>
-														<label class="radio-inline">
-															<input type="radio" name="Divulgacion" id="Divulgacion1" value="1" {{ ($calificacion && $calificacion['Divulgacion'] == '1' || old('Divulgacion') ==  '1') ? 'checked' : '' }}> 1
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Divulgacion" id="Divulgacion1" value="1" {{ ($calificacion && $calificacion['Divulgacion'] == '1' || old('Divulgacion') ==  '1') ? 'checked' : '' }}> 1
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Divulgacion" id="Divulgacion2" value="2" {{ ($calificacion && $calificacion['Divulgacion'] == '2' || old('Divulgacion') ==  '2') ? 'checked' : '' }}> 2
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Divulgacion" id="Divulgacion2" value="2" {{ ($calificacion && $calificacion['Divulgacion'] == '2' || old('Divulgacion') ==  '2') ? 'checked' : '' }}> 2
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Divulgacion" id="Divulgacion3" value="3" {{ ($calificacion && $calificacion['Divulgacion'] == '3' || old('Divulgacion') ==  '3') ? 'checked' : '' }}> 3
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Divulgacion" id="Divulgacion3" value="3" {{ ($calificacion && $calificacion['Divulgacion'] == '3' || old('Divulgacion') ==  '3') ? 'checked' : '' }}> 3
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Divulgacion" id="Divulgacion4" value="4" {{ ($calificacion && $calificacion['Divulgacion'] == '4' || old('Divulgacion') ==  '4') ? 'checked' : '' }}> 4
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Divulgacion" id="Divulgacion4" value="4" {{ ($calificacion && $calificacion['Divulgacion'] == '4' || old('Divulgacion') ==  '4') ? 'checked' : '' }}> 4
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Divulgacion" id="Divulgacion5" value="5" {{ ($calificacion && $calificacion['Divulgacion'] == '5' || old('Divulgacion') ==  '5') ? 'checked' : '' }}> 5
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Divulgacion" id="Divulgacion5" value="5" {{ ($calificacion && $calificacion['Divulgacion'] == '5' || old('Divulgacion') ==  '5') ? 'checked' : '' }}> 5
 														</label>
 													</div>
 													<div class="col-md-12 form-group {{ $errors->has('Seguridad') ? 'has-error' : '' }}">
 														<label for="">8. Seguridad</label> <br>
-														<label class="radio-inline">
-															<input type="radio" name="Seguridad" id="Seguridad1" value="1" {{ ($calificacion && $calificacion['Seguridad'] == '1' || old('Seguridad') ==  '1') ? 'checked' : '' }}> 1
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Seguridad" id="Seguridad1" value="1" {{ ($calificacion && $calificacion['Seguridad'] == '1' || old('Seguridad') ==  '1') ? 'checked' : '' }}> 1
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Seguridad" id="Seguridad2" value="2" {{ ($calificacion && $calificacion['Seguridad'] == '2' || old('Seguridad') ==  '2') ? 'checked' : '' }}> 2
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Seguridad" id="Seguridad2" value="2" {{ ($calificacion && $calificacion['Seguridad'] == '2' || old('Seguridad') ==  '2') ? 'checked' : '' }}> 2
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Seguridad" id="Seguridad3" value="3" {{ ($calificacion && $calificacion['Seguridad'] == '3' || old('Seguridad') ==  '3') ? 'checked' : '' }}> 3
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Seguridad" id="Seguridad3" value="3" {{ ($calificacion && $calificacion['Seguridad'] == '3' || old('Seguridad') ==  '3') ? 'checked' : '' }}> 3
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Seguridad" id="Seguridad4" value="4" {{ ($calificacion && $calificacion['Seguridad'] == '4' || old('Seguridad') ==  '4') ? 'checked' : '' }}> 4
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Seguridad" id="Seguridad4" value="4" {{ ($calificacion && $calificacion['Seguridad'] == '4' || old('Seguridad') ==  '4') ? 'checked' : '' }}> 4
 														</label>
-														<label class="radio-inline">
-															<input type="radio" name="Seguridad" id="Seguridad5" value="5" {{ ($calificacion && $calificacion['Seguridad'] == '5' || old('Seguridad') ==  '5') ? 'checked' : '' }}> 5
+														<label class="checkbox-inline">
+															<input type="checkbox" name="Seguridad" id="Seguridad5" value="5" {{ ($calificacion && $calificacion['Seguridad'] == '5' || old('Seguridad') ==  '5') ? 'checked' : '' }}> 5
 														</label>
 													</div>
 												</div>
