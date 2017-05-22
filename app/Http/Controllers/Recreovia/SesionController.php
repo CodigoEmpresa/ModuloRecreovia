@@ -411,7 +411,7 @@ class SesionController extends Controller {
 		} else {
 			$qb = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'profesor.persona')
 								->where('Id_Recreopersona', $this->usuario['Recreopersona']->Id_Recreopersona);
-			$qb->aplicarFiltro($qb, $request);
+			$qb = $this->aplicarFiltro($qb, $request);
 
 
 			$elementos = $qb->whereNull('deleted_at')
