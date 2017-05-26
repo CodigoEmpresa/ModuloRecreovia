@@ -17,6 +17,7 @@ class CalificacionDelServicio extends Model
     public function __construct()
     {
         parent::__construct();
+        $this->table = config('database.connections.mysql.database').'.CalificacionesDelServicio';
     }
 
     public function sesion()

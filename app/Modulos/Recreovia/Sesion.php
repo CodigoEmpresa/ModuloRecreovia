@@ -17,6 +17,7 @@ class Sesion extends Model
     public function __construct()
     {
         parent::__construct();
+        $this->table = config('database.connections.mysql.database').'.Sesiones';
     }
     
     public function cronograma()
