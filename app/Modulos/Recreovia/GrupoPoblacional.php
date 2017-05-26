@@ -4,6 +4,7 @@ namespace App\Modulos\Recreovia;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Idrd\Usuarios\Seguridad\TraitSeguridad;
 
 class GrupoPoblacional extends Model
 {
@@ -13,6 +14,7 @@ class GrupoPoblacional extends Model
 
     public function __construct()
     {
+        parent::__construct();
         $this->table = config('database.connections.mysql.database').'.GruposPoblacionales';
     }
 
@@ -22,5 +24,5 @@ class GrupoPoblacional extends Model
         			->withPivot('Genero', 'Grupo_Asistencia', 'Cantidad');
     }
 
-    use SoftDeletes;
+    use SoftDeletes, TraitSeguridad;
 }

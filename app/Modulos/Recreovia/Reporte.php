@@ -5,6 +5,7 @@ namespace App\Modulos\Recreovia;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
+use Idrd\Usuarios\Seguridad\TraitSeguridad;
 
 class Reporte extends Model
 {
@@ -14,6 +15,7 @@ class Reporte extends Model
 
     public function __construct()
     {
+        parent::__construct();
         $this->table = config('database.connections.mysql.database').'.Reportes';
     }
 
@@ -48,5 +50,5 @@ class Reporte extends Model
         return $this->cronograma->jornada->toString().' <br> Día(s) '.$this->Dias;
     }
 
-    use SoftDeletes, CascadeSoftDeletes;
+    use SoftDeletes, CascadeSoftDeletes, TraitSeguridad;
 }

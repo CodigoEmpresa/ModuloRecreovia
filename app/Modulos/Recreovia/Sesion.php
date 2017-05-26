@@ -5,6 +5,7 @@ namespace App\Modulos\Recreovia;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
+use Idrd\Usuarios\Seguridad\TraitSeguridad;
 
 class Sesion extends Model
 {
@@ -13,6 +14,11 @@ class Sesion extends Model
     protected $connection = 'mysql';
     protected $cascadeDeletes = ['gruposPoblacionales', 'productosNoConformes', 'calificacionDelServicio'];
 
+    public function __construct()
+    {
+        parent::__construct();
+    }
+    
     public function cronograma()
     {
     	return $this->belongsTo('App\Modulos\Recreovia\Cronograma', 'Id_Cronograma');
@@ -68,5 +74,5 @@ class Sesion extends Model
 		return $gruposPoblacionales.' '.$productoNoConforme.' '.$calificacionDelServicio;
 	}
 
-    use SoftDeletes;
+    use SoftDeletes, TraitSeguridad;
 }

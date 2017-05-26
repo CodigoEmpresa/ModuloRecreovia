@@ -5,12 +5,11 @@ namespace App\Modulos\Recreovia;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
+use Idrd\Usuarios\Seguridad\TraitSeguridad;
 
 class Jornada extends Model
 {
-    use SoftDeletes, CascadeSoftDeletes;
-
-	  protected $table = 'Jornadas';
+	protected $table = 'Jornadas';
     protected $primaryKey = 'Id_Jornada';
     protected $connection = 'mysql';
     protected $cascadeDeletes = ['cronogramas'];
@@ -18,6 +17,7 @@ class Jornada extends Model
 
     public function __construct()
     {
+        parent::__construct();
     	$this->table = config('database.connections.mysql.database').'.Jornadas';
     }
 
@@ -81,4 +81,6 @@ class Jornada extends Model
     {
         return 'J'.str_pad($this->Id_Jornada, 2, '0', STR_PAD_LEFT);
     }
+
+    use SoftDeletes, CascadeSoftDeletes, TraitSeguridad;
 }

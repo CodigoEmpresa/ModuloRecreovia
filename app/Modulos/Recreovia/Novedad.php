@@ -4,6 +4,7 @@ namespace App\Modulos\Recreovia;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Idrd\Usuarios\Seguridad\TraitSeguridad;
 
 class Novedad extends Model
 {
@@ -14,6 +15,7 @@ class Novedad extends Model
 
     public function __construct()
     {
+        parent::__construct();
         $this->table = config('database.connections.mysql.database').'.ReporteNovedad';
     }
 
@@ -22,5 +24,5 @@ class Novedad extends Model
     	return $this->belongsTo('App\Modulos\Recreovia\Reporte', 'Id_Reporte');
     }
 
-    use SoftDeletes;
+    use SoftDeletes, TraitSeguridad;
 }

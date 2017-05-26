@@ -143,8 +143,9 @@ class PuntosController extends Controller {
 	}
 
 	private function editarPunto($request)
-	{
-		$punto = Punto::find($request->Id_Punto);
+	{	
+		$model = new Punto;
+		$punto = $model->find($request->Id_Punto);
 		return $punto;
 	}
 }
