@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+å<!DOCTYPE html>
 <html lang="es">
 	<head>
 		<meta charset="utf-8">
@@ -187,10 +187,10 @@
 			<div class="page-header" id="banner">
 				<div class="row">
 					<div class="col-lg-8 col-md-7 col-sm-6">
-						<h1>Recreovía</h1>
+						<img src="{{ asset('public/Img/RECREOVIA.jpg') }}" width="40%" heigth="40%"/>
 						<p class="lead"><h4>Módulo para la gestión y control de actividades del programa recreovía</h4></p>
 					</div>
-					<div class="col-lg-4 col-md-5 col-sm-6">
+					<div class="col-lg-4 col-md-5 col-sm-6 hidden-xs">
 						 <div align="right">
 								<img src="{{ asset('public/Img/IDRD.JPG') }}" width="50%" heigth="40%"/>
 						 </div>

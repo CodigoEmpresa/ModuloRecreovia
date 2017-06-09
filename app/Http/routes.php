@@ -5,16 +5,6 @@ header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
-/*
-|--------------------------------------------------------------------------
-| Routes File
-|--------------------------------------------------------------------------
-|
-| Here is where you will register all of the routes in an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
 Route::get('/personas', '\Idrd\Usuarios\Controllers\PersonaController@index');
 Route::get('/personas/service/obtener/{id}', '\Idrd\Usuarios\Controllers\PersonaController@obtener');
 Route::get('/personas/service/buscar/{key}', '\Idrd\Usuarios\Controllers\PersonaController@buscar');
@@ -27,29 +17,30 @@ Route::get('/actividad_usuario/{identificacion?}', function ($identificacion = n
 		'identificacion' => $identificacion
 	]);
 });
+
 Route::get('/usuario_tipo', function () { return view('persona_tipoPersona'); });
 Route::get('/asignarActividad', '\Idrd\Usuarios\Controllers\AsignarActividadController@asignarActividades');
 Route::get('/actividadesModulo', '\Idrd\Usuarios\Controllers\AsignarActividadController@moduloActividades');
 Route::get('/actividadesPersona/{id}', '\Idrd\Usuarios\Controllers\AsignarActividadController@personaActividades');
-Route::any('PersonasActividadesProceso', '\Idrd\Usuarios\Controllers\AsignarActividadController@PersonasActividadesProceso');
-
 Route::get('/tipo_modulo', '\Idrd\Usuarios\Controllers\AsignarActividadController@tipoModulo');
-Route::post('ProcesoTipoPersona', '\Idrd\Usuarios\Controllers\AsignarActividadController@AdicionTipoPersona');
-
 Route::get('/parques/service/buscar/{key}', '\Idrd\Parques\Controllers\ParqueController@buscar');
+Route::post('ProcesoTipoPersona', '\Idrd\Usuarios\Controllers\AsignarActividadController@AdicionTipoPersona');
+Route::get('/buscador', 'Recreovia\BuscadorController@index');
+
 Route::any('/logout', 'MainController@logout');
 Route::any('/', 'MainController@index');
+Route::any('PersonasActividadesProceso', '\Idrd\Usuarios\Controllers\AsignarActividadController@PersonasActividadesProceso');
 
 //rutas con filtro de autenticación
 Route::group(['middleware' => ['web']], function()
 {
 	Route::get('/welcome', 'MainController@welcome');
 
-	route::get('/jornadas', 'Recreovia\JornadaController@index');
-	route::get('/jornadas/crear', 'Recreovia\JornadaController@crear');
-	route::get('/jornadas/{id}/editar', 'Recreovia\JornadaController@editar');
-	route::get('/jornadas/{id}/eliminar', 'Recreovia\JornadaController@eliminar');
-	route::post('/jornadas/procesar', 'Recreovia\JornadaController@procesar');
+	Route::get('/jornadas', 'Recreovia\JornadaController@index');
+	Route::get('/jornadas/crear', 'Recreovia\JornadaController@crear');
+	Route::get('/jornadas/{id}/editar', 'Recreovia\JornadaController@editar');
+	Route::get('/jornadas/{id}/eliminar', 'Recreovia\JornadaController@eliminar');
+	Route::post('/jornadas/procesar', 'Recreovia\JornadaController@procesar');
 
 	Route::get('/puntos', 'Recreovia\PuntosController@index');
 	Route::get('/puntos/service/buscar/{key}', 'Recreovia\PuntosController@buscar');
@@ -64,22 +55,22 @@ Route::group(['middleware' => ['web']], function()
 	Route::get('/localidades/{id_localidad}/personal/{id_persona}/remover', 'Recreovia\LocalidadController@removerPersonal');
 	Route::post('/localidades/personal/agregar', 'Recreovia\LocalidadController@agregarPersonal');
 
-	route::any('/programacion', 'Recreovia\ProgramacionController@index');
-	route::get('/programacion/crear', 'Recreovia\ProgramacionController@crear');
-	route::get('/programacion/{id_cronograma}/editar', 'Recreovia\ProgramacionController@editar');
-	route::get('/programacion/{id_cronograma}/eliminar', 'Recreovia\ProgramacionController@eliminar');
-	route::post('/programacion/procesar', 'Recreovia\ProgramacionController@procesar');
-	route::post('/programacion/disponibilidad', 'Recreovia\ProgramacionController@disponibilidad');
+	Route::any('/programacion', 'Recreovia\ProgramacionController@index');
+	Route::get('/programacion/crear', 'Recreovia\ProgramacionController@crear');
+	Route::get('/programacion/{id_cronograma}/editar', 'Recreovia\ProgramacionController@editar');
+	Route::get('/programacion/{id_cronograma}/eliminar', 'Recreovia\ProgramacionController@eliminar');
+	Route::post('/programacion/procesar', 'Recreovia\ProgramacionController@procesar');
+	Route::post('/programacion/disponibilidad', 'Recreovia\ProgramacionController@disponibilidad');
 
-	route::any('/sesiones/administrar', 'Recreovia\ProgramacionController@todos');
-	route::any('/sesiones/buscar', 'Recreovia\SesionController@buscar');
+	Route::any('/sesiones/administrar', 'Recreovia\ProgramacionController@todos');
+	Route::any('/sesiones/buscar', 'Recreovia\SesionController@buscar');
 
-	route::any('/gestores/sesiones', 'Recreovia\SesionController@sesionesGestor');
-	route::get('/gestores/{id_cronograma}/sesiones', 'Recreovia\SesionController@crearSesionesGestor');
-	route::get('/gestores/{id_cronograma}/sesiones/{id_sesion}/editar', 'Recreovia\SesionController@editarSesionesGestor');
-	route::get('/gestores/{id_cronograma}/sesiones/{id_sesion}/eliminar', 'Recreovia\SesionController@eliminarSesionesGestor');
-	route::post('/gestores/sesiones/procesar', 'Recreovia\SesionController@procesarGestor');
-	route::get('/gestores/sesiones/{id_sesion}/editar', 'Recreovia\SesionController@editarSesionGestor');
+	Route::any('/gestores/sesiones', 'Recreovia\SesionController@sesionesGestor');
+	Route::get('/gestores/{id_cronograma}/sesiones', 'Recreovia\SesionController@crearSesionesGestor');
+	Route::get('/gestores/{id_cronograma}/sesiones/{id_sesion}/editar', 'Recreovia\SesionController@editarSesionesGestor');
+	Route::get('/gestores/{id_cronograma}/sesiones/{id_sesion}/eliminar', 'Recreovia\SesionController@eliminarSesionesGestor');
+	Route::post('/gestores/sesiones/procesar', 'Recreovia\SesionController@procesarGestor');
+	Route::get('/gestores/sesiones/{id_sesion}/editar', 'Recreovia\SesionController@editarSesionGestor');
 
 	Route::get('/profesores', 'Recreovia\ProfesoresController@index');
 	Route::get('/profesores/service/buscar/{key}/{strict?}', 'Recreovia\ProfesoresController@buscar');
@@ -88,27 +79,27 @@ Route::group(['middleware' => ['web']], function()
 	Route::get('/profesores/{id}/editar', 'Recreovia\ProfesoresController@editar');
 	Route::get('/profesores/{id}/eliminar', 'Recreovia\ProfesoresController@eliminar');
 	Route::post('/profesores/procesar', 'Recreovia\ProfesoresController@procesar');
-	route::any('/profesores/sesiones', 'Recreovia\SesionController@sesionesProfesor');
-	route::get('/profesores/sesiones/{id_sesion}/editar', 'Recreovia\SesionController@editarSesionProfesor');
+	Route::any('/profesores/sesiones', 'Recreovia\SesionController@sesionesProfesor');
+	Route::get('/profesores/sesiones/{id_sesion}/editar', 'Recreovia\SesionController@editarSesionProfesor');
 
-	route::post('/sesiones/actualizar_estado', 'Recreovia\SesionController@actualizarEstado');
-	route::post('/sesiones/procesar', 'Recreovia\SesionController@procesar');
-	route::post('/asistencia/procesar', 'Recreovia\SesionController@asistencia');
-	route::post('/producto_no_conforme/procesar', 'Recreovia\SesionController@productoNoConforme');
-	route::get('/producto_no_conforme/{id}/eliminar/{tipo}', 'Recreovia\SesionController@eliminarProductoNoConforme');
-	route::post('/calificacion_del_servicio/procesar', 'Recreovia\SesionController@calificacionDelServicio');
+	Route::post('/sesiones/actualizar_estado', 'Recreovia\SesionController@actualizarEstado');
+	Route::post('/sesiones/procesar', 'Recreovia\SesionController@procesar');
+	Route::post('/asistencia/procesar', 'Recreovia\SesionController@asistencia');
+	Route::post('/producto_no_conforme/procesar', 'Recreovia\SesionController@productoNoConforme');
+	Route::get('/producto_no_conforme/{id}/eliminar/{tipo}', 'Recreovia\SesionController@eliminarProductoNoConforme');
+	Route::post('/calificacion_del_servicio/procesar', 'Recreovia\SesionController@calificacionDelServicio');
 
-	route::any('/informes/jornadas', 'Recreovia\ReporteController@jornadas');
-	route::any('/informes/jornadas/profesor', 'Recreovia\ReporteController@jornadas_profesor');
-	route::get('/informes/jornadas/crear', 'Recreovia\ReporteController@crearInformeJornadas');
-	route::get('/informes/jornadas/{id}/editar', 'Recreovia\ReporteController@editarInformeJornadas');
-	route::get('/informes/jornadas/{id}/eliminar', 'Recreovia\ReporteController@eliminarInformeJornadas');
-	route::post('/informes/jornadas/generar', 'Recreovia\ReporteController@generarInformeJornadas');
-	route::post('/informes/jornadas/actualizar', 'Recreovia\ReporteController@actualizarInformeJornadas');
-	route::any('/informes/jornadas/revisar', 'Recreovia\ReporteController@obtenerInformes');
+	Route::any('/informes/jornadas', 'Recreovia\ReporteController@jornadas');
+	Route::any('/informes/jornadas/profesor', 'Recreovia\ReporteController@jornadas_profesor');
+	Route::get('/informes/jornadas/crear', 'Recreovia\ReporteController@crearInformeJornadas');
+	Route::get('/informes/jornadas/{id}/editar', 'Recreovia\ReporteController@editarInformeJornadas');
+	Route::get('/informes/jornadas/{id}/eliminar', 'Recreovia\ReporteController@eliminarInformeJornadas');
+	Route::post('/informes/jornadas/generar', 'Recreovia\ReporteController@generarInformeJornadas');
+	Route::post('/informes/jornadas/actualizar', 'Recreovia\ReporteController@actualizarInformeJornadas');
+	Route::any('/informes/jornadas/revisar', 'Recreovia\ReporteController@obtenerInformes');
 
-	route::get('/informes/consolidado_general', 'Recreovia\ConsolidadoGeneralController@index');
-	route::post('/informes/consolidado_general', 'Recreovia\ConsolidadoGeneralController@generar');
+	Route::get('/informes/consolidado_general', 'Recreovia\ConsolidadoGeneralController@index');
+	Route::post('/informes/consolidado_general', 'Recreovia\ConsolidadoGeneralController@generar');
 
 });
 /*

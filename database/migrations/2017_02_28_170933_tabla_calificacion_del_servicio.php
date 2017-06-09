@@ -16,14 +16,14 @@ class TablaCalificacionDelServicio extends Migration
         {
             $table->increments('Id');
             $table->integer('Id_Sesion')->unsigned();
-            $table->smallInteger('Puntualidad_PAF')->unsigned();
-            $table->smallInteger('Tiempo_De_La_Sesion')->unsigned();
-            $table->smallInteger('Escenario_Y_Montaje')->unsigned();
-            $table->smallInteger('Cumplimiento_Del_Objetivo')->unsigned();
-            $table->smallInteger('Variedad_Y_Creatividad')->unsigned();
-            $table->smallInteger('Imagen_Institucional')->unsigned();
-            $table->smallInteger('Divulgacion')->unsigned();
-            $table->smallInteger('Seguridad')->unsigned();
+            $table->smallInteger('Puntualidad_PAF')->unsigned()->nullable();
+            $table->smallInteger('Tiempo_De_La_Sesion')->unsigned()->nullable();
+            $table->smallInteger('Escenario_Y_Montaje')->unsigned()->nullable();
+            $table->smallInteger('Cumplimiento_Del_Objetivo')->unsigned()->nullable();
+            $table->smallInteger('Variedad_Y_Creatividad')->unsigned()->nullable();
+            $table->smallInteger('Imagen_Institucional')->unsigned()->nullable();
+            $table->smallInteger('Divulgacion')->unsigned()->nullable();
+            $table->smallInteger('Seguridad')->unsigned()->nullable();
             $table->string('Nombre', 100)->nullable();
             $table->string('Telefono', 100)->nullable();
             $table->string('Correo', 100)->nullable();
