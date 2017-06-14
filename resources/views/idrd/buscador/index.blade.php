@@ -46,9 +46,11 @@
                             <table class="table table-min sesiones">
                                 <thead>
                                 <tr>
-                                    <th width="30px;">#</th>
-                                    <th>Objetivo general</th>
-                                    <th width="100px;">Hora</th>
+                                    <th style="width:30px !important;" width="30px;">#</th>
+                                    <th>Tipo</th>
+                                    <th class="none">Profesor</th>
+                                    <th class="none">Objetivo</th>
+                                    <th style="width:100px !important;" width="100px;">Hora</th>
                                 </tr>
                                 </thead>
                             </table>

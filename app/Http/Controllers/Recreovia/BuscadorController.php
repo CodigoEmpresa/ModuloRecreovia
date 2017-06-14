@@ -41,6 +41,17 @@ class BuscadorController extends Controller
             }
         ]);
 
+        foreach($puntos as &$punto)
+        {
+            foreach ($punto->cronogramas as &$cronograma)
+            {
+                foreach ($cronograma->sesiones as &$sesion)
+                {
+                    $sesion->load('profesor.persona');
+                }
+            }
+        }
+
         return response()->json($puntos);
     }
 }

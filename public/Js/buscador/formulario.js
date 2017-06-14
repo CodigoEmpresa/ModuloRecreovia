@@ -1,15 +1,15 @@
 $(function()
 {
-    var latitud = 4.666575;
-    var longitud = -74.125786;
-    var zoom = 13;
+    var latitud = 4.65308;
+    var longitud = -74.244232;
+    var zoom = 12;
     var puntos = [];
     var markers = [];
 
     var table = $('table.sesiones').DataTable({
         responsive: true,
-        pageLength: 10,
         lengthChange: false,
+        paging: false,
         scrollY: '50vh',
         scrollCollapse: true,
         columnDefs: [
@@ -36,13 +36,13 @@ $(function()
         var punto = this.punto;
         var index = 0;
 
-        $('#punto').html(punto.Escenario+'<br><small>'+punto.Direccion+'</small>');
+        $('#punto').html('<strong>'+punto.Escenario+'</strong><br><small>'+punto.Direccion+'</small>');
         $.each(punto.cronogramas, function(i, cronograma)
         {
             $.each(cronograma.sesiones, function(i2, sesion)
             {
                 index ++;
-                var $tr = $('<tr><td>'+index+'</td><td>'+sesion.Objetivo_General+'</td><td>'+sesion.Inicio+' / '+sesion.Fin+'</td></tr>');
+                var $tr = $('<tr data-id="'+sesion.Id+'"><td>'+index+'</td><td>'+sesion.Objetivo_General+'</td><td>'+(sesion.profesor.persona['Primer_Nombre']+' '+sesion.profesor.persona['Primer_Apellido'])+'</td><td>'+sesion.Objetivos_Especificos+'</td><td>'+sesion.Inicio+' / '+sesion.Fin+'</td></tr>');
 
                 table.row.add($tr).draw(false);
             });
