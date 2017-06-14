@@ -192,7 +192,7 @@
 					</div>
 					<div class="col-lg-4 col-md-5 col-sm-6 hidden-xs">
 						 <div align="right">
-								<img src="{{ asset('public/Img/IDRD.JPG') }}" width="50%" heigth="40%"/>
+							 <img src="{{ asset('public/Img/IDRD.JPG') }}" width="50%" heigth="40%"/>
 						 </div>
 					</div>
 					<div class="col-sm-12">

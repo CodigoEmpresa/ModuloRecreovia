@@ -26,6 +26,7 @@ Route::get('/tipo_modulo', '\Idrd\Usuarios\Controllers\AsignarActividadControlle
 Route::get('/parques/service/buscar/{key}', '\Idrd\Parques\Controllers\ParqueController@buscar');
 Route::post('ProcesoTipoPersona', '\Idrd\Usuarios\Controllers\AsignarActividadController@AdicionTipoPersona');
 Route::get('/buscador', 'Recreovia\BuscadorController@index');
+Route::post('/buscador', 'Recreovia\BuscadorController@buscar');
 
 Route::any('/logout', 'MainController@logout');
 Route::any('/', 'MainController@index');

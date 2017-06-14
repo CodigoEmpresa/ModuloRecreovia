@@ -211,3 +211,27 @@ div.oculto {
 		width: 1280px;
 	}
 }
+
+#buscador {
+	position: fixed;
+	background-color: rgba(255,255,255,.9);
+	min-height: 720px;
+	top: 50px;
+	left: 10px;
+	bottom: 50px;
+	right: 60%;
+	min-width: 400px;
+	border-radius: 4px;
+	box-shadow: 0px 0px 2px #999;
+	z-index: 2;
+}
+
+#mapa-buscador {
+	position: fixed !important;
+	background-color: #0a0a0a;
+	width: 100%;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 1;
+}

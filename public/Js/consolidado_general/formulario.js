@@ -31,7 +31,6 @@ $(function(e)
 
 			if (jornada)
 			{
-				console.log(jornada);
 				if (jornada.Fecha_Evento_Inicio)
 			    {
 					var fecha_inicio = moment(jornada.Fecha_Evento_Inicio);//.subtract(1, 'days');

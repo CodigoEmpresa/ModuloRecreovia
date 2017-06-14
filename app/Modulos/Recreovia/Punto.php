@@ -39,6 +39,11 @@ class Punto extends Eloquent
         return $this->hasMany('App\Modulos\Recreovia\Cronograma', 'Id_Punto');
     }
 
+    public function sesiones()
+    {
+        return $this->hasManyThrough('App\Modulos\Recreovia\Sesion', 'App\Modulos\Recreovia\Cronograma', 'Id_Punto', 'Id_Cronograma', 'Id');
+    }
+
     public function reportes()
     {
         return $this->hasMany('App\Modulos\Recreovia\Reporte', 'Id_Punto');
