@@ -29,12 +29,8 @@
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<strong><i class="fa fa-info-circle" aria-hidden="true"></i> Notas de la versión</strong> <br><br>
                     <ul>
-                    	<li>Se crearon filtros para la busqueda de sesiones, cronogramas e informes de jornadas.</li>
-						<li>Se solucionaron inconvenientes al momento de crear informes de jornadas y el consolidado general.</li>
-						<li>Se agregaron nuevos campos para registrar el Nº de expediente virtual y contrato.</li>
-						<li>Nuevo permiso que permite la edición del estado de las sesiones.</li>
-						<li>El dashboard entro en mantenimiento por problemas de rendimiento.</li>
-						<li>Dashboard en mantenimiento por problemas de rendimiento.</li>
+                    	<li>Ajustes de seguridad.</li>
+                    	<li>Se creó un buscador público de sesiones. <a href="https://www.idrd.gov.co/SIM/ModuloRecreovia/buscador" target="_blank">www.idrd.gov.co/SIM/ModuloRecreovia/buscador</a></li>
                     </ul>
 	            </div>
 	        </div>

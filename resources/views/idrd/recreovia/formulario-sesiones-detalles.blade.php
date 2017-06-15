@@ -270,7 +270,7 @@
 											<div class="row">
 												<div class="col-md-12"><hr></div>
 												<div class="col-md-12">
-													@if($sesion && $sesion['Estado'] != 'Finalizado')
+													@if ($sesion && (!in_array($sesion['Estado'], ['Finalizado', 'Cancelado'])))
 														@if($tipo == "profesor")
 															<input type="submit" class="btn btn-primary" value="Guardar" {{ $sesion && $sesion['Estado'] == 'Aprobado' ? 'disabled' : '' }}>
 														@else
@@ -392,7 +392,7 @@
 												<input type="hidden" name="Id" value="{{ $sesion ? $sesion['Id'] : 0 }}">
 												<input type="hidden" name="origen" value="{{ $tipo }}">
 												<input type="hidden" name="area" value="Asistencia">
-												@if($sesion && $sesion['Estado'] != 'Finalizado')
+												@if ($sesion && (!in_array($sesion['Estado'], ['Finalizado', 'Cancelado'])))
 													<div class="row">
 														<div class="col-md-12"><hr></div>
 														<div class="col-xs-12"><input type="submit" class="btn btn-primary" value="Registrar asistencia"></div>
@@ -590,7 +590,7 @@
 												<input type="hidden" name="Id" value="{{ $sesion ? $sesion['Id'] : 0 }}">
 												<input type="hidden" name="origen" value="{{ $tipo }}">
 												<input type="hidden" name="area" value="Producto_No_Conforme">
-												@if($sesion && $sesion['Estado'] != 'Finalizado')
+												@if ($sesion && (!in_array($sesion['Estado'], ['Finalizado', 'Cancelado'])))
 													<div class="row">
 														<div class="col-md-12"><hr></div>
 														<div class="col-xs-12"><input type="submit" class="btn btn-primary" value="Registrar producto no conforme"></div>
@@ -784,7 +784,7 @@
 												<input type="hidden" name="Id" value="{{ $sesion ? $sesion['Id'] : 0 }}">
 												<input type="hidden" name="origen" value="{{ $tipo }}">
 												<input type="hidden" name="area" value="Calificacion_Del_Servicio">
-												@if($sesion && $sesion['Estado'] != 'Finalizado')
+												@if ($sesion && (!in_array($sesion['Estado'], ['Finalizado', 'Cancelado'])))
 													<div class="row">
 														<div class="col-md-12"><hr></div>
 														<div class="col-xs-12"><input type="submit" class="btn btn-primary" value="Registrar calificación del servicio"></div>

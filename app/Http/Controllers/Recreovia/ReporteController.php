@@ -310,7 +310,7 @@ class ReporteController extends Controller {
 		$sesiones = Sesion::with('gruposPoblacionales', 'profesor', 'profesor.persona')
 							->where('Id_Cronograma', $informe['Id_Cronograma'])
 							->whereIn('Fecha', explode(',', $informe['Dias']))
-							->where('Estado', 'Finalizado')
+							->whereIn('Estado', ['Finalizado', 'Cancelado'])
 							->get();
 
 		return $sesiones;

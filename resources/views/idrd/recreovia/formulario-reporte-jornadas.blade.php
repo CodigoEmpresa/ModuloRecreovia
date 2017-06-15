@@ -426,10 +426,11 @@
                                             <?php
                                                 $subtotal_genero_m = 0;
                                                 $subtotal_genero_f = 0;
+                                                $cancelado = $sesion['Estado'] == 'Cancelado' ? true : false;
                                             ?>
                                             <tr>
                                                 <td>{{ ++$i }}</td>
-                                                <td>{{ $sesion['Objetivo_General'] }}</td>
+                                                <td>{!! $sesion['Objetivo_General'].' '.($sesion['Estado'] == 'Cancelado' ? '<br><span class="label label-danger">Cancelada</span>' : '') !!}</td>
                                                 <td align="center">{!! $sesion['Fecha'].'<br>'.$sesion['Inicio'] !!}</td>
                                                 <td>
                                                     @if($sesion->profesor)
@@ -439,7 +440,7 @@
                                                     @endif
                                                 </td>
                                                 @foreach ($gruposPoblacionales as $grupo)
-                                                    @if (count($sesion->gruposPoblacionales))
+                                                    @if (count($sesion->gruposPoblacionales) && !$cancelado)
                                                         @foreach ($sesion->gruposPoblacionales()->where('Id_Grupo', $grupo['Id'])->where('Grupo_Asistencia', 'Participantes')->orderBy('Genero')->get() as $participacion)
                                                             <?php
                                                                 switch ($participacion->pivot['Genero'])
@@ -457,8 +458,9 @@
                                                             <td style="text-align:right;">{{ $participacion->pivot['Cantidad'] }}</td>
                                                         @endforeach
                                                     @else
-                                                        <td colspan="{{ count($gruposPoblacionales) * 2 }}">No se ha ingesado la participación de esta sesión</td>
-                                                        @break
+                                                        @foreach ($sesion->gruposPoblacionales()->where('Id_Grupo', $grupo['Id'])->where('Grupo_Asistencia', 'Participantes')->orderBy('Genero')->get() as $participacion)
+                                                            <td style="text-align:right;">--</td>
+                                                        @endforeach
                                                     @endif
                                                 @endforeach
                                                 <td style="text-align:right;">{{ $subtotal_genero_m }}</td>
@@ -539,10 +541,11 @@
                                             <?php
                                                 $subtotal_genero_m = 0;
                                                 $subtotal_genero_f = 0;
+                                                $cancelado = $sesion['Estado'] == 'Cancelado' ? true : false;
                                             ?>
                                             <tr>
                                                 <td>{{ ++$i }}</td>
-                                                <td>{{ $sesion['Objetivo_General'] }}</td>
+                                                <td>{!! $sesion['Objetivo_General'].' '.($sesion['Estado'] == 'Cancelado' ? '<br><span class="label label-danger">Cancelada</span>' : '') !!}</td>
                                                 <td align="center">{!! $sesion['Fecha'].'<br>'.$sesion['Inicio'] !!}</td>
                                                 <td>
                                                     @if($sesion->profesor)
@@ -552,7 +555,7 @@
                                                     @endif
                                                 </td>
                                                 @foreach ($gruposPoblacionales as $grupo)
-                                                    @if (count($sesion->gruposPoblacionales))
+                                                    @if (count($sesion->gruposPoblacionales) && !$cancelado)
                                                         @foreach ($sesion->gruposPoblacionales()->where('Id_Grupo', $grupo['Id'])->where('Grupo_Asistencia', 'Asistentes')->orderBy('Genero')->get() as $participacion)
                                                             <?php
                                                                 switch ($participacion->pivot['Genero'])
@@ -570,8 +573,9 @@
                                                             <td style="text-align:right;">{{ $participacion->pivot['Cantidad'] }}</td>
                                                         @endforeach
                                                     @else
-                                                        <td colspan="{{ count($gruposPoblacionales) * 2 }}">No se ha ingesado la participación de esta sesión</td>
-                                                        @break
+                                                        @foreach ($sesion->gruposPoblacionales()->where('Id_Grupo', $grupo['Id'])->where('Grupo_Asistencia', 'Asistentes')->orderBy('Genero')->get() as $participacion)
+                                                            <td style="text-align:right;">--</td>
+                                                        @endforeach
                                                     @endif
                                                 @endforeach
                                                 <td style="text-align:right;">{{ $subtotal_genero_m }}</td>

@@ -34,11 +34,11 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-md-2 form-group">
+                    <div class="col-md-8 form-group">
                         <label for="">&nbsp;</label><br>
                         <input type="hidden" name="_method" value="POST">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <button type="submit" class="btn btn-success"><i class="fa fa-filter"></i></button>
+                        <button type="submit" class="btn btn-success">Buscar</button>
                         @if ($crear)
                             <a href="{{ url('/programacion/crear/') }}" class="btn btn-primary" id="crear">Crear</a>
                         @endif
