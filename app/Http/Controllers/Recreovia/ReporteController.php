@@ -114,7 +114,7 @@ class ReporteController extends Controller {
 			$qb = null;
 			$elementos = $qb;
 		} else {
-			$qb = Reporte::with(['profesores', 'cronograma', 'cronograma.jornada', 'cronograma.sesiones']);
+			$qb = Reporte::with(['punto', 'profesores', 'cronograma', 'cronograma.jornada', 'cronograma.sesiones']);
 			$qb = $this->aplicarFiltro($qb, $request);
 
 			$elementos = $qb->whereNull('deleted_at')

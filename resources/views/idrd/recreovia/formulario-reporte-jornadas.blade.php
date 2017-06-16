@@ -426,11 +426,11 @@
                                             <?php
                                                 $subtotal_genero_m = 0;
                                                 $subtotal_genero_f = 0;
-                                                $cancelado = $sesion['Estado'] == 'Cancelado' ? true : false;
+                                                $cancelado = ($sesion['Estado'] == 'Cancelado' ? true : false);
                                             ?>
                                             <tr>
                                                 <td>{{ ++$i }}</td>
-                                                <td>{!! $sesion['Objetivo_General'].' '.($sesion['Estado'] == 'Cancelado' ? '<br><span class="label label-danger">Cancelada</span>' : '') !!}</td>
+                                                <td>{!! $sesion['Objetivo_General'].' '.($cancelado ? '<br><span class="label label-danger">Cancelada</span>' : '') !!}</td>
                                                 <td align="center">{!! $sesion['Fecha'].'<br>'.$sesion['Inicio'] !!}</td>
                                                 <td>
                                                     @if($sesion->profesor)
@@ -458,9 +458,8 @@
                                                             <td style="text-align:right;">{{ $participacion->pivot['Cantidad'] }}</td>
                                                         @endforeach
                                                     @else
-                                                        @foreach ($sesion->gruposPoblacionales()->where('Id_Grupo', $grupo['Id'])->where('Grupo_Asistencia', 'Participantes')->orderBy('Genero')->get() as $participacion)
-                                                            <td style="text-align:right;">--</td>
-                                                        @endforeach
+                                                        <td style="width: 52px;">--</td>
+                                                        <td style="width: 52px;">--</td>
                                                     @endif
                                                 @endforeach
                                                 <td style="text-align:right;">{{ $subtotal_genero_m }}</td>
@@ -573,9 +572,8 @@
                                                             <td style="text-align:right;">{{ $participacion->pivot['Cantidad'] }}</td>
                                                         @endforeach
                                                     @else
-                                                        @foreach ($sesion->gruposPoblacionales()->where('Id_Grupo', $grupo['Id'])->where('Grupo_Asistencia', 'Asistentes')->orderBy('Genero')->get() as $participacion)
-                                                            <td style="text-align:right;">--</td>
-                                                        @endforeach
+                                                        <td style="width: 52px;">--</td>
+                                                        <td style="width: 52px;">--</td>
                                                     @endif
                                                 @endforeach
                                                 <td style="text-align:right;">{{ $subtotal_genero_m }}</td>

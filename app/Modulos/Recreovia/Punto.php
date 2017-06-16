@@ -12,6 +12,7 @@ class Punto extends Eloquent
     protected $primaryKey = 'Id_Punto';
     protected $connection = 'mysql';
     protected $softDelete = true;
+    protected $cascadeDeletes = ['reportes', 'cronogramas'];
 
     public function __construct()
     {

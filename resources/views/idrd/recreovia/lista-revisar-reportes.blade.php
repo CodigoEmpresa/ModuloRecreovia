@@ -73,17 +73,19 @@
                     </thead>
                     <tbody>
                         @foreach($elementos as $reporte)
-                            <tr>
-                                <td>{{ $reporte->punto->toString() }}</td>
-                                <td>{!! $reporte->toString() !!}</td>
-                                <td>{{ empty($reporte->Estado) ? 'Pendiente' : $reporte->Estado }}</td>
-                                <td>{{ $reporte->updated_at }}</td>
-                                <td>
-                                    <a href="{{ url('/informes/jornadas/'.$reporte['Id'].'/editar') }}" class="pull-right btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Editar">
-                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                    </a>
-                                </td>
-                            </tr>
+                            @if($reporte->punto)
+                                <tr>
+                                    <td>{{ $reporte->punto->toString() }}</td>
+                                    <td>{!! $reporte->toString() !!}</td>
+                                    <td>{{ empty($reporte->Estado) ? 'Pendiente' : $reporte->Estado }}</td>
+                                    <td>{{ $reporte->updated_at }}</td>
+                                    <td>
+                                        <a href="{{ url('/informes/jornadas/'.$reporte['Id'].'/editar') }}" class="pull-right btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Editar">
+                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endif
                         @endforeach
                     </tbody>
                 </table>
