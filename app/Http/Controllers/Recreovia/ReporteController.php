@@ -161,7 +161,7 @@ class ReporteController extends Controller {
 
 	public function editarInformeJornadas(Request $request, $id)
 	{
-		$informe = Reporte::with('profesores', 'novedad', 'servicios', 'cronograma', 'cronograma.gestor')->find($id);
+		$informe = Reporte::with('profesores', 'novedad', 'servicios', 'cronograma.gestor.persona')->find($id);
 		$recreopersona = $this->cronogramasPersona($informe->cronograma->gestor['Id_Recreopersona']);
 		$gruposPoblacionales = GrupoPoblacional::all();
 
@@ -213,14 +213,26 @@ class ReporteController extends Controller {
 			{
 				if($sesion['Id_Recreopersona'])
 				{
-					$profesores[$sesion['Id_Recreopersona']] = [
-						'Hora_Llegada' => null,
-						'Hora_Salida' => null,
-						'Sesiones_Realizadas' => count($sesiones->where('Id_Recreopersona', $sesion['Id_Recreopersona'])->all()),
-						'Planificacion' => '',
-						'Sistema_De_Datos' => '',
-						'Novedades' => ''
-					];
+				    if($sesion['Asumida_Por_El_Gestor'])
+                    {
+                        $id_recreopersona = $sesion->cronograma['Id_Recreopersona'];
+                    } else {
+				        $id_recreopersona = $sesion['Id_Recreopersona'];
+                    }
+
+                    if (array_key_exists($id_recreopersona, $profesores))
+                    {
+                        $profesores[$id_recreopersona]['Sesiones_Realizadas'] += 1;
+                    } else {
+                        $profesores[$id_recreopersona] = [
+                            'Hora_Llegada' => null,
+                            'Hora_Salida' => null,
+                            'Sesiones_Realizadas' => 1,
+                            'Planificacion' => '',
+                            'Sistema_De_Datos' => '',
+                            'Novedades' => ''
+                        ];
+                    }
 				}
 			}
 		}
@@ -307,7 +319,7 @@ class ReporteController extends Controller {
 
 	private function obtenerSesionesInforme($informe)
 	{
-		$sesiones = Sesion::with('gruposPoblacionales', 'profesor', 'profesor.persona')
+		$sesiones = Sesion::with('gruposPoblacionales', 'profesor.persona', 'cronograma.gestor.persona')
 							->where('Id_Cronograma', $informe['Id_Cronograma'])
 							->whereIn('Fecha', explode(',', $informe['Dias']))
 							->whereIn('Estado', ['Finalizado', 'Cancelado'])

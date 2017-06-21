@@ -174,6 +174,7 @@ class SesionController extends Controller {
 		$sesion->Inicio = $request->input('Inicio');
 		$sesion->Fin = $request->input('Fin');
 		$sesion->Estado = !$nuevo ? $sesion->Estado : 'Pendiente';
+		$sesion->Asumida_Por_El_Gestor = !$nuevo ? $sesion->Asumida_Por_El_Gestor : 0;
 		$sesion->save();
 
 		if(array_key_exists('Acompanantes', $request->input()))
@@ -207,6 +208,7 @@ class SesionController extends Controller {
 		$sesion->Tiempo_Final = $request->input('Tiempo_Final');
 		$sesion->Observaciones = $request->input('Observaciones');
 		$sesion->Estado = $request->has('Estado') ? $request->input('Estado') : $sesion->Estado;
+		$sesion->Asumida_Por_El_Gestor = $request->has('Asumida_Por_El_Gestor') ? 1 : 0;
 
 		if ($request->input('origen') == 'profesor')
 		{

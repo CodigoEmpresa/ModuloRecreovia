@@ -112,7 +112,7 @@
 													</div>
 												</div>
 												<div class="col-md-6">
-													<div id="map" style="height:145px;"></div>
+													<div id="map" style="height:230px;"></div>
 												</div>
 											</div>
 										</div>
@@ -257,6 +257,13 @@
 					                            <label class="radio-inline">
 					                                <input type="radio" name="Estado" id="estado4" value="Corregir" {{ ($sesion && $sesion['Estado'] == 'Corregir') || old('Estado') == 'Corregir' ? 'checked' : '' }}> Corregir
 					                            </label>
+											</div>
+											<div class="col-md-12 form-group">
+												<div class="checkbox">
+													<label>
+														<input name="Asumida_Por_El_Gestor" value="1" type="checkbox" {{ $sesion && $sesion['Asumida_Por_El_Gestor'] ? 'checked' : '' }}> La sesión es asumida por el gestor.
+													</label>
+												</div>
 											</div>
 				                        @endif
 										<div class="col-md-12">

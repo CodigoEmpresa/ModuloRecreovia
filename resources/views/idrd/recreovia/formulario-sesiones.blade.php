@@ -78,7 +78,7 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div id="map" style="height:145px;"></div>
+							<div id="map" style="height:230px;"></div>
 						</div>
 						<div class="col-md-12">
 							<div class="row">

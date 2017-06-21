@@ -44,8 +44,7 @@ class ConsolidadoGeneralController extends Controller {
 	{
 
 		$id_jornada = $request->input('Id_Jornada');
-		$fecha = $request->input('Fecha');
-		$dias = explode(',', $request->input('Dias'));
+		$fecha = $dias = explode(',', $request->input('Dias'));
 		usort($dias, function($a, $b) {
   			return strcmp($a, $b);
 		});
@@ -55,7 +54,7 @@ class ConsolidadoGeneralController extends Controller {
 								{
 									$query->where('Id_Jornada', $id_jornada);
 								})
-								->where('Estado', 'Aprobado');
+								->where('Estado', 'Finalizado');
 
 		$query_builder->where(function($query) use ($dias)
 		{
@@ -102,7 +101,7 @@ class ConsolidadoGeneralController extends Controller {
 
 		foreach ($reportes as $reporte)
 		{
-			foreach ($reporte->cronograma->sesiones as $sesion)
+			foreach ($reporte->cronograma->sesiones->whereIn('Fecha', $dias)->all() as $sesion)
 			{
 				foreach ($sesion->gruposPoblacionales as $grupo)
 				{

@@ -67,7 +67,7 @@
                                     <input type="hidden" name="_method" value="POST">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <input type="hidden" name="Id" value="{{ $informe ? $informe['Id'] : 0 }}">
-                                    @if ($informe['Estado'] != 'Aprobado')
+                                    @if ($informe['Estado'] != 'Finalizado')
                                         <input type="submit" value="{{ $informe ? 'Regenerar reporte' : 'Generar reporte' }}" id="generar" class="btn btn-primary">
                                         @if ($informe)
                                             <a data-toggle="modal" data-target="#modal-eliminar" class="btn btn-danger">Eliminar</a>
@@ -119,7 +119,7 @@
                                         <fieldset>
                                             <div class="col-md-12 form-group">
                                                 <label for="">Estado</label><br>
-                                                @if ($_SESSION['Usuario']['Permisos']['validar_reportes_jornadas'])
+                                                @if ($_SESSION['Usuario']['Permisos']['validar_reportes_jornadas'] && $informe['Estado'] !== 'Finalizado')
                                                     <label class="radio-inline">
                                                         <input type="radio" name="Estado" value="Pendiente" {{ $informe && $informe['Estado'] == 'Pendiente' ? 'checked' : '' }}> Pendiente
                                                     </label>
@@ -128,6 +128,9 @@
                                                     </label>
                                                     <label class="radio-inline">
                                                         <input type="radio" name="Estado" value="Rechazado" {{ $informe && $informe['Estado'] == 'Rechazado' ? 'checked' : '' }}> Rechazado
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="Estado" value="Finalizado" {{ $informe && $informe['Estado'] == 'Finalizado' ? 'checked' : '' }}> Finalizado
                                                     </label>
                                                 @else
                                                     <p class="form-control-static">{{ $informe['Estado'] }}</p>
@@ -382,7 +385,7 @@
                             <div class="col-md-12">
                                 <br>
                             </div>
-                            <div class="col-md-12 form-group">
+                            <div class="col-md-12">
                                 <label for="">Participantes (Frecuencia Relativa)</label><br>
                                 <table id="participaciones" class="display nowrap table table-bordered table-min">
                                     <thead>
@@ -426,15 +429,25 @@
                                             <?php
                                                 $subtotal_genero_m = 0;
                                                 $subtotal_genero_f = 0;
-                                                $cancelado = ($sesion['Estado'] == 'Cancelado' ? true : false);
+                                                $cancelado = $sesion['Estado'] == 'Cancelado' ? true : false;
+                                                $asumida_por_el_gestor = $sesion['Asumida_Por_El_Gestor'] ? true : false;
                                             ?>
                                             <tr>
                                                 <td>{{ ++$i }}</td>
-                                                <td>{!! $sesion['Objetivo_General'].' '.($cancelado ? '<br><span class="label label-danger">Cancelada</span>' : '') !!}</td>
+                                                <td>{!!
+                                                        $sesion['Objetivo_General'].
+                                                        ($cancelado ? '<br><span class="label label-danger">Cancelada</span>' : '').
+                                                        ($asumida_por_el_gestor ? '<br><span class="label label-primary">Gestor</span>':'')
+                                                    !!}
+                                                </td>
                                                 <td align="center">{!! $sesion['Fecha'].'<br>'.$sesion['Inicio'] !!}</td>
                                                 <td>
                                                     @if($sesion->profesor)
-                                                        {{ $sesion->profesor->persona->toFriendlyString() }}
+                                                        @if ($asumida_por_el_gestor)
+                                                            {{ $informe->cronograma->gestor->persona->toFriendlyString() }}
+                                                        @else
+                                                            {{ $sesion->profesor->persona->toFriendlyString() }}
+                                                        @endif
                                                     @else
                                                         Sin profesor asignado
                                                     @endif
@@ -495,8 +508,9 @@
                                         </tr>
                                     </tfoot>
                                 </table>
+                                <?php $total_participantes = $subtotal_grupo; ?>
                             </div>
-                            <div class="col-md-12 form-group">
+                            <div class="col-md-12">
                                 <label for="">Asistentes (Frecuencia Relativa)</label><br>
                                 <table id="asistencias" class="display nowrap table table-bordered table-min">
                                     <thead>
@@ -541,14 +555,24 @@
                                                 $subtotal_genero_m = 0;
                                                 $subtotal_genero_f = 0;
                                                 $cancelado = $sesion['Estado'] == 'Cancelado' ? true : false;
+                                                $asumida_por_el_gestor = $sesion['Asumida_Por_El_Gestor'] ? true : false;
                                             ?>
                                             <tr>
                                                 <td>{{ ++$i }}</td>
-                                                <td>{!! $sesion['Objetivo_General'].' '.($sesion['Estado'] == 'Cancelado' ? '<br><span class="label label-danger">Cancelada</span>' : '') !!}</td>
+                                                <td>{!!
+                                                        $sesion['Objetivo_General'].
+                                                        ($cancelado ? '<br><span class="label label-danger">Cancelada</span>' : '').
+                                                        ($asumida_por_el_gestor ? '<br><span class="label label-primary">Gestor</span>':'')
+                                                    !!}
+                                                </td>
                                                 <td align="center">{!! $sesion['Fecha'].'<br>'.$sesion['Inicio'] !!}</td>
                                                 <td>
                                                     @if($sesion->profesor)
-                                                        {{ $sesion->profesor->persona->toFriendlyString() }}
+                                                        @if ($asumida_por_el_gestor)
+                                                            {{ $informe->cronograma->gestor->persona->toFriendlyString() }}
+                                                        @else
+                                                            {{ $sesion->profesor->persona->toFriendlyString() }}
+                                                        @endif
                                                     @else
                                                         Sin profesor asignado
                                                     @endif
@@ -609,15 +633,82 @@
                                         </tr>
                                     </tfoot>
                                 </table>
+                                <?php $total_asistentes = $subtotal_grupo; ?>
+                            </div>
+                            <div class="col-md-12">
+                                <br>
+                            </div>
+                            <div class="col-md-12">
+                                <?php
+                                    $subtotal_participantes_m = 0;
+                                    $subtotal_participantes_f = 0;
+                                    $subtotal_asistentes_m = 0;
+                                    $subtotal_asistentes_f = 0;
+                                    $total = 0;
+                                ?>
+                                <table class="display nowrap table table-bordered table-min">
+                                    <thead>
+                                        <tr>
+                                            @foreach($gruposPoblacionales as $grupo)
+                                                <th style="width:104px;" colspan="2">{{ $grupo['Edad_Inicio'].($grupo['Edad_Fin'] > 0 ? ' a '.$grupo['Edad_Fin'].' años' : ' - mas') }}<br>{{ $grupo['Grupo'] }}</th>
+                                            @endforeach
+                                            <th style="width:104px;" colspan="2">Subtotal<br>Participantes</th>
+                                            <th style="width:52px;" valign="center" rowspan="2">Total</th>
+                                        </tr>
+                                        <tr>
+                                            @foreach($gruposPoblacionales as $grupo)
+                                                <th style="width: 52px;">H</th>
+                                                <th style="width: 52px;">M</th>
+                                            @endforeach
+                                            <th style="width: 52px;">H</th>
+                                            <th style="width: 52px;">M</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            @foreach($gruposPoblacionales as $grupo)
+                                                <?php
+                                                    $subtotal_participantes_m += $total_participantes[$grupo['Id']]['M'];
+                                                    $subtotal_participantes_f += $total_participantes[$grupo['Id']]['F'];
+                                                ?>
+                                                <td align="right">{{ $total_participantes[$grupo['Id']]['M'] }}</td>
+                                                <td align="right">{{ $total_participantes[$grupo['Id']]['F'] }}</td>
+                                            @endforeach
+                                            <td align="right">{{ $subtotal_participantes_m }}</td>
+                                            <td align="right">{{ $subtotal_participantes_f }}</td>
+                                            <td align="right">{{ $subtotal_participantes_m + $subtotal_participantes_f }}</td>
+                                        </tr>
+                                        <tr>
+                                            @foreach($gruposPoblacionales as $grupo)
+                                                <?php
+                                                    $subtotal_asistentes_m += $total_asistentes[$grupo['Id']]['M'];
+                                                    $subtotal_asistentes_f += $total_asistentes[$grupo['Id']]['F'];
+                                                ?>
+                                                <td align="right">{{ $total_asistentes[$grupo['Id']]['M'] }}</td>
+                                                <td align="right">{{ $total_asistentes[$grupo['Id']]['F'] }}</td>
+                                            @endforeach
+                                            <td align="right">{{ $subtotal_asistentes_m }}</td>
+                                            <td align="right">{{ $subtotal_asistentes_f }}</td>
+                                            <td align="right">{{ $subtotal_asistentes_m + $subtotal_asistentes_f }}</td>
+                                        </tr>
+                                        <tr>
+                                            @foreach($gruposPoblacionales as $grupo)
+                                                <?php $total += $total_participantes[$grupo['Id']]['M'] + $total_asistentes[$grupo['Id']]['M'] + $total_participantes[$grupo['Id']]['F'] + $total_asistentes[$grupo['Id']]['F'] ?>
+                                                <td align="center" colspan="2">{{ $total_participantes[$grupo['Id']]['M'] + $total_asistentes[$grupo['Id']]['M'] + $total_participantes[$grupo['Id']]['F'] + $total_asistentes[$grupo['Id']]['F'] }}</td>
+                                            @endforeach
+                                            <td align="center" colspan="3"><strong>{{ $total }}</strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
-                        <hr>
-                    </div>
-                    @if ($informe['Estado'] != 'Aprobado' || $_SESSION['Usuario']['Permisos']['validar_reportes_jornadas'])
+                    @if ($informe['Estado'] != 'Finalizado' && $_SESSION['Usuario']['Permisos']['validar_reportes_jornadas'])
+                        <div class="col-md-12">
+                            <hr>
+                        </div>
                         <div class="col-md-12">
                             <input type="button" class="btn btn-primary" id="actualizar_reporte" value="Actualizar reporte">
                         </div>

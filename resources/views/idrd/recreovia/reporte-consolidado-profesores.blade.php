@@ -36,7 +36,7 @@
 		<td colspan="3"></td>
 	</tr>
 	<tr>
-		<td align="center" colspan="3" style="text-align:center;">{{ $fecha }}</td>
+		<td align="center" colspan="3" style="text-align:center;">{{ implode(', ',  $fecha) }}</td>
 		<td>Jornada</td>
 		<td align="center" style="text-align:center;">{{ $jornada->Jornada == 'dia' ? 'x' : '' }}</td>
 		<td align="center" style="text-align:center;">{{ $jornada->Jornada == 'noche' ? 'x' : '' }}</td>
@@ -263,7 +263,7 @@
 	?>
 	@foreach($reportes as $reporte)
 		<?php $subtotal = 0; ?>
-		@foreach($reporte->cronograma->sesiones as $sesion)
+		@foreach($reporte->cronograma->sesiones->whereIn('Fecha', $fecha)->all() as $sesion)
 			<?php 
 				$subtotal += $sesion->gruposPoblacionales->sum('pivot.Cantidad'); 
 				$total += $sesion->gruposPoblacionales->sum('pivot.Cantidad');
