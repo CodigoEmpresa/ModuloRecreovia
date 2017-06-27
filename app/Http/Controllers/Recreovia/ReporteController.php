@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Recreovia;
 
 use App\Http\Controllers\Controller;
+use App\Modulos\Parques\Localidad;
 use Illuminate\Http\Request;
 use App\Modulos\Recreovia\Reporte;
 use App\Modulos\Recreovia\Recreopersona;
@@ -13,6 +14,7 @@ use App\Modulos\Recreovia\GrupoPoblacional;
 use App\Modulos\Recreovia\Novedad;
 use App\Modulos\Recreovia\Servicio;
 use App\Http\Requests\GenerarInforme;
+use League\Flysystem\Adapter\Local;
 
 class ReporteController extends Controller {
 
@@ -38,7 +40,6 @@ class ReporteController extends Controller {
 			$qb = $this->aplicarFiltro($qb, $request);
 
 			$elementos = $qb->whereNull('deleted_at')
-							->whereNull('deleted_at')
 							->whereIn('Id_Cronograma', $recreopersona->cronogramas->pluck('Id')->toArray())
 							->orderBy('Id', 'DESC')
 							->get();
@@ -47,6 +48,7 @@ class ReporteController extends Controller {
 		$lista = [
 			'titulo' => 'Informes jornadas',
 	        'elementos' => $elementos,
+            'localidades' => Localidad::all(),
 	        'puntos' => $recreopersona->puntos,
 	        'status' => session('status')
 		];
@@ -114,7 +116,12 @@ class ReporteController extends Controller {
 			$qb = null;
 			$elementos = $qb;
 		} else {
-			$qb = Reporte::with(['punto', 'profesores', 'cronograma', 'cronograma.jornada', 'cronograma.sesiones']);
+			$qb = Reporte::with(['punto', 'profesores', 'cronograma', 'cronograma.jornada', 'cronograma.sesiones'])
+                            ->whereHas('cronograma', function($query)
+                            {
+                                $query->whereNull('deleted_at');
+                            });
+
 			$qb = $this->aplicarFiltro($qb, $request);
 
 			$elementos = $qb->whereNull('deleted_at')
@@ -126,8 +133,21 @@ class ReporteController extends Controller {
 			'titulo' => 'Aprobar informes de jornadas',
 	        'elementos' => $elementos,
 			'puntos' => Punto::all(),
+            'localidades' => Localidad::all(),
 	        'status' => session('status')
 		];
+
+        if($elementos){
+            foreach($elementos as $elemento)
+            {
+                try
+                {
+                    $data = $elemento->toString();
+                } catch (\Exception $e){
+                    echo 'error';
+                }
+            }
+        }
 
 		$datos = [
 			'seccion' => 'Revisar informes',
@@ -370,18 +390,30 @@ class ReporteController extends Controller {
 			{
 				if ($request->input('estado') == 'Pendiente')
 				{
-					return $query->where('Estado', $request->input('estado'))
+                    $query->where('Estado', $request->input('estado'))
 								->orWhereNull('Estado');
 				} else {
-					return $query->where('Estado', $request->input('estado'));
+                    $query->where('Estado', $request->input('estado'));
 				}
 			});
 		}
 
-		if ($request->input('punto') && $request->input('punto') != 'Todos')
+		if ($request->input('localidad') && $request->input('localidad') != 'Todos')
 		{
-			$qb->where('Id_Punto', $request->input('punto'));
-		}
+            $localidad = Localidad::with('puntos')->find($request->input('localidad'));
+
+            if ($request->input('punto') && $request->input('punto') != 'Todos')
+            {
+                $qb->where('Id_Punto', $request->input('punto'));
+            } else {
+                $qb->whereIn('Id_Punto', $localidad->puntos->pluck('Id_Punto')->toArray());
+            }
+        } else {
+            if ($request->input('punto') && $request->input('punto') != 'Todos')
+            {
+                $qb->where('Id_Punto', $request->input('punto'));
+            }
+        }
 
 		if($request->input('fecha'))
 		{

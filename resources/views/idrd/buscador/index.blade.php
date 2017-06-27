@@ -42,7 +42,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <span id="punto" style="position:absolute;"></span>
+                            <span id="punto">Selecciona un punto en el mapa. <br> &nbsp;</span>
                             <table class="table table-min sesiones">
                                 <thead>
                                 <tr>

@@ -7,11 +7,15 @@ $(function()
     var markers = [];
 
     var table = $('table.sesiones').DataTable({
+        dom: 'Bfrtip',
         responsive: true,
         lengthChange: false,
         paging: false,
         scrollY: '50vh',
         scrollCollapse: true,
+        buttons: [
+            'copy', 'excel', {extend: 'pdfHtml5', orientation: 'landscape', pageSize: 'LEGAL'}
+        ],
         columnDefs: [
             {
                 targets: 'no-sort',

@@ -1,7 +1,7 @@
 @section('script')
     @parent
 
-    <!--<script src="{{ asset('public/Js/profesores/buscador.js') }}"></script>-->
+    <script src="{{ asset('public/Js/lista_reportes/buscador.js') }}"></script>
 @stop
 
 <div class="content">
@@ -32,11 +32,20 @@
                         </select>
                     </div>
                     <div class="col-md-2 form-group">
+                        <label for="">Localidad</label>
+                        <select name="localidad" id="localidad" title="Localidad" class="form-control" data-value="{{ old('localidad') }}" data-live-search="true">
+                            <option value="Todos">Todos</option>
+                            @foreach($localidades as $localidad)
+                                <option value="{{ $localidad['Id_Localidad'] }}">{{ $localidad['Id_Localidad'] }} - {{ $localidad['Localidad'] }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-2 form-group">
                         <label for="">Punto</label>
                         <select name="punto" id="punto" title="Punto" class="form-control" data-value="{{ old('punto') }}" data-live-search="true">
                             <option value="Todos">Todos</option>
                             @foreach($puntos as $punto)
-                                <option value="{{ $punto['Id_Punto'] }}">{{ $punto->getCode() }} - {{ $punto->toString() }}</option>
+                                <option data-localidad="{{ $punto['Id_Localidad'] }}" value="{{ $punto['Id_Punto'] }}">{{ $punto->getCode() }} - {{ $punto->toString() }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -44,7 +53,7 @@
                         <label for="">Fecha</label>
                         <input name="fecha" type="text" placeholder="Fecha" class="form-control" data-role="datepicker" data-fechas-importantes="{{ Festivos::create()->datesToString() }}" value="{{ old('fecha') }}">
                     </div>
-                    <div class="col-md-6 form-group">
+                    <div class="col-md-2 form-group">
                         <label for="">&nbsp;</label><br>
                         <input type="hidden" name="_method" value="POST">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
