@@ -705,7 +705,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    @if ($informe['Estado'] != 'Finalizado' && $_SESSION['Usuario']['Permisos']['validar_reportes_jornadas'])
+                    @if ($informe['Estado'] != 'Finalizado' || $_SESSION['Usuario']['Permisos']['validar_reportes_jornadas'])
                         <div class="col-md-12">
                             <hr>
                         </div>
