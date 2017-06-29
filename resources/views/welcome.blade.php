@@ -32,6 +32,7 @@
                     	<li>Ajustes de seguridad.</li>
 						<li>Nuevo estado para los reportes de jornadas (Finalizado) el cual bloquea la edición.</li>
 						<li>Nueva opción en las sesiones para permitir que el gestor sea quien asuma la ejecución de la sesión.</li>
+						<li>Se agregó filtro por localidad al buscador de informes de jornadas.</li>
                     	<li>Se creó un buscador público de sesiones. <a href="https://www.idrd.gov.co/SIM/ModuloRecreovia/buscador" target="_blank">www.idrd.gov.co/SIM/ModuloRecreovia/buscador</a></li>
                     </ul>
 	            </div>

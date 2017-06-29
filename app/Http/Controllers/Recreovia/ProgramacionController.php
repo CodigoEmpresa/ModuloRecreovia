@@ -76,6 +76,10 @@ class ProgramacionController extends Controller {
 			$elementos = $qb;
 		} else {
 			$qb = Cronograma::with('punto', 'jornada', 'gestor', 'gestor.persona', 'sesiones');
+            $qb->whereHas('punto', function($query)
+            {
+                $query->whereNull('deleted_at');
+            });
 			$qb = $this->aplicarFiltro($qb, $request);
 
 			$elementos = $qb->whereNull('deleted_at')

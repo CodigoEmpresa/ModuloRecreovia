@@ -12,7 +12,7 @@
     @section ('style')
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="{{ asset('public/components/jquery-ui/themes/base/jquery-ui.css') }}" media="screen">
-        <link rel="stylesheet" href="{{ asset('public/Css/bootstrap.css') }}" media="screen">
+        <link rel="stylesheet" href="{{ asset('public/css/bootstrap.css') }}" media="screen">
         <link rel="stylesheet" href="{{ asset('public/components/bootstrap-select/dist/css/bootstrap-select.css') }}" media="screen">
         <link rel="stylesheet" href="{{ asset('public/components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css') }}" media="screen">
         <link rel="stylesheet" href="{{ asset('public/components/selectize/dist/css/selectize.bootstrap3.css') }}" media="screen">
@@ -22,7 +22,7 @@
         <link rel="stylesheet" href="{{ asset('public/components/highcharts/css/highcharts.css') }}" media="screen">
         <link rel="stylesheet" href="{{ asset('public/components/font-awesome/css/font-awesome.css') }}" media="screen">
         <link rel="stylesheet" href="{{ asset('public/components/loaders.css/loaders.min.css') }}" media="screen">
-        <link rel="stylesheet" href="{{ asset('public/Css/main.css') }}" media="screen">
+        <link rel="stylesheet" href="{{ asset('public/css/main.css') }}" media="screen">
     @show
 
     @section ('script')
