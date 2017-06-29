@@ -24,6 +24,9 @@ class ProgramacionController extends Controller {
 		$request->flash();
 
 		$cronogramas = Cronograma::with('punto')
+                                ->whereHas('punto', function($query){
+                                    $query->whereNull('deleted_at');
+                                })
 								->where('Id_Recreopersona', $this->usuario['Recreopersona']->Id_Recreopersona)
 								->get();
 
@@ -32,7 +35,10 @@ class ProgramacionController extends Controller {
 			$qb = null;
 			$elementos = $qb;
 		} else {
-			$qb = Cronograma::with('punto', 'jornada', 'sesiones');
+			$qb = Cronograma::with('punto', 'jornada', 'sesiones')
+                ->whereHas('punto', function($query){
+                    $query->whereNull('deleted_at');
+                });
 			$qb = $this->aplicarFiltro($qb, $request);
 
 			$elementos = $qb->whereNull('deleted_at')

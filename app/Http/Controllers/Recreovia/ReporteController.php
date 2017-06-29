@@ -351,25 +351,27 @@ class ReporteController extends Controller {
 	private function cronogramasPersona($recreopersona)
 	{
 		$recreopersona = Recreopersona::with(['cronogramas' => function($query){
-												$query->whereNull('Cronogramas.deleted_at');
+												$query->whereNull('deleted_at');
 											}, 'cronogramas.jornada', 'cronogramas.punto'])->find($recreopersona);
 		$puntos = collect();
 
 		foreach ($recreopersona->cronogramas as &$cronograma)
 		{
-			$Id_Punto = $cronograma->punto['Id_Punto'];
-			$cronograma->jornada->Label = $cronograma->jornada->toString();
-			$cronograma->jornada->Code = $cronograma->jornada->getCode();
+		    if ($cronograma->punto){
+                $Id_Punto = $cronograma->punto['Id_Punto'];
+                $cronograma->jornada->Label = $cronograma->jornada->toString();
+                $cronograma->jornada->Code = $cronograma->jornada->getCode();
 
-			$exists = $puntos->search(function($item, $key) use ($Id_Punto)
-			{
-				return $item['Id_Punto'] == $Id_Punto;
-			});
+                $exists = $puntos->search(function($item, $key) use ($Id_Punto)
+                {
+                    return $item['Id_Punto'] == $Id_Punto;
+                });
 
-			if (!$exists)
-			{
-				$puntos->push($cronograma->punto);
-			}
+                if (!$exists)
+                {
+                    $puntos->push($cronograma->punto);
+                }
+            }
 		}
 
 		foreach($puntos as &$punto)
