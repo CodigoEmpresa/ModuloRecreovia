@@ -47,7 +47,7 @@
                         <label for="">&nbsp;</label><br>
                         <input type="hidden" name="_method" value="POST">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <button type="submit" class="btn btn-success"><i class="fa fa-filter"></i></button>
+                        <button type="submit" class="btn btn-success">Buscar</button>
                     </div>
                 </div>
             </div>

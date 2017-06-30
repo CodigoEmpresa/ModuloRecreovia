@@ -412,6 +412,12 @@ class SesionController extends Controller {
 			$elementos = $qb;
 		} else {
 			$qb = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'profesor.persona')
+                                ->whereHas('cronograma', function ($query) {
+                                    $query->whereNull('deleted_at')
+                                        ->whereHas('punto', function($query_inner_punto) {
+                                            $query_inner_punto->whereNull('deleted_at');
+                                        });
+                                })
 								->where('Id_Recreopersona', $this->usuario['Recreopersona']->Id_Recreopersona);
 			$qb = $this->aplicarFiltro($qb, $request);
 
@@ -447,7 +453,11 @@ class SesionController extends Controller {
 			$qb = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'profesor.persona')
 						->whereHas('cronograma', function($query)
 						{
-							$query->where('Id_Recreopersona', $this->usuario['Recreopersona']->Id_Recreopersona);
+							$query->where('Id_Recreopersona', $this->usuario['Recreopersona']->Id_Recreopersona)
+                                ->whereNull('deleted_at')
+                                ->whereHas('punto', function($query_inner_punto) {
+                                    $query_inner_punto->whereNull('deleted_at');
+                                });
 						});
 			$qb = $this->aplicarFiltro($qb, $request);
 
