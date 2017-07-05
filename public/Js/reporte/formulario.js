@@ -97,7 +97,6 @@ $(function()
                 'json'
             ).done(function(e)
             {
-                $('#alerta_ajax_ok').fadeIn();
                 $('html, body').animate({
                     scrollTop: 10
                 }, 100);

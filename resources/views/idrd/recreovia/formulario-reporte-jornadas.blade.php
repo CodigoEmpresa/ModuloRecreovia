@@ -26,12 +26,6 @@
                 </div>
             </div>
         @endif
-        <div id="alerta_ajax_ok" class="col-xs-12" style="display:none;">
-            <div class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                Datos actualizados satisfactoriamente.
-            </div>
-        </div>
         <div class="col-xs-12"><br></div>
         <div class="col-xs-12 col-md-12">
             @if(count($puntos) > 0)

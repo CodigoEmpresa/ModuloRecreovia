@@ -206,14 +206,16 @@ class ReporteController extends Controller {
 
 	public function generarInformeJornadas(GenerarInforme $request)
 	{
-		if($request->input('Id') == '0')
+	    $nuevo = $request->input('Id') == '0';
+		if($nuevo) {
 			$reporte = new Reporte;
-		else
+        } else {
 			$reporte = Reporte::find($request->input('Id'));
+        }
 
 		$dias = explode(',', $request->input('Dias'));
 		usort($dias, function($a, $b) {
-  		return strcmp($a, $b);
+  		    return strcmp($a, $b);
 		});
 
 		$reporte->Id_Punto = $request->input('Id_Punto');
@@ -244,14 +246,21 @@ class ReporteController extends Controller {
                     {
                         $profesores[$id_recreopersona]['Sesiones_Realizadas'] += 1;
                     } else {
-                        $profesores[$id_recreopersona] = [
-                            'Hora_Llegada' => null,
-                            'Hora_Salida' => null,
-                            'Sesiones_Realizadas' => 1,
-                            'Planificacion' => '',
-                            'Sistema_De_Datos' => '',
-                            'Novedades' => ''
-                        ];
+				        if ($nuevo)
+				        {
+                            $profesores[$id_recreopersona] = [
+                                'Hora_Llegada' => null,
+                                'Hora_Salida' => null,
+                                'Sesiones_Realizadas' => 1,
+                                'Planificacion' => '',
+                                'Sistema_De_Datos' => '',
+                                'Novedades' => ''
+                            ];
+                        } else {
+                            $profesores[$id_recreopersona] = [
+                                'Sesiones_Realizadas' => 1
+                            ];
+                        }
                     }
 				}
 			}
@@ -351,11 +360,13 @@ class ReporteController extends Controller {
 	private function cronogramasPersona($recreopersona)
 	{
 		$recreopersona = Recreopersona::with(['cronogramas' => function($query){
-												$query->whereNull('deleted_at');
-											}, 'cronogramas.jornada', 'cronogramas.punto'])->find($recreopersona);
+		                                        $query->with('jornada', 'punto')
+												    ->whereNull('deleted_at');
+											}])->find($recreopersona);
 		$puntos = collect();
 
-		foreach ($recreopersona->cronogramas as &$cronograma)
+
+		foreach ($recreopersona->cronogramas as $cronograma)
 		{
 		    if ($cronograma->punto){
                 $Id_Punto = $cronograma->punto['Id_Punto'];
@@ -376,7 +387,7 @@ class ReporteController extends Controller {
 
 		foreach($puntos as &$punto)
 		{
-			$punto->cronogramas = $recreopersona->cronogramas->where('Id_Punto', $punto['Id_Punto'])->toArray();
+			$punto->cronogramas = $recreopersona->cronogramas->where('Id_Punto', strval($punto['Id_Punto']))->toArray();
 		}
 
 		$recreopersona->puntos = $puntos;
