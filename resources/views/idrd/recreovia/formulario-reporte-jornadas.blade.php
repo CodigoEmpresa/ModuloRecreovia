@@ -103,7 +103,15 @@
                             <div class="col-md-12">
                                 <br>
                             </div>
-                            <div class="col-md-12 form-group">
+                            <div class="col-md-2 form-group">
+                                <label for="">Cod.</label>
+                                <p class="form-control-static">{{ $informe->getCode() }}</p>
+                            </div>
+                            <div class="col-md-2 form-group">
+                                <label for="">Gestor</label>
+                                <p class="form-control-static">{{ $informe->cronograma->gestor->persona->toFriendlyString() }}</p>
+                            </div>
+                            <div class="col-md-2 form-group">
                                 <label for="">Última actualización</label>
                                 <p class="form-control-static">{{ $informe->updated_at }}</p>
                             </div>
@@ -113,15 +121,18 @@
                                         <fieldset>
                                             <div class="col-md-12 form-group">
                                                 <label for="">Estado</label><br>
-                                                @if ($_SESSION['Usuario']['Permisos']['validar_reportes_jornadas'] && $informe['Estado'] !== 'Finalizado')
-                                                    <label class="radio-inline">
-                                                        <input type="radio" name="Estado" value="Pendiente" {{ $informe && $informe['Estado'] == 'Pendiente' ? 'checked' : '' }}> Pendiente
-                                                    </label>
-                                                    <label class="radio-inline">
-                                                        <input type="radio" name="Estado" value="Aprobado" {{ $informe && $informe['Estado'] == 'Aprobado' ? 'checked' : '' }}> Aprobado
-                                                    </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="Estado" value="Pendiente" {{ $informe && $informe['Estado'] == 'Pendiente' ? 'checked' : '' }}> Pendiente
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="Estado" value="Aprobado" {{ $informe && $informe['Estado'] == 'Aprobado' ? 'checked' : '' }}> Aprobado
+                                                </label>
+                                                @if ($_SESSION['Usuario']['Permisos']['validar_reportes_jornadas'])
                                                     <label class="radio-inline">
                                                         <input type="radio" name="Estado" value="Rechazado" {{ $informe && $informe['Estado'] == 'Rechazado' ? 'checked' : '' }}> Rechazado
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="Estado" value="Corregir" {{ $informe && $informe['Estado'] == 'Corregir' ? 'checked' : '' }}> Corregir
                                                     </label>
                                                     <label class="radio-inline">
                                                         <input type="radio" name="Estado" value="Finalizado" {{ $informe && $informe['Estado'] == 'Finalizado' ? 'checked' : '' }}> Finalizado
@@ -505,6 +516,9 @@
                                 <?php $total_participantes = $subtotal_grupo; ?>
                             </div>
                             <div class="col-md-12">
+                                <br><br>
+                            </div>
+                            <div class="col-md-12">
                                 <label for="">Asistentes (Frecuencia Relativa)</label><br>
                                 <table id="asistencias" class="display nowrap table table-bordered table-min">
                                     <thead>
@@ -694,6 +708,114 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                            </div>
+                            <div class="col-md-12"><br></div>
+                            <div class="col-md-12">
+                                <h4 class="panel-title">
+                                    PRODUCTO NO CONFORME
+                                </h4>
+                            </div>
+                            <div class="col-md-12">
+                                <?php $ultima_sesion = $sesiones->last() ?>
+                                <div class="row">
+                                    <div class="col-md-12"><br></div>
+                                    <div class="col-md-6">
+                                        <table class="table table-bordered table-min">
+                                            <thead>
+                                                <tr>
+                                                    <th rowspan="2">Requisito</th>
+                                                    <th colspan="2">Se cumple con el requisito</th>
+                                                    <th rowspan="2">Requisito</th>
+                                                    <th colspan="2">Se cumple con el requisito</th>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width:100px;">Si</th>
+                                                    <th style="width:100px;">No</th>
+                                                    <th style="width:100px;">Si</th>
+                                                    <th style="width:100px;">No</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_1'] === '1' ? 'x' : '' }}</td>
+                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_1'] === '0' ? 'x' : '' }}</td>
+                                                    <td>8</td>
+                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_8'] === '1' ? 'x' : '' }}</td>
+                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_8'] === '0' ? 'x' : '' }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_2'] === '1' ? 'x' : '' }}</td>
+                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_2'] === '0' ? 'x' : '' }}</td>
+                                                    <td>9</td>
+                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_9'] === '1' ? 'x' : '' }}</td>
+                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_9'] === '0' ? 'x' : '' }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3</td>
+                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_3'] === '1' ? 'x' : '' }}</td>
+                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_3'] === '0' ? 'x' : '' }}</td>
+                                                    <td>10</td>
+                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_10'] === '1' ? 'x' : '' }}</td>
+                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_10'] === '0' ? 'x' : '' }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>4</td>
+                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_4'] === '1' ? 'x' : '' }}</td>
+                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_4'] === '0' ? 'x' : '' }}</td>
+                                                    <td>11</td>
+                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_11'] === '1' ? 'x' : '' }}</td>
+                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_11'] === '0' ? 'x' : '' }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>5</td>
+                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_5'] === '1' ? 'x' : '' }}</td>
+                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_5'] === '0' ? 'x' : '' }}</td>
+                                                    <td>12</td>
+                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_12'] === '1' ? 'x' : '' }}</td>
+                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_12'] === '0' ? 'x' : '' }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>6</td>
+                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_6'] === '1' ? 'x' : '' }}</td>
+                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_6'] === '0' ? 'x' : '' }}</td>
+                                                    <td>13</td>
+                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_13'] === '1' ? 'x' : '' }}</td>
+                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_13'] === '0' ? 'x' : '' }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>7</td>
+                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_7'] === '1' ? 'x' : '' }}</td>
+                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_7'] === '0' ? 'x' : '' }}</td>
+                                                    <td colspan="3">TRATAMIENTOS: <br>(C) Concesión (I) Identificación de no uso</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-md-12 form-group">
+                                                <label for="">DESCRIPCIÓN DE LA NO CONFORMIDAD:</label>
+                                                <p class="form-control-static">
+                                                    {{ $ultima_sesion->productoNoConforme['Descripcion_De_La_No_Conformidad'] ? : 'Sin especificar' }}
+                                                </p>
+                                            </div>
+                                            <div class="col-md-12 form-group">
+                                                <label for="">DESCRIPCIÓN DE LA ACCIÓN TOMADA:</label>
+                                                <p class="form-control-static">
+                                                    {{ $ultima_sesion->productoNoConforme['Descripcion_De_La_Accion_Tomada'] ? : 'Sin especificar' }}
+                                                </p>
+                                            </div>
+                                            <div class="col-md-12 form-group">
+                                                <label for="">TRATAMIENTO:</label>
+                                                <p class="form-control-static">
+                                                    {{ $ultima_sesion->productoNoConforme['Tratamiento'] ? : 'Sin especificar' }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

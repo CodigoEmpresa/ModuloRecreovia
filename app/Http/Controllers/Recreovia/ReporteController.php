@@ -36,7 +36,7 @@ class ReporteController extends Controller {
 			$qb = null;
 			$elementos = $qb;
 		} else {
-			$qb = Reporte::with(['profesores', 'cronograma', 'cronograma.sesiones']);
+			$qb = Reporte::with(['profesores.persona', 'cronograma', 'cronograma.sesiones', 'cronograma.gestor.persona']);
 			$qb = $this->aplicarFiltro($qb, $request);
 
 			$elementos = $qb->whereNull('deleted_at')
@@ -116,7 +116,7 @@ class ReporteController extends Controller {
 			$qb = null;
 			$elementos = $qb;
 		} else {
-			$qb = Reporte::with(['punto', 'profesores', 'cronograma', 'cronograma.jornada', 'cronograma.sesiones'])
+			$qb = Reporte::with(['punto', 'profesores.persona', 'cronograma', 'cronograma.jornada', 'cronograma.sesiones', 'cronograma.gestor.persona'])
                             ->whereHas('cronograma', function($query)
                             {
                                 $query->whereNull('deleted_at');
@@ -348,7 +348,7 @@ class ReporteController extends Controller {
 
 	private function obtenerSesionesInforme($informe)
 	{
-		$sesiones = Sesion::with('gruposPoblacionales', 'profesor.persona', 'cronograma.gestor.persona')
+		$sesiones = Sesion::with('gruposPoblacionales', 'productoNoConforme', 'calificacionDelServicio', 'profesor.persona', 'cronograma.gestor.persona')
 							->where('Id_Cronograma', $informe['Id_Cronograma'])
 							->whereIn('Fecha', explode(',', $informe['Dias']))
 							->whereIn('Estado', ['Finalizado', 'Cancelado'])

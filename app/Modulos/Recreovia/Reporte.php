@@ -50,5 +50,10 @@ class Reporte extends Model
         return $this->cronograma->jornada->toString().' <br> Día(s) '.$this->Dias;
     }
 
+    public function getCode()
+    {
+        return 'R'.str_pad($this->Id, 5, '0', STR_PAD_LEFT);
+    }
+
     use SoftDeletes, CascadeSoftDeletes, TraitSeguridad;
 }

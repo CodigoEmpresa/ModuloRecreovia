@@ -29,6 +29,8 @@
                             <option value="Pendiente">Pendiente</option>
                             <option value="Aprobado">Aprobado</option>
                             <option value="Rechazado">Rechazado</option>
+                            <option value="Corregir">Corregir</option>
+                            <option value="Finalizado">Finalizado</option>
                         </select>
                     </div>
                     <div class="col-md-2 form-group">
@@ -63,22 +65,56 @@
                 <table class="default display no-wrap responsive table table-min table-striped" width="100%">
                     <thead>
                         <tr>
-                            <th style="width: 200px;">Punto</th>
-                            <th>Jornada</th>
-                            <th style="width: 80px;">Profesores</th>
-                            <th style="width: 80px;">Sesiones</th>
-                            <th style="width: 80px;">Estado</th>
-                            <th style="width: 100px;">U. Actualización</th>
-                            <th data-priority="2"  class="no-sort" style="width: 35px;">
-                            </th>
+                            <th class="all" style="width: 70px;">Cod.</th>
+                            <th class="all" style="width: 200px;">Punto</th>
+                            <th class="all">Jornada</th>
+                            <th class="all" style="width: 80px;">Estado</th>
+                            <th class="none" style="width: 80px;">Gestor</th>
+                            <th class="none" style="width: 80px;">Profesor(es)</th>
+                            <th class="none" style="width: 80px;">Sesiones</th>
+                            <th class="all" style="width: 100px;">U. Actualización</th>
+                            <th class="all no-sort" data-priority="2" style="width: 35px;"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($elementos as $reporte)
-                            <tr>
+                            <?php
+                                $class = '';
+
+                                switch ($reporte->Estado)
+                                {
+                                    case 'Pendiente':
+                                        $class = 'default';
+                                        break;
+                                    case 'Corregir':
+                                        $class = 'warning';
+                                        break;
+                                    case 'Aprobado':
+                                        $class = 'success';
+                                        break;
+                                    case 'Finalizado':
+                                        $class = 'info';
+                                        break;
+                                    case 'Rechazado':
+                                        $class = 'danger';
+                                        break;
+                                    default:
+                                        $class= 'default';
+                                        break;
+                                }
+                            ?>
+                            <tr class="{{ $class }}">
+                                <td>{{ $reporte->getCode() }}</td>
                                 <td>{{ $reporte->punto->toString() }}</td>
                                 <td>{!! $reporte->toString() !!}</td>
-                                <td>{{ count($reporte->profesores) }}</td>
+                                <td>{{ empty($reporte->Estado) ? 'Pendiente' : $reporte->Estado }}</td>
+                                <td>
+                                    {{ $reporte->cronograma->gestor->persona->toFriendlyString() }}
+                                </td> <td>
+                                    @foreach($reporte->profesores as $profesor)
+                                        {{ $profesor->persona->toFriendlyString() }},
+                                    @endforeach
+                                </td>
                                 <td>{{
                                         count($reporte->cronograma->sesiones
                                             ->filter(function($item) use ($reporte){
@@ -88,7 +124,6 @@
                                             })->all())
                                     }}
                                 </td>
-                                <td>{{ empty($reporte->Estado) ? 'Pendiente' : $reporte->Estado }}</td>
                                 <td>{{ $reporte->updated_at }}</td>
                                 <td>
                                     <a href="{{ url('/informes/jornadas/'.$reporte['Id'].'/editar') }}" class="pull-right btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Editar">
