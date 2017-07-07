@@ -169,6 +169,9 @@
                                 </div>
                             </div>
                             <div class="col-md-12">
+                                <br>
+                            </div>
+                            <div class="col-md-12">
                                 <h4 class="panel-title">
                                     INFORMACIÓN PROFESORES DE ACTIVIDAD FÍSICA
                                 </h4>
@@ -652,6 +655,8 @@
                                     $subtotal_participantes_f = 0;
                                     $subtotal_asistentes_m = 0;
                                     $subtotal_asistentes_f = 0;
+                                    $subtotal_m = 0;
+                                    $subtotal_f = 0;
                                     $total = 0;
                                 ?>
                                 <table class="display nowrap table table-bordered table-min">
@@ -699,7 +704,20 @@
                                             <td align="right">{{ $subtotal_asistentes_f }}</td>
                                             <td align="right">{{ $subtotal_asistentes_m + $subtotal_asistentes_f }}</td>
                                         </tr>
-                                        <tr>
+                                        <tr class="active">
+                                            @foreach($gruposPoblacionales as $grupo)
+                                                <?php
+                                                    $subtotal_m += $total_asistentes[$grupo['Id']]['M'] + $total_participantes[$grupo['Id']]['M'];
+                                                    $subtotal_f += $total_asistentes[$grupo['Id']]['F'] + $total_participantes[$grupo['Id']]['F'];
+                                                ?>
+                                                <td align="right">{{ $total_asistentes[$grupo['Id']]['M'] + $total_participantes[$grupo['Id']]['M'] }}</td>
+                                                <td align="right">{{ $total_asistentes[$grupo['Id']]['F'] + $total_participantes[$grupo['Id']]['F'] }}</td>
+                                            @endforeach
+                                            <td align="right">{{ $subtotal_m }}</td>
+                                            <td align="right">{{ $subtotal_f }}</td>
+                                            <td align="right">{{ $subtotal_m + $subtotal_f }}</td>
+                                        </tr>
+                                        <tr class="active">
                                             @foreach($gruposPoblacionales as $grupo)
                                                 <?php $total += $total_participantes[$grupo['Id']]['M'] + $total_asistentes[$grupo['Id']]['M'] + $total_participantes[$grupo['Id']]['F'] + $total_asistentes[$grupo['Id']]['F'] ?>
                                                 <td align="center" colspan="2">{{ $total_participantes[$grupo['Id']]['M'] + $total_asistentes[$grupo['Id']]['M'] + $total_participantes[$grupo['Id']]['F'] + $total_asistentes[$grupo['Id']]['F'] }}</td>
@@ -710,13 +728,13 @@
                                 </table>
                             </div>
                             <div class="col-md-12"><br></div>
+                            <?php $ultima_sesion = $sesiones->last() ?>
                             <div class="col-md-12">
                                 <h4 class="panel-title">
                                     PRODUCTO NO CONFORME
                                 </h4>
                             </div>
                             <div class="col-md-12">
-                                <?php $ultima_sesion = $sesiones->last() ?>
                                 <div class="row">
                                     <div class="col-md-12"><br></div>
                                     <div class="col-md-6">
@@ -796,24 +814,77 @@
                                     <div class="col-md-6">
                                         <div class="row">
                                             <div class="col-md-12 form-group">
-                                                <label for="">DESCRIPCIÓN DE LA NO CONFORMIDAD:</label>
+                                                <label for="">Descripción de la no conformidad:</label>
                                                 <p class="form-control-static">
                                                     {{ $ultima_sesion->productoNoConforme['Descripcion_De_La_No_Conformidad'] ? : 'Sin especificar' }}
                                                 </p>
                                             </div>
                                             <div class="col-md-12 form-group">
-                                                <label for="">DESCRIPCIÓN DE LA ACCIÓN TOMADA:</label>
+                                                <label for="">Descripción de la acción tomada:</label>
                                                 <p class="form-control-static">
                                                     {{ $ultima_sesion->productoNoConforme['Descripcion_De_La_Accion_Tomada'] ? : 'Sin especificar' }}
                                                 </p>
                                             </div>
                                             <div class="col-md-12 form-group">
-                                                <label for="">TRATAMIENTO:</label>
+                                                <label for="">Tratamiento:</label>
                                                 <p class="form-control-static">
                                                     {{ $ultima_sesion->productoNoConforme['Tratamiento'] ? : 'Sin especificar' }}
                                                 </p>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12"><br></div>
+                            <div class="col-md-12">
+                                <h4 class="panel-title">
+                                    CALIFICACIÓN DEL SERVICIO
+                                </h4>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12"><br></div>
+                                    <div class="col-md-12">
+                                        <table class="table table-min">
+                                            <tr>
+                                                <td>1. Puntualidad PAF</td>
+                                                <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Puntualidad_PAF'] }}</td>
+                                                <td>3. Escenario y Montaje</td>
+                                                <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Escenario_Y_Montaje'] }}</td>
+                                                <td>5. Variedad y Creatividad</td>
+                                                <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Variedad_Y_Creatividad'] }}</td>
+                                                <td>7. Divulgación</td>
+                                                <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Divulgacion'] }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2. Tiempo de la Sesión</td>
+                                                <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Tiempo_De_La_Sesion'] }}</td>
+                                                <td>4. Cumplimiento del Objetivo:</td>
+                                                <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Cumplimiento_Del_Objetivo'] }}</td>
+                                                <td>6. Imagen Institucional</td>
+                                                <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Imagen_Institucional'] }}</td>
+                                                <td>8. Seguridad</td>
+                                                <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Seguridad'] }}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label for="">Nombre representante de la comunidad que califica el servicio: </label>
+                                        <p class="form-control-static">
+                                            {{ $ultima_sesion->calificacionDelServicio['Nombre'] }}
+                                        </p>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label for="">Correo: </label>
+                                        <p class="form-control-static">
+                                            {{ $ultima_sesion->calificacionDelServicio['Correo'] }}
+                                        </p>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label for="">Teléfono: </label>
+                                        <p class="form-control-static">
+                                            {{ $ultima_sesion->calificacionDelServicio['Telefono'] }}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
