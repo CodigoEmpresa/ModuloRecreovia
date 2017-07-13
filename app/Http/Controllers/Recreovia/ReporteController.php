@@ -160,6 +160,7 @@ class ReporteController extends Controller {
 	public function crearInformeJornadas()
 	{
 		$recreopersona = $this->cronogramasPersona($this->usuario['Recreopersona']->Id_Recreopersona);
+
 		$gruposPoblacionales = GrupoPoblacional::all();
 
 		$formulario = [
@@ -387,7 +388,7 @@ class ReporteController extends Controller {
 
 		foreach($puntos as &$punto)
 		{
-			$punto->cronogramas = $recreopersona->cronogramas->where('Id_Punto', strval($punto['Id_Punto']))->toArray();
+			$punto->cronogramas = $recreopersona->cronogramas->where('Id_Punto', $punto['Id_Punto'])->toArray();
 		}
 
 		$recreopersona->puntos = $puntos;

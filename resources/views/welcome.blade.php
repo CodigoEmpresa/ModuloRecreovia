@@ -29,6 +29,10 @@
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<strong><i class="fa fa-info-circle" aria-hidden="true"></i> Notas de la versión</strong> <br><br>
                     <ul>
+						<li>Se solucionó el error que borraba los datos diligenciados al regenerar un informe de jornada.</li>
+						<li>Estados para los informes de jornadas</li>
+						<li>Visualización de la calificación del servicio y el producto no conforme en los informes de jornadas</li>
+						<li>--</li>
                     	<li>Ajustes de seguridad.</li>
 						<li>Nuevo estado para los reportes de jornadas (Finalizado) el cual bloquea la edición.</li>
 						<li>Nueva opción en las sesiones para permitir que el gestor sea quien asuma la ejecución de la sesión.</li>

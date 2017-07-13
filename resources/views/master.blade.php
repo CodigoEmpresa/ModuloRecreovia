@@ -65,6 +65,7 @@
 						<li class="dropdown {{ $seccion && in_array($seccion, ['Profesores', 'Jornadas', 'Puntos', 'Administrar localidades', 'Gestion global de sesiones']) ? 'active' : '' }}">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#">Administración <span class="caret"></span></a>
 							<ul class="dropdown-menu">
+								<li class="dropdown-header">Configuración</li>
 								@if($_SESSION['Usuario']['Permisos']['administrar_jornadas'])
 									<li class="{{ $seccion && $seccion == 'Jornadas' ? 'active' : '' }}">
 										<a href="{{ url('jornadas') }}">Jornadas</a>
@@ -84,6 +85,9 @@
 									<li class="{{ $seccion && $seccion == 'Administrar localidades' ? 'active' : '' }}">
 										<a href="{{ url('localidades/administrar') }}">Distribución de personal</a>
 									</li>
+								@endif
+								@if($_SESSION['Usuario']['Permisos']['gestion_global_de_sesiones'] || $_SESSION['Usuario']['Permisos']['buscador_de_sesiones'])
+									<li class="dropdown-header">Utilidades</li>
 								@endif
 								@if($_SESSION['Usuario']['Permisos']['gestion_global_de_sesiones'])
 									<li class="{{ $seccion && $seccion == 'Gestion global de sesiones' ? 'active' : '' }}">
@@ -108,11 +112,12 @@
 						<li class="dropdown {{ $seccion && in_array($seccion, ['Programación', 'Sesiones gestor']) ? 'active' : '' }}">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestores <span class="caret"></span></a>
 							<ul class="dropdown-menu">
+								<li class="dropdown-header">Sesiones</li>
 								<li class="{{ $seccion && $seccion == 'Programación' ? 'active' : '' }}">
-									<a href="{{ url('programacion') }}">Programación de sesiones</a>
+									<a href="{{ url('programacion') }}">Programación</a>
 								</li>
 								<li class="{{ $seccion && $seccion == 'Sesiones gestor' ? 'active' : '' }}">
-									<a href="{{ url('/gestores/sesiones') }}">Revisar sesiones</a>
+									<a href="{{ url('/gestores/sesiones') }}">Consulta</a>
 								</li>
 							</ul>
 						</li>
@@ -126,8 +131,9 @@
 						<li class="dropdown {{ $seccion && in_array($seccion, ['Sesiones profesor']) ? 'active' : '' }}">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#">Profesores <span class="caret"></span></a>
 							<ul class="dropdown-menu">
+								<li class="dropdown-header">Sesiones</li>
 								<li class="{{ $seccion && $seccion == 'Sesiones profesor' ? 'active' : '' }}">
-									<a href="{{ url('/profesores/sesiones') }}">Consultar sesiones</a>
+									<a href="{{ url('/profesores/sesiones') }}">Consulta</a>
 								</li>
 							</ul>
 						</li>
@@ -141,24 +147,26 @@
 						<li class="dropdown {{ $seccion && in_array($seccion, ['Revisar informes', 'Informes jornadas', 'Generar informe de actividades por punto']) ? 'active' : '' }}">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#">Informes y consultas <span class="caret"></span></a>
 							<ul class="dropdown-menu">
+								<li class="dropdown-header">Informes de jornadas</li>
 								@if ($_SESSION['Usuario']['Permisos']['validar_reportes_jornadas'])
 									<li class="{{ $seccion && $seccion == 'Revisar informes' ? 'active' : '' }}">
-										<a href="{{ url('informes/jornadas/revisar') }}">Revisar informes de jornadas</a>
+										<a href="{{ url('informes/jornadas/revisar') }}">Validar</a>
 									</li>
 								@endif
 								@if ($_SESSION['Usuario']['Permisos']['gestionar_reportes_jornadas'] && in_array('Gestor', $_SESSION['Usuario']['Roles']))
 									<li class="{{ $seccion && in_array($seccion, ['Informes jornadas', 'Generar informe de actividades por punto']) ? 'active' : '' }}">
-										<a href="{{ url('/informes/jornadas') }}">Informes jornadas</a>
+										<a href="{{ url('/informes/jornadas') }}">Consultar</a>
 									</li>
 								@endif
 								@if ($_SESSION['Usuario']['Permisos']['gestionar_reportes_jornadas'] && in_array('Profesor', $_SESSION['Usuario']['Roles']))
 									<li class="{{ $seccion && in_array($seccion, ['Informes jornadas', 'Generar informe de actividades por punto']) ? 'active' : '' }}">
-										<a href="{{ url('/informes/jornadas/profesor') }}">Informes jornadas</a>
+										<a href="{{ url('/informes/jornadas/profesor') }}">Consultar</a>
 									</li>
 								@endif
 								@if ($_SESSION['Usuario']['Permisos']['exportar_consolidado_general'])
+									<li class="dropdown-header">Consolidado general jornadas</li>
 									<li class="{{ $seccion && in_array($seccion, ['Consolidado general jornadas']) ? 'active' : '' }}">
-										<a href="{{ url('/informes/consolidado_general') }}">Consolidado general jornadas</a>
+										<a href="{{ url('/informes/consolidado_general') }}">Generar</a>
 									</li>
 								@endif
 							</ul>

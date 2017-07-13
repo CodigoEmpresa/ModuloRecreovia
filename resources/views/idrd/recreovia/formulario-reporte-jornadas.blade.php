@@ -734,7 +734,8 @@
                                     PRODUCTO NO CONFORME
                                 </h4>
                             </div>
-                            <div class="col-md-12">
+                            @if ($ultima_sesion->productoNoConforme)
+                                <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-12"><br></div>
                                     <div class="col-md-6">
@@ -835,13 +836,19 @@
                                     </div>
                                 </div>
                             </div>
+                            @else
+                                <div class="col-md-12">
+                                    No se ha registrado el formato de producto no conforme. (Sesión {{ $ultima_sesion->getCode() }})
+                                </div>
+                            @endif
                             <div class="col-md-12"><br></div>
                             <div class="col-md-12">
                                 <h4 class="panel-title">
                                     CALIFICACIÓN DEL SERVICIO
                                 </h4>
                             </div>
-                            <div class="col-md-12">
+                            @if ($ultima_sesion->calificacionDelServicio)
+                                <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-12"><br></div>
                                     <div class="col-md-12">
@@ -888,6 +895,11 @@
                                     </div>
                                 </div>
                             </div>
+                            @else
+                                <div class="col-md-12">
+                                    No se ha registrado el formato de calificación del servicio. (Sesión {{ $ultima_sesion->getCode() }})
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
