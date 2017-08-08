@@ -25,19 +25,17 @@ class BuscadorController extends Controller
 
         $qb = Punto::whereHas('sesiones', function($query) use ($fecha) {
                 $query->where('Fecha', $fecha)
-                    ->where('Estado', 'Aprobado');
+                    ->whereIn('Estado', ['Aprobado', 'Finalizado']);
             });
 
-        if($localidad == "")
-            $qb->where('Id_Localidad', '<>', '0');
-        else
+        if($localidad != "")
             $qb->where('Id_Localidad', $localidad);
 
         $puntos = $qb->get();
 
         $puntos->load(['cronogramas.sesiones' => function($query) use ($fecha) {
             $query->where('Fecha', $fecha)
-                ->where('Estado', 'Aprobado');
+                ->whereIn('Estado', ['Aprobado', 'Finalizado']);
             }
         ]);
 

@@ -729,175 +729,181 @@
                             </div>
                             <div class="col-md-12"><br></div>
                             <?php $ultima_sesion = $sesiones->last() ?>
-                            <div class="col-md-12">
-                                <h4 class="panel-title">
-                                    PRODUCTO NO CONFORME
-                                </h4>
-                            </div>
-                            @if ($ultima_sesion->productoNoConforme)
+                            @if ($ultima_sesion)
                                 <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-12"><br></div>
-                                    <div class="col-md-6">
-                                        <table class="table table-bordered table-min">
-                                            <thead>
-                                                <tr>
-                                                    <th rowspan="2">Requisito</th>
-                                                    <th colspan="2">Se cumple con el requisito</th>
-                                                    <th rowspan="2">Requisito</th>
-                                                    <th colspan="2">Se cumple con el requisito</th>
-                                                </tr>
-                                                <tr>
-                                                    <th style="width:100px;">Si</th>
-                                                    <th style="width:100px;">No</th>
-                                                    <th style="width:100px;">Si</th>
-                                                    <th style="width:100px;">No</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_1'] === '1' ? 'x' : '' }}</td>
-                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_1'] === '0' ? 'x' : '' }}</td>
-                                                    <td>8</td>
-                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_8'] === '1' ? 'x' : '' }}</td>
-                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_8'] === '0' ? 'x' : '' }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_2'] === '1' ? 'x' : '' }}</td>
-                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_2'] === '0' ? 'x' : '' }}</td>
-                                                    <td>9</td>
-                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_9'] === '1' ? 'x' : '' }}</td>
-                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_9'] === '0' ? 'x' : '' }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_3'] === '1' ? 'x' : '' }}</td>
-                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_3'] === '0' ? 'x' : '' }}</td>
-                                                    <td>10</td>
-                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_10'] === '1' ? 'x' : '' }}</td>
-                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_10'] === '0' ? 'x' : '' }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>4</td>
-                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_4'] === '1' ? 'x' : '' }}</td>
-                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_4'] === '0' ? 'x' : '' }}</td>
-                                                    <td>11</td>
-                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_11'] === '1' ? 'x' : '' }}</td>
-                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_11'] === '0' ? 'x' : '' }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>5</td>
-                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_5'] === '1' ? 'x' : '' }}</td>
-                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_5'] === '0' ? 'x' : '' }}</td>
-                                                    <td>12</td>
-                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_12'] === '1' ? 'x' : '' }}</td>
-                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_12'] === '0' ? 'x' : '' }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>6</td>
-                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_6'] === '1' ? 'x' : '' }}</td>
-                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_6'] === '0' ? 'x' : '' }}</td>
-                                                    <td>13</td>
-                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_13'] === '1' ? 'x' : '' }}</td>
-                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_13'] === '0' ? 'x' : '' }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>7</td>
-                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_7'] === '1' ? 'x' : '' }}</td>
-                                                    <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_7'] === '0' ? 'x' : '' }}</td>
-                                                    <td colspan="3">TRATAMIENTOS: <br>(C) Concesión (I) Identificación de no uso</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="row">
-                                            <div class="col-md-12 form-group">
-                                                <label for="">Descripción de la no conformidad:</label>
-                                                <p class="form-control-static">
-                                                    {{ $ultima_sesion->productoNoConforme['Descripcion_De_La_No_Conformidad'] ? : 'Sin especificar' }}
-                                                </p>
-                                            </div>
-                                            <div class="col-md-12 form-group">
-                                                <label for="">Descripción de la acción tomada:</label>
-                                                <p class="form-control-static">
-                                                    {{ $ultima_sesion->productoNoConforme['Descripcion_De_La_Accion_Tomada'] ? : 'Sin especificar' }}
-                                                </p>
-                                            </div>
-                                            <div class="col-md-12 form-group">
-                                                <label for="">Tratamiento:</label>
-                                                <p class="form-control-static">
-                                                    {{ $ultima_sesion->productoNoConforme['Tratamiento'] ? : 'Sin especificar' }}
-                                                </p>
+                                    <h4 class="panel-title">
+                                        PRODUCTO NO CONFORME
+                                    </h4>
+                                </div>
+                                @if ($ultima_sesion->productoNoConforme)
+                                    <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12"><br></div>
+                                        <div class="col-md-6">
+                                            <table class="table table-bordered table-min">
+                                                <thead>
+                                                    <tr>
+                                                        <th rowspan="2">Requisito</th>
+                                                        <th colspan="2">Se cumple con el requisito</th>
+                                                        <th rowspan="2">Requisito</th>
+                                                        <th colspan="2">Se cumple con el requisito</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="width:100px;">Si</th>
+                                                        <th style="width:100px;">No</th>
+                                                        <th style="width:100px;">Si</th>
+                                                        <th style="width:100px;">No</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_1'] === '1' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_1'] === '0' ? 'x' : '' }}</td>
+                                                        <td>8</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_8'] === '1' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_8'] === '0' ? 'x' : '' }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_2'] === '1' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_2'] === '0' ? 'x' : '' }}</td>
+                                                        <td>9</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_9'] === '1' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_9'] === '0' ? 'x' : '' }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_3'] === '1' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_3'] === '0' ? 'x' : '' }}</td>
+                                                        <td>10</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_10'] === '1' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_10'] === '0' ? 'x' : '' }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>4</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_4'] === '1' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_4'] === '0' ? 'x' : '' }}</td>
+                                                        <td>11</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_11'] === '1' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_11'] === '0' ? 'x' : '' }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>5</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_5'] === '1' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_5'] === '0' ? 'x' : '' }}</td>
+                                                        <td>12</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_12'] === '1' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_12'] === '0' ? 'x' : '' }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>6</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_6'] === '1' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_6'] === '0' ? 'x' : '' }}</td>
+                                                        <td>13</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_13'] === '1' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_13'] === '0' ? 'x' : '' }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>7</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_7'] === '1' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_7'] === '0' ? 'x' : '' }}</td>
+                                                        <td colspan="3">TRATAMIENTOS: <br>(C) Concesión (I) Identificación de no uso</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-12 form-group">
+                                                    <label for="">Descripción de la no conformidad:</label>
+                                                    <p class="form-control-static">
+                                                        {{ $ultima_sesion->productoNoConforme['Descripcion_De_La_No_Conformidad'] ? : 'Sin especificar' }}
+                                                    </p>
+                                                </div>
+                                                <div class="col-md-12 form-group">
+                                                    <label for="">Descripción de la acción tomada:</label>
+                                                    <p class="form-control-static">
+                                                        {{ $ultima_sesion->productoNoConforme['Descripcion_De_La_Accion_Tomada'] ? : 'Sin especificar' }}
+                                                    </p>
+                                                </div>
+                                                <div class="col-md-12 form-group">
+                                                    <label for="">Tratamiento:</label>
+                                                    <p class="form-control-static">
+                                                        {{ $ultima_sesion->productoNoConforme['Tratamiento'] ? : 'Sin especificar' }}
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            @else
-                                <div class="col-md-12">
-                                    No se ha registrado el formato de producto no conforme. (Sesión {{ $ultima_sesion->getCode() }})
-                                </div>
-                            @endif
-                            <div class="col-md-12"><br></div>
-                            <div class="col-md-12">
-                                <h4 class="panel-title">
-                                    CALIFICACIÓN DEL SERVICIO
-                                </h4>
-                            </div>
-                            @if ($ultima_sesion->calificacionDelServicio)
-                                <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-12"><br></div>
+                                @else
                                     <div class="col-md-12">
-                                        <table class="table table-min">
-                                            <tr>
-                                                <td>1. Puntualidad PAF</td>
-                                                <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Puntualidad_PAF'] }}</td>
-                                                <td>3. Escenario y Montaje</td>
-                                                <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Escenario_Y_Montaje'] }}</td>
-                                                <td>5. Variedad y Creatividad</td>
-                                                <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Variedad_Y_Creatividad'] }}</td>
-                                                <td>7. Divulgación</td>
-                                                <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Divulgacion'] }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2. Tiempo de la Sesión</td>
-                                                <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Tiempo_De_La_Sesion'] }}</td>
-                                                <td>4. Cumplimiento del Objetivo:</td>
-                                                <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Cumplimiento_Del_Objetivo'] }}</td>
-                                                <td>6. Imagen Institucional</td>
-                                                <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Imagen_Institucional'] }}</td>
-                                                <td>8. Seguridad</td>
-                                                <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Seguridad'] }}</td>
-                                            </tr>
-                                        </table>
+                                        No se ha registrado el formato de producto no conforme. (Sesión {{ $ultima_sesion->getCode() }})
                                     </div>
-                                    <div class="col-md-6 form-group">
-                                        <label for="">Nombre representante de la comunidad que califica el servicio: </label>
-                                        <p class="form-control-static">
-                                            {{ $ultima_sesion->calificacionDelServicio['Nombre'] }}
-                                        </p>
-                                    </div>
-                                    <div class="col-md-3 form-group">
-                                        <label for="">Correo: </label>
-                                        <p class="form-control-static">
-                                            {{ $ultima_sesion->calificacionDelServicio['Correo'] }}
-                                        </p>
-                                    </div>
-                                    <div class="col-md-3 form-group">
-                                        <label for="">Teléfono: </label>
-                                        <p class="form-control-static">
-                                            {{ $ultima_sesion->calificacionDelServicio['Telefono'] }}
-                                        </p>
+                                @endif
+                                <div class="col-md-12"><br></div>
+                                <div class="col-md-12">
+                                    <h4 class="panel-title">
+                                        CALIFICACIÓN DEL SERVICIO
+                                    </h4>
+                                </div>
+                                @if ($ultima_sesion->calificacionDelServicio)
+                                    <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12"><br></div>
+                                        <div class="col-md-12">
+                                            <table class="table table-min">
+                                                <tr>
+                                                    <td>1. Puntualidad PAF</td>
+                                                    <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Puntualidad_PAF'] }}</td>
+                                                    <td>3. Escenario y Montaje</td>
+                                                    <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Escenario_Y_Montaje'] }}</td>
+                                                    <td>5. Variedad y Creatividad</td>
+                                                    <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Variedad_Y_Creatividad'] }}</td>
+                                                    <td>7. Divulgación</td>
+                                                    <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Divulgacion'] }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2. Tiempo de la Sesión</td>
+                                                    <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Tiempo_De_La_Sesion'] }}</td>
+                                                    <td>4. Cumplimiento del Objetivo:</td>
+                                                    <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Cumplimiento_Del_Objetivo'] }}</td>
+                                                    <td>6. Imagen Institucional</td>
+                                                    <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Imagen_Institucional'] }}</td>
+                                                    <td>8. Seguridad</td>
+                                                    <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Seguridad'] }}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label for="">Nombre representante de la comunidad que califica el servicio: </label>
+                                            <p class="form-control-static">
+                                                {{ $ultima_sesion->calificacionDelServicio['Nombre'] }}
+                                            </p>
+                                        </div>
+                                        <div class="col-md-3 form-group">
+                                            <label for="">Correo: </label>
+                                            <p class="form-control-static">
+                                                {{ $ultima_sesion->calificacionDelServicio['Correo'] }}
+                                            </p>
+                                        </div>
+                                        <div class="col-md-3 form-group">
+                                            <label for="">Teléfono: </label>
+                                            <p class="form-control-static">
+                                                {{ $ultima_sesion->calificacionDelServicio['Telefono'] }}
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                                @else
+                                    <div class="col-md-12">
+                                        No se ha registrado el formato de calificación del servicio. (Sesión {{ $ultima_sesion->getCode() }})
+                                    </div>
+                                @endif
                             @else
                                 <div class="col-md-12">
-                                    No se ha registrado el formato de calificación del servicio. (Sesión {{ $ultima_sesion->getCode() }})
+                                    <h4 class="panel-title">No se han registrado sesiónes para esta jornada</h4>
                                 </div>
                             @endif
                         </div>

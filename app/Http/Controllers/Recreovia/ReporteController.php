@@ -36,14 +36,23 @@ class ReporteController extends Controller {
 			$qb = null;
 			$elementos = $qb;
 		} else {
-			$qb = Reporte::with(['profesores.persona', 'cronograma', 'cronograma.sesiones', 'cronograma.gestor.persona']);
+			$qb = Reporte::with(['punto', 'profesores.persona', 'cronograma', 'cronograma.sesiones', 'cronograma.gestor.persona']);
 			$qb = $this->aplicarFiltro($qb, $request);
 
 			$elementos = $qb->whereNull('deleted_at')
 							->whereIn('Id_Cronograma', $recreopersona->cronogramas->pluck('Id')->toArray())
+                            ->whereHas('punto', function($query){
+                                $query->whereNull('deleted_at');
+                            })
 							->orderBy('Id', 'DESC')
 							->get();
 		}
+
+		foreach ($elementos as $elemento)
+		{
+		    if($elemento->getCode() == 'R00999')
+		        dd($elemento);
+        }
 
 		$lista = [
 			'titulo' => 'Informes jornadas',
