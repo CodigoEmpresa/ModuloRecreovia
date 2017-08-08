@@ -48,12 +48,6 @@ class ReporteController extends Controller {
 							->get();
 		}
 
-		foreach ($elementos as $elemento)
-		{
-		    if($elemento->getCode() == 'R00999')
-		        dd($elemento);
-        }
-
 		$lista = [
 			'titulo' => 'Informes jornadas',
 	        'elementos' => $elementos,
