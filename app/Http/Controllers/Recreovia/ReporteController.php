@@ -67,7 +67,12 @@ class ReporteController extends Controller {
 	public function jornadas_profesor(Request $request)
 	{
 		$request->flash();
-		$recreopersona = Recreopersona::with(['reportes', 'reportes.profesores', 'reportes.cronograma', 'reportes.punto', 'reportes.cronograma.sesiones'])
+		$recreopersona = Recreopersona::with(['reportes' => function($query){
+                                        $query->with('profesores', 'cronograma', 'punto', 'cronograma.sesiones')
+                                            ->whereHas('punto', function($query_punto){
+                                                $query_punto->whereNull('deleted_at');
+                                            });
+                                    }])
 									->find($this->usuario['Recreopersona']->Id_Recreopersona);
 
 		$puntos = [];
