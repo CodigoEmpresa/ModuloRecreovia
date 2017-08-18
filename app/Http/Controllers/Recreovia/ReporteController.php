@@ -68,10 +68,10 @@ class ReporteController extends Controller {
 	{
 		$request->flash();
 		$recreopersona = Recreopersona::with(['reportes' => function($query){
-                                        $query->with('profesores', 'cronograma', 'punto', 'cronograma.sesiones')
+                                        $query->with('profesores', 'punto', 'cronograma.sesiones')
                                             ->whereHas('punto', function($query_punto){
                                                 $query_punto->whereNull('deleted_at');
-                                            });
+                                            })->orderBy('Id', 'DESC');
                                     }])
 									->find($this->usuario['Recreopersona']->Id_Recreopersona);
 
@@ -90,10 +90,14 @@ class ReporteController extends Controller {
 		} else {
 			$qb = Recreopersona::with(['reportes' => function($query) use ($request)
 								{
+								    $query->with('profesores', 'punto', 'cronograma.sesiones');
+
 									$query = $this->aplicarFiltro($query, $request);
 									$query->whereNull('Reportes.deleted_at')
-												->orderBy('Id', 'DESC');
-								}, 'reportes.profesores', 'reportes.cronograma', 'reportes.punto', 'reportes.cronograma.sesiones'])
+                                          ->whereHas('punto', function($query_punto){
+                                              $query_punto->whereNull('deleted_at');
+                                          })->orderBy('Id', 'DESC');
+								}])
 								->find($this->usuario['Recreopersona']->Id_Recreopersona);
 
 			$elementos = $qb->reportes;
