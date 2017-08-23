@@ -45,6 +45,11 @@ class Reporte extends Model
                     ->withPivot('Hora_Llegada', 'Hora_Salida', 'Sesiones_Realizadas', 'Planificacion', 'Sistema_De_Datos', 'Novedades');
     }
 
+    public function sesiones()
+    {
+        return $this->belongsToMany('App\Modulos\Recreovia\Sesion', 'ReportesSesiones', 'Id_Reporte', 'Id_Sesion');
+    }
+
     public function toString()
     {
         return $this->cronograma->jornada->toString().' <br> Día(s) '.$this->Dias;

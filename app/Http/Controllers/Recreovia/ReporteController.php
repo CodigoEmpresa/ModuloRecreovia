@@ -174,7 +174,6 @@ class ReporteController extends Controller {
 		$recreopersona = $this->cronogramasPersona($this->usuario['Recreopersona']->Id_Recreopersona);
 
 		$gruposPoblacionales = GrupoPoblacional::all();
-
 		$formulario = [
 			'titulo' => 'Generar informe de actividades por punto',
 	        'puntos' => $recreopersona->puntos,
@@ -219,6 +218,7 @@ class ReporteController extends Controller {
 
 	public function generarInformeJornadas(GenerarInforme $request)
 	{
+	    dd($request);
 	    $nuevo = $request->input('Id') == '0';
 		if($nuevo) {
 			$reporte = new Reporte;
@@ -238,7 +238,7 @@ class ReporteController extends Controller {
 		$reporte->Estado = 'Pendiente';
 		$reporte->save();
 
-		$sesiones = $this->obtenerSesionesInforme($request->all());
+		$sesiones = $this->obtenerSesionesInforme($request->input('sesion'));
 
 		if ($sesiones)
 		{
@@ -363,7 +363,7 @@ class ReporteController extends Controller {
 	{
 		$sesiones = Sesion::with('gruposPoblacionales', 'productoNoConforme', 'calificacionDelServicio', 'profesor.persona', 'cronograma.gestor.persona')
 							->where('Id_Cronograma', $informe['Id_Cronograma'])
-							->whereIn('Fecha', explode(',', $informe['Dias']))
+							->whereIn('Id', explode(',', $informe['Dias']))
 							->whereIn('Estado', ['Finalizado', 'Cancelado'])
 							->get();
 
@@ -373,15 +373,31 @@ class ReporteController extends Controller {
 	private function cronogramasPersona($recreopersona)
 	{
 		$recreopersona = Recreopersona::with(['cronogramas' => function($query){
-		                                        $query->with('jornada', 'punto')
-												    ->whereNull('deleted_at');
+		                                        $query->with(
+		                                                [
+		                                                    'jornada' => function($query_jornada){
+		                                                        $query_jornada->whereNull('deleted_at');
+                                                            },
+                                                            'punto' => function($query_punto){
+                                                                $query_punto->whereNull('deleted_at');
+                                                            },
+                                                            'sesiones' => function($query_sesiones){
+                                                                $query_sesiones->doesntHave('reportes')
+                                                                    ->whereIn('Estado', ['Finalizado', 'Cancelado'])
+                                                                    ->whereNull('deleted_at');
+                                                            }
+                                                        ])->whereHas('sesiones', function($query_sesiones){
+                                                                $query_sesiones->doesntHave('reportes')
+                                                                    ->whereIn('Estado', ['Finalizado', 'Cancelado'])
+                                                                    ->whereNull('deleted_at');
+                                                        })->whereNull('deleted_at');
 											}])->find($recreopersona);
 		$puntos = collect();
 
-
 		foreach ($recreopersona->cronogramas as $cronograma)
 		{
-		    if ($cronograma->punto){
+            if ($cronograma->punto)
+            {
                 $Id_Punto = $cronograma->punto['Id_Punto'];
                 $cronograma->jornada->Label = $cronograma->jornada->toString();
                 $cronograma->jornada->Code = $cronograma->jornada->getCode();
@@ -398,9 +414,10 @@ class ReporteController extends Controller {
             }
 		}
 
-		foreach($puntos as &$punto)
-		{
-			$punto->cronogramas = $recreopersona->cronogramas->where('Id_Punto', $punto['Id_Punto'])->toArray();
+        foreach($puntos as &$punto)
+        {
+            //strval($punto['Id_Punto']) para que funcione local.
+            $punto->cronogramas = array_values($recreopersona->cronogramas->where('Id_Punto', strval($punto['Id_Punto']))->toArray());
 		}
 
 		$recreopersona->puntos = $puntos;

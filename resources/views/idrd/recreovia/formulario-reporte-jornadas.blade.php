@@ -45,13 +45,27 @@
                                 <select name="Id_Cronograma" id="Id_Cronograma" class="form-control" data-json="{{ json_encode($puntos->toArray()) }}" data-value="{{ $informe ? $informe['Id_Cronograma'] : old('Id_Cronograma') }}" title="Seleccionar">
                                 </select>
                             </div>
-                            <div class="col-md-4 form-group {{ $errors->has('Dia') ? 'has-error' : '' }}">
+                            <!--<div class="col-md-4 form-group {{ $errors->has('Dia') ? 'has-error' : '' }}">
                                 <label for="">Día</label>
                                 <input type="text" name="Dia" class="form-control" data-role="datepicker" data-fecha-inicio="" data-fecha-fin="" data-dias="" data-fechas-importantes="{{ Festivos::create()->datesToString() }}" value="{{ $informe ? $informe['Dia'] : old('Dia') }}">
                             </div>
                             <div class="col-md-8 form-group {{ $errors->has('Dias') ? 'has-error' : '' }}">
                                 <label for="">Días seleccionados</label> <br>
                                 <input type="text" class="form-control" name="Dias" value="{{ $informe ? $informe['Dias'] : old('Dias') }}">
+                            </div>-->
+                            <div class="col-xs-12">
+                                <table id="sesiones" class="default table table-min">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:100px;">Fecha</th>
+                                            <th>Sesion</th>
+                                            <th class="no-sort" style="width:30px;"><input type="checkbox" id="check_all"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
                             </div>
                             <div class="col-xs-12">
                                 <hr>
