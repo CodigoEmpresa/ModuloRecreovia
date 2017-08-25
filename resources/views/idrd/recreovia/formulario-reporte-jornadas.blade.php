@@ -30,7 +30,7 @@
         <div class="col-xs-12 col-md-12">
             @if(count($puntos) > 0)
                 <div class="row">
-                    <form action="{{ url('informes/jornadas/generar') }}" method="post">
+                    <form id="principal" action="{{ url('informes/jornadas/generar') }}" method="post">
                         <fieldset>
                             <div class="col-md-4 form-group {{ $errors->has('Id_Punto') ? 'has-error' : '' }}">
                                 <label for="">Punto</label>
@@ -74,6 +74,7 @@
                                 <div class="col-md-12">
                                     <input type="hidden" name="_method" value="POST">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <input type="hidden" name="sesiones" value="{{ $informe ? implode(',', $informe->sesiones->pluck('Id')->toArray()) : old('sesiones') }}">
                                     <input type="hidden" name="Id" value="{{ $informe ? $informe['Id'] : 0 }}">
                                     @if ($informe['Estado'] != 'Finalizado')
                                         <input type="submit" value="{{ $informe ? 'Regenerar reporte' : 'Generar reporte' }}" id="generar" class="btn btn-primary">

@@ -193,11 +193,11 @@ class ReporteController extends Controller {
 
 	public function editarInformeJornadas(Request $request, $id)
 	{
-		$informe = Reporte::with('profesores', 'novedad', 'servicios', 'cronograma.gestor.persona')->find($id);
+		$informe = Reporte::with('profesores', 'sesiones', 'novedad', 'servicios', 'cronograma.gestor.persona')->find($id);
 		$recreopersona = $this->cronogramasPersona($informe->cronograma->gestor['Id_Recreopersona']);
 		$gruposPoblacionales = GrupoPoblacional::all();
 
-		$sesiones = $this->obtenerSesionesInforme($informe);
+		$sesiones = $this->obtenerSesionesInforme($informe->sesiones->pluck('Id')->toArray());
 
 		$formulario = [
 			'titulo' => 'Editar informe',
@@ -218,7 +218,6 @@ class ReporteController extends Controller {
 
 	public function generarInformeJornadas(GenerarInforme $request)
 	{
-	    dd($request);
 	    $nuevo = $request->input('Id') == '0';
 		if($nuevo) {
 			$reporte = new Reporte;
@@ -238,7 +237,7 @@ class ReporteController extends Controller {
 		$reporte->Estado = 'Pendiente';
 		$reporte->save();
 
-		$sesiones = $this->obtenerSesionesInforme($request->input('sesion'));
+		$sesiones = $this->obtenerSesionesInforme(explode(',', $request->input('sesiones')));
 
 		if ($sesiones)
 		{
@@ -277,6 +276,8 @@ class ReporteController extends Controller {
                     }
 				}
 			}
+
+            $reporte->sesiones()->sync($sesiones->pluck('Id')->toArray());
 		}
 
 		$reporte->profesores()->sync($profesores);
@@ -359,11 +360,10 @@ class ReporteController extends Controller {
 		return response()->json([true]);
 	}
 
-	private function obtenerSesionesInforme($informe)
+	private function obtenerSesionesInforme($sesiones)
 	{
 		$sesiones = Sesion::with('gruposPoblacionales', 'productoNoConforme', 'calificacionDelServicio', 'profesor.persona', 'cronograma.gestor.persona')
-							->where('Id_Cronograma', $informe['Id_Cronograma'])
-							->whereIn('Id', explode(',', $informe['Dias']))
+							->whereIn('Id', $sesiones)
 							->whereIn('Estado', ['Finalizado', 'Cancelado'])
 							->get();
 
@@ -382,7 +382,7 @@ class ReporteController extends Controller {
                                                                 $query_punto->whereNull('deleted_at');
                                                             },
                                                             'sesiones' => function($query_sesiones){
-                                                                $query_sesiones->doesntHave('reportes')
+                                                                $query_sesiones->with('reportes')
                                                                     ->whereIn('Estado', ['Finalizado', 'Cancelado'])
                                                                     ->whereNull('deleted_at');
                                                             }
@@ -417,7 +417,7 @@ class ReporteController extends Controller {
         foreach($puntos as &$punto)
         {
             //strval($punto['Id_Punto']) para que funcione local.
-            $punto->cronogramas = array_values($recreopersona->cronogramas->where('Id_Punto', strval($punto['Id_Punto']))->toArray());
+            $punto->cronogramas = array_values($recreopersona->cronogramas->where('Id_Punto', $punto['Id_Punto'])->toArray());
 		}
 
 		$recreopersona->puntos = $puntos;

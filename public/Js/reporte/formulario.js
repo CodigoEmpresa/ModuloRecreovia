@@ -93,13 +93,16 @@ $(function()
 
 
         var sesiones = cronograma.sesiones;
+        var sesiones_seleccionadas = $.map($('input[name="sesiones"]').val().split(','), function(v) { return +v; });
+
         tbl_sesiones.clear().draw();
 
         $.each(sesiones, function(i, e){
-            tbl_sesiones.row.add($('<tr>'+
+            var checked = $.inArray(e.Id, sesiones_seleccionadas) > -1 ? 'checked="checked"' : '';
+            tbl_sesiones.row.add($('<tr data-id="'+e.Id+'">'+
                     '<td>'+e.Fecha+'</td>'+
                     '<td>'+e.Objetivo_General+'</td>'+
-                    '<td><input type="checkbox" name="sesion[]" value="'+e.Id+'"/></td>'+
+                    '<td><input type="checkbox" name="sesion[]" value="'+e.Id+'" '+checked+'/></td>'+
                '</tr>')).draw(false);
         });
     });
@@ -152,5 +155,19 @@ $(function()
         $(this).closest('tr').remove();
         reindexarServicios();
         e.preventDefault();
+    });
+
+    $('#principal').on('submit', function(e)
+    {
+        var selected = [];
+        tbl_sesiones.rows().every(function (rowIdx, tableLoop, rowLoop) {
+            $tr = $(this.node());
+            if($tr.find('input[type="checkbox"]').is(':checked'))
+            {
+                selected.push($tr.data('id'));
+            }
+        });
+
+        $('input[name="sesiones"]').val(selected.join());
     });
 });
