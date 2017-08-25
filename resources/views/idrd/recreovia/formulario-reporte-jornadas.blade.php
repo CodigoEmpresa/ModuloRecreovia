@@ -59,6 +59,7 @@
                                         <tr>
                                             <th style="width:100px;">Fecha</th>
                                             <th>Sesion</th>
+                                            <th width="100px">Presente en</th>
                                             <th class="no-sort" style="width:30px;"><input type="checkbox" id="check_all"></th>
                                         </tr>
                                     </thead>

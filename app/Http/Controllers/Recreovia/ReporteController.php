@@ -382,12 +382,12 @@ class ReporteController extends Controller {
                                                                 $query_punto->whereNull('deleted_at');
                                                             },
                                                             'sesiones' => function($query_sesiones){
-                                                                $query_sesiones->with('reportes')
+                                                                $query_sesiones->with('reportes', 'profesor.persona')
                                                                     ->whereIn('Estado', ['Finalizado', 'Cancelado'])
                                                                     ->whereNull('deleted_at');
                                                             }
                                                         ])->whereHas('sesiones', function($query_sesiones){
-                                                                $query_sesiones->doesntHave('reportes')
+                                                                $query_sesiones->with('reportes')
                                                                     ->whereIn('Estado', ['Finalizado', 'Cancelado'])
                                                                     ->whereNull('deleted_at');
                                                         })->whereNull('deleted_at');
@@ -417,7 +417,7 @@ class ReporteController extends Controller {
         foreach($puntos as &$punto)
         {
             //strval($punto['Id_Punto']) para que funcione local.
-            $punto->cronogramas = array_values($recreopersona->cronogramas->where('Id_Punto', $punto['Id_Punto'])->toArray());
+            $punto->cronogramas = array_values($recreopersona->cronogramas->where('Id_Punto', strval($punto['Id_Punto']))->toArray());
 		}
 
 		$recreopersona->puntos = $puntos;

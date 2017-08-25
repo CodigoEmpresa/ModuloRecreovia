@@ -94,6 +94,7 @@ $(function()
 
         var sesiones = cronograma.sesiones;
         var sesiones_seleccionadas = $.map($('input[name="sesiones"]').val().split(','), function(v) { return +v; });
+        console.log(sesiones);
 
         tbl_sesiones.clear().draw();
 
@@ -101,7 +102,8 @@ $(function()
             var checked = $.inArray(e.Id, sesiones_seleccionadas) > -1 ? 'checked="checked"' : '';
             tbl_sesiones.row.add($('<tr data-id="'+e.Id+'">'+
                     '<td>'+e.Fecha+'</td>'+
-                    '<td>'+e.Objetivo_General+'</td>'+
+                    '<td>'+e.Objetivo_General+'<br>'+e.profesor.persona['Primer_Nombre']+' '+e.profesor.persona['Primer_Apellido']+'</td>'+
+                    '<td>'+e.reportes.length+' informe(s)</td>'+
                     '<td><input type="checkbox" name="sesion[]" value="'+e.Id+'" '+checked+'/></td>'+
                '</tr>')).draw(false);
         });
@@ -115,7 +117,7 @@ $(function()
         });
     });
 
-    if ($('select[name="Id_Punto"]').data('value') != '')
+    if ($('select[name="Id_Punto"]').data('value') !== '')
     {
         $('select[name="Id_Punto"]').val($('select[name="Id_Punto"]').data('value')).trigger('change');
     }
