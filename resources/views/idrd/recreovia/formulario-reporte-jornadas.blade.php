@@ -750,7 +750,7 @@
                             @if ($ultima_sesion)
                                 <div class="col-md-12">
                                     <h4 class="panel-title">
-                                        PRODUCTO NO CONFORME
+                                        PRODUCTO NO CONFORME ({{ $ultima_sesion->getCode() }})
                                     </h4>
                                 </div>
                                 @if ($ultima_sesion->productoNoConforme)
@@ -776,56 +776,56 @@
                                                 <tbody>
                                                     <tr>
                                                         <td>1</td>
-                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_1'] === '1' ? 'x' : '' }}</td>
-                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_1'] === '0' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_1'] == '1' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_1'] == '0' ? 'x' : '' }}</td>
                                                         <td>8</td>
-                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_8'] === '1' ? 'x' : '' }}</td>
-                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_8'] === '0' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_8'] == '1' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_8'] == '0' ? 'x' : '' }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>2</td>
-                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_2'] === '1' ? 'x' : '' }}</td>
-                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_2'] === '0' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_2'] == '1' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_2'] == '0' ? 'x' : '' }}</td>
                                                         <td>9</td>
-                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_9'] === '1' ? 'x' : '' }}</td>
-                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_9'] === '0' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_9'] == '1' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_9'] == '0' ? 'x' : '' }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>3</td>
-                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_3'] === '1' ? 'x' : '' }}</td>
-                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_3'] === '0' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_3'] == '1' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_3'] == '0' ? 'x' : '' }}</td>
                                                         <td>10</td>
-                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_10'] === '1' ? 'x' : '' }}</td>
-                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_10'] === '0' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_10'] == '1' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_10'] == '0' ? 'x' : '' }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>4</td>
-                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_4'] === '1' ? 'x' : '' }}</td>
-                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_4'] === '0' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_4'] == '1' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_4'] == '0' ? 'x' : '' }}</td>
                                                         <td>11</td>
-                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_11'] === '1' ? 'x' : '' }}</td>
-                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_11'] === '0' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_11'] == '1' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_11'] == '0' ? 'x' : '' }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>5</td>
-                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_5'] === '1' ? 'x' : '' }}</td>
-                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_5'] === '0' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_5'] == '1' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_5'] == '0' ? 'x' : '' }}</td>
                                                         <td>12</td>
-                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_12'] === '1' ? 'x' : '' }}</td>
-                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_12'] === '0' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_12'] == '1' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_12'] == '0' ? 'x' : '' }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>6</td>
-                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_6'] === '1' ? 'x' : '' }}</td>
-                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_6'] === '0' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_6'] == '1' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_6'] == '0' ? 'x' : '' }}</td>
                                                         <td>13</td>
-                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_13'] === '1' ? 'x' : '' }}</td>
-                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_13'] === '0' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_13'] == '1' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_13'] == '0' ? 'x' : '' }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>7</td>
-                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_7'] === '1' ? 'x' : '' }}</td>
-                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_7'] === '0' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_7'] == '1' ? 'x' : '' }}</td>
+                                                        <td align="center">{{ $ultima_sesion->productoNoConforme['Requisito_7'] == '0' ? 'x' : '' }}</td>
                                                         <td colspan="3">TRATAMIENTOS: <br>(C) Concesión (I) Identificación de no uso</td>
                                                     </tr>
                                                 </tbody>
@@ -874,23 +874,23 @@
                                             <table class="table table-min">
                                                 <tr>
                                                     <td>1. Puntualidad PAF</td>
-                                                    <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Puntualidad_PAF'] }}</td>
+                                                    <td style="width:30px;"><strong>{{ $ultima_sesion->calificacionDelServicio['Puntualidad_PAF'] }}</strong></td>
                                                     <td>3. Escenario y Montaje</td>
-                                                    <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Escenario_Y_Montaje'] }}</td>
+                                                    <td style="width:30px;"><strong>{{ $ultima_sesion->calificacionDelServicio['Escenario_Y_Montaje'] }}</strong></td>
                                                     <td>5. Variedad y Creatividad</td>
-                                                    <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Variedad_Y_Creatividad'] }}</td>
+                                                    <td style="width:30px;"><strong>{{ $ultima_sesion->calificacionDelServicio['Variedad_Y_Creatividad'] }}</strong></td>
                                                     <td>7. Divulgación</td>
-                                                    <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Divulgacion'] }}</td>
+                                                    <td style="width:30px;"><strong>{{ $ultima_sesion->calificacionDelServicio['Divulgacion'] }}</strong></td>
                                                 </tr>
                                                 <tr>
                                                     <td>2. Tiempo de la Sesión</td>
-                                                    <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Tiempo_De_La_Sesion'] }}</td>
+                                                    <td style="width:30px;"><strong>{{ $ultima_sesion->calificacionDelServicio['Tiempo_De_La_Sesion'] }}</strong></td>
                                                     <td>4. Cumplimiento del Objetivo:</td>
-                                                    <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Cumplimiento_Del_Objetivo'] }}</td>
+                                                    <td style="width:30px;"><strong>{{ $ultima_sesion->calificacionDelServicio['Cumplimiento_Del_Objetivo'] }}</strong></td>
                                                     <td>6. Imagen Institucional</td>
-                                                    <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Imagen_Institucional'] }}</td>
+                                                    <td style="width:30px;"><strong>{{ $ultima_sesion->calificacionDelServicio['Imagen_Institucional'] }}</strong></td>
                                                     <td>8. Seguridad</td>
-                                                    <td style="width:30px;">{{ $ultima_sesion->calificacionDelServicio['Seguridad'] }}</td>
+                                                    <td style="width:30px;"><strong>{{ $ultima_sesion->calificacionDelServicio['Seguridad'] }}</strong></td>
                                                 </tr>
                                             </table>
                                         </div>

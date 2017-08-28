@@ -417,7 +417,7 @@ class ReporteController extends Controller {
         foreach($puntos as &$punto)
         {
             //strval($punto['Id_Punto']) para que funcione local.
-            $punto->cronogramas = array_values($recreopersona->cronogramas->where('Id_Punto', strval($punto['Id_Punto']))->toArray());
+            $punto->cronogramas = array_values($recreopersona->cronogramas->where('Id_Punto', +$punto['Id_Punto'])->toArray());
 		}
 
 		$recreopersona->puntos = $puntos;

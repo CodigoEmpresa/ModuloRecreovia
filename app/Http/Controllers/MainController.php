@@ -42,10 +42,14 @@ class MainController extends Controller {
 			$query->where('Id_Recreopersona', $this->Usuario['Recreopersona']->Id_Recreopersona);
 		}
 
-		$sesiones = $query->whereNull('deleted_at')
-			->whereYear('Fecha', '=', date('Y'))
-			->orderBy('Id', 'DESC')
-			->get();
+        if (in_array('Profesor', $_SESSION['Usuario']['Roles']) || in_array('Profesor', $_SESSION['Usuario']['Roles'])){
+            $sesiones = $query->whereNull('deleted_at')
+                ->whereYear('Fecha', '=', date('Y'))
+                ->orderBy('Id', 'DESC')
+                ->get();
+        } else {
+            $sesiones = null;
+        }
 
 		$data = [
 			'sesiones' => $sesiones,
