@@ -169,7 +169,7 @@ class ProgramacionController extends Controller {
 		$recreopersona->puntos = $puntos;
 
 		$formulario = [
-			'titulo' => 'Crear ó editar cronograma de sesiones',
+			'titulo' => 'Crear ó editar cronogramas de sesiones',
 			'recreopersona' => $recreopersona,
 	        'cronograma' => $cronograma,
 	        'status' => session('status')
@@ -251,6 +251,51 @@ class ProgramacionController extends Controller {
 
 		return response()->json($profesores_disponibles);
 	}
+
+	public function ajustar()
+    {
+        $formulario = [
+            'titulo' => 'Agrupar ó transferir cronogramas de sesiones',
+            'status' => session('status')
+        ];
+
+        $datos = [
+            'seccion' => 'Agrupar y transferir cronogramas',
+            'formulario' => view('idrd.recreovia.formulario-cronograma-ajustar', $formulario)
+        ];
+
+        return view('form', $datos);
+    }
+
+    public function buscar(Request $request)
+    {
+        $codigos = collect(array_filter(explode(',', $request->input('codigos'))));
+        $codigos_preparados = $codigos->map(function($item, $key){
+            return sprintf("'%s'", strtoupper(trim($item)));
+        });
+
+        if(!$codigos_preparados->isEmpty())
+        {
+            $elementos = Cronograma::with('punto', 'jornada', 'sesiones', 'gestor.persona')
+                ->whereRaw('concat("C", LPAD(Id, 5, "0")) IN ('.$codigos_preparados->implode(',').')')
+                ->whereNull('deleted_at')
+                ->orderBy('Id', 'DESC')
+                ->get();
+
+            foreach ($elementos as &$cronograma)
+            {
+                $cronograma->Code = $cronograma->getCode();
+                $cronograma->Label = $cronograma->toString();
+                $cronograma->punto->Label = $cronograma->punto->toString();
+                $cronograma->gestor->persona->Label = $cronograma->gestor->persona->toString();
+                $cronograma->jornada->Label = $cronograma->jornada->toString();
+            }
+        } else {
+            $elementos = null;
+        }
+
+        return response()->json($elementos);
+    }
 
 	private function obtenerPuntosLocalidades($localidades)
 	{

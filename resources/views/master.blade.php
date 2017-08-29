@@ -60,9 +60,10 @@
 						$_SESSION['Usuario']['Permisos']['administrar_localidades'] ||
 						$_SESSION['Usuario']['Permisos']['administrar_jornadas'] ||
 						$_SESSION['Usuario']['Permisos']['gestion_global_de_sesiones'] ||
-						$_SESSION['Usuario']['Permisos']['buscador_de_sesiones']
+						$_SESSION['Usuario']['Permisos']['buscador_de_sesiones'] ||
+						$_SESSION['Usuario']['Permisos']['ajustar_cronogramas']
 					)
-						<li class="dropdown {{ $seccion && in_array($seccion, ['Profesores', 'Jornadas', 'Puntos', 'Administrar localidades', 'Gestion global de sesiones']) ? 'active' : '' }}">
+						<li class="dropdown {{ $seccion && in_array($seccion, ['Profesores', 'Jornadas', 'Puntos', 'Administrar localidades', 'Gestion global de sesiones', 'Buscador de sesiones', 'Agrupar y transferir cronogramas']) ? 'active' : '' }}">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#">Administración <span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li class="dropdown-header">Configuración</li>
@@ -78,7 +79,7 @@
 								@endif
 								@if($_SESSION['Usuario']['Permisos']['editar_profesores'])
 									<li class="{{ $seccion && $seccion == 'Profesores' ? 'active' : '' }}">
-										<a href="{{ url('profesores') }}">Profesores y Gestores</a>
+										<a href="{{ url('profesores') }}">Profesores y gestores</a>
 									</li>
 								@endif
 								@if($_SESSION['Usuario']['Permisos']['administrar_localidades'])
@@ -97,6 +98,11 @@
 								@if($_SESSION['Usuario']['Permisos']['buscador_de_sesiones'])
 									<li class="{{ $seccion && $seccion == 'Buscador de sesiones' ? 'active' : '' }}">
 										<a href="{{ url('sesiones/buscar') }}">Buscador de sesiones</a>
+									</li>
+								@endif
+								@if($_SESSION['Usuario']['Permisos']['ajustar_cronogramas'])
+									<li class="{{ $seccion && $seccion == 'Agrupar y transferir cronogramas' ? 'active' : '' }}">
+										<a href="{{ url('programacion/ajustar') }}">Agrupar y transferir cronogramas</a>
 									</li>
 								@endif
 							</ul>

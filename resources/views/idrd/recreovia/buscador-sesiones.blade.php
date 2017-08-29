@@ -22,15 +22,17 @@
         <form action="{{ url('/sesiones/buscar') }}" method="post">
             <div class="col-md-12">
                 <div class="row">
-                    <div class="col-md-11 form-group">
+                    <div class="col-md-12 form-group">
                         <label for="">Buscar</label>
-                        <input type="text" name="codigos" class="form-control" value="{{ old('codigos') }}" placeholder="Códigos separados por ( , )">
-                    </div>
-                    <div class="col-md-1 form-group">
-                        <label for="">&nbsp;</label><br>
-                        <input type="hidden" name="_method" value="POST">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <button type="submit" class="btn btn-success"><i class="fa fa-filter"></i></button>
+
+                        <div class="input-group">
+                            <input type="text" name="codigos" class="form-control" value="{{ old('codigos') }}" placeholder="Códigos separados por ( , )">
+                            <div class="input-group-btn">
+                                <input type="hidden" name="_method" value="POST">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <button type="submit" class="btn btn-success">Buscar</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
