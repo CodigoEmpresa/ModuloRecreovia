@@ -64,6 +64,7 @@ Route::group(['middleware' => ['web']], function()
 	Route::post('/programacion/disponibilidad', 'Recreovia\ProgramacionController@disponibilidad');
 	Route::get('/programacion/ajustar', 'Recreovia\ProgramacionController@ajustar');
     Route::post('/programacion/buscar', 'Recreovia\ProgramacionController@buscar');
+    Route::post('/programacion/agrupar', 'Recreovia\ProgramacionController@agrupar');
 
 	Route::any('/sesiones/administrar', 'Recreovia\ProgramacionController@todos');
 	Route::any('/sesiones/buscar', 'Recreovia\SesionController@buscar');

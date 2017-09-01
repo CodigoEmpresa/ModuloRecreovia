@@ -5,6 +5,8 @@ $(function()
     $('.buscador-cronogramas').on('blur', function(e) {
         var $this = $(this);
         var $target = $($(this).data('target')).DataTable();
+        var $input = $($(this).data('input')).val('');
+        var $field = $(this).data('field');
 
         var request = $.post(
                 URL+'/buscar',
@@ -17,6 +19,7 @@ $(function()
         request.done(function(data)
         {
             $target.clear().draw();
+
             if(data)
             {
                 $.each(data, function(i, cronograma)
@@ -31,6 +34,18 @@ $(function()
                     $target.rows.add($tr).draw(false);
                 });
             }
+
+            var ids = [];
+            var values = $this.val().split(',');
+
+            $.each(values, function(i, e)
+            {
+                var numb = e.match(/\d/g);
+                numb = numb.join('');
+                ids.push(+numb);
+            });
+
+            $input.val(ids.join(','));
         });
 
         request.fail(function(jqXHR, textStatus, error) {

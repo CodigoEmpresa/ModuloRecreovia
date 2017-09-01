@@ -158,6 +158,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\FestivosServiceProvider::class,
+        App\Providers\ValidarArregloIdServiceProvider::class,
         Idrd\Usuarios\UsuariosServiceProvider::class,
         Idrd\Parques\ParquesServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Recreovia;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AgruparCronogramas;
 use App\Modulos\Recreovia\Cronograma;
 use App\Modulos\Recreovia\Recreopersona;
 use App\Modulos\Recreovia\Sesion;
@@ -265,6 +266,14 @@ class ProgramacionController extends Controller {
         ];
 
         return view('form', $datos);
+    }
+
+    public function agrupar(AgruparCronogramas $request)
+    {
+        $sesiones = Sesion::whereIn('Id_Cronograma', explode($request->input('cronogramas')));
+        $destino = Cronograma::with('sesiones')->find($request->input('codigo'));
+
+
     }
 
     public function buscar(Request $request)
