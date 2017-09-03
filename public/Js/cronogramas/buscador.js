@@ -41,8 +41,12 @@ $(function()
             $.each(values, function(i, e)
             {
                 var numb = e.match(/\d/g);
-                numb = numb.join('');
-                ids.push(+numb);
+                if(numb)
+                    numb = +(numb.join(''));
+                else
+                    numb = "";
+
+                ids.push(numb);
             });
 
             $input.val(ids.join(','));

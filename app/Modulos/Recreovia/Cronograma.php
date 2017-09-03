@@ -46,6 +46,21 @@ class Cronograma extends Model
     	return $this->belongsTo('App\Modulos\Recreovia\Punto', 'Id_Punto');
     }
 
+    public function historialSesiones()
+    {
+        return $this->belongsToMany('App\Modulos\Recreovia\Sesion', 'HistorialCronogramasSesiones', 'Id_Cronograma', 'Id_Sesion');
+    }
+
+    public function historialReportes()
+    {
+        return $this->belongsToMany('App\Modulos\Recreovia\Reporte', 'HistorialCronogramasReportes', 'Id_Cronograma', 'Id_Reporte');
+    }
+
+    public function historialGestores()
+    {
+        return $this->belongsToMany('App\Modulos\Recreovia\Recreopersona', 'HistorialCronogramasGestores', 'Id_Cronograma', 'Id_Recreopersona');
+    }
+
     public function toString()
     {
         return 'Cronograma de sesiones desde '.$this->Desde.' hasta '.$this->Hasta;

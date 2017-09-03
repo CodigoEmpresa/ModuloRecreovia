@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Recreovia;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AgruparCronogramas;
+use App\Http\Requests\AgruparYTransferirCronogramas;
 use App\Modulos\Recreovia\Cronograma;
 use App\Modulos\Recreovia\Recreopersona;
+use App\Modulos\Recreovia\Reporte;
 use App\Modulos\Recreovia\Sesion;
 use App\Modulos\Recreovia\Punto;
 use App\Modulos\Recreovia\Jornada;
@@ -268,12 +269,59 @@ class ProgramacionController extends Controller {
         return view('form', $datos);
     }
 
-    public function agrupar(AgruparCronogramas $request)
+    public function procesarAjuste(AgruparYTransferirCronogramas $request)
     {
-        $sesiones = Sesion::whereIn('Id_Cronograma', explode($request->input('cronogramas')));
-        $destino = Cronograma::with('sesiones')->find($request->input('codigo'));
+        $sesiones = Sesion::with('cronograma')->whereIn('Id_Cronograma', explode(',', $request->input('cronogramas')))->get();
+        $reportes = Reporte::with('cronograma')->whereIn('Id_Cronograma', explode(',', $request->input('cronogramas')))->get();
+        $cronogramas = Cronograma::with('gestor')->whereIn('Id', explode(',', $request->input('cronogramas')))->get();
 
+        switch ($request->input('operacion'))
+        {
+            case 'agrupar':
+                $destino = Cronograma::with('sesiones')->find($request->input('codigo'));
 
+                foreach ($sesiones as $sesion)
+                {
+                    if ($sesion['Id_Cronograma'] != $destino['Id'])
+                    {
+                        $sesion->historialCronogramas()->attach($sesion->cronograma);
+                        $sesion['Id_Cronograma'] = $destino['Id'];
+                        $sesion->save();
+                    }
+                }
+
+                foreach ($reportes as $reporte)
+                {
+                    if ($reporte['Id_Cronograma'] != $destino['Id'])
+                    {
+                        $reporte->historialCronogramas()->attach($reporte->cronograma);
+                        $reporte['Id_Cronograma'] = $destino['Id'];
+                        $reporte->save();
+                    }
+                }
+
+                foreach ($cronogramas as $cronograma)
+                {
+                    if ($cronograma['Id'] != $destino['Id'])
+                    {
+                        $cronograma->delete();
+                    }
+                }
+                break;
+            case 'transferir':
+                $destino = Recreopersona::find($request->input('codigo'));
+
+                foreach ($cronogramas as $cronograma)
+                {
+                    $cronograma->historialGestores()->attach($cronograma->gestor);
+                    $cronograma['Id_Recreopersona'] = $destino['Id_Recreopersona'];
+                    $cronograma->save();
+                }
+                break;
+        }
+
+        return redirect('/programacion/ajustar')
+                    ->with('status', 'success');
     }
 
     public function buscar(Request $request)

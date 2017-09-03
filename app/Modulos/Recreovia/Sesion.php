@@ -56,6 +56,11 @@ class Sesion extends Model
         return $this->belongsToMany('App\Modulos\Recreovia\Reporte', 'ReportesSesiones', 'Id_Sesion', 'Id_Reporte');
     }
 
+    public function historialCronogramas()
+    {
+        return $this->belongsToMany('App\Modulos\Recreovia\Cronograma', 'HistorialCronogramasSesiones', 'Id_Sesion', 'Id_Cronograma');
+    }
+
     public function toString()
     {
         return $this->Objetivo_General.' programada para el dia '.$this->Fecha.' de '.$this->Inicio.' a '.$this->Fin;

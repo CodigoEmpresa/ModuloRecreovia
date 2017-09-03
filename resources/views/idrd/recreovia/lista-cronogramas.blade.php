@@ -27,7 +27,7 @@
                     </div>
                     <div class="col-md-2 form-group">
                         <label for="">Jornada</label>
-                        <select name="jornada" id="jornada" title="Estado" class="form-control" data-value="{{ old('jornada') }}">
+                        <select name="jornada" id="jornada" title="Jornada" class="form-control" data-value="{{ old('jornada') }}">
                             <option value="Todos">Todos</option>
                             @foreach($jornadas as $jornada)
                                 <option value="{{ $jornada['Id_Jornada'] }}">{{ $jornada->toString() }}</option>

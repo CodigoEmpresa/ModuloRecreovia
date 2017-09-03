@@ -62,9 +62,10 @@ Route::group(['middleware' => ['web']], function()
 	Route::get('/programacion/{id_cronograma}/eliminar', 'Recreovia\ProgramacionController@eliminar');
 	Route::post('/programacion/procesar', 'Recreovia\ProgramacionController@procesar');
 	Route::post('/programacion/disponibilidad', 'Recreovia\ProgramacionController@disponibilidad');
-	Route::get('/programacion/ajustar', 'Recreovia\ProgramacionController@ajustar');
     Route::post('/programacion/buscar', 'Recreovia\ProgramacionController@buscar');
-    Route::post('/programacion/agrupar', 'Recreovia\ProgramacionController@agrupar');
+
+    Route::get('/programacion/ajustar', 'Recreovia\ProgramacionController@ajustar');
+    Route::post('/programacion/ajustar', 'Recreovia\ProgramacionController@procesarAjuste');
 
 	Route::any('/sesiones/administrar', 'Recreovia\ProgramacionController@todos');
 	Route::any('/sesiones/buscar', 'Recreovia\SesionController@buscar');

@@ -46,28 +46,35 @@
         <div class="col-xs-12 col-md-12">
             <div class="row">
                 <div class="col-md-12">
-                    <h5>Agrupar cronogramas</h5>
+                    <h5>Agrupar y transferir cronogramas</h5>
                 </div>
                 <div class="col-md-12">
                     <br>
                 </div>
                 <div class="col-md-12">
-                    <form action="{{ url('/programacion/agrupar') }}" id="programacion" method="post">
+                    <form action="{{ url('/programacion/ajustar') }}" id="programacion" method="post">
                         <div class="row">
-                            <div class="col-md-9 form-group {{ $errors->has('cronogramas_origen') || $errors->has('cronogramas') ? 'has-error' : '' }}">
+                            <div class="col-md-6 form-group {{ $errors->has('cronogramas_origen') || $errors->has('cronogramas') ? 'has-error' : '' }}">
                                 <label for="">Cronogramas</label>
                                 <input type="text" name="cronogramas_origen" class="form-control buscador-cronogramas" value="{{ old('cronogramas_origen') }}" data-target="#table_cronogramas" data-input="#cronogramas" data-field="Id" placeholder="Códigos separados por ( , )">
                             </div>
+                            <div class="col-md-3 form-group {{ $errors->has('operacion') ? 'has-error' : '' }}">
+                                <label for="">Operación</label>
+                                <select name="operacion" id="operacion" title="Seleccionar" class="form-control" data-value="{{ old('operacion') }}">
+                                    <option value="agrupar">Agrupar en cronograma:</option>
+                                    <option value="transferir">Transferir a gestor:</option>
+                                </select>
+                            </div>
                             <div class="col-md-3 form-group {{ $errors->has('codigo_destino') || $errors->has('codigo') ? 'has-error' : '' }}">
-                                <label for="">Cronograma de destino</label>
-                                <input type="text" name="codigo_destino" class="form-control" placeholder="Códigos" value="{{ old('codigo_destino') }}">
+                                <label for="">Cronograma o Usuario de destino</label>
+                                <input type="text" name="codigo_destino" class="form-control" placeholder="Código" value="{{ old('codigo_destino') }}">
                             </div>
                             <div class="col-md-12">
                                 <input type="hidden" name="cronogramas" value="{{ old('cronogramas') }}" id="cronogramas">
                                 <input type="hidden" name="codigo" value="{{ old('codigo') }}" id="codigo">
                                 <input type="hidden" name="_method" value="POST">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <button class="btn btn-primary" type="submit">Agrupar</button>
+                                <button class="btn btn-primary" type="submit">Aceptar</button>
                             </div>
                             <div class="col-md-12">
                                 <br>

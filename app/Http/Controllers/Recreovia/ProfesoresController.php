@@ -25,7 +25,7 @@ class ProfesoresController extends Controller {
 	public function index()
 	{
 		$elementos = Persona::has('recreopersona')
-							->with('recreopersona', 'recreopersona.cronogramas', 'recreopersona.sesiones', 'recreopersona.localidades')
+							->with('recreopersona')
 							->orderBy('Cedula', 'ASC')
 							->get();
 

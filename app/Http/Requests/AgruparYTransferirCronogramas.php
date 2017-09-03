@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class AgruparCronogramas extends Request
+class AgruparYTransferirCronogramas extends Request
 {
 
     function __construct(){
@@ -28,10 +28,25 @@ class AgruparCronogramas extends Request
      */
     public function rules()
     {
-        return [
+        $rules = [
+            'operacion' => 'required',
             'cronogramas' => 'required|exists_multiple:Cronogramas,Id',
-            'codigo' => 'required|exists:Cronogramas,Id'
         ];
+
+        switch ($this->input('operacion'))
+        {
+            case 'transferir':
+                $rules['codigo'] = 'required|exists:Recreopersonas,Id_Recreopersona';
+                break;
+            case 'agrupar':
+                $rules['codigo'] = 'required|exists:Cronogramas,Id';
+                break;
+            default:
+                $rules['codigo'] = 'required';
+                break;
+        }
+
+        return $rules;
     }
 
     public function messages()
@@ -39,8 +54,8 @@ class AgruparCronogramas extends Request
         return [
             'cronogramas.required' => 'Debe ingresar los cronogramas que seran agrupados',
             'cronogramas.exist_multiple' => 'Alguno de los cronogramas ingresados no existe',
-            'codigo.required' => 'El cronograma de destino es requerido',
-            'codigo.exists' => 'El cronograma de destino no existe'
+            'codigo.required' => 'El código de destino es requerido',
+            'codigo.exists' => 'El código de destino no existe'
         ];
     }
 }

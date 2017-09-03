@@ -100,9 +100,10 @@ $(function()
 
         $.each(sesiones, function(i, e){
             var checked = $.inArray(e.Id, sesiones_seleccionadas) > -1 ? 'checked="checked"' : '';
+            var profesor = e.profesor ? e.profesor.persona['Primer_Nombre']+' '+e.profesor.persona['Primer_Apellido'] : 'Sin profesor asignado';
             tbl_sesiones.row.add($('<tr data-id="'+e.Id+'">'+
                     '<td>'+e.Fecha+'</td>'+
-                    '<td>'+e.Objetivo_General+'<br>'+e.profesor.persona['Primer_Nombre']+' '+e.profesor.persona['Primer_Apellido']+'</td>'+
+                    '<td>'+e.Objetivo_General+'<br>'+profesor+'</td>'+
                     '<td>'+e.reportes.length+' informe(s)</td>'+
                     '<td><input type="checkbox" name="sesion[]" value="'+e.Id+'" '+checked+'/></td>'+
                '</tr>')).draw(false);

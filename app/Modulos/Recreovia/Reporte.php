@@ -50,6 +50,11 @@ class Reporte extends Model
         return $this->belongsToMany('App\Modulos\Recreovia\Sesion', 'ReportesSesiones', 'Id_Reporte', 'Id_Sesion');
     }
 
+    public function historialCronogramas()
+    {
+        return $this->belongsToMany('App\Modulos\Recreovia\Cronograma', 'HistorialCronogramasReportes', 'Id_Reporte', 'Id_Cronograma');
+    }
+
     public function toString()
     {
         return $this->cronograma->jornada->toString().' <br> Día(s) '.$this->Dias;

@@ -46,6 +46,11 @@ class Recreopersona extends Model
 		return $this->belognsToMany('App\Modulos\Recreovia\Sesion', 'Sesiones_Acompanantes', 'Id_Recreopersona', 'Id_Sesion');
 	}
 
+    public function historialCronogramas()
+    {
+        return $this->belongsToMany('App\Modulos\Recreovia\Cronograma', 'HistorialCronogramasGestores', 'Id_Recreopersona', 'Id_Cronograma');
+    }
+
     public function reportes()
     {
         return $this->belongsToMany('App\Modulos\Recreovia\Reporte', 'ReportesProfesores', 'Id_Profesor', 'Id_Reporte')
