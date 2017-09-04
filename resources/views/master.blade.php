@@ -178,6 +178,9 @@
 							</ul>
 						</li>
 					@endif
+						<li>
+							<a target="_blank" href="{{ url('/buscador') }}">Buscador</a>
+						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="http://www.idrd.gov.co/sitio/idrd/" target="_blank">I.D.R.D</a></li>

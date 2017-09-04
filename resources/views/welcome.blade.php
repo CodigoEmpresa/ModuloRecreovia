@@ -29,15 +29,14 @@
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<strong><i class="fa fa-info-circle" aria-hidden="true"></i> Notas de la versión</strong> <br><br>
                     <ul>
+						<li>Se modificó el formulario del informe de jornadas para habilitar la opción de generarlo por sesiones.</li>
+						<li>Se arregló el error por el cual no se cargaba el producto no conforme en los informes de jornadas.</li>
+						<li>Se deshabilitó el cambio de estado para los informes de jornadas a los profesores.</li>
+						<li>Se creó una funcionalidad para unificar y transferir cronogramas de sesiones.</li>
+						<li>--</li>
 						<li>Se solucionó el error que borraba los datos diligenciados al regenerar un informe de jornada.</li>
 						<li>Estados para los informes de jornadas</li>
 						<li>Visualización de la calificación del servicio y el producto no conforme en los informes de jornadas</li>
-						<li>--</li>
-                    	<li>Ajustes de seguridad.</li>
-						<li>Nuevo estado para los reportes de jornadas (Finalizado) el cual bloquea la edición.</li>
-						<li>Nueva opción en las sesiones para permitir que el gestor sea quien asuma la ejecución de la sesión.</li>
-						<li>Se agregó filtro por localidad al buscador de informes de jornadas.</li>
-                    	<li>Se creó un buscador público de sesiones. <a href="https://www.idrd.gov.co/SIM/ModuloRecreovia/buscador" target="_blank">www.idrd.gov.co/SIM/ModuloRecreovia/buscador</a></li>
                     </ul>
 	            </div>
 	        </div>
