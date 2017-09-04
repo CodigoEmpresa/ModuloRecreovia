@@ -261,7 +261,7 @@
 											<div class="col-md-12 form-group">
 												<div class="checkbox">
 													<label>
-														<input name="Asumida_Por_El_Gestor" value="1" type="checkbox" {{ $sesion && $sesion['Asumida_Por_El_Gestor'] ? 'checked' : '' }}> La sesión es asumida por el gestor.
+														<input name="Asumida_Por_El_Gestor" value="{{ $sesion->cronograma['Id_Recreopersona'] }}" type="checkbox" {{ $sesion && $sesion['Asumida_Por_El_Gestor'] ? 'checked' : '' }}> La sesión es asumida por el gestor.
 													</label>
 												</div>
 											</div>

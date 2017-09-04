@@ -65,8 +65,11 @@ $(function(e)
 	var refrescar_acompanantes = function()
 	{
 		var acompanantes = $('select[name="Acompanantes[]"]').attr('data-value');
-		$('select[name="Acompanantes[]"]').selectpicker('val', acompanantes.split(','));
-		$('select[name="Acompanantes[]"]').selectpicker('refresh');
+		if (acompanantes)
+		{
+			$('select[name="Acompanantes[]"]').selectpicker('val', acompanantes.split(','));
+			$('select[name="Acompanantes[]"]').selectpicker('refresh');
+        }
 	}
 
 	$('#sesiones').DataTable({

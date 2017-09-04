@@ -249,7 +249,7 @@ class ReporteController extends Controller {
 				{
 				    if($sesion['Asumida_Por_El_Gestor'])
                     {
-                        $id_recreopersona = $sesion->cronograma['Id_Recreopersona'];
+                        $id_recreopersona = $sesion['Asumida_Por_El_Gestor'];
                     } else {
 				        $id_recreopersona = $sesion['Id_Recreopersona'];
                     }
