@@ -28,7 +28,17 @@ class ReporteController extends Controller {
 
 	public function jornadas(Request $request)
 	{
-		$recreopersona = $this->cronogramasPersona($this->usuario['Recreopersona']->Id_Recreopersona);
+		$puntos = $this->cronogramasPersona($this->usuario['Recreopersona']->Id_Recreopersona);
+		$cronogramas = [];
+
+		foreach ($puntos as $punto)
+        {
+            foreach ($punto->cronogramas as $cronograma)
+            {
+                if(!in_array($cronograma['Id'], $cronogramas)) $cronogramas[] = $cronograma['Id'];
+            }
+        }
+
 		$request->flash();
 
 		if ($request->isMethod('get'))
@@ -40,7 +50,7 @@ class ReporteController extends Controller {
 			$qb = $this->aplicarFiltro($qb, $request);
 
 			$elementos = $qb->whereNull('deleted_at')
-							->whereIn('Id_Cronograma', $recreopersona->cronogramas->pluck('Id')->toArray())
+							->whereIn('Id_Cronograma', $cronogramas)
                             ->whereHas('punto', function($query){
                                 $query->whereNull('deleted_at');
                             })
@@ -52,7 +62,7 @@ class ReporteController extends Controller {
 			'titulo' => 'Informes jornadas',
 	        'elementos' => $elementos,
             'localidades' => Localidad::all(),
-	        'puntos' => $recreopersona->puntos,
+	        'puntos' => $puntos,
 	        'status' => session('status')
 		];
 
@@ -120,7 +130,6 @@ class ReporteController extends Controller {
 
 	public function obtenerInformes(Request $request)
 	{
-		$recreopersona = $this->cronogramasPersona($this->usuario['Recreopersona']->Id_Recreopersona);
 		$request->flash();
 
 		if ($request->isMethod('get'))
@@ -149,7 +158,7 @@ class ReporteController extends Controller {
 	        'status' => session('status')
 		];
 
-        if($elementos){
+        if($elementos) {
             foreach($elementos as $elemento)
             {
                 try
@@ -171,12 +180,12 @@ class ReporteController extends Controller {
 
 	public function crearInformeJornadas()
 	{
-		$recreopersona = $this->cronogramasPersona($this->usuario['Recreopersona']->Id_Recreopersona);
+		$puntos = $this->cronogramasPersona($this->usuario['Recreopersona']->Id_Recreopersona);
 
 		$gruposPoblacionales = GrupoPoblacional::all();
 		$formulario = [
 			'titulo' => 'Generar informe de actividades por punto',
-	        'puntos' => $recreopersona->puntos,
+	        'puntos' => $puntos,
 	        'informe' => null,
 	        'sesiones' => null,
 	        'gruposPoblacionales' => $gruposPoblacionales,
@@ -193,22 +202,21 @@ class ReporteController extends Controller {
 
 	public function editarInformeJornadas(Request $request, $id)
 	{
-		$informe = Reporte::with('profesores', 'sesiones', 'novedad', 'servicios', 'cronograma.gestor.persona')->find($id);
-		$recreopersona = $this->cronogramasPersona($informe->cronograma->gestor['Id_Recreopersona']);
+	    $informe = Reporte::with('profesores', 'sesiones', 'novedad', 'servicios', 'cronograma.gestor.persona')->find($id);
+		$puntos = $this->cronogramasPersona($informe->cronograma->gestor['Id_Recreopersona']);
 		$gruposPoblacionales = GrupoPoblacional::all();
-
 		$sesiones = $this->obtenerSesionesInforme($informe->sesiones->pluck('Id')->toArray());
 
 		$formulario = [
 			'titulo' => 'Editar informe',
 	        'informe' => $informe,
-	        'puntos' => $recreopersona->puntos,
+	        'puntos' => $puntos,
 	        'sesiones' => $sesiones,
 	        'gruposPoblacionales' => $gruposPoblacionales,
 	        'status' => session('status')
 	    ];
 
-	    $datos = [
+        $datos = [
 			'seccion' => 'Generar informe de actividades por punto',
 			'formulario' => view('idrd.recreovia.formulario-reporte-jornadas', $formulario)
 		];
@@ -360,6 +368,13 @@ class ReporteController extends Controller {
 		return response()->json([true]);
 	}
 
+    public function obtenerCronogramasPunto(Request $request, $id_gestor, $id_punto)
+    {
+        $puntos = $this->cronogramasPersona($id_gestor);
+
+        return response()->json($puntos->where('Id_Punto', +$id_punto)->first());
+    }
+
 	private function obtenerSesionesInforme($sesiones)
 	{
 		$sesiones = Sesion::with('gruposPoblacionales', 'productoNoConforme', 'calificacionDelServicio', 'profesor.persona', 'cronograma.gestor.persona')
@@ -420,9 +435,7 @@ class ReporteController extends Controller {
             $punto->cronogramas = array_values($recreopersona->cronogramas->where('Id_Punto', $punto['Id_Punto'])->toArray());
 		}
 
-		$recreopersona->puntos = $puntos;
-
-		return $recreopersona;
+		return $puntos;
 	}
 
 	private function aplicarFiltro($qb, $request)
@@ -460,7 +473,7 @@ class ReporteController extends Controller {
 
 		if($request->input('fecha'))
 		{
-			$qb->whereRaw('FIND_IN_SET("'.$request->input('fecha').'", Dias) > 0');
+			$qb->whereRaw('DATE(Reportes.created_at) = "'.$request->input('fecha').'"');
 		}
 
 		return $qb;

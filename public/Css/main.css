@@ -109,7 +109,8 @@ td.input input[type="checkbox"] {
 	height: 313px;
 }
 
-div.ajaxloader {
+div.ajaxloader,
+div.loader {
 	position: fixed;
 	display: none;
 	top: 0;
@@ -120,7 +121,12 @@ div.ajaxloader {
 	z-index: 1000;
 }
 
-div.ajaxloader span {
+div.loader {
+	display: block;
+}
+
+div.ajaxloader span,
+div.loader span{
 	position: fixed;
     top: 50%;
     left: 50%;
@@ -130,7 +136,8 @@ div.ajaxloader span {
 	text-shadow: 1px 1px 2px #DDD;
 }
 
-div.ajaxloader .ball-scale-multiple
+div.ajaxloader .ball-scale-multiple,
+div.loader .ball-scale-multiple
 {
 	position: fixed;
     top: 50%;
@@ -139,7 +146,8 @@ div.ajaxloader .ball-scale-multiple
     margin-top: -15px;
 }
 
-div.ajaxloader .ball-scale-multiple>div
+div.ajaxloader .ball-scale-multiple>div,
+div.loader .ball-scale-multiple>div
 {
 	background-color: #54b4eb;
 }

@@ -72,7 +72,7 @@
                             <th class="none" style="width: 80px;">Gestor</th>
                             <th class="none" style="width: 80px;">Profesor(es)</th>
                             <th class="none" style="width: 80px;">Sesiones</th>
-                            <th class="all" style="width: 100px;">U. Actualización</th>
+                            <th class="all" style="width: 100px;">F. Creación</th>
                             <th class="all no-sort" data-priority="2" style="width: 35px;"></th>
                         </tr>
                     </thead>
@@ -115,16 +115,8 @@
                                         {{ $profesor->persona->toFriendlyString() }},
                                     @endforeach
                                 </td>
-                                <td>{{
-                                        count($reporte->cronograma->sesiones
-                                            ->filter(function($item) use ($reporte){
-                                                return in_array($item->Fecha, explode(',', $reporte->Dias));
-                                            })->filter(function($item) {
-                                                return $item->Estado == 'Finalizado';
-                                            })->all())
-                                    }}
-                                </td>
-                                <td>{{ $reporte->updated_at }}</td>
+                                <td>{{ count($reporte->sesiones) }}</td>
+                                <td>{{ $reporte->created_at }}</td>
                                 <td>
                                     <a href="{{ url('/informes/jornadas/'.$reporte['Id'].'/editar') }}" class="pull-right btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Editar">
                                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>

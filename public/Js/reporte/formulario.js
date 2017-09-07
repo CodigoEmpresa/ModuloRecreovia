@@ -1,6 +1,7 @@
 $(function()
 {
-    var PUNTOS = $('select[name="Id_Cronograma"]').length ? $.parseJSON(JSON.stringify($('select[name="Id_Cronograma"]').data('json'))) : {};
+    var PUNTOS = {};
+    var CRONOGRAMAS = {};
 
     var URL = $('#main').data('url');
 
@@ -35,79 +36,66 @@ $(function()
         create:  true
     });
 
-    /*
-    var selectize_dias = $('input[name="Dias"]')[0].selectize;
-
-    $('input[name="Dia"]').on('change', function(e)
-    {
-        selectize_dias.addOption({text:$(this).val(), value:$(this).val()});
-        selectize_dias.addItem($(this).val());
-        $(this).val('');
-    });*/
-
     $('select[name="Id_Punto"]').on('changed.bs.select', function(e)
     {
-    	var Id_Punto = $(this).val();
-    	var punto = $.grep(PUNTOS, function(o, i)
-    	{
-    		return o.Id_Punto == Id_Punto;
-    	})[0];
+    	var id_punto = $(this).val();
+        var id_gestor = $('input[name="id_gestor"]').val()
+        var request = $.get(URL+'/gestor/'+id_gestor+'/punto/'+id_punto+'/cronogramas', {}, 'json');
+        var recargar_sesiones = false;
 
-    	if(punto.cronogramas)
-    	{
-    		$('select[name="Id_Cronograma"]').html('');
-    		$.each(punto.cronogramas, function(i, cronograma)
-    		{
-    			$('select[name="Id_Cronograma"]').append('<option data-desde="'+cronograma.Desde+'" data-dias="'+cronograma.jornada.Dias+'" data-hasta="'+cronograma.Hasta+'" value="'+cronograma.Id+'">'+('Del '+cronograma.Desde+' al '+cronograma.Hasta+' / '+cronograma.jornada.Code+' - '+cronograma.jornada.Label)+'</option>');
-    		});
-
-            $('select[name="Id_Cronograma"]').selectpicker('refresh');
-    	}
-
-        if ($('select[name="Id_Cronograma"]').data('value') != '')
+        request.done(function(punto)
         {
-            $('select[name="Id_Cronograma"]').val($('select[name="Id_Cronograma"]').data('value')).trigger('change');
-        }
+            CRONOGRAMAS = punto.cronogramas;
+            if(punto.cronogramas)
+            {
+                $('select[name="Id_Cronograma"]').html('');
+                $.each(punto.cronogramas, function(i, cronograma)
+                {
+                    if(!recargar_sesiones) recargar_sesiones = +$('select[name="Id_Cronograma"]').data('value') == cronograma.Id;
+
+                    $('select[name="Id_Cronograma"]').append('<option data-desde="'+cronograma.Desde+'" data-dias="'+cronograma.jornada.Dias+'" data-hasta="'+cronograma.Hasta+'" value="'+cronograma.Id+'">'+('Del '+cronograma.Desde+' al '+cronograma.Hasta+' / '+cronograma.jornada.Code+' - '+cronograma.jornada.Label)+'</option>');
+                });
+
+                $('select[name="Id_Cronograma"]').selectpicker('refresh');
+            }
+
+
+            if (recargar_sesiones)
+            {
+                $('select[name="Id_Cronograma"]').val($('select[name="Id_Cronograma"]').data('value')).trigger('change');
+            } else {
+                $('select[name="Id_Cronograma"]').selectpicker('val', '');
+                tbl_sesiones.clear().draw();
+            }
+        });
     });
 
     $('select[name="Id_Cronograma"]').on('change', function(e)
     {
-    	/*var option = $('select[name="Id_Cronograma"] option:selected');
-    	$('input[name="Dia"]').attr('data-fecha-inicio', '').attr('data-fecha-fin', '');
-
-    	var dias = option.data('dias');
-    	var fecha_inicio = moment(option.data('desde'));
-    	var fecha_fin = moment(option.data('hasta'));
-    	$('input[name="Dia"]').attr('data-fecha-inicio', fecha_inicio.format('YYYY-MM-DD')).attr('data-fecha-fin', fecha_fin.format('YYYY-MM-DD')).attr('data-dias', dias);
-        $('input[name="Dia"]').val('');*/
-
-        var punto = $.grep(PUNTOS, function(o, i)
+        var cronograma = Object.values(CRONOGRAMAS).filter(function (cronograma)
         {
-            return o.Id_Punto == $('select[name="Id_Punto"]').val();
+            return cronograma.Id == $('select[name="Id_Cronograma"]').val();
         })[0];
-
-        var cronograma = $.grep(punto.cronogramas, function(o, i)
-        {
-            return o.Id == $('select[name="Id_Cronograma"]').val();
-        })[0];
-
 
         var sesiones = cronograma.sesiones;
         var sesiones_seleccionadas = $.map($('input[name="sesiones"]').val().split(','), function(v) { return +v; });
-        console.log(sesiones);
 
         tbl_sesiones.clear().draw();
 
         $.each(sesiones, function(i, e){
             var checked = $.inArray(e.Id, sesiones_seleccionadas) > -1 ? 'checked="checked"' : '';
+            var enEsteInforme = $.inArray(e.Id, sesiones_seleccionadas) > -1 ? 'Si' : 'No';
             var profesor = e.profesor ? e.profesor.persona['Primer_Nombre']+' '+e.profesor.persona['Primer_Apellido'] : 'Sin profesor asignado';
             tbl_sesiones.row.add($('<tr data-id="'+e.Id+'">'+
                     '<td>'+e.Fecha+'</td>'+
                     '<td>'+e.Objetivo_General+'<br>'+profesor+'</td>'+
+                    '<td>'+enEsteInforme+'</td>'+
                     '<td>'+e.reportes.length+' informe(s)</td>'+
                     '<td><input type="checkbox" name="sesion[]" value="'+e.Id+'" '+checked+'/></td>'+
                '</tr>')).draw(false);
         });
+
+        tbl_sesiones.order([2, 'desc']).draw();
     });
 
     $('#check_all').on('click', function(e){

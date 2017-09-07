@@ -1,12 +1,12 @@
 @section('script')
     @parent
 
-    <script src="{{ asset('public/Js/reporte/formulario.js') }}"></script>
+    <script src="{{ asset('public/Js/reporte/formulario.js?n=2') }}"></script>
 @stop
 <div class="content">
     <div id="main" class="row" data-url="{{ url('informes/jornadas') }}">
         @if ($status == 'success')
-            <div id="alerta" class="col-xs-12">
+            <div id="alerta" class="col-md-12">
                 <div class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     Datos actualizados satisfactoriamente.
@@ -14,7 +14,7 @@
             </div>
         @endif
         @if (!empty($errors->all()))
-            <div class="col-xs-12">
+            <div class="col-md-12">
                 <div class="alert alert-danger alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong>Solucione los siguientes inconvenientes y vuelva a intentarlo</strong>
@@ -26,8 +26,8 @@
                 </div>
             </div>
         @endif
-        <div class="col-xs-12"><br></div>
-        <div class="col-xs-12 col-md-12">
+        <div class="col-md-12"><br></div>
+        <div class="col-md-12">
             @if(count($puntos) > 0)
                 <div class="row">
                     <form id="principal" action="{{ url('informes/jornadas/generar') }}" method="post">
@@ -42,25 +42,19 @@
                             </div>
                             <div class="col-md-8 form-group {{ $errors->has('Id_Cronograma') ? 'has-error' : '' }}">
                                 <label for="">Periodo y jornada</label>
-                                <select name="Id_Cronograma" id="Id_Cronograma" class="form-control" data-json="{{ json_encode($puntos->toArray()) }}" data-value="{{ $informe ? $informe['Id_Cronograma'] : old('Id_Cronograma') }}" title="Seleccionar">
+                                <select name="Id_Cronograma" id="Id_Cronograma" class="form-control" data-value="{{ $informe ? $informe['Id_Cronograma'] : old('Id_Cronograma') }}" title="Seleccionar">
                                 </select>
                             </div>
-                            <!--<div class="col-md-4 form-group {{ $errors->has('Dia') ? 'has-error' : '' }}">
-                                <label for="">Día</label>
-                                <input type="text" name="Dia" class="form-control" data-role="datepicker" data-fecha-inicio="" data-fecha-fin="" data-dias="" data-fechas-importantes="{{ Festivos::create()->datesToString() }}" value="{{ $informe ? $informe['Dia'] : old('Dia') }}">
-                            </div>
-                            <div class="col-md-8 form-group {{ $errors->has('Dias') ? 'has-error' : '' }}">
-                                <label for="">Días seleccionados</label> <br>
-                                <input type="text" class="form-control" name="Dias" value="{{ $informe ? $informe['Dias'] : old('Dias') }}">
-                            </div>-->
-                            <div class="col-xs-12">
-                                <table id="sesiones" class="default table table-min">
+                            @if (!$informe || ($informe->cronograma->gestor['Id_Recreopersona'] == $_SESSION['Usuario']['Recreopersona']['Id_Recreopersona']))
+                            <div class="col-md-12">
+                                <table id="sesiones" class="default display no-wrap responsive table table-min table-striped">
                                     <thead>
                                         <tr>
                                             <th style="width:100px;">Fecha</th>
                                             <th>Sesion</th>
+                                            <th width="100px">En este informe</th>
                                             <th width="100px">Presente en</th>
-                                            <th class="no-sort" style="width:30px;"><input type="checkbox" id="check_all"></th>
+                                            <th class="all no-sort" style="width:30px;"><input type="checkbox" id="check_all"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -68,14 +62,18 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="col-xs-12">
+                            <div class="col-md-12">
                                 <hr>
                             </div>
+                            @endif
+
+                            <input type="hidden" name="sesiones" value="{{ $informe ? implode(',', $informe->sesiones->pluck('Id')->toArray()) : old('sesiones') }}">
+                            <input type="hidden" name="id_gestor" value="{{ $informe ? $informe->cronograma->gestor['Id_Recreopersona'] : $_SESSION['Usuario']['Recreopersona']['Id_Recreopersona'] }}">
+
                             @if (!$informe || ($informe->cronograma->gestor['Id_Recreopersona'] == $_SESSION['Usuario']['Recreopersona']['Id_Recreopersona']))
                                 <div class="col-md-12">
                                     <input type="hidden" name="_method" value="POST">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                    <input type="hidden" name="sesiones" value="{{ $informe ? implode(',', $informe->sesiones->pluck('Id')->toArray()) : old('sesiones') }}">
                                     <input type="hidden" name="Id" value="{{ $informe ? $informe['Id'] : 0 }}">
                                     @if ($informe['Estado'] != 'Finalizado')
                                         <input type="submit" value="{{ $informe ? 'Regenerar reporte' : 'Generar reporte' }}" id="generar" class="btn btn-primary">

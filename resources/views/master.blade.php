@@ -179,7 +179,7 @@
 						</li>
 					@endif
 						<li>
-							<a target="_blank" href="{{ url('/buscador') }}">Buscador</a>
+							<a target="_blank" href="{{ url('/buscador') }}">Mapa de actividades</a>
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">

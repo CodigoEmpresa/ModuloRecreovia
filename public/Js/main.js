@@ -1,3 +1,8 @@
+$(window).load(function() {
+    // Animate loader off screen
+    $('div.loader').fadeOut("slow");
+});
+
 $(function()
 {
 	$.ajaxSetup({

@@ -120,9 +120,14 @@
                                     <td>{{ empty($reporte->Estado) ? 'Pendiente' : $reporte->Estado }}</td>
                                     <td>
                                         {{ $reporte->cronograma->gestor->persona->toFriendlyString() }}
-                                    </td> <td>
+                                    </td>
+                                    <td>
                                         @foreach($reporte->profesores as $profesor)
-                                            {{ $profesor->persona->toFriendlyString() }},
+                                            @if ($profesor)
+                                                {{ $profesor->persona->toFriendlyString() }}
+                                            @else
+                                                Sin profesor asignado
+                                            @endif
                                         @endforeach
                                     </td>
                                     <td>{{
