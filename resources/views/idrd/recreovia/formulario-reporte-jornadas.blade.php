@@ -1,7 +1,7 @@
 @section('script')
     @parent
 
-    <script src="{{ asset('public/Js/reporte/formulario.js?n=2') }}"></script>
+    <script src="{{ asset('public/Js/reporte/formulario.js?n=3') }}"></script>
 @stop
 <div class="content">
     <div id="main" class="row" data-url="{{ url('informes/jornadas') }}">
