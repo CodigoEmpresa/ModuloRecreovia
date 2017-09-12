@@ -1,8 +1,5 @@
 $(function()
 {
-    var PUNTOS = {};
-    var CRONOGRAMAS = {};
-
     var URL = $('#main').data('url');
 
     var reindexarServicios = function()
@@ -45,7 +42,6 @@ $(function()
 
         request.done(function(punto)
         {
-            CRONOGRAMAS = punto.cronogramas;
             if(punto.cronogramas)
             {
                 $('select[name="Id_Cronograma"]').html('');
@@ -72,30 +68,31 @@ $(function()
 
     $('select[name="Id_Cronograma"]').on('change', function(e)
     {
-        var cronograma = Object.values(CRONOGRAMAS).filter(function (cronograma)
-        {
-            return cronograma.Id == $('select[name="Id_Cronograma"]').val();
-        })[0];
-
-        var sesiones = cronograma.sesiones;
-        var sesiones_seleccionadas = $.map($('input[name="sesiones"]').val().split(','), function(v) { return +v; });
+        var id_cronograma = $(this).val();
+        var request = $.get(URL+'/cronograma/'+id_cronograma+'/sesiones', {}, 'json');
 
         tbl_sesiones.clear().draw();
 
-        $.each(sesiones, function(i, e){
-            var checked = $.inArray(e.Id, sesiones_seleccionadas) > -1 ? 'checked="checked"' : '';
-            var enEsteInforme = $.inArray(e.Id, sesiones_seleccionadas) > -1 ? 'Si' : 'No';
-            var profesor = e.profesor ? e.profesor.persona['Primer_Nombre']+' '+e.profesor.persona['Primer_Apellido'] : 'Sin profesor asignado';
-            tbl_sesiones.row.add($('<tr data-id="'+e.Id+'">'+
+        request.done(function(cronograma)
+        {
+            var sesiones = cronograma.sesiones;
+            var sesiones_seleccionadas = $.map($('input[name="sesiones"]').val().split(','), function(v) { return +v; });
+
+            $.each(sesiones, function(i, e){
+                var checked = $.inArray(e.Id, sesiones_seleccionadas) > -1 ? 'checked="checked"' : '';
+                var enEsteInforme = $.inArray(e.Id, sesiones_seleccionadas) > -1 ? 'Si' : 'No';
+                var profesor = e.profesor ? e.profesor.persona['Primer_Nombre']+' '+e.profesor.persona['Primer_Apellido'] : 'Sin profesor asignado';
+                tbl_sesiones.row.add($('<tr data-id="'+e.Id+'">'+
                     '<td>'+e.Fecha+'</td>'+
                     '<td>'+e.Objetivo_General+'<br>'+profesor+'</td>'+
                     '<td>'+enEsteInforme+'</td>'+
                     '<td>'+e.reportes.length+' informe(s)</td>'+
                     '<td><input type="checkbox" name="sesion[]" value="'+e.Id+'" '+checked+'/></td>'+
-               '</tr>')).draw(false);
-        });
+                    '</tr>')).draw(false);
+            });
 
-        tbl_sesiones.order([2, 'desc']).draw();
+            tbl_sesiones.order([2, 'desc']).draw();
+        });
     });
 
     $('#check_all').on('click', function(e){

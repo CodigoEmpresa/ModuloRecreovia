@@ -375,6 +375,13 @@ class ReporteController extends Controller {
         return response()->json($puntos->where('Id_Punto', +$id_punto)->first());
     }
 
+    public function obtenerSesionesCronogramas(Request $request, $id_cronograma)
+    {
+        $cronograma = $this->sesionesCronograma($id_cronograma);
+
+        return response()->json($cronograma);
+    }
+
 	private function obtenerSesionesInforme($sesiones)
 	{
 		$sesiones = Sesion::with('gruposPoblacionales', 'productoNoConforme', 'calificacionDelServicio', 'profesor.persona', 'cronograma.gestor.persona')
@@ -385,28 +392,23 @@ class ReporteController extends Controller {
 		return $sesiones;
 	}
 
-	private function cronogramasPersona($recreopersona)
+	private function cronogramasPersona($id_recreopersona)
 	{
 		$recreopersona = Recreopersona::with(['cronogramas' => function($query){
 		                                        $query->with(
 		                                                [
-		                                                    'jornada' => function($query_jornada){
+		                                                    'jornada' => function($query_jornada) {
 		                                                        $query_jornada->whereNull('deleted_at');
                                                             },
-                                                            'punto' => function($query_punto){
+                                                            'punto' => function($query_punto) {
                                                                 $query_punto->whereNull('deleted_at');
-                                                            },
-                                                            'sesiones' => function($query_sesiones){
-                                                                $query_sesiones->with('reportes', 'profesor.persona')
-                                                                    ->whereIn('Estado', ['Finalizado', 'Cancelado'])
-                                                                    ->whereNull('deleted_at');
                                                             }
                                                         ])->whereHas('sesiones', function($query_sesiones){
                                                                 $query_sesiones->with('reportes')
                                                                     ->whereIn('Estado', ['Finalizado', 'Cancelado'])
                                                                     ->whereNull('deleted_at');
                                                         })->whereNull('deleted_at');
-											}])->find($recreopersona);
+											}])->find($id_recreopersona);
 		$puntos = collect();
 
 		foreach ($recreopersona->cronogramas as $cronograma)
@@ -419,10 +421,10 @@ class ReporteController extends Controller {
 
                 $exists = $puntos->search(function($item, $key) use ($Id_Punto)
                 {
-                    return $item['Id_Punto'] == $Id_Punto;
-                });
+                    return $item->Id_Punto == $Id_Punto;
+                }, true);
 
-                if (!$exists)
+                if (is_bool($exists))
                 {
                     $puntos->push($cronograma->punto);
                 }
@@ -437,6 +439,17 @@ class ReporteController extends Controller {
 
 		return $puntos;
 	}
+
+	private function sesionesCronograma($id_cronograma)
+    {
+        $cronograma = Cronograma::with(['sesiones' => function($query_sesiones){
+                $query_sesiones->with('reportes', 'profesor.persona')
+                    ->whereIn('Estado', ['Finalizado', 'Cancelado'])
+                    ->whereNull('deleted_at');
+            }])->find($id_cronograma);
+
+        return $cronograma;
+    }
 
 	private function aplicarFiltro($qb, $request)
 	{

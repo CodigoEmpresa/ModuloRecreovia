@@ -133,30 +133,30 @@
                                 <div class="row">
                                     <form action="{{ url('informes/jornadas/actualizar') }}" method="post">
                                         <fieldset>
-                                            @if ($informe->cronograma->gestor['Id_Recreopersona'] == $_SESSION['Usuario']['Recreopersona']['Id_Recreopersona'])
-                                                <div class="col-md-12 form-group">
-                                                    <label for="">Estado</label><br>
+                                            <div class="col-md-12 form-group">
+                                                <label for="">Estado</label><br>
+                                                @if ($informe->cronograma->gestor['Id_Recreopersona'] == $_SESSION['Usuario']['Recreopersona']['Id_Recreopersona'])
                                                     <label class="radio-inline">
                                                         <input type="radio" name="Estado" value="Pendiente" {{ $informe && $informe['Estado'] == 'Pendiente' ? 'checked' : '' }}> Pendiente
                                                     </label>
                                                     <label class="radio-inline">
                                                         <input type="radio" name="Estado" value="Aprobado" {{ $informe && $informe['Estado'] == 'Aprobado' ? 'checked' : '' }}> Aprobado
                                                     </label>
-                                                    @if ($_SESSION['Usuario']['Permisos']['validar_reportes_jornadas'])
-                                                        <label class="radio-inline">
-                                                            <input type="radio" name="Estado" value="Rechazado" {{ $informe && $informe['Estado'] == 'Rechazado' ? 'checked' : '' }}> Rechazado
-                                                        </label>
-                                                        <label class="radio-inline">
-                                                            <input type="radio" name="Estado" value="Corregir" {{ $informe && $informe['Estado'] == 'Corregir' ? 'checked' : '' }}> Corregir
-                                                        </label>
-                                                        <label class="radio-inline">
-                                                            <input type="radio" name="Estado" value="Finalizado" {{ $informe && $informe['Estado'] == 'Finalizado' ? 'checked' : '' }}> Finalizado
-                                                        </label>
-                                                    @else
-                                                        <p class="form-control-static">{{ $informe['Estado'] }}</p>
-                                                    @endif
-                                                </div>
-                                            @endif
+                                                @endif
+                                                @if ($_SESSION['Usuario']['Permisos']['validar_reportes_jornadas'])
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="Estado" value="Rechazado" {{ $informe && $informe['Estado'] == 'Rechazado' ? 'checked' : '' }}> Rechazado
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="Estado" value="Corregir" {{ $informe && $informe['Estado'] == 'Corregir' ? 'checked' : '' }}> Corregir
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="Estado" value="Finalizado" {{ $informe && $informe['Estado'] == 'Finalizado' ? 'checked' : '' }}> Finalizado
+                                                    </label>
+                                                @else
+                                                    <p class="form-control-static">{{ $informe['Estado'] }}</p>
+                                                @endif
+                                            </div>
                                             <div class="col-md-12 form-group">
                                                 <label for="">Observaciones</label>
                                                 <textarea name="Observaciones" class="form-control">{{ $informe['Observaciones'] }}</textarea>
