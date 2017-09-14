@@ -43,8 +43,12 @@
                         </select>
                     </div>
                     <div class="col-md-2 form-group">
-                        <label for="">Fecha</label>
-                        <input name="fecha" type="text" placeholder="Fecha" class="form-control" data-role="datepicker" data-fechas-importantes="{{ Festivos::create()->datesToString() }}" value="{{ old('fecha') }}">
+                        <label for="">Fecha inicio</label>
+                        <input name="fecha_inicio" type="text" placeholder="Fecha inicio" class="form-control" data-role="datepicker" data-fechas-importantes="{{ Festivos::create()->datesToString() }}" value="{{ old('fecha_inicio') }}">
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <label for="">Fecha fin</label>
+                        <input name="fecha_fin" type="text" placeholder="Fecha fin" class="form-control" data-role="datepicker" data-fechas-importantes="{{ Festivos::create()->datesToString() }}" value="{{ old('fecha_fin') }}">
                     </div>
                     <div class="col-md-2 form-group">
                         <label for="">&nbsp;</label><br>

@@ -28,6 +28,7 @@ class ReporteController extends Controller {
 
 	public function jornadas(Request $request)
 	{
+        $request->flash();
 		$puntos = $this->cronogramasPersona($this->usuario['Recreopersona']->Id_Recreopersona);
 		$cronogramas = [];
 
@@ -39,14 +40,12 @@ class ReporteController extends Controller {
             }
         }
 
-		$request->flash();
-
 		if ($request->isMethod('get'))
 		{
 			$qb = null;
 			$elementos = $qb;
 		} else {
-			$qb = Reporte::with(['punto', 'profesores.persona', 'cronograma', 'cronograma.sesiones', 'cronograma.gestor.persona']);
+			$qb = Reporte::with(['punto', 'sesiones', 'profesores.persona', 'cronograma.gestor.persona']);
 			$qb = $this->aplicarFiltro($qb, $request);
 
 			$elementos = $qb->whereNull('deleted_at')
@@ -490,9 +489,15 @@ class ReporteController extends Controller {
             }
         }
 
-		if($request->input('fecha'))
+		if($request->input('fecha_inicio') || $request->input('fecha_fin'))
 		{
-			$qb->whereRaw('DATE(Reportes.created_at) = "'.$request->input('fecha').'"');
+			$qb->whereHas('sesiones', function($query) use ($request) {
+                if ($request->input('fecha_inicio'))
+                    $query->where('Fecha', '>=', $request->input('fecha_inicio'));
+
+                if ($request->input('fecha_fin'))
+                    $query->where('Fecha', '<=', $request->input('fecha_fin'));
+            });
 		}
 
 		return $qb;
