@@ -65,5 +65,5 @@ class Reporte extends Model
         return 'R'.str_pad($this->Id, 5, '0', STR_PAD_LEFT);
     }
 
-    use SoftDeletes, CascadeSoftDeletes, TraitSeguridad;
+    use SoftDeletes, CascadeSoftDeletes/*, TraitSeguridad*/;
 }

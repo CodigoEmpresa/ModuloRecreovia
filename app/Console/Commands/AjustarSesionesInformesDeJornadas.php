@@ -6,21 +6,21 @@ use Illuminate\Console\Command;
 use App\Modulos\Recreovia\Reporte;
 use App\Modulos\Recreovia\Sesion;
 
-class Ajustar extends Command
+class AjustarSesionesInformesDeJornadas extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'ajustar:informes-de-jornadas';
+    protected $signature = 'ajustar:informes-de-jornadas-sesiones';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Realizar ajustes a los informes de jornadas';
+    protected $description = 'Sincronizar las sesiones con los informes de jornadas antiguos';
 
     /**
      * Create a new command instance.
