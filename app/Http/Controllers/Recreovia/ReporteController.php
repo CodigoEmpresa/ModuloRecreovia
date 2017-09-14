@@ -227,47 +227,42 @@ class ReporteController extends Controller {
 	public function generarInformeJornadas(GenerarInforme $request)
 	{
 	    $nuevo = $request->input('Id') == '0';
-		if($nuevo) {
+
+	    if($nuevo)
 			$reporte = new Reporte;
-        } else {
-			$reporte = Reporte::find($request->input('Id'));
-        }
+        else
+            $reporte = Reporte::find($request->input('Id'));
 
-		$dias = explode(',', $request->input('Dias'));
-		usort($dias, function($a, $b) {
-  		    return strcmp($a, $b);
-		});
+        $sesiones = $this->obtenerSesionesInforme(explode(',', $request->input('sesiones')));
 
-		$reporte->Id_Punto = $request->input('Id_Punto');
-		$reporte->Id_Cronograma = $request->input('Id_Cronograma');
-		$reporte->Dias = implode(',', $dias);
-		$reporte->Condiciones_Climaticas = null;
-		$reporte->Estado = 'Pendiente';
-		$reporte->save();
+		if($sesiones)
+        {
+            $profesores = [];
+            $dias = [];
 
-		$sesiones = $this->obtenerSesionesInforme(explode(',', $request->input('sesiones')));
+            foreach ($sesiones as $sesion)
+            {
 
-		if ($sesiones)
-		{
-			$profesores = [];
-			//sincronizar profesores
-			foreach ($sesiones as $sesion)
-			{
-				if($sesion['Id_Recreopersona'])
-				{
-				    if($sesion['Asumida_Por_El_Gestor'])
+                if($sesion['Id_Recreopersona'])
+                {
+                    if($sesion['Asumida_Por_El_Gestor'])
                     {
                         $id_recreopersona = $sesion['Asumida_Por_El_Gestor'];
                     } else {
-				        $id_recreopersona = $sesion['Id_Recreopersona'];
+                        $id_recreopersona = $sesion['Id_Recreopersona'];
+                    }
+
+                    if (!in_array($sesion['Fecha'], $dias))
+                    {
+                        $dias[] = $sesion['Fecha'];
                     }
 
                     if (array_key_exists($id_recreopersona, $profesores))
                     {
                         $profesores[$id_recreopersona]['Sesiones_Realizadas'] += 1;
                     } else {
-				        if ($nuevo)
-				        {
+                        if ($nuevo)
+                        {
                             $profesores[$id_recreopersona] = [
                                 'Hora_Llegada' => null,
                                 'Hora_Salida' => null,
@@ -282,11 +277,22 @@ class ReporteController extends Controller {
                             ];
                         }
                     }
-				}
-			}
+                }
+            }
+        }
 
-            $reporte->sesiones()->sync($sesiones->pluck('Id')->toArray());
-		}
+        usort($dias, function($a, $b) {
+  		    return strcmp($a, $b);
+		});
+
+        $reporte->Id_Punto = $request->input('Id_Punto');
+        $reporte->Id_Cronograma = $request->input('Id_Cronograma');
+        $reporte->Dias = implode(',', $dias);
+        $reporte->Condiciones_Climaticas = null;
+        $reporte->Estado = 'Pendiente';
+        $reporte->save();
+
+        if ($sesiones) $reporte->sesiones()->sync($sesiones->pluck('Id')->toArray());
 
 		$reporte->profesores()->sync($profesores);
 
