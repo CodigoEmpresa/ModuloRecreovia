@@ -340,7 +340,7 @@
                                                                 <input name="Observaciones_Generales" data-name="Observaciones_Generales" type="text" placeholder="Observaciones generales" style="text-align:left;">
                                                             </td>
                                                             <td>
-                                                                <a href="#" class="btn btn-default btn-xs" data-role="eliminar" data-toggle="tooltip" data-placement="bottom" title="Eliminar"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                                                <a href="#" class="btn btn-default btn-sm" data-role="eliminar" data-toggle="tooltip" data-placement="bottom" title="Eliminar"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                                             </td>
                                                         </tr>
                                                         <?php
@@ -348,7 +348,7 @@
                                                         ?>
                                                         @foreach($informe->servicios as $servicio)
                                                             <?php $i++; ?>
-                                                            <tr id="plantilla_servicio">
+                                                            <tr>
                                                                 <td data-role="item">{{ $i }}</td>
                                                                 <td class="select">
                                                                     <select name="tipo_{{ $i-1 }}" data-name="tipo" data-value="{{ $servicio->tipo }}" data-ignore-selectpicker>
@@ -378,7 +378,7 @@
                                                                     <input name="Observaciones_Generales_{{ $i-1 }}" data-name="Observaciones_Generales" type="text" placeholder="Observaciones generales" value="{{ $servicio['Observaciones_Generales'] }}" style="text-align:left;">
                                                                 </td>
                                                                 <td>
-                                                                    <a href="#" class="btn btn-default btn-xs" data-role="eliminar" data-toggle="tooltip" data-placement="bottom" title="Eliminar"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                                                    <a href="#" class="btn btn-default btn-sm" data-role="eliminar" data-toggle="tooltip" data-placement="bottom" title="Eliminar"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                                                 </td>
                                                             </tr>
                                                         @endforeach
@@ -386,7 +386,7 @@
                                                     <tfoot>
                                                         <tr>
                                                             <th colspan="10">
-                                                                <button id="agregar_servicio" type="button" class="btn btn-xs btn-default">Agregar servicio</button>
+                                                                <button id="agregar_servicio" type="button" class="btn btn-sm btn-default">Agregar servicio</button>
                                                             </th>
                                                         </tr>
                                                     </tfoot>
