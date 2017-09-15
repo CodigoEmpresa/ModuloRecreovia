@@ -33,22 +33,22 @@
 			<div class="row">
 				<form action="{{ url('/gestores/sesiones/procesar') }}" method="post">
 					<fieldset>
-                        @if ($_SESSION['Usuario']['Permisos']['gestion_global_de_sesiones'] && $cronograma)
-                            <div class="col-md-12 form-group">
-                                <label for="">Gestor</label>
-                                <p class="form-control-static">{{ $cronograma->gestor->persona->toString() }}</p>
-                            </div>
-                        @endif
-						<div class="col-md-12">
-							<div class="row">
-								<div class="col-md-12 form-group">
-									<label for="">Programación</label>
-									<p class="form-control-static">{{ $cronograma->toString() }}</p>
-								</div>
-							</div>
-						</div>
 						<div class="col-md-6">
 							<div class="row">
+								@if ($_SESSION['Usuario']['Permisos']['gestion_global_de_sesiones'] && $cronograma)
+									<div class="col-md-12 form-group">
+										<label for="">Gestor</label>
+										<p class="form-control-static">{{ $cronograma->gestor->persona->toString() }}</p>
+									</div>
+								@endif
+								<div class="col-md-12">
+									<div class="row">
+										<div class="col-md-12 form-group">
+											<label for="">Programación</label>
+											<p class="form-control-static">{{ $cronograma->toString() }}</p>
+										</div>
+									</div>
+								</div>
 								<div class="col-md-12 form-group">
 									<label for="">Punto</label>
 									<p class="form-control-static">
@@ -58,14 +58,14 @@
 
 											if ($cronograma->punto->Contacto_Nombre || $cronograma->punto->Contacto_Telefono || $cronograma->punto->Contacto_Correo)
 											{
-								                $html = '<br><br><small class="text-muted">';
-								                $html .= $cronograma->punto->Contacto_Nombre ? 'Contacto: '.$cronograma->punto->Contacto_Nombre.'<br>' : '';
-								                $html .= $cronograma->punto->Contacto_Telefono ? 'Telefono: '.$cronograma->punto->Contacto_Telefono.'<br>' : '';
-								                $html .= $cronograma->punto->Contacto_Correo ? 'Correo: '.$cronograma->punto->Contacto_Correo.'<br>' : '';
-								                $html .= '</small>';
-								            }
+												$html = '<br><br><small class="text-muted">';
+												$html .= $cronograma->punto->Contacto_Nombre ? 'Contacto: '.$cronograma->punto->Contacto_Nombre.'<br>' : '';
+												$html .= $cronograma->punto->Contacto_Telefono ? 'Telefono: '.$cronograma->punto->Contacto_Telefono.'<br>' : '';
+												$html .= $cronograma->punto->Contacto_Correo ? 'Correo: '.$cronograma->punto->Contacto_Correo.'<br>' : '';
+												$html .= '</small>';
+											}
 
-								            echo $html;
+											echo $html;
 										?>
 									</p>
 								</div>
@@ -78,7 +78,7 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div id="map" style="height:230px;"></div>
+							<div id="map" style="height:300px;"></div>
 						</div>
 						<div class="col-md-12">
 							<div class="row">
@@ -194,7 +194,6 @@
 								<th style="width:50px;" width="50px">H. Fin</th>
 								<th style="width:50px;" width="50px">Estado</th>
 								<th data-priority="2" class="no-sort" style="width: 30px;"></th>
-								<th data-priority="2" class="no-sort" style="width: 30px;"></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -245,17 +244,18 @@
 									<td>{{ $i_sesion->Fin }}</td>
 									<td>{{ $i_sesion->Estado }}</td>
 									<td data-priority="2">
-		                            	<a data-role="validar" href="{{ url('/gestores/sesiones/'.$i_sesion['Id'].'/editar') }}" class="pull-right separe-right btn btn-default btn-xs" data-toggle="tooltip" data-placement="bottom" title="Detalles">
-		                                	<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-		                            	</a>
+										<div class="pull-right btn-group">
+											<button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												<span class="caret"></span>
+											</button>
+											<ul class="dropdown-menu">
+												@if($i_sesion->Estado != 'Finalizado')
+													<li><a data-role="editar" href="{{ url('/gestores/'.$cronograma['Id'].'/sesiones/'.$i_sesion['Id'].'/editar') }}">Editar</a></li>
+												@endif
+												<li><a data-role="validar" href="{{ url('/gestores/sesiones/'.$i_sesion['Id'].'/editar') }}">Detalles</a></li>
+											</ul>
+										</div>
 		                            </td>
-									<td data-priority="2">
-										@if($i_sesion->Estado != 'Finalizado')
-											<a data-role="editar" href="{{ url('/gestores/'.$cronograma['Id'].'/sesiones/'.$i_sesion['Id'].'/editar') }}" class="pull-right btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Editar">
-				                                	<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-				                            </a>
-			                            @endif
-									</td>
 								</tr>
 							@endforeach
 						</tbody>

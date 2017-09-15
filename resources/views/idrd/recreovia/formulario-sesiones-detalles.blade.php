@@ -36,45 +36,45 @@
 							<div class="row">
 								<form action="{{ url('/sesiones/procesar') }}" method="post">
 									<fieldset>
-										<div class="col-md-12">
-											<label for="">Estado</label>
-											<?php
-				                                switch ($sesion->Estado)
-				                                {
-                                                    case 'Pendiente':
-            		                        			$class = 'default';
-            		                        		break;
-            		                        		case 'Diligenciado':
-            		                        		case 'Corregir':
-            		                        			$class = 'warning';
-            		                        		break;
-            		                        		case 'Aprobado':
-            		                        			$class = 'success';
-            		                        		break;
-            		                        		case 'Finalizado':
-            		                        			$class = 'info';
-            		                        		break;
-            		                        		case 'Rechazado':
-            		                        		case 'Cancelado':
-            		                        			$class = 'danger';
-            		                        		break;
-            	                                    default:
-            	                                        $class= 'default';
-            	                                    break;
-				                                }
-				                            ?>
-											<p class="form-control-static text-{{ $class }}">
-												{{ $sesion->Estado }}
-											</p>
-										</div>
-										<div class="row">
-											<div class="col-md-12">
+										<div class="col-md-6">
+											<div class="row">
+												<div class="col-md-12">
+													<label for="">Estado</label>
+                                                    <?php
+                                                    switch ($sesion->Estado)
+                                                    {
+                                                        case 'Pendiente':
+                                                            $class = 'default';
+                                                            break;
+                                                        case 'Diligenciado':
+                                                        case 'Corregir':
+                                                            $class = 'warning';
+                                                            break;
+                                                        case 'Aprobado':
+                                                            $class = 'success';
+                                                            break;
+                                                        case 'Finalizado':
+                                                            $class = 'info';
+                                                            break;
+                                                        case 'Rechazado':
+                                                        case 'Cancelado':
+                                                            $class = 'danger';
+                                                            break;
+                                                        default:
+                                                            $class= 'default';
+                                                            break;
+                                                    }
+                                                    ?>
+													<p class="form-control-static text-{{ $class }}">
+														{{ $sesion->Estado }}
+													</p>
+												</div>
 												@if ($_SESSION['Usuario']['Permisos']['gestion_global_de_sesiones'] && $sesion)
-						                            <div class="col-md-12 form-group">
-						                                <label for="">Gestor</label>
-						                                <p class="form-control-static">{{ $sesion->cronograma->gestor->persona->toString() }}</p>
-						                            </div>
-						                        @endif
+													<div class="col-md-12 form-group">
+														<label for="">Gestor</label>
+														<p class="form-control-static">{{ $sesion->cronograma->gestor->persona->toString() }}</p>
+													</div>
+												@endif
 												<div class="col-md-12">
 													<div class="row">
 														<div class="col-md-12 form-group">
@@ -83,38 +83,34 @@
 														</div>
 													</div>
 												</div>
-												<div class="col-md-6">
-													<div class="row">
-														<div class="col-md-12 form-group">
-															<label for="">Punto</label>
-															<p class="form-control-static">
-																{{ $sesion->cronograma->punto->getCode().' - '.$sesion->cronograma->punto->toString() }}
-																<?php
-																	$html = '';
+												<div class="col-md-12 form-group">
+													<label for="">Punto</label>
+													<p class="form-control-static">
+														{{ $sesion->cronograma->punto->getCode().' - '.$sesion->cronograma->punto->toString() }}
+														<?php
+														$html = '';
 
-																	if ($sesion->cronograma->punto->Contacto_Nombre || $sesion->cronograma->punto->Contacto_Telefono || $sesion->cronograma->punto->Contacto_Correo)
-																	{
-														                $html = '<br><br><small class="text-muted">';
-														                $html .= $sesion->cronograma->punto->Contacto_Nombre ? 'Contacto: '.$sesion->cronograma->punto->Contacto_Nombre.'<br>' : '';
-														                $html .= $sesion->cronograma->punto->Contacto_Telefono ? 'Telefono: '.$sesion->cronograma->punto->Contacto_Telefono.'<br>' : '';
-														                $html .= $sesion->cronograma->punto->Contacto_Correo ? 'Correo: '.$sesion->cronograma->punto->Contacto_Correo.'<br>' : '';
-														                $html .= '</small>';
-														            }
+														if ($sesion->cronograma->punto->Contacto_Nombre || $sesion->cronograma->punto->Contacto_Telefono || $sesion->cronograma->punto->Contacto_Correo)
+														{
+															$html = '<br><br><small class="text-muted">';
+															$html .= $sesion->cronograma->punto->Contacto_Nombre ? 'Contacto: '.$sesion->cronograma->punto->Contacto_Nombre.'<br>' : '';
+															$html .= $sesion->cronograma->punto->Contacto_Telefono ? 'Telefono: '.$sesion->cronograma->punto->Contacto_Telefono.'<br>' : '';
+															$html .= $sesion->cronograma->punto->Contacto_Correo ? 'Correo: '.$sesion->cronograma->punto->Contacto_Correo.'<br>' : '';
+															$html .= '</small>';
+														}
 
-														            echo $html;
-																?>
-															</p>
-														</div>
-														<div class="col-md-12 form-group">
-															<label for="">Jornada</label>
-															<p class="form-control-static">{{ $sesion->getCode().' - '.$sesion->cronograma->jornada->toString() }}</p>
-														</div>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div id="map" style="height:230px;"></div>
+														echo $html;
+														?>
+													</p>
 												</div>
 											</div>
+										</div>
+										<div class="col-md-6">
+											<div id="map" style="height:300px;"></div>
+										</div>
+										<div class="col-md-12 form-group">
+											<label for="">Jornada</label>
+											<p class="form-control-static">{{ $sesion->getCode().' - '.$sesion->cronograma->jornada->toString() }}</p>
 										</div>
 										<div class="col-md-2 form-group">
 											<label for="">Fecha</label>

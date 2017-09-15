@@ -31,7 +31,7 @@ $(function()
                                     '</div>'+
                                     '<div class="row">'+
 			        					'<div class="col-md-12 form-group">'+
-			        						'<button disabled type="button" class="btn btn-sm btn-primary" id="Agregar'+e.Id_Persona+'" onclick="Agregar('+e.Id_Persona+');">Asignar</button>'+
+			        						'<button disabled type="button" class="btn btn-primary" id="Agregar'+e.Id_Persona+'" onclick="Agregar('+e.Id_Persona+');">Asignar</button>'+
 			        					'</div>'+
 			        				'</div>'+
                                 '</div>'+

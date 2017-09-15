@@ -42,9 +42,14 @@
                                 <small>Disponible en {{ count($jornada->puntos) }} puntos</small>
                             </td>
                             <td>
-                                <a data-role="editar" href="{{ url('jornadas/'.$jornada['Id_Jornada'].'/editar') }}" class="pull-right btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Editar">
-                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                </a>
+                                <div class="pull-right btn-group">
+                                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="" data-role="editar" href="{{ url('jornadas/'.$jornada['Id_Jornada'].'/editar') }}" >Editar</a></li>
+                                    </ul>
+                                </div>
                             </td>
                         </tr>
                     @endforeach

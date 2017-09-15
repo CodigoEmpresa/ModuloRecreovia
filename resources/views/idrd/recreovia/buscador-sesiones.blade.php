@@ -104,7 +104,7 @@
                                 <td data-role="Estado">{{ $sesion->Estado }}</td>
                                 <td data-priority="2">
                                     <div class="btn-group">
-                                        <button class="pull-right btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <button class="pull-right btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu">

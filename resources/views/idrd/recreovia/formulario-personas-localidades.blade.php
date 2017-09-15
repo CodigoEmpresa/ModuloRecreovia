@@ -60,7 +60,7 @@
                                         @foreach ($localidad->recreopersonas->filter(function($item){ return $item->pivot['tipo'] == 'Gestor'; })->all() as $gestor)
                                             <tr>
                                                 <td>{{ $gestor->persona['Primer_Apellido'].' '.$gestor->persona['Primer_Nombre'] }}</td>
-                                                <td><a class="btn btn-default btn-xs" href="{{ url('/localidades/'.$localidad->Id_Localidad.'/personal/'.$gestor['Id_Recreopersona'].'/remover') }}" data-toggle="tooltip" data-placement="bottom" title="Eliminar"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+                                                <td><a class="btn btn-default btn-sm" href="{{ url('/localidades/'.$localidad->Id_Localidad.'/personal/'.$gestor['Id_Recreopersona'].'/remover') }}" title="Eliminar"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
                                             </tr>
                                         @endforeach
                                     @endif

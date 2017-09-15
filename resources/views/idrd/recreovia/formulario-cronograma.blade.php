@@ -89,7 +89,7 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div id="map"></div>
+                            <div id="map" style="height:300px;"></div>
                         </div>
                         @if ($cronograma)
                             <div class="col-md-12">

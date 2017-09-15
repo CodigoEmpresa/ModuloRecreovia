@@ -59,8 +59,6 @@
                             <th>Sesiones</th>
                             <th data-priority="2"  class="no-sort" style="width: 30px;">
                             </th>
-                            <th data-priority="2"  class="no-sort" style="width: 30px;">
-                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -80,14 +78,18 @@
                                 <td>{{ $cronograma->jornada->toString() }}</td>
                                 <td>{{ count($cronograma->sesiones) }}</td>
                                 <td>
-                                    <a data-role="sesiones" href="{{ url('/gestores/'.$cronograma['Id'].'/sesiones') }}" class="pull-right btn btn-default btn-xs separe-right" data-toggle="tooltip" data-placement="bottom" title="Sesiones">
-                                        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-                                    </a>
-                                </td>
-                                <td>
-                                    <a data-role="editar" href="{{ url('/programacion/'.$cronograma['Id'].'/editar') }}" class="pull-right btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Editar">
-                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                    </a>
+                                    <div class="pull-right btn-group">
+                                        <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a data-role="editar" href="{{ url('/programacion/'.$cronograma['Id'].'/editar') }}">Editar</a>
+                                            </li>
+                                            <li>
+                                                <a data-role="sesiones" href="{{ url('/gestores/'.$cronograma['Id'].'/sesiones') }}">Sesiones</a>
+                                            </li>
+                                        </ul>
                                 </td>
                             </tr>
                         @endforeach
