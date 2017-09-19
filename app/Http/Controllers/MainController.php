@@ -63,8 +63,8 @@ class MainController extends Controller {
 
     public function index(Request $request)
 	{
-		//$fake_permissions = ['5144', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'];
-		$fake_permissions = null;
+		$fake_permissions = ['5144', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'];
+		//$fake_permissions = null;
 
 		if ($request->has('vector_modulo') || $fake_permissions)
 		{
@@ -85,7 +85,8 @@ class MainController extends Controller {
 				'exportar_consolidado_general' => array_key_exists(10, $permissions_array) ? intval($permissions_array[10]) : 0,
 				'gestion_global_de_sesiones' => array_key_exists(11, $permissions_array) ? intval($permissions_array[11]) : 0,
 				'buscador_de_sesiones' => array_key_exists(12, $permissions_array) ? intval($permissions_array[12]) : 0,
-				'ajustar_cronogramas' => array_key_exists(13, $permissions_array) ? intval($permissions_array[13]) : 0
+				'ajustar_cronogramas' => array_key_exists(13, $permissions_array) ? intval($permissions_array[13]) : 0,
+				'consultar_reportes' => array_key_exists(14, $permissions_array) ? intval($permissions_array[14]) : 0
 			];
 
 			$_SESSION['Usuario'] = $user_array;

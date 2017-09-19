@@ -1,4 +1,4 @@
-  @section('script')
+@section('script')
     @parent
 
     <!--<script src="{{ asset('public/Js/profesores/buscador.js') }}"></script>-->
@@ -44,11 +44,11 @@
                     </div>
                     <div class="col-md-2 form-group">
                         <label for="">Fecha inicio</label>
-                        <input name="fecha_inicio" type="text" placeholder="Fecha inicio" class="form-control" data-role="datepicker" data-fechas-importantes="{{ Festivos::create()->datesToString() }}" value="{{ old('fecha_inicio') }}">
+                        <input name="fecha_inicio" type="text" placeholder="Fecha inicio" class="form-control" data-role="datepicker" data-rel="fecha_inicio" data-fechas-importantes="{{ Festivos::create()->datesToString() }}" value="{{ old('fecha_inicio') }}">
                     </div>
                     <div class="col-md-2 form-group">
                         <label for="">Fecha fin</label>
-                        <input name="fecha_fin" type="text" placeholder="Fecha fin" class="form-control" data-role="datepicker" data-fechas-importantes="{{ Festivos::create()->datesToString() }}" value="{{ old('fecha_fin') }}">
+                        <input name="fecha_fin" type="text" placeholder="Fecha fin" class="form-control" data-role="datepicker" data-rel="fecha_fin" data-fechas-importantes="{{ Festivos::create()->datesToString() }}" value="{{ old('fecha_fin') }}">
                     </div>
                     <div class="col-md-2 form-group">
                         <label for="">&nbsp;</label><br>
