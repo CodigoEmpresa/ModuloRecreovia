@@ -35,6 +35,7 @@
                             <input type="hidden" name="_method" value="POST">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <button type="submit" class="btn btn-default"><i class="fa fa-search"></i> Buscar</button>
+                            <button id="seleccionar-todos" type="button" class="btn btn-link">Seleccionar todos</button>
                         </div>
                     </div>
                     <div class="row">
@@ -47,6 +48,8 @@
                                 <thead>
                                 <tr>
                                     <th style="width:30px !important;" width="30px;">#</th>
+                                    <th>Punto</th>
+                                    <th>Dirección</th>
                                     <th>Tipo</th>
                                     <th class="none">Profesor</th>
                                     <th class="none">Objetivo</th>

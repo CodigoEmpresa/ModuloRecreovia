@@ -46,6 +46,7 @@ class BuscadorController extends Controller
                 foreach ($cronograma->sesiones as &$sesion)
                 {
                     $sesion->load('profesor.persona');
+                    $sesion->Code = $sesion->getCode();
                 }
             }
         }
