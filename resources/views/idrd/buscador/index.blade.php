@@ -4,7 +4,7 @@
     @parent
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmhb8BVo311Mnvr35sv8VngIvXiiTnKQ4" defer></script>
-    <script src="{{ asset('public/Js/buscador/formulario.js') }}"></script>
+    <script src="{{ asset('public/Js/buscador/formulario.js?v=1') }}"></script>
 @stop
 
 @section('content')
@@ -28,7 +28,7 @@
                             </select>
                         </div>
                         <div class="col-xs-6 form-group">
-                            <label for="localidad">Fecha</label>
+                            <label for="fecha">Fecha</label>
                             <input type="text" name="Fecha" class="form-control" data-role="datepicker" placeholder="Fecha">
                         </div>
                         <div class="col-md-6">
