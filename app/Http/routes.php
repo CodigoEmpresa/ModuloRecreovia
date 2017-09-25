@@ -104,6 +104,7 @@ Route::group(['middleware' => ['web']], function()
 	Route::post('/informes/jornadas/generar', 'Recreovia\ReporteController@generarInformeJornadas');
 	Route::post('/informes/jornadas/actualizar', 'Recreovia\ReporteController@actualizarInformeJornadas');
 	Route::any('/informes/jornadas/revisar', 'Recreovia\ReporteController@obtenerInformes');
+	Route::post('/informes/actualizar_estado', 'Recreovia\ReporteController@actualizarEstado');
 
 	Route::any('/reportes/asistencia', 'Recreovia\ReporteAsistenciaController@index');
 

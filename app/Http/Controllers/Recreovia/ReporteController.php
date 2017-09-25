@@ -387,6 +387,16 @@ class ReporteController extends Controller {
         return response()->json($cronograma);
     }
 
+    public function actualizarEstado(Request $request)
+    {
+	    $reporte = Reporte::find($request->input('id'));
+
+	    $reporte->Estado = $request->input('estado');
+	    $reporte->save();
+
+        return response()->json(true);
+    }
+
 	private function obtenerSesionesInforme($sesiones)
 	{
 		$sesiones = Sesion::with('gruposPoblacionales', 'productoNoConforme', 'calificacionDelServicio', 'profesor.persona', 'cronograma.gestor.persona')

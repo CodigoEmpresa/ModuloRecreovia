@@ -2,10 +2,11 @@
     @parent
 
     <script src="{{ asset('public/Js/lista_reportes/buscador.js') }}"></script>
+    <script src="{{ asset('public/Js/lista_reportes/cambiador-estados.js') }}"></script>
 @stop
 
 <div class="content">
-    <div id="main" class="row" data-url="{{ url('profesores') }}">
+    <div id="main" class="row" data-url="{{ url('informes') }}">
         @if ($status == 'success')
             <div id="alerta" class="col-xs-12">
                 <div class="alert alert-success alert-dismissible" role="alert">
@@ -75,7 +76,7 @@
         <div class="col-xs-12"><br></div>
         <div class="col-xs-12">
             @if (count($elementos) > 0)
-                <table class="default display no-wrap responsive table table-min table-striped" width="100%">
+                <table id="informes" class="default display no-wrap responsive table table-min table-striped" width="100%">
                     <thead>
                         <tr>
                             <th class="all" style="width: 70px;">Cod.</th>
@@ -117,11 +118,11 @@
                                         break;
                                 }
                                 ?>
-                                <tr class="{{ $class }}">
+                                <tr data-id="{{ $reporte->Id }}" class="{{ $class }}">
                                     <td>{{ $reporte->getCode() }}</td>
                                     <td>{{ $reporte->punto->toString() }}</td>
                                     <td>{!! $reporte->toString() !!}</td>
-                                    <td>{{ empty($reporte->Estado) ? 'Pendiente' : $reporte->Estado }}</td>
+                                    <td data-role="Estado">{{ empty($reporte->Estado) ? 'Pendiente' : $reporte->Estado }}</td>
                                     <td>
                                         {{ $reporte->cronograma->gestor->persona->toFriendlyString() }}
                                     </td>
@@ -151,6 +152,9 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li><a href="{{ url('/informes/jornadas/'.$reporte['Id'].'/editar') }}">Editar</a></li>
+                                                <li><a data-role="estado" href="#">Rechazado</a></li>
+                                                <li><a data-role="estado" href="#">Corregir</a></li>
+                                                <li><a data-role="estado" href="#">Finalizado</a></li>
                                             </ul>
                                         </div>
                                     </td>
