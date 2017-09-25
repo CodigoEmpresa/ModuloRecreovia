@@ -210,6 +210,12 @@ div.oculto {
     color: #54b4eb;
 }
 
+.control-warning textarea,
+.control-warning input
+{
+	background-color: #fbec88;
+}
+
 .disponible {
     background-color: #f00 !important;
 }

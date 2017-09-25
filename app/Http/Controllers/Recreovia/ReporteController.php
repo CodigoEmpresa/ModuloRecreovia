@@ -315,6 +315,7 @@ class ReporteController extends Controller {
 				$reporte->Condiciones_Climaticas = $request->has('Condiciones_Climaticas') ? $request->input('Condiciones_Climaticas') : null;
 				$reporte->Estado = $request->has('Estado') ? $request->input('Estado') : $reporte->Estado;
 				$reporte->Observaciones = $request->input('Observaciones');
+				$reporte->Observaciones_Informe = $request->input('Observaciones_Informe');
 			break;
 			case 'informacion_profesores_de_actividad_fisica':
 				$profesores = [];

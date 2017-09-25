@@ -157,6 +157,10 @@
                                                     <p class="form-control-static">{{ $informe['Estado'] }}</p>
                                                 @endif
                                             </div>
+                                            <div class="col-md-12 form-group {{ $informe['Observaciones_Informe'] != '' ? 'has-warning control-warning' : '' }}">
+                                                <label for="">Observaciones informe</label>
+                                                <textarea name="Observaciones_Informe" class="form-control" >{{ $informe['Observaciones_Informe'] }}</textarea>
+                                            </div>
                                             <div class="col-md-12 form-group">
                                                 <label for="">Observaciones</label>
                                                 <textarea name="Observaciones" class="form-control">{{ $informe['Observaciones'] }}</textarea>
