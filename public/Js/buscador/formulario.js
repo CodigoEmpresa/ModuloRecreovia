@@ -35,7 +35,7 @@ $(function()
                 }
             ]
         });
-    }
+    };
 
     var map = new google.maps.Map($('#mapa-buscador').get(0), {
         center: {lat: latitud, lng: longitud},

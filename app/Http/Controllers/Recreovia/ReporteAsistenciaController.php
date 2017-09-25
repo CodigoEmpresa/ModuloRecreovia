@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Recreovia;
 
 use App\Modulos\Parques\Localidad;
+use App\Modulos\Recreovia\GrupoPoblacional;
 use App\Modulos\Recreovia\Jornada;
 use App\Http\Controllers\Controller;
 use App\Modulos\Recreovia\Reporte;
@@ -11,42 +12,46 @@ use Illuminate\Http\Request;
 
 class ReporteAsistenciaController extends Controller
 {
-    public function index() {
-        $data = [
-            'localidades' => Localidad::with('upz.puntos')->get(),
-            'jornadas' => Jornada::all(),
-            'seccion' => 'Reporte asistencia y participación'
-        ];
+    public function index(Request $request) {
+        $request->flash();
 
-        return view('idrd.recreovia.reporte-asistencia', $data);
-    }
+        if($request->isMethod('get')) {
+            $sesiones = null;
+        } else {
+            $qb = Reporte::with('sesiones.gruposPoblacionales');
+            $qb = $this->aplicarFiltros($qb, $request);
 
-    public function generar(Request $request) {
-        $qb = Reporte::with('sesiones.gruposPoblacionales');
-        $qb = $this->aplicarFiltros($qb, $request);
+            $elementos = $qb->where('Estado', 'Finalizado')
+                ->whereNull('deleted_at')
+                ->orderBy('Id', 'DESC')
+                ->get();
 
-        $elementos = $qb->where('Estado', 'Finalizado')
-                    ->whereNull('deleted_at')
-                    ->orderBy('Id', 'DESC')
-                    ->get();
+            $sesiones = collect([]);
 
-        $sesiones = collect([]);
-
-        foreach ($elementos as $reporte)
-        {
-            foreach ($reporte->sesiones as $sesion)
+            foreach ($elementos as $reporte)
             {
-                $exists = $sesiones->search(function($item, $key) use ($sesion)
+                foreach ($reporte->sesiones as $sesion)
                 {
-                    return $item->Id == $sesion->Id;
-                }, true);
+                    $exists = $sesiones->search(function($item, $key) use ($sesion)
+                    {
+                        return $item->Id == $sesion->Id;
+                    }, true);
 
-                if (is_bool($exists))
-                    $sesiones->push($sesion);
+                    if (is_bool($exists))
+                        $sesiones->push($sesion);
+                }
             }
         }
 
-        return response()->json(['sesiones' => $sesiones->toArray()]);
+        $data = [
+            'localidades' => Localidad::with('upz.puntos')->get(),
+            'jornadas' => Jornada::all(),
+            'gruposPoblacionales' => GrupoPoblacional::all(),
+            'seccion' => 'Reporte asistencia y participación',
+            'sesiones' => $sesiones
+        ];
+
+        return view('idrd.recreovia.reporte-asistencia', $data);
     }
 
     private function aplicarFiltros(Builder $qb, $request) {
