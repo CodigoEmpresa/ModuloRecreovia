@@ -135,7 +135,10 @@
                             @if ($_SESSION['Usuario']['Permisos']['consultar_reportes'])
                                 <li class="dropdown-header">Reportes</li>
                                 <li class="{{ $seccion && in_array($seccion, ['Reporte asistencia y participación']) ? 'active' : '' }}">
-                                    <a href="{{ url('/reportes/asistencia') }}">Participación y asistencia</a>
+                                    <a href="{{ url('/reportes/asistencia') }}">Reporte de participación y asistencia</a>
+                                </li>
+                                <li class="{{ $seccion && in_array($seccion, ['Reporte de actividades']) ? 'active' : '' }}">
+                                    <a href="{{ url('/reportes/actividades') }}">Reporte de actividades</a>
                                 </li>
                             @endif
                         </ul>

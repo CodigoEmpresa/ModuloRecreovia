@@ -54,4 +54,5 @@ $(function()
 
     $('select[name="id_jornada[]"]').selectpicker('val', $('select[name="id_jornada[]"]').data('value').split(','));
     $('select[name="id_localidad[]"]').selectpicker('val', $('select[name="id_localidad[]"]').data('value').split(',')).trigger('change');
+    $('select[name="sesion[]"]').selectpicker('val', $('select[name="sesion[]"]').data('value').split(',')).trigger('change');
 });

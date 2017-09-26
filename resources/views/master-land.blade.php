@@ -54,18 +54,20 @@
 <!-- Contenedor información módulo -->
 </br></br>
 </br></br>
-<div class="container-fluid">
-    <div class="col-sm-12">
-        <p class="text-primary">{{ $seccion ? $seccion : '' }}</p>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <p class="text-primary">{{ $seccion ? $seccion : '' }}</p>
+        </div>
     </div>
 </div>
 <!-- FIN Contenedor información módulo -->
 
 <!-- Contenedor panel principal -->
-<div class="container-fluid">
+<div class="container">
     @yield('content')
 </div>
-<div class="container-fluid">
+<div class="container">
     <div class="row">
         <div class="col-md-12">
             <br><br><br>

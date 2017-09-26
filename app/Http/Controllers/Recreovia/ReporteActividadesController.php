@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Recreovia;
 
+
 use App\Modulos\Parques\Localidad;
 use App\Modulos\Recreovia\GrupoPoblacional;
 use App\Modulos\Recreovia\Jornada;
@@ -10,15 +11,22 @@ use App\Modulos\Recreovia\Reporte;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
-class ReporteAsistenciaController extends Controller
+class ReporteActividadesController extends Controller
 {
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
         $request->flash();
 
         if($request->isMethod('get')) {
             $sesiones = null;
         } else {
-            $qb = Reporte::with('sesiones');
+            $qb = Reporte::with(['sesiones' => function($query) use ($request) {
+                $query->with('gruposPoblacionales');
+
+                if ($request->has('sesion')) {
+                    $query->whereIn('Objetivo_General', $request->input('sesion'));
+                }
+            }]);
             $qb = $this->aplicarFiltros($qb, $request);
 
             $elementos = $qb->where('Estado', 'Finalizado')
@@ -43,18 +51,27 @@ class ReporteAsistenciaController extends Controller
             }
         }
 
+        //dd($sesiones);
+
         $data = [
             'localidades' => Localidad::with('upz.puntos')->get(),
             'jornadas' => Jornada::all(),
             'gruposPoblacionales' => GrupoPoblacional::all(),
-            'seccion' => 'Reporte asistencia y participación',
+            'seccion' => 'Reporte de actividades',
             'sesiones' => $sesiones
         ];
 
-        return view('idrd.recreovia.reporte-asistencia', $data);
+        return view('idrd.recreovia.reporte-actividades', $data);
     }
 
     private function aplicarFiltros(Builder $qb, $request) {
+        if($request->has('sesion'))
+        {
+            $qb->whereHas('sesiones', function($query) use ($request) {
+                $query->whereIn('Objetivo_General', $request->input('sesion'));
+            });
+        }
+
         if($request->has('id_jornada'))
         {
             $qb->whereHas('cronograma', function($query) use ($request) {

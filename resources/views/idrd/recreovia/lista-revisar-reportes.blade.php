@@ -65,7 +65,7 @@
                         <input type="hidden" name="_method" value="POST">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <button type="submit" class="btn btn-success">Buscar</button>
-                        @if(in_array('Gestor', $_SESSION['Usuario']['Roles']))
+                        @if (in_array('Gestor', $_SESSION['Usuario']['Roles']))
                             <a class="btn btn-primary" href="{{ url('informes/jornadas/crear') }}">Crear</a>
                         @endif
                     </div>
@@ -154,6 +154,7 @@
                                                 <li><a href="{{ url('/informes/jornadas/'.$reporte['Id'].'/editar') }}">Editar</a></li>
                                                 <li><a data-role="estado" href="#">Rechazado</a></li>
                                                 <li><a data-role="estado" href="#">Corregir</a></li>
+                                                <li><a data-role="estado" href="#">Aprobado</a></li>
                                                 <li><a data-role="estado" href="#">Finalizado</a></li>
                                             </ul>
                                         </div>
