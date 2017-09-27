@@ -18,9 +18,9 @@ class ReporteActividadesController extends Controller
         $request->flash();
 
         if($request->isMethod('get')) {
-            $sesiones = null;
+            $registros = null;
         } else {
-            $qb = Reporte::with(['sesiones' => function($query) use ($request) {
+            $qb = Reporte::with(['cronograma', 'punto', 'sesiones' => function($query) use ($request) {
                 $query->with('gruposPoblacionales');
 
                 if ($request->has('sesion')) {
@@ -35,6 +35,7 @@ class ReporteActividadesController extends Controller
                 ->get();
 
             $sesiones = collect([]);
+            $puntos = [];
 
             foreach ($elementos as $reporte)
             {
@@ -49,16 +50,21 @@ class ReporteActividadesController extends Controller
                         $sesiones->push($sesion);
                 }
             }
+
+            foreach ($sesiones as $sesion)
+            {
+                $puntos[$sesion->Id_Punto] = [];
+            }
         }
 
-        //dd($sesiones);
+        dd($registros);
 
         $data = [
             'localidades' => Localidad::with('upz.puntos')->get(),
             'jornadas' => Jornada::all(),
             'gruposPoblacionales' => GrupoPoblacional::all(),
             'seccion' => 'Reporte de actividades',
-            'sesiones' => $sesiones
+            'sesiones' => $registros
         ];
 
         return view('idrd.recreovia.reporte-actividades', $data);
