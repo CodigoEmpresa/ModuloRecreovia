@@ -21,7 +21,9 @@ class ReporteActividadesController extends Controller
             $registros = null;
         } else {
             $qb = Reporte::with(['cronograma', 'punto', 'sesiones' => function($query) use ($request) {
-                $query->with('gruposPoblacionales');
+                $query->with(['gruposPoblacionales', 'cronograma' => function($cronograma) {
+                    $cronograma->with('jornada', 'punto');
+                }]);
 
                 if ($request->has('sesion')) {
                     $query->whereIn('Objetivo_General', $request->input('sesion'));
@@ -53,11 +55,30 @@ class ReporteActividadesController extends Controller
 
             foreach ($sesiones as $sesion)
             {
-                $puntos[$sesion->Id_Punto] = [];
+                if (!array_key_exists($sesion->Id_Punto, $puntos))
+                {
+                    $puntos[$sesion->Id_Punto] = [
+                        'punto' => $sesion->cronograma->punto,
+                        'jornadas' => []
+                    ];
+                }
+
+                if (array_key_exists($sesion->Id_Punto, $puntos))
+                {
+                    if(!array_key_exists($sesion->cronograma->jornadas, $puntos[$sesion->Id_Punto]['jornadas']))
+                    {
+                        
+                    }
+
+                    $puntos[$sesion->Id_Punto] = [
+                        'punto' => $sesion->cronograma->punto,
+                        'jornadas' => []
+                    ];
+                }
             }
         }
 
-        dd($registros);
+        //dd($registros);
 
         $data = [
             'localidades' => Localidad::with('upz.puntos')->get(),
