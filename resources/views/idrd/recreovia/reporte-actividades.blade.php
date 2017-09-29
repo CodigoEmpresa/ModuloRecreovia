@@ -6,7 +6,16 @@
     <script>
         $(function(e)
         {
-            $('table').DataTable({
+            $('table tfoot th').each(function () {
+                var title = $(this).text();
+                var columnas = ["Hombres", "Mujeres", "Total"];
+
+                if ($.inArray(title, columnas) < 0){
+                    $(this).html('<input type="text" placeholder="Filtrar"/>');
+                }
+            });
+
+            var table = $('table').DataTable({
                 dom: 'Bfrtip',
                 responsive: true,
                 lengthChange: false,
@@ -20,7 +29,84 @@
                         targets: 'no-sort',
                         orderable: false
                     }
-                ]
+                ],
+                footerCallback: function ( row, data, start, end, display ) {
+                    var api = this.api(), data;
+
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function ( i ) {
+                        return typeof i === 'string' ?
+                            i.replace(/[\$,]/g, '')*1 :
+                            typeof i === 'number' ?
+                                i : 0;
+                    };
+
+                    total_h = api
+                        .column( 5 )
+                        .data()
+                        .reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+
+                    pagina_total_h = api
+                        .column( 5, { page: 'current'} )
+                        .data()
+                        .reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+
+                    total_m = api
+                        .column( 6 )
+                        .data()
+                        .reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+
+                    pagina_total_m = api
+                        .column( 6, { page: 'current'} )
+                        .data()
+                        .reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+
+                    total = api
+                        .column( 7 )
+                        .data()
+                        .reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+
+                    pagina_total = api
+                        .column( 7, { page: 'current'} )
+                        .data()
+                        .reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+
+                    // Update footer
+                    $( api.column( 5 ).footer() ).html(
+                        pagina_total_h+'  /  '+ total_h
+                    );
+
+                    $( api.column( 6 ).footer() ).html(
+                        pagina_total_m+'  /  '+ total_m
+                    );
+
+                    $( api.column( 7 ).footer() ).html(
+                        pagina_total+'  /  '+ total
+                    );
+                }
+            });
+
+            table.columns().every( function () {
+                var that = this;
+                $( 'input', this.footer() ).on( 'keyup change', function () {
+                    if ( that.search() !== this.value ) {
+                        that
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
             });
         });
     </script>
@@ -111,8 +197,8 @@
                                         <th>Jornada</th>
                                         <th>Tipo</th>
                                         <th>Sesiones</th>
-                                        <th>Participación</th>
-                                        <th>Asistencia</th>
+                                        <th>Hombres</th>
+                                        <th>Mujeres</th>
                                         <th>Total</th>
                                     </tr>
                                 </thead>
@@ -121,15 +207,15 @@
                                         @foreach($punto['jornadas'] as $jornada)
                                             @foreach($jornada['sesiones'] as $key => $grupos_sesiones)
                                                 <?php
-                                                    $participantes = 0;
-                                                    $asistentes = 0;
+                                                    $hombres = 0;
+                                                    $mujeres = 0;
                                                 ?>
                                                 @foreach($grupos_sesiones as $sesion)
-                                                    @foreach ($sesion->gruposPoblacionales()->where('Grupo_Asistencia', 'Participantes')->get() as $participacion)
-                                                        <?php $participantes += +$participacion->pivot['Cantidad']; ?>
+                                                    @foreach ($sesion->gruposPoblacionales()->where('Genero', 'M')->get() as $participacion_hombres)
+                                                        <?php $hombres += +$participacion_hombres->pivot['Cantidad']; ?>
                                                     @endforeach
-                                                    @foreach ($sesion->gruposPoblacionales()->where('Grupo_Asistencia', 'Asistentes')->get() as $asistencia)
-                                                        <?php $asistentes += +$asistencia->pivot['Cantidad']; ?>
+                                                    @foreach ($sesion->gruposPoblacionales()->where('Genero', 'F')->get() as $participacion_mujeres)
+                                                        <?php $mujeres += +$participacion_mujeres->pivot['Cantidad']; ?>
                                                     @endforeach
                                                 @endforeach
 
@@ -140,15 +226,25 @@
                                                         <td>{{ $jornada['jornada']->toString() }}</td>
                                                         <td>{{ $key }}</td>
                                                         <td>{{ count($jornada['sesiones'][$key])  }}</td>
-                                                        <td>{{ $participantes }}</td>
-                                                        <td>{{ $asistentes }}</td>
-                                                        <td>{{ $participantes + $asistentes }}</td>
+                                                        <td>{{ $hombres }}</td>
+                                                        <td>{{ $mujeres }}</td>
+                                                        <td>{{ $hombres + $mujeres }}</td>
                                                     </tr>
                                                 @endif
                                             @endforeach
                                         @endforeach
                                     @endforeach
                                 </tbody>
+                                <tfoot>
+                                    <th>Punto</th>
+                                    <th>Direccion</th>
+                                    <th>Jornada</th>
+                                    <th>Tipo</th>
+                                    <th>Sesiones</th>
+                                    <th>Hombres</th>
+                                    <th>Mujeres</th>
+                                    <th>Total</th>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
