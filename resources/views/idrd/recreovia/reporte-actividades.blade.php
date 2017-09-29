@@ -20,7 +20,8 @@
                 responsive: true,
                 lengthChange: false,
                 scrollCollapse: true,
-                paging: false,
+                paging: true,
+                pageLength: 20,
                 buttons: [
                     'copy', 'excel', {extend: 'pdfHtml5', orientation: 'landscape', pageSize: 'LEGAL'}
                 ],
