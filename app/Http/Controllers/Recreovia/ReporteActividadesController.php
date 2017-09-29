@@ -18,7 +18,7 @@ class ReporteActividadesController extends Controller
         $request->flash();
 
         if($request->isMethod('get')) {
-            $registros = null;
+            $puntos = null;
         } else {
             $qb = Reporte::with(['cronograma', 'punto', 'sesiones' => function($query) use ($request) {
                 $query->with(['gruposPoblacionales', 'cronograma' => function($cronograma) {
@@ -29,6 +29,7 @@ class ReporteActividadesController extends Controller
                     $query->whereIn('Objetivo_General', $request->input('sesion'));
                 }
             }]);
+
             $qb = $this->aplicarFiltros($qb, $request);
 
             $elementos = $qb->where('Estado', 'Finalizado')
@@ -55,37 +56,53 @@ class ReporteActividadesController extends Controller
 
             foreach ($sesiones as $sesion)
             {
-                if (!array_key_exists($sesion->Id_Punto, $puntos))
+
+                if (!array_key_exists($sesion->cronograma->punto['Id_Punto'], $puntos))
                 {
-                    $puntos[$sesion->Id_Punto] = [
+                    $puntos[$sesion->cronograma->punto['Id_Punto']] = [
                         'punto' => $sesion->cronograma->punto,
                         'jornadas' => []
                     ];
                 }
 
-                if (array_key_exists($sesion->Id_Punto, $puntos))
+                if (array_key_exists($sesion->cronograma->punto['Id_Punto'], $puntos))
                 {
-                    if(!array_key_exists($sesion->cronograma->jornadas, $puntos[$sesion->Id_Punto]['jornadas']))
+                    if (!array_key_exists($sesion->cronograma->jornada['Id_Jornada'], $puntos[$sesion->cronograma->punto['Id_Punto']]['jornadas']))
                     {
-                        
+                        $puntos[$sesion->cronograma->punto['Id_Punto']]['jornadas'][$sesion->cronograma->jornada['Id_Jornada']] = [
+                            'jornada' => $sesion->cronograma->jornada,
+                            'sesiones' => [
+                                'Gimnasia de Mantenimiento (GM)' => [],
+                                'Estimulación Muscular (EM)' => [],
+                                'Movilidad Articular (MA)' => [],
+                                'Rumba Tropical Folclorica (RTF)' => [],
+                                'Actividad Rítmica para Niños (ARN) Rumba para Niños' => [],
+                                'Gimnasia Aeróbica Musicalizada (GAM)' => [],
+                                'Artes Marciales Musicalizadas (AMM)' => [],
+                                'Gimnasia Psicofísica (GPF)' => [],
+                                'Pilates (Pil)' => [],
+                                'Taller de Danzas (TD)' => [],
+                                'Gimnasio Saludable al Aire Libre (GSAL)' => []
+                            ]
+                        ];
                     }
 
-                    $puntos[$sesion->Id_Punto] = [
-                        'punto' => $sesion->cronograma->punto,
-                        'jornadas' => []
-                    ];
+                    if (array_key_exists($sesion->cronograma->jornada['Id_Jornada'], $puntos[$sesion->cronograma->punto['Id_Punto']]['jornadas']))
+                    {
+                        $puntos[$sesion->cronograma->punto['Id_Punto']]['jornadas'][$sesion->cronograma->jornada['Id_Jornada']]['sesiones'][$sesion->Objetivo_General][] = $sesion;
+                    }
                 }
             }
         }
 
-        //dd($registros);
+        //dd($puntos);
 
         $data = [
             'localidades' => Localidad::with('upz.puntos')->get(),
             'jornadas' => Jornada::all(),
             'gruposPoblacionales' => GrupoPoblacional::all(),
             'seccion' => 'Reporte de actividades',
-            'sesiones' => $registros
+            'puntos' => $puntos
         ];
 
         return view('idrd.recreovia.reporte-actividades', $data);

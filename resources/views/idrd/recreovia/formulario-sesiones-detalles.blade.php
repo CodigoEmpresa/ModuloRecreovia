@@ -1,3 +1,4 @@
+
 @section('script')
     @parent
 
@@ -167,19 +168,19 @@
 											<p id="detalle_objetivo_general" class="form-control-static"></p>
 										</div>
 										<div class="col-md-6 form-group">
-											<label for="">Objetivo específico 1</label>
+											<label for="">Objetivo 1. Educativo</label>
 											<textarea class="form-control" name="Objetivos_Especificos">{{ $sesion ? $sesion['Objetivos_Especificos'] : old('Objetivos_Especificos') }}</textarea>
 										</div>
 										<div class="col-md-6 form-group">
-											<label for="">Objetivo específico 2</label>
+											<label for="">Objetivo 2. Fisiológico</label>
 											<textarea class="form-control" name="Objetivos_Especificos_1">{{ $sesion ? $sesion['Objetivos_Especificos_1'] : old('Objetivos_Especificos_1') }}</textarea>
 										</div>
 										<div class="col-md-6 form-group">
-											<label for="">Objetivo específico 3</label>
+											<label for="">Objetivo 3. Social</label>
 											<textarea class="form-control" name="Objetivos_Especificos_2">{{ $sesion ? $sesion['Objetivos_Especificos_2'] : old('Objetivos_Especificos_2') }}</textarea>
 										</div>
 										<div class="col-md-6 form-group">
-											<label for="">Objetivo específico 4</label>
+											<label for="">Objetivo 4. Institucional</label>
 											<textarea class="form-control" name="Objetivos_Especificos_3">{{ $sesion ? $sesion['Objetivos_Especificos_3'] : old('Objetivos_Especificos_3') }}</textarea>
 										</div>
 										<div class="col-md-12">

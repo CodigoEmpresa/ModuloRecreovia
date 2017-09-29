@@ -92,6 +92,67 @@
                         <hr>
                     </div>
                 </div>
+                @if($puntos)
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 class="panel-title">
+                                ACTIVIDADES
+                            </h4>
+                        </div>
+                        <div class="col-md-12">
+                            <br>
+                        </div>
+                        <div class="col-md-12">
+                            <table id="actividades" class="display nowrap table table-bordered table-min">
+                                <thead>
+                                    <tr>
+                                        <th>Punto</th>
+                                        <th>Direccion</th>
+                                        <th>Jornada</th>
+                                        <th>Tipo</th>
+                                        <th>Sesiones</th>
+                                        <th>Participación</th>
+                                        <th>Asistencia</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($puntos as $punto)
+                                        @foreach($punto['jornadas'] as $jornada)
+                                            @foreach($jornada['sesiones'] as $key => $grupos_sesiones)
+                                                <?php
+                                                    $participantes = 0;
+                                                    $asistentes = 0;
+                                                ?>
+                                                @foreach($grupos_sesiones as $sesion)
+                                                    @foreach ($sesion->gruposPoblacionales()->where('Grupo_Asistencia', 'Participantes')->get() as $participacion)
+                                                        <?php $participantes += +$participacion->pivot['Cantidad']; ?>
+                                                    @endforeach
+                                                    @foreach ($sesion->gruposPoblacionales()->where('Grupo_Asistencia', 'Asistentes')->get() as $asistencia)
+                                                        <?php $asistentes += +$asistencia->pivot['Cantidad']; ?>
+                                                    @endforeach
+                                                @endforeach
+
+                                                @if(count($jornada['sesiones'][$key]) > 0)
+                                                    <tr>
+                                                        <td>{{ $punto['punto']->Escenario }}</td>
+                                                        <td>{{ $punto['punto']->Direccion }}</td>
+                                                        <td>{{ $jornada['jornada']->toString() }}</td>
+                                                        <td>{{ $key }}</td>
+                                                        <td>{{ count($jornada['sesiones'][$key])  }}</td>
+                                                        <td>{{ $participantes }}</td>
+                                                        <td>{{ $asistentes }}</td>
+                                                        <td>{{ $participantes + $asistentes }}</td>
+                                                    </tr>
+                                                @endif
+                                            @endforeach
+                                        @endforeach
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                @endif
             </form>
         </div>
     </div>
