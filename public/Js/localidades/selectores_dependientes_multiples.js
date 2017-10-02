@@ -57,5 +57,5 @@ $(function()
 
     $('select[name="id_localidad[]"]').selectpicker('val', ($('select[name="id_localidad[]"]').data('value')).toString().split(',')).trigger('change');
 
-    $('select[name="sesion[]"]').selectpicker('val', ($('select[name="sesion[]"]').data('value').split(',')).toString()).trigger('change');
+    $('select[name="sesion[]"]').selectpicker('val', ($('select[name="sesion[]"]').data('value')).toString().split(',')).trigger('change');
 });

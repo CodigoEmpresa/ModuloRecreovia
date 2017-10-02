@@ -2,7 +2,7 @@
 
 @section('script')
     @parent
-    <script src="{{ asset('public/Js/localidades/selectores_dependientes_multiples.js') }}"></script>
+    <script src="{{ asset('public/Js/localidades/selectores_dependientes_multiples.js?v=3') }}"></script>
     <script>
         $(function(e)
         {
@@ -127,7 +127,7 @@
                         </select>
                     </div>
                     <div class="col-md-3 form-group">
-                        <label for="">Sesion</label>
+                        <label for="">Sesión</label>
                         <select name="sesion[]" data-value="{!! implode(',', old('sesion', [])) !!}" data-live-search="true" data-live-search="true" data-actions-box="true" data-select-all-text="Seleccionar todos" data-deselect-all-text="Deseleccionar todos" class="form-control" title="Seleccionar" multiple>
                             <option value="Gimnasia de Mantenimiento (GM)">Gimnasia de Mantenimiento (GM)</option>
                             <option value="Estimulación Muscular (EM)">Estimulación Muscular (EM)</option>
@@ -206,6 +206,7 @@
                                         <th>Direccion</th>
                                         <th>Jornada</th>
                                         <th>Tipo</th>
+                                        <th class="none">Reporte</th>
                                         <th>Sesiones</th>
                                         <th>Hombres</th>
                                         <th>Mujeres</th>
@@ -215,6 +216,10 @@
                                 <tbody>
                                     @foreach($puntos as $punto)
                                         @foreach($punto['jornadas'] as $jornada)
+                                            <?php $reportes = '' ?>
+                                            @foreach($jornada['reportes'] as $reporte)
+                                                <?php $reportes .= '<br>'.$reporte->getCode().': '.$reporte['Dias'] ?>
+                                            @endforeach
                                             @if(!old('agrupar_tipos_de_sesion'))
                                                 @foreach($jornada['sesiones'] as $key => $grupos_sesiones)
                                                     <?php
@@ -237,6 +242,7 @@
                                                             <td>{{ $punto['punto']->Direccion }}</td>
                                                             <td>{{ $jornada['jornada']->toString() }}</td>
                                                             <td>{{ $key }}</td>
+                                                            <td>{!! $reportes !!}</td>
                                                             <td>{{ count($jornada['sesiones'][$key])  }}</td>
                                                             <td>{{ $hombres }}</td>
                                                             <td>{{ $mujeres }}</td>
@@ -271,6 +277,7 @@
                                                     <td>{{ $punto['punto']->Direccion }}</td>
                                                     <td>{{ $jornada['jornada']->toString() }}</td>
                                                     <td>Todas</td>
+                                                    <td>{!! $reportes !!}</td>
                                                     <td>{{ $sesiones }}</td>
                                                     <td>{{ $hombres }}</td>
                                                     <td>{{ $mujeres }}</td>
@@ -286,6 +293,7 @@
                                     <th>Direccion</th>
                                     <th>Jornada</th>
                                     <th>Tipo</th>
+                                    <th>Reportes</th>
                                     <th>Sesiones</th>
                                     <th>Hombres</th>
                                     <th>Mujeres</th>

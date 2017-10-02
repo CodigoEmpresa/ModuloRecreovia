@@ -32,6 +32,10 @@ Route::any('/logout', 'MainController@logout');
 Route::any('/', 'MainController@index');
 Route::any('PersonasActividadesProceso', '\Idrd\Usuarios\Controllers\AsignarActividadController@PersonasActividadesProceso');
 
+Route::get('/checktimezone', function(){
+    echo date('Y-m-d H:i:s');
+});
+
 //rutas con filtro de autenticación
 Route::group(['middleware' => ['web']], function()
 {
