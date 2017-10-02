@@ -20,7 +20,7 @@ class ReporteActividadesController extends Controller
         if($request->isMethod('get')) {
             $puntos = null;
         } else {
-            $qb = Reporte::with(['cronograma', 'punto', 'sesiones' => function($query) use ($request) {
+            $qb = Reporte::with(['cronograma', 'punto.localidad', 'sesiones' => function($query) use ($request) {
                 $query->with(['gruposPoblacionales', 'cronograma' => function($cronograma) {
                     $cronograma->with('jornada', 'punto');
                 }]);

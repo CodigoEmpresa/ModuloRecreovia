@@ -19,7 +19,7 @@ $(function()
            });
 
            $('select[name="id_upz[]"]').selectpicker('refresh');
-           $('select[name="id_upz[]"]').selectpicker('val', $('select[name="id_upz[]"]').data('value').split(',')).trigger('change');
+           $('select[name="id_upz[]"]').selectpicker('val', ($('select[name="id_upz[]"]').data('value')).toString().split(',')).trigger('change');
        });
     });
 
@@ -49,10 +49,13 @@ $(function()
         });
 
         $('select[name="id_punto[]"]').selectpicker('refresh');
-        $('select[name="id_punto[]"]').selectpicker('val', $('select[name="id_punto[]"]').data('value').split(',')).trigger('change');
+
+        $('select[name="id_punto[]"]').selectpicker('val', ($('select[name="id_punto[]"]').data('value')).toString().split(',')).trigger('change');
     });
 
-    $('select[name="id_jornada[]"]').selectpicker('val', $('select[name="id_jornada[]"]').data('value').split(','));
-    $('select[name="id_localidad[]"]').selectpicker('val', $('select[name="id_localidad[]"]').data('value').split(',')).trigger('change');
-    $('select[name="sesion[]"]').selectpicker('val', $('select[name="sesion[]"]').data('value').split(',')).trigger('change');
+    $('select[name="id_jornada[]"]').selectpicker('val', ($('select[name="id_jornada[]"]').data('value')).toString().split(','));
+
+    $('select[name="id_localidad[]"]').selectpicker('val', ($('select[name="id_localidad[]"]').data('value')).toString().split(',')).trigger('change');
+
+    $('select[name="sesion[]"]').selectpicker('val', ($('select[name="sesion[]"]').data('value').split(',')).toString()).trigger('change');
 });

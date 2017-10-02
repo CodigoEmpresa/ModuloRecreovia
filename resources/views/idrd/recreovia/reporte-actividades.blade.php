@@ -201,6 +201,7 @@
                             <table id="actividades" class="display nowrap table table-bordered table-min">
                                 <thead>
                                     <tr>
+                                        <th>Localidad</th>
                                         <th>Punto</th>
                                         <th>Direccion</th>
                                         <th>Jornada</th>
@@ -231,6 +232,7 @@
 
                                                     @if(count($jornada['sesiones'][$key]) > 0)
                                                         <tr>
+                                                            <td>{{ $punto['punto']->localidad['Localidad'] }}</td>
                                                             <td>{{ $punto['punto']->Escenario }}</td>
                                                             <td>{{ $punto['punto']->Direccion }}</td>
                                                             <td>{{ $jornada['jornada']->toString() }}</td>
@@ -264,6 +266,7 @@
                                                     @endif
                                                 @endforeach
                                                 <tr>
+                                                    <td>{{ $punto['punto']->localidad['Localidad'] }}</td>
                                                     <td>{{ $punto['punto']->Escenario }}</td>
                                                     <td>{{ $punto['punto']->Direccion }}</td>
                                                     <td>{{ $jornada['jornada']->toString() }}</td>
@@ -278,6 +281,7 @@
                                     @endforeach
                                 </tbody>
                                 <tfoot>
+                                    <th>Localidad</th>
                                     <th>Punto</th>
                                     <th>Direccion</th>
                                     <th>Jornada</th>
