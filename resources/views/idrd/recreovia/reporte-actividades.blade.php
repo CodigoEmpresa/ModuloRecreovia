@@ -168,6 +168,14 @@
                         <label for="">Fecha fin</label>
                         <input name="fecha_fin" value="{!! old('fecha_fin', '') !!}" placeholder="Fecha fin" class="form-control" data-role="datepicker" data-rel="fecha_fin" data-fechas-importantes="{{ Festivos::create()->datesToString() }}" value="{{ old('fecha_fin') }}">
                     </div>
+                    <div class="col-md-3 form-group">
+                        <label for=""><br></label>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="1" name="agrupar_tipos_de_sesion" {{ old('agrupar_tipos_de_sesion') ? 'checked' : '' }}> Agrupar tipos de sesión.
+                            </label>
+                        </div>
+                    </div>
                     <div class="col-md-12">
                         <input type="hidden" name="_method" value="POST">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -206,33 +214,66 @@
                                 <tbody>
                                     @foreach($puntos as $punto)
                                         @foreach($punto['jornadas'] as $jornada)
-                                            @foreach($jornada['sesiones'] as $key => $grupos_sesiones)
+                                            @if(!old('agrupar_tipos_de_sesion'))
+                                                @foreach($jornada['sesiones'] as $key => $grupos_sesiones)
+                                                    <?php
+                                                        $hombres = 0;
+                                                        $mujeres = 0;
+                                                    ?>
+                                                    @foreach($grupos_sesiones as $sesion)
+                                                        @foreach ($sesion->gruposPoblacionales()->where('Genero', 'M')->get() as $participacion_hombres)
+                                                            <?php $hombres += +$participacion_hombres->pivot['Cantidad']; ?>
+                                                        @endforeach
+                                                        @foreach ($sesion->gruposPoblacionales()->where('Genero', 'F')->get() as $participacion_mujeres)
+                                                            <?php $mujeres += +$participacion_mujeres->pivot['Cantidad']; ?>
+                                                        @endforeach
+                                                    @endforeach
+
+                                                    @if(count($jornada['sesiones'][$key]) > 0)
+                                                        <tr>
+                                                            <td>{{ $punto['punto']->Escenario }}</td>
+                                                            <td>{{ $punto['punto']->Direccion }}</td>
+                                                            <td>{{ $jornada['jornada']->toString() }}</td>
+                                                            <td>{{ $key }}</td>
+                                                            <td>{{ count($jornada['sesiones'][$key])  }}</td>
+                                                            <td>{{ $hombres }}</td>
+                                                            <td>{{ $mujeres }}</td>
+                                                            <td>{{ $hombres + $mujeres }}</td>
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+                                            @else
                                                 <?php
                                                     $hombres = 0;
                                                     $mujeres = 0;
+                                                    $sesiones = 0;
                                                 ?>
-                                                @foreach($grupos_sesiones as $sesion)
-                                                    @foreach ($sesion->gruposPoblacionales()->where('Genero', 'M')->get() as $participacion_hombres)
-                                                        <?php $hombres += +$participacion_hombres->pivot['Cantidad']; ?>
+                                                @foreach($jornada['sesiones'] as $key => $grupos_sesiones)
+                                                    @foreach($grupos_sesiones as $sesion)
+                                                        @foreach ($sesion->gruposPoblacionales()->where('Genero', 'M')->get() as $participacion_hombres)
+                                                            <?php $hombres += +$participacion_hombres->pivot['Cantidad']; ?>
+                                                        @endforeach
+                                                        @foreach ($sesion->gruposPoblacionales()->where('Genero', 'F')->get() as $participacion_mujeres)
+                                                            <?php $mujeres += +$participacion_mujeres->pivot['Cantidad']; ?>
+                                                        @endforeach
                                                     @endforeach
-                                                    @foreach ($sesion->gruposPoblacionales()->where('Genero', 'F')->get() as $participacion_mujeres)
-                                                        <?php $mujeres += +$participacion_mujeres->pivot['Cantidad']; ?>
-                                                    @endforeach
+                                                    @if(count($jornada['sesiones'][$key]) > 0)
+                                                        <?php
+                                                            $sesiones += count($jornada['sesiones'][$key]);
+                                                        ?>
+                                                    @endif
                                                 @endforeach
-
-                                                @if(count($jornada['sesiones'][$key]) > 0)
-                                                    <tr>
-                                                        <td>{{ $punto['punto']->Escenario }}</td>
-                                                        <td>{{ $punto['punto']->Direccion }}</td>
-                                                        <td>{{ $jornada['jornada']->toString() }}</td>
-                                                        <td>{{ $key }}</td>
-                                                        <td>{{ count($jornada['sesiones'][$key])  }}</td>
-                                                        <td>{{ $hombres }}</td>
-                                                        <td>{{ $mujeres }}</td>
-                                                        <td>{{ $hombres + $mujeres }}</td>
-                                                    </tr>
-                                                @endif
-                                            @endforeach
+                                                <tr>
+                                                    <td>{{ $punto['punto']->Escenario }}</td>
+                                                    <td>{{ $punto['punto']->Direccion }}</td>
+                                                    <td>{{ $jornada['jornada']->toString() }}</td>
+                                                    <td>Todas</td>
+                                                    <td>{{ $sesiones }}</td>
+                                                    <td>{{ $hombres }}</td>
+                                                    <td>{{ $mujeres }}</td>
+                                                    <td>{{ $hombres + $mujeres }}</td>
+                                                </tr>
+                                            @endif
                                         @endforeach
                                     @endforeach
                                 </tbody>
