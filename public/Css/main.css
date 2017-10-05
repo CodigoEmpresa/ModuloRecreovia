@@ -224,6 +224,11 @@ div.oculto {
 	.container {
 		width: 1280px;
 	}
+
+	.container-land {
+		width: 1920px;
+		margin: 0 auto;
+	}
 }
 
 div#buscador {

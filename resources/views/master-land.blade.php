@@ -54,7 +54,7 @@
 <!-- Contenedor información módulo -->
 </br></br>
 </br></br>
-<div class="container">
+<div class="container-land">
     <div class="row">
         <div class="col-sm-12">
             <p class="text-primary">{{ $seccion ? $seccion : '' }}</p>
@@ -64,10 +64,10 @@
 <!-- FIN Contenedor información módulo -->
 
 <!-- Contenedor panel principal -->
-<div class="container">
+<div class="container-land">
     @yield('content')
 </div>
-<div class="container">
+<div class="container-land">
     <div class="row">
         <div class="col-md-12">
             <br><br><br>

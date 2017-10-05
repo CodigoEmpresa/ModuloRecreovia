@@ -71,7 +71,7 @@ class ReporteActividadesController extends Controller
                     {
                         $puntos[$sesion->cronograma->punto['Id_Punto']]['jornadas'][$sesion->cronograma->jornada['Id_Jornada']] = [
                             'jornada' => $sesion->cronograma->jornada,
-                            'reportes' => $elementos->where('Id_Cronograma', strval($sesion->cronograma['Id']))->all(),
+                            'reportes' => $elementos->where('Id_Cronograma', $sesion->cronograma['Id'])->all(),
                             'sesiones' => [
                                 'Gimnasia de Mantenimiento (GM)' => [],
                                 'Estimulación Muscular (EM)' => [],

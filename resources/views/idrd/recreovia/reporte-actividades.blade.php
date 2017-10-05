@@ -42,58 +42,76 @@
                                 i : 0;
                     };
 
-                    total_h = api
-                        .column( 5 )
-                        .data()
-                        .reduce( function (a, b) {
-                            return intVal(a) + intVal(b);
-                        }, 0 );
-
-                    pagina_total_h = api
-                        .column( 5, { page: 'current'} )
-                        .data()
-                        .reduce( function (a, b) {
-                            return intVal(a) + intVal(b);
-                        }, 0 );
-
-                    total_m = api
+                    total_s = api
                         .column( 6 )
                         .data()
                         .reduce( function (a, b) {
                             return intVal(a) + intVal(b);
                         }, 0 );
 
-                    pagina_total_m = api
+                    pagina_total_s = api
                         .column( 6, { page: 'current'} )
                         .data()
                         .reduce( function (a, b) {
                             return intVal(a) + intVal(b);
                         }, 0 );
 
-                    total = api
+                    total_h = api
                         .column( 7 )
                         .data()
                         .reduce( function (a, b) {
                             return intVal(a) + intVal(b);
                         }, 0 );
 
-                    pagina_total = api
+                    pagina_total_h = api
                         .column( 7, { page: 'current'} )
                         .data()
                         .reduce( function (a, b) {
                             return intVal(a) + intVal(b);
                         }, 0 );
 
-                    // Update footer
-                    $( api.column( 5 ).footer() ).html(
-                        pagina_total_h+'  /  '+ total_h
-                    );
+                    total_m = api
+                        .column( 8 )
+                        .data()
+                        .reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
 
+                    pagina_total_m = api
+                        .column( 8, { page: 'current'} )
+                        .data()
+                        .reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+
+                    total = api
+                        .column( 9 )
+                        .data()
+                        .reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+
+                    pagina_total = api
+                        .column( 9, { page: 'current'} )
+                        .data()
+                        .reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+
+                    // Update footer
                     $( api.column( 6 ).footer() ).html(
-                        pagina_total_m+'  /  '+ total_m
+                        pagina_total_s+'  /  '+ total_s
                     );
 
                     $( api.column( 7 ).footer() ).html(
+                        pagina_total_h+'  /  '+ total_h
+                    );
+
+                    $( api.column( 8 ).footer() ).html(
+                        pagina_total_m+'  /  '+ total_m
+                    );
+
+                    $( api.column( 9 ).footer() ).html(
                         pagina_total+'  /  '+ total
                     );
                 }
@@ -206,6 +224,7 @@
                                         <th>Direccion</th>
                                         <th>Jornada</th>
                                         <th>Tipo</th>
+                                        <th>Reportes</th>
                                         <th class="none">Reporte</th>
                                         <th>Sesiones</th>
                                         <th>Hombres</th>
@@ -242,6 +261,7 @@
                                                             <td>{{ $punto['punto']->Direccion }}</td>
                                                             <td>{{ $jornada['jornada']->toString() }}</td>
                                                             <td>{{ $key }}</td>
+                                                            <td>{{ count($jornada['reportes']) }}</td>
                                                             <td>{!! $reportes !!}</td>
                                                             <td>{{ count($jornada['sesiones'][$key])  }}</td>
                                                             <td>{{ $hombres }}</td>
@@ -277,6 +297,7 @@
                                                     <td>{{ $punto['punto']->Direccion }}</td>
                                                     <td>{{ $jornada['jornada']->toString() }}</td>
                                                     <td>Todas</td>
+                                                    <td>{{ count($jornada['reportes']) }}</td>
                                                     <td>{!! $reportes !!}</td>
                                                     <td>{{ $sesiones }}</td>
                                                     <td>{{ $hombres }}</td>
@@ -293,6 +314,7 @@
                                     <th>Direccion</th>
                                     <th>Jornada</th>
                                     <th>Tipo</th>
+                                    <th>Reportes</th>
                                     <th>Reportes</th>
                                     <th>Sesiones</th>
                                     <th>Hombres</th>
