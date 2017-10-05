@@ -107,7 +107,7 @@
                     ($_SESSION['Usuario']['Permisos']['gestionar_reportes_jornadas'] && in_array('Gestor', $_SESSION['Usuario']['Roles'])) ||
                     ($_SESSION['Usuario']['Permisos']['gestionar_reportes_jornadas'] && in_array('Profesor', $_SESSION['Usuario']['Roles']))
                 )
-                    <li class="dropdown {{ $seccion && in_array($seccion, ['Revisar informes', 'Informes jornadas', 'Generar informe de actividades por punto']) ? 'active' : '' }}">
+                    <li class="dropdown {{ $seccion && in_array($seccion, ['Revisar informes', 'Informes jornadas', 'Generar informe de actividades por punto', 'Reporte asistencia y participación', 'Reporte de actividades', 'Reporte producto no conforme']) ? 'active' : '' }}">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Informes y consultas <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li class="dropdown-header">Informes de jornadas</li>
@@ -139,6 +139,9 @@
                                 </li>
                                 <li class="{{ $seccion && in_array($seccion, ['Reporte de actividades']) ? 'active' : '' }}">
                                     <a href="{{ url('/reportes/actividades') }}">Reporte de actividades</a>
+                                </li>
+                                <li class="{{ $seccion && in_array($seccion, ['Reporte producto no conforme']) ? 'active' : '' }}">
+                                    <a href="{{ url('/reportes/producto_no_conforme') }}">Reporte producto no conforme</a>
                                 </li>
                             @endif
                         </ul>
