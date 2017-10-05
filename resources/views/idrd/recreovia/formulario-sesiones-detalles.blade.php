@@ -255,12 +255,19 @@
 					                                <input type="radio" name="Estado" id="estado4" value="Corregir" {{ ($sesion && $sesion['Estado'] == 'Corregir') || old('Estado') == 'Corregir' ? 'checked' : '' }}> Corregir
 					                            </label>
 											</div>
-											<div class="col-md-12 form-group">
-												<div class="checkbox">
+											<div class="col-md-4 form-group">
+												<label for="">La sesión es asumida por el gestor</label>
+												<select class="form-control" name="Asumida_Por_El_Gestor" id="" data-value="{{ $sesion ? $sesion['Asumida_Por_El_Gestor'] : old('Asumida_Por_El_Gestor') }}">
+													<option value="">No</option>
+													@foreach($gestores as $gestor)
+														<option value="{{ $gestor['Id_Recreopersona'] }}">{{ $gestor->persona->toFriendlyString() }}</option>
+													@endforeach
+												</select>
+												<!--<div class="checkbox">
 													<label>
 														<input name="Asumida_Por_El_Gestor" value="{{ $sesion->cronograma['Id_Recreopersona'] }}" type="checkbox" {{ $sesion && $sesion['Asumida_Por_El_Gestor'] ? 'checked' : '' }}> La sesión es asumida por el gestor.
 													</label>
-												</div>
+												</div>-->
 											</div>
 				                        @endif
 										<div class="col-md-12">

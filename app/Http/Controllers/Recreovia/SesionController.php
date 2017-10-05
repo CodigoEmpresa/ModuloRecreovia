@@ -103,6 +103,7 @@ class SesionController extends Controller {
 			'sesion' => $sesion,
 			'gruposPoblacionales' => $gruposPoblacionales,
 			'tipo' => 'profesor',
+            'gestores' => collect(),
 			'area' => session('area'),
 			'status' => session('status')
 		];
@@ -120,11 +121,22 @@ class SesionController extends Controller {
 		$sesion = Sesion::with('cronograma', 'cronograma.punto', 'cronograma.jornada', 'gruposPoblacionales', 'ProductoNoConforme', 'profesor', 'acompanantes')->find($id_sesion);
 		$gruposPoblacionales = GrupoPoblacional::get();
 
+        $gestores = collect();
+		$localidades = Localidad::with('gestores.persona')->has('gestores')->get();
+        foreach ($localidades as $localidad)
+        {
+            foreach ($localidad->gestores as $gestor)
+            {
+                $gestores->push($gestor);
+            }
+        }
+
 		$formulario = [
 			'titulo' => 'Sesion',
 			'sesion' => $sesion,
 			'gruposPoblacionales' => $gruposPoblacionales,
 			'tipo' => 'gestor',
+            'gestores' => $gestores,
 			'area' => session('area'),
 			'status' => session('status')
 		];
