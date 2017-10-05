@@ -42,6 +42,20 @@
                                 i : 0;
                     };
 
+                    total_r = api
+                        .column( 5 )
+                        .data()
+                        .reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+
+                    pagina_total_r = api
+                        .column( 5, { page: 'current'} )
+                        .data()
+                        .reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+
                     total_s = api
                         .column( 6 )
                         .data()
@@ -99,6 +113,10 @@
                         }, 0 );
 
                     // Update footer
+                    $( api.column( 5 ).footer() ).html(
+                        pagina_total_r+'  /  '+ total_r
+                    );
+
                     $( api.column( 6 ).footer() ).html(
                         pagina_total_s+'  /  '+ total_s
                     );
@@ -224,7 +242,7 @@
                                         <th>Direccion</th>
                                         <th>Jornada</th>
                                         <th>Tipo</th>
-                                        <th>Reportes</th>
+                                        <th># Actividades</th>
                                         <th class="none">Reporte</th>
                                         <th>Sesiones</th>
                                         <th>Hombres</th>
@@ -314,7 +332,7 @@
                                     <th>Direccion</th>
                                     <th>Jornada</th>
                                     <th>Tipo</th>
-                                    <th>Reportes</th>
+                                    <th># Actividades</th>
                                     <th>Reportes</th>
                                     <th>Sesiones</th>
                                     <th>Hombres</th>
