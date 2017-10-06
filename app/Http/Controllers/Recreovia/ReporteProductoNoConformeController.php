@@ -19,7 +19,24 @@ class ReporteProductoNoConformeController extends Controller
         if($request->isMethod('get')) {
             $sesiones = null;
         } else {
-            $qb = Reporte::with('sesiones.productoNoConforme');
+            $qb = Reporte::with(['sesiones' => function($query) use ($request)
+            {
+                if($request->has('no_conformidad'))
+                {
+                    $query->with(['productoNoConforme' => function($sub_query) use ($request) {
+                        $primera = false;
+                        foreach ($request->input('no_conformidad') as $no_conformidad) {
+
+                            if (!$primera)
+                                $sub_query->where($no_conformidad, "0");
+                            else
+                                $sub_query->orWhere($no_conformidad, "0");
+
+                            $primera = true;
+                        }
+                    }]);
+                }
+            }]);
             $qb = $this->aplicarFiltros($qb, $request);
 
             $elementos = $qb->where('Estado', 'Finalizado')
@@ -44,7 +61,7 @@ class ReporteProductoNoConformeController extends Controller
             }
         }
 
-        dd($sesiones);
+        //dd($sesiones);
 
         $data = [
             'localidades' => Localidad::with('upz.puntos')->get(),
@@ -98,12 +115,20 @@ class ReporteProductoNoConformeController extends Controller
 
         if($request->has('no_conformidad'))
         {
-            $qb->whereHas('sesiones.productoNoConforme', function($query) use ($request)
+            $qb->whereHas('sesiones', function($query) use ($request)
             {
-                foreach ($request->input('no_conformidad') as $no_conformidad)
-                {
-                    $query->where($no_conformidad, '0');
-                }
+                $query->whereHas('productoNoConforme', function($sub_query) use ($request) {
+                    $primera = false;
+                    foreach ($request->input('no_conformidad') as $no_conformidad)
+                    {
+                        if (!$primera)
+                            $sub_query->where($no_conformidad, "0");
+                        else
+                            $sub_query->orWhere($no_conformidad, "0");
+
+                        $primera = true;
+                    }
+                });
             });
         }
 

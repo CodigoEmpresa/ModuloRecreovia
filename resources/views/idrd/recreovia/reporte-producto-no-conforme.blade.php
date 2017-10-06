@@ -33,7 +33,7 @@
                 <div class="row">
                     <div class="col-md-3 form-group">
                         <label for="">Jornada</label>
-                        <select name="id_jornada[]" data-value="{!! implode(',', old('id_jornada', [])) !!}" data-live-search="true" data-live-search="true" data-actions-box="true" data-select-all-text="Seleccionar todos" data-deselect-all-text="Deseleccionar todos" class="form-control" title="Seleccionar" multiple>
+                        <select name="id_jornada[]" data-value="{!! implode(',', old('id_jornada', [])) !!}" data-live-search="true" data-actions-box="true" data-select-all-text="Seleccionar todos" data-deselect-all-text="Deseleccionar todos" class="form-control" title="Seleccionar" multiple>
                             @foreach($jornadas as $jornada)
                                 <option value="{{ $jornada['Id_Jornada'] }}">{{ $jornada->toString() }}</option>
                             @endforeach
@@ -49,17 +49,17 @@
                     </div>
                     <div class="col-md-3 form-group">
                         <label for="">Upz</label>
-                        <select name="id_upz[]" data-value="{!! implode(',', old('id_upz', [])) !!}" data-live-search="true" data-live-search="true" data-actions-box="true" data-select-all-text="Seleccionar todos" data-deselect-all-text="Deseleccionar todos" class="form-control" title="Seleccionar" multiple>
+                        <select name="id_upz[]" data-value="{!! implode(',', old('id_upz', [])) !!}" data-live-search="true" data-actions-box="true" data-select-all-text="Seleccionar todos" data-deselect-all-text="Deseleccionar todos" class="form-control" title="Seleccionar" multiple>
                         </select>
                     </div>
                     <div class="col-md-3 form-group">
                         <label for="">Punto</label>
-                        <select name="id_punto[]" data-value="{!! implode(',', old('id_punto', [])) !!}" data-live-search="true" data-live-search="true" data-actions-box="true" data-select-all-text="Seleccionar todos" data-deselect-all-text="Deseleccionar todos" class="form-control" title="Seleccionar" multiple>
+                        <select name="id_punto[]" data-value="{!! implode(',', old('id_punto', [])) !!}" data-live-search="true" data-actions-box="true" data-select-all-text="Seleccionar todos" data-deselect-all-text="Deseleccionar todos" class="form-control" title="Seleccionar" multiple>
                         </select>
                     </div>
                     <div class="col-md-3 form-group">
                         <label for="">No conformidad</label>
-                        <select name="no_conformidad[]" data-value="{!! implode(',', old('no_conformidad', [])) !!}" data-live-search="true" data-live-search="true" data-actions-box="true" data-select-all-text="Seleccionar todos" data-deselect-all-text="Deseleccionar todos" class="form-control" title="Seleccionar" multiple>
+                        <select name="no_conformidad[]" data-value="{!! implode(',', old('no_conformidad', [])) !!}" data-live-search="true" data-actions-box="true" data-select-all-text="Seleccionar todos" data-deselect-all-text="Deseleccionar todos" class="form-control" title="Seleccionar" multiple>
                             <option value="Requisito_1">1. Puntualidad</option>
                             <option value="Requisito_2">2. Personal competente para el desarrollo de la actividad</option>
                             <option value="Requisito_3">3. Contar con el Talento Humano mínimo requerido</option>
@@ -94,6 +94,67 @@
                         <hr>
                     </div>
                 </div>
+                @if($sesiones)
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 class="panel-title">
+                                SESIONES
+                            </h4>
+                        </div>
+                        <div class="col-md-12">
+                            <br>
+                        </div>
+                        <div class="col-md-12">
+                            <table id="actividades" class="display nowrap table table-bordered table-min">
+                                <thead>
+                                    <tr>
+                                        <th>Sesion</th>
+                                        <th>No conformidades</th>
+                                        <th>Descripción</th>
+                                        <th>Acción tomada</th>
+                                        <th>Tratamiento</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($sesiones as $sesion)
+                                        <?php
+                                            $requisitos_html = '';
+                                            $requisitos = [
+                                                'Requisito_1' => '1. Puntualidad',
+                                                'Requisito_2' => '2. Personal competente para el desarrollo de la actividad',
+                                                'Requisito_3' => '3. Contar con el Talento Humano mínimo requerido',
+                                                'Requisito_4' => '4. Escenario adecuado',
+                                                'Requisito_5' => '5. Contar con los parámetros del IDIGER',
+                                                'Requisito_6' => '6. Cumplir con los niveles de competencia de Ruido',
+                                                'Requisito_7' => '7. Cumplir con la Resolución 512 de 2003',
+                                                'Requisito_8' => '8. Elementos de producción (sonido)',
+                                                'Requisito_9' => '9. Planificación de la sesión',
+                                                'Requisito_10' => '10. Presentación Personal del Talento Humano',
+                                                'Requisito_11' => '11. Mantener actualizada la información sobre los Puntos de Recreovía en Planeación del IDRD',
+                                                'Requisito_12' => '12. Accesorios (bicicletas estáticas, step)',
+                                                'Requisito_13' => '13. Cumplir con el instructivo de selección y contratación'
+                                            ];
+                                            foreach ($requisitos as $key => $requisito)
+                                            {
+                                                if($sesion->productoNoConforme[$key] == '0')
+                                                {
+                                                    $requisitos_html .= $requisito.'<br>';
+                                                }
+                                            }
+                                        ?>
+                                        <tr>
+                                            <td>{{ $sesion->getCode() }}</td>
+                                            <td>{!! $requisitos_html !!}</td>
+                                            <td>{{ $sesion->productoNoConforme['Descripcion_De_La_No_Conformidad'] }}</td>
+                                            <td>{{ $sesion->productoNoConforme['Descripcion_De_La_Accion_Tomada'] }}</td>
+                                            <td>{{ $sesion->productoNoConforme['Tratamiento'] }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                @endif
             </form>
         </div>
     </div>

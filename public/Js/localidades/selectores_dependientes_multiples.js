@@ -53,9 +53,12 @@ $(function()
         $('select[name="id_punto[]"]').selectpicker('val', ($('select[name="id_punto[]"]').data('value')).toString().split(',')).trigger('change');
     });
 
-    $('select[name="id_jornada[]"]').selectpicker('val', ($('select[name="id_jornada[]"]').data('value')).toString().split(','));
+    if($('select[name="id_jornada[]"]').length)
+        $('select[name="id_jornada[]"]').selectpicker('val', ($('select[name="id_jornada[]"]').data('value')).toString().split(','));
 
-    $('select[name="id_localidad[]"]').selectpicker('val', ($('select[name="id_localidad[]"]').data('value')).toString().split(',')).trigger('change');
+    if($('select[name="id_localidad[]"]').length)
+        $('select[name="id_localidad[]"]').selectpicker('val', ($('select[name="id_localidad[]"]').data('value')).toString().split(',')).trigger('change');
 
-    $('select[name="sesion[]"]').selectpicker('val', ($('select[name="sesion[]"]').data('value')).toString().split(',')).trigger('change');
+    if($('select[name="sesion[]"]').length)
+        $('select[name="sesion[]"]').selectpicker('val', ($('select[name="sesion[]"]').data('value')).toString().split(',')).trigger('change');
 });
