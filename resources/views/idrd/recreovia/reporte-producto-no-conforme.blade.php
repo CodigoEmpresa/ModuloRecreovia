@@ -2,7 +2,7 @@
 
 @section('script')
     @parent
-    <script src="{{ asset('public/Js/localidades/selectores_dependientes_multiples.js') }}"></script>
+    <script src="{{ asset('public/Js/localidades/selectores_dependientes_multiples.js?v=1') }}"></script>
     <script>
         $(function(e)
         {
@@ -109,6 +109,7 @@
                                 <thead>
                                     <tr>
                                         <th>Sesion</th>
+                                        <th>PAF</th>
                                         <th>No conformidades</th>
                                         <th>Descripción</th>
                                         <th>Acción tomada</th>
@@ -144,6 +145,7 @@
                                         ?>
                                         <tr>
                                             <td>{{ $sesion->getCode() }}</td>
+                                            <td>{{ $sesion->AsumidaPorElGestor ? $sesion->gestorSiAsume->persona->toFriendlyString() : $sesion->profesor->persona->toFriendlyString() }}</td>
                                             <td>{!! $requisitos_html !!}</td>
                                             <td>{{ $sesion->productoNoConforme['Descripcion_De_La_No_Conformidad'] }}</td>
                                             <td>{{ $sesion->productoNoConforme['Descripcion_De_La_Accion_Tomada'] }}</td>

@@ -61,4 +61,7 @@ $(function()
 
     if($('select[name="sesion[]"]').length)
         $('select[name="sesion[]"]').selectpicker('val', ($('select[name="sesion[]"]').data('value')).toString().split(',')).trigger('change');
+
+    if($('select[name="no_conformidad[]"]').length)
+        $('select[name="no_conformidad[]"]').selectpicker('val', ($('select[name="no_conformidad[]"]').data('value')).toString().split(',')).trigger('change');
 });

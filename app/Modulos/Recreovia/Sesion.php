@@ -30,6 +30,11 @@ class Sesion extends Model
     	return $this->belongsTo('App\Modulos\Recreovia\Recreopersona', 'Id_Recreopersona');
     }
 
+    public function gestorSiAsume()
+    {
+        return $this->belongsTo('App\Modulos\Recreovia\Recreopersona', 'Asumida_Por_El_Gestor');
+    }
+
 	public function acompanantes()
 	{
 		return $this->belongsToMany('App\Modulos\Recreovia\Recreopersona', 'Sesiones_Acompanantes', 'Id_Sesion', 'Id_Recreopersona');

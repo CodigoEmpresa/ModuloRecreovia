@@ -19,24 +19,12 @@ class ReporteProductoNoConformeController extends Controller
         if($request->isMethod('get')) {
             $sesiones = null;
         } else {
-            $qb = Reporte::with(['sesiones' => function($query) use ($request)
+
+            $qb = Reporte::with(['sesiones' => function($query)
             {
-                if($request->has('no_conformidad'))
-                {
-                    $query->with(['productoNoConforme' => function($sub_query) use ($request) {
-                        $primera = false;
-                        foreach ($request->input('no_conformidad') as $no_conformidad) {
-
-                            if (!$primera)
-                                $sub_query->where($no_conformidad, "0");
-                            else
-                                $sub_query->orWhere($no_conformidad, "0");
-
-                            $primera = true;
-                        }
-                    }]);
-                }
+                $query->with('productoNoConforme', 'profesor.persona', 'gestorSiAsume.persona');
             }]);
+
             $qb = $this->aplicarFiltros($qb, $request);
 
             $elementos = $qb->where('Estado', 'Finalizado')
@@ -56,11 +44,31 @@ class ReporteProductoNoConformeController extends Controller
                     }, true);
 
                     if (is_bool($exists))
-                        $sesiones->push($sesion);
+                    {
+                        if ($request->has('no_conformidad'))
+                        {
+                            $pass = false;
+                            foreach ($request->input('no_conformidad') as $no_conformidad)
+                            {
+                                if($sesion->productoNoConforme[$no_conformidad] == '0')
+                                {
+                                    $pass = true;
+                                }
+                            }
+
+                            if($pass) {
+                                $sesiones->push($sesion);
+                            }
+                        } else {
+                            $sesiones->push($sesion);
+                        }
+
+                    }
                 }
             }
         }
 
+        //exit();
         //dd($sesiones);
 
         $data = [
@@ -110,25 +118,6 @@ class ReporteProductoNoConformeController extends Controller
 
                 if ($request->input('fecha_fin'))
                     $query->where('Fecha', '<=', $request->input('fecha_fin'));
-            });
-        }
-
-        if($request->has('no_conformidad'))
-        {
-            $qb->whereHas('sesiones', function($query) use ($request)
-            {
-                $query->whereHas('productoNoConforme', function($sub_query) use ($request) {
-                    $primera = false;
-                    foreach ($request->input('no_conformidad') as $no_conformidad)
-                    {
-                        if (!$primera)
-                            $sub_query->where($no_conformidad, "0");
-                        else
-                            $sub_query->orWhere($no_conformidad, "0");
-
-                        $primera = true;
-                    }
-                });
             });
         }
 
