@@ -143,6 +143,9 @@
                                 <li class="{{ $seccion && in_array($seccion, ['Reporte producto no conforme']) ? 'active' : '' }}">
                                     <a href="{{ url('/reportes/producto_no_conforme') }}">Reporte producto no conforme</a>
                                 </li>
+                                <li class="{{ $seccion && in_array($seccion, ['Reporte calificación del servicio']) ? 'active' : '' }}">
+                                    <a href="{{ url('/reportes/calificacion_del_servicio') }}">Reporte calificación del servicio</a>
+                                </li>
                             @endif
                         </ul>
                     </li>
