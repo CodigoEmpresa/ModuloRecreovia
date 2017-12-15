@@ -178,10 +178,12 @@
                             Presente en {{ count($persona->recreopersona->sesiones) }} sesiones.
                         </small>
                     </div>
-                    <div class="col-md-12">
-                        <br>
-                        <a href="{{ url('actividad_usuario/'.$persona['Cedula']) }}" class="btn btn-default"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Editar permisos</a>
-                    </div>
+                    @if ($_SESSION['Usuario']['Permisos']['editar_permisos'])
+                        <div class="col-md-12">
+                            <br>
+                            <a href="{{ url('actividad_usuario/'.$persona['Cedula']) }}" class="btn btn-default"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Editar permisos</a>
+                        </div>
+                    @endif
                 @else
                     <div class="col-md-12">
                         <small>No disponible.</small>

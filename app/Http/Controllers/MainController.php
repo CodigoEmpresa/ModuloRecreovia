@@ -86,7 +86,8 @@ class MainController extends Controller {
 				'gestion_global_de_sesiones' => array_key_exists(11, $permissions_array) ? intval($permissions_array[11]) : 0,
 				'buscador_de_sesiones' => array_key_exists(12, $permissions_array) ? intval($permissions_array[12]) : 0,
 				'ajustar_cronogramas' => array_key_exists(13, $permissions_array) ? intval($permissions_array[13]) : 0,
-				'consultar_reportes' => array_key_exists(14, $permissions_array) ? intval($permissions_array[14]) : 0
+				'consultar_reportes' => array_key_exists(14, $permissions_array) ? intval($permissions_array[14]) : 0,
+				'editar_permisos' => array_key_exists(15, $permissions_array) ? intval($permissions_array[15]) : 0
 			];
 
 			$_SESSION['Usuario'] = $user_array;
