@@ -75,7 +75,7 @@
                                     <input type="hidden" name="_method" value="POST">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <input type="hidden" name="Id" value="{{ $informe ? $informe['Id'] : 0 }}">
-                                    @if ($informe['Estado'] != 'Finalizado')
+                                    @if (!in_array($informe['Estado'], ['Finalizado', 'Rechazado']))
                                         <input type="submit" value="{{ $informe ? 'Regenerar reporte' : 'Generar reporte' }}" id="generar" class="btn btn-primary">
                                         @if ($informe)
                                             <a data-toggle="modal" data-target="#modal-eliminar" class="btn btn-danger">Eliminar</a>
@@ -135,14 +135,17 @@
                                         <fieldset>
                                             <div class="col-md-12 form-group">
                                                 <label for="">Estado</label><br>
-                                                @if ($informe->cronograma->gestor['Id_Recreopersona'] == $_SESSION['Usuario']['Recreopersona']['Id_Recreopersona'])
+                                                @if ($informe->cronograma->gestor['Id_Recreopersona'] == $_SESSION['Usuario']['Recreopersona']['Id_Recreopersona'] && !in_array($informe['Estado'], ['Finalizado', 'Rechazado']) )
                                                     <label class="radio-inline">
                                                         <input type="radio" name="Estado" value="Pendiente" {{ $informe && $informe['Estado'] == 'Pendiente' ? 'checked' : '' }}> Pendiente
                                                     </label>
                                                     <label class="radio-inline">
                                                         <input type="radio" name="Estado" value="Aprobado" {{ $informe && $informe['Estado'] == 'Aprobado' ? 'checked' : '' }}> Aprobado
                                                     </label>
+                                                @else
+                                                    No se puede modificar el estado ya que actualmente este se encuentra en finalizado o rechazado <small>(Para modificarlo solicite al supervisor que cambie el estado a <strong>corregir</strong>)</small>.
                                                 @endif
+
                                                 @if ($_SESSION['Usuario']['Permisos']['validar_reportes_jornadas'])
                                                     <label class="radio-inline">
                                                         <input type="radio" name="Estado" value="Rechazado" {{ $informe && $informe['Estado'] == 'Rechazado' ? 'checked' : '' }}> Rechazado
@@ -153,9 +156,11 @@
                                                     <label class="radio-inline">
                                                         <input type="radio" name="Estado" value="Finalizado" {{ $informe && $informe['Estado'] == 'Finalizado' ? 'checked' : '' }}> Finalizado
                                                     </label>
-                                                @else
-                                                    <p class="form-control-static">{{ $informe['Estado'] }}</p>
                                                 @endif
+                                            </div>
+                                            <div class="col-md-12 form-group">
+                                                <label for="">Estado actual</label>
+                                                <p class="form-control-static">{{ $informe['Estado'] }}</p>
                                             </div>
                                             <div class="col-md-12 form-group {{ $informe['Observaciones_Informe'] != '' ? 'has-warning control-warning' : '' }}">
                                                 <label for="">Observaciones informe</label>
@@ -930,7 +935,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    @if ($informe['Estado'] != 'Finalizado' || $_SESSION['Usuario']['Permisos']['validar_reportes_jornadas'])
+                    @if (!in_array($informe['Estado'], ['Finalizado', 'Rechazado']) || $_SESSION['Usuario']['Permisos']['validar_reportes_jornadas'])
                         <div class="col-md-12">
                             <hr>
                         </div>
